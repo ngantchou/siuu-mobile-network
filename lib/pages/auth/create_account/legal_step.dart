@@ -190,7 +190,7 @@ class OBLegalStepPageState extends State<OBLegalStepPage> {
       child: Text(_localizationService.auth__create_acc__next,
           style: TextStyle(fontSize: 18.0)),
       onPressed: () {
-        Navigator.pushNamed(context, '/auth/accept_step');
+        Navigator.pop(context);
       },
     );
   }
@@ -212,13 +212,13 @@ class OBLegalStepPageState extends State<OBLegalStepPage> {
             width: 10.0,
           ),
           Text(
-            buttonText,
+            "Cancel",
             style: TextStyle(fontSize: 18.0, color: Colors.white),
           )
         ],
       ),
       onPressed: () {
-        Navigator.pop(context);
+        Navigator.pushNamed(context, '/auth/login');
       },
     );
   }

@@ -37,7 +37,8 @@ class OBButton extends StatelessWidget {
       this.padding,
       this.textStyle,
       this.color,
-      this.textColor, this.onLongPressed});
+      this.textColor,
+      this.onLongPressed});
 
   @override
   Widget build(BuildContext context) {
@@ -143,7 +144,7 @@ class OBButton extends StatelessWidget {
         break;
       case OBButtonType.success:
         buttonGradient = linearGradient;
-       /* buttonGradient = themeValueParser.parseGradient(theme.successColor);*/
+        /* buttonGradient = themeValueParser.parseGradient(theme.successColor);*/
         break;
       case OBButtonType.highlight:
         Color primaryColor = themeValueParser.parseColor(theme.primaryColor);

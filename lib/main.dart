@@ -260,9 +260,9 @@ class _MyAppState extends State<MyApp> {
                 bootstrapOpenbookProviderInContext(context);
                 return VideoMemory();
               },
-              '/Wallet': (BuildContext context) {
+              '/wallet': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
-                return Wallet();
+                return OBHomePage();
               }
             }),
       ),

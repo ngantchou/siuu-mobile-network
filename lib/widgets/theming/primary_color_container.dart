@@ -19,7 +19,8 @@ class OBPrimaryColorContainer extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
-
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return StreamBuilder(
         stream: themeService.themeChange,
         initialData: themeService.getActiveTheme(),
@@ -40,7 +41,9 @@ class OBPrimaryColorContainer extends StatelessWidget {
           return Column(
             mainAxisSize: mainAxisSize,
             children: <Widget>[
-              SizedBox(height: MediaQuery.of(context).size.height / 8),
+              SizedBox(
+                height: height * 0.087,
+              ),
               Expanded(child: container)
             ],
           );

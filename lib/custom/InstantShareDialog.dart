@@ -1,6 +1,6 @@
+import 'package:Siuu/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:Siuu/res/colors.dart';
 
 class InstantShareDialog extends StatelessWidget {
   Widget build(BuildContext context) {

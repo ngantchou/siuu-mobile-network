@@ -409,7 +409,7 @@ class LocalizationService {
   }
 
   String get auth__create_acc__suggested_memories {
-    return Intl.message("🥳 Get started by joining the following memories.",
+    return Intl.message("🥳 Get started by follow the following users.",
         name: 'auth__create_acc__suggested_memories');
   }
 

@@ -4,7 +4,6 @@ import 'package:Siuu/pages/home/pages/Messages/Message.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Siuu/models/push_notification.dart';
 import 'package:Siuu/pages/home/lib/poppable_page_controller.dart';
-import 'package:Siuu/screens/home/home.dart';
 import 'package:Siuu/services/intercom.dart';
 import 'package:Siuu/services/media/media.dart';
 import 'package:Siuu/services/push_notifications/push_notifications.dart';

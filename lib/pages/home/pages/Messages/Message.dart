@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Siuu/res/colors.dart';
-import 'package:Siuu/screens/Messages/chat.dart';
+import 'chat.dart';
 
 import 'loader.dart';
 

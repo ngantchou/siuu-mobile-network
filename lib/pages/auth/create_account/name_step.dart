@@ -1,3 +1,4 @@
+import 'package:Siuu/custom/CustomAuthScreens/text/CustomTextinAuthScreens.dart';
 import 'package:Siuu/models/user_invite.dart';
 import 'package:Siuu/provider.dart';
 import 'package:Siuu/pages/auth/create_account/blocs/create_account.dart';
@@ -12,6 +13,7 @@ import 'package:Siuu/widgets/buttons/success_button.dart';
 import 'package:Siuu/widgets/buttons/secondary_button.dart';
 import 'package:Siuu/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:pigment/pigment.dart';
 
 class OBAuthNameStepPage extends StatefulWidget {
   @override
@@ -67,17 +69,79 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
         child: SingleChildScrollView(
             child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
-                child: Column(
-                  children: <Widget>[
-                    _buildWhatYourName(context: context),
-                    const SizedBox(
-                      height: 20.0,
-                    ),
-                    _buildNameForm(width, height),
-                  ],
-                ))),
+                child: Form(
+                    key: _formKey,
+                    child: Column(
+                      children: <Widget>[
+                        SizedBox(height: height * 0.043),
+                        Center(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Siuu",
+                                style: TextStyle(
+                                  fontFamily: "Gabriola",
+                                  fontSize: 27,
+                                  color: Color(0xff4d0cbb),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 10),
+                                child: Text(
+                                  "Rejoindre notre communauté",
+                                  style: TextStyle(
+                                    fontFamily: "Segoe UI",
+                                    fontSize: 11,
+                                    color: Color(0xff4d0cbb),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: height * 0.117),
+                        SizedBox(
+                          height: height * 0.117,
+                          width: width * 0.243,
+                          child: Image.asset(
+                            'assets/images/Siu.png',
+                            fit: BoxFit.fitWidth,
+                          ),
+                        ),
+                        SizedBox(height: height * 0.043),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomTextAuthScreens(
+                                'Vous avez déjà un compte ? '),
+                            InkWell(
+                              onTap: () {
+                                Navigator.of(context).pushNamed('/auth');
+                              },
+                              child: CustomTextAuthScreens('Se connecter'),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: height * 0.029),
+                        _buildNameForm(width, height),
+                        SizedBox(height: height * 0.029),
+                        _buildUsernameForm(width, height),
+                        SizedBox(height: height * 0.029),
+                        _buildEmailForm(width, height),
+                        SizedBox(height: height * 0.029),
+                        _buildPasswordForm(width, height),
+                        SizedBox(height: height * 0.043),
+                        GestureDetector(
+                            child: CustomTextAuthScreens(
+                                'By registering, you are agreeing\nto our Terms of Service'),
+                            onTap: () {
+                              Navigator.pushNamed(context, '/auth/legal_step');
+                            }),
+                      ],
+                    )))),
       ),
-      backgroundColor: Color(0xFF9013FE),
+      backgroundColor: Pigment.fromString('#FFFFFF'),
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -95,6 +159,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
                 child: _buildPreviousButton(context: context),
               ),
               Expanded(child: _buildNextButton()),
+              SizedBox(height: height * 0.043),
             ],
           ),
         ),
@@ -142,7 +207,8 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
         _createAccountBloc.setUsername(_usernameController.text.trim());
         _createAccountBloc.setEmail(_emailController.text.trim());
         _createAccountBloc.setToken(createdUserInvite.token);
-        Navigator.pushNamed(context, '/auth/legal_step');
+        //Navigator.pushNamed(context, '/auth/legal_step');
+        Navigator.pushNamed(context, '/auth/accept_step');
       });
     }
   }
@@ -191,14 +257,14 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
         children: <Widget>[
           Icon(
             Icons.arrow_back_ios,
-            color: Colors.white,
+            color: Colors.black,
           ),
           const SizedBox(
             width: 10.0,
           ),
           Text(
             buttonText,
-            style: TextStyle(fontSize: 18.0, color: Colors.white),
+            style: TextStyle(fontSize: 18.0, color: Colors.black),
           )
         ],
       ),
@@ -208,59 +274,58 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
     );
   }
 
-  Widget _buildWhatYourName({@required BuildContext context}) {
-    String whatNameText =
-        _localizationService.trans('auth__create_acc__what_name');
-
-    return Column(
-      children: <Widget>[
-        Text(
-          '📛',
-          style: TextStyle(fontSize: 45.0, color: Colors.white),
-        ),
-        const SizedBox(
-          height: 20.0,
-        ),
-        Text(whatNameText,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-                color: Colors.white)),
-      ],
-    );
-  }
-
-  Widget _buildUsernameForm() {
+  Widget _buildUsernameForm(double width, double height) {
     String usernameInputPlaceholder =
         _localizationService.auth__create_acc__username_placeholder;
     String errorUsernameTaken =
         _localizationService.auth__create_acc__username_taken_error;
 
-    return Form(
-      key: _formKey,
-      child: Row(children: <Widget>[
-        new Expanded(
-          child: Container(
-              color: Colors.transparent,
-              child: OBAuthTextField(
-                autocorrect: false,
-                hintText: usernameInputPlaceholder,
-                validator: (String username) {
-                  String validateUsernameResult =
-                      _validationService.validateUserUsername(username.trim());
-                  if (validateUsernameResult != null)
-                    return validateUsernameResult;
-                  if (_usernameTaken != null && _usernameTaken) {
-                    return errorUsernameTaken.replaceFirst('%s', username);
-                  }
-                },
-                controller: _usernameController,
-                onFieldSubmitted: (v) => onPressedNextStep(),
-              )),
+    return Row(children: <Widget>[
+      new Expanded(
+        child: Container(
+          color: Colors.transparent,
+          child: TextFormField(
+            //hintText: usernameInputPlaceholder,
+            validator: (String username) {
+              String validateUsernameResult =
+                  _validationService.validateUserUsername(username.trim());
+              if (validateUsernameResult != null) return validateUsernameResult;
+              if (_usernameTaken != null && _usernameTaken) {
+                return errorUsernameTaken.replaceFirst('%s', username);
+              }
+            },
+            controller: _usernameController,
+            cursorColor: Color(purpleColor),
+            obscureText: false,
+            textAlign: TextAlign.center,
+            decoration: InputDecoration(
+              hintText: "Pseudo",
+              hintStyle: TextStyle(
+                fontFamily: "SF Pro Display",
+                fontWeight: FontWeight.w600,
+                fontSize: 14,
+                color: Color(0xff4d0cbb),
+              ),
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(48.0)),
+                borderSide: BorderSide(
+                    width: width * 0.004, color: Color(greyishColor)),
+              ),
+              disabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(48.0)),
+                borderSide: BorderSide(
+                    width: width * 0.004, color: Color(greyishColor)),
+              ),
+              enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.all(Radius.circular(48.0)),
+                borderSide: BorderSide(
+                    width: width * 0.004, color: Color(greyishColor)),
+              ),
+            ),
+          ),
         ),
-      ]),
-    );
+      ),
+    ]);
   }
 
   Widget _buildEmailForm(double width, double height) {
@@ -284,7 +349,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
             },
             controller: _emailController,
             cursorColor: Color(purpleColor),
-            obscureText: true,
+            obscureText: false,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
               hintText: emailInputPlaceholder,
@@ -335,7 +400,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
             obscureText: false,
             textAlign: TextAlign.center,
             decoration: InputDecoration(
-              hintText: nameInputPlaceholder,
+              hintText: "Name",
               hintStyle: TextStyle(
                 fontFamily: "SF Pro Display",
                 fontWeight: FontWeight.w600,
@@ -389,7 +454,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
                   _togglePasswordVisibility();
                 },
               ),
-              hintText: "password",
+              hintText: "Password",
               hintStyle: TextStyle(
                 fontFamily: "SF Pro Display",
                 fontWeight: FontWeight.w600,
@@ -412,25 +477,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
                     width: width * 0.004, color: Color(greyishColor)),
               ),
             ),
-          ), /*OBAuthTextField(
-                autocorrect: false,
-                obscureText: !passwordIsVisible,
-                validator: (String password) {
-                  String validatePassword =
-                      _validationService.validateUserPassword(password);
-                  if (validatePassword != null) return validatePassword;
-                },
-                suffixIcon: GestureDetector(
-                  child: Icon(passwordIsVisible
-                      ? Icons.visibility_off
-                      : Icons.visibility),
-                  onTap: () {
-                    _togglePasswordVisibility();
-                  },
-                ),
-                controller: _passwordController,
-                onFieldSubmitted: (v) => onPressedNextStep(),
-              )*/
+          ),
         ),
       ),
     ]);

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_reaction_button/flutter_reaction_button.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'InstantShareDialog.dart';
@@ -23,6 +24,14 @@ class CustomPostContainer extends StatefulWidget {
 }
 
 class _CustomPostContainerState extends State<CustomPostContainer> {
+  Widget reactionIcon;
+
+  @override
+  void initState() {
+    super.initState();
+    reactionIcon = null;
+  }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -31,6 +40,7 @@ class _CustomPostContainerState extends State<CustomPostContainer> {
       children: [
         Container(
           height: widget.height,
+          // height: 126,
           decoration: BoxDecoration(
             color: Color(0xffffffff),
             boxShadow: [
@@ -42,11 +52,11 @@ class _CustomPostContainerState extends State<CustomPostContainer> {
             ],
             borderRadius: BorderRadius.circular(12.00),
           ),
-          child: Padding(
-            padding: const EdgeInsets.fromLTRB(20, 20, 20, 10),
-            child: Column(
-              children: [
-                Row(
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -86,14 +96,17 @@ class _CustomPostContainerState extends State<CustomPostContainer> {
                     Image.asset('assets/images/arrowDownIcon.png'),
                   ],
                 ),
-                SizedBox(height: height * 0.029),
-                Expanded(
-                  child: widget.widget,
-                ),
-                Divider(
-                  thickness: 1,
-                ),
-                Row(
+              ),
+              SizedBox(height: height * 0.029),
+              Expanded(
+                child: widget.widget,
+              ),
+              Divider(
+                thickness: 1,
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     GestureDetector(
@@ -115,7 +128,7 @@ class _CustomPostContainerState extends State<CustomPostContainer> {
                             SizedBox(width: width * 0.024),
                             InkWell(
                               onTap: () {
-                                Navigator.of(context).pushNamed(
+                                /*Navigator.of(context).pushNamed(
                                   '/comments',
                                   arguments: CustomPostContainer(
                                     image: 'avatar',
@@ -133,7 +146,7 @@ class _CustomPostContainerState extends State<CustomPostContainer> {
                                       ),
                                     ),
                                   ),
-                                );
+                                );*/
                               },
                               child:
                                   SvgPicture.asset('assets/svg/comments.svg'),
@@ -147,19 +160,134 @@ class _CustomPostContainerState extends State<CustomPostContainer> {
                           children: [
                             buildNumberText(widget.heartNumber),
                             SizedBox(width: width * 0.024),
-                            SvgPicture.asset('assets/svg/heart.svg'),
+                            FlutterReactionButton(
+                              shouldChangeReaction: false,
+                              boxColor: Color(0xffFD0767).withOpacity(0.3),
+                              boxAlignment: Alignment.bottomRight,
+                              onReactionChanged: (reaction) {
+                                print('reaction selected id: ${reaction.id}');
+                                setState(() {
+                                  reactionIcon = reaction.icon;
+                                });
+                              },
+                              reactions: <Reaction>[
+                                Reaction(
+                                  id: 1,
+                                  previewIcon: buildpreview('like'),
+                                  icon: buildIcon('like'),
+                                ),
+                                Reaction(
+                                  id: 2,
+                                  previewIcon: buildpreview('dislike'),
+                                  icon: buildIcon('dislike'),
+                                ),
+                                Reaction(
+                                  id: 3,
+                                  previewIcon: buildpreview('heartReact'),
+                                  icon: buildIcon('heartReact'),
+                                ),
+                                Reaction(
+                                  id: 4,
+                                  previewIcon: buildpreview('brokenHeart'),
+                                  icon: buildIcon('brokenHeart'),
+                                ),
+                                Reaction(
+                                  id: 5,
+                                  previewIcon: buildpreview('haha'),
+                                  icon: buildIcon('haha'),
+                                ),
+                                Reaction(
+                                  id: 6,
+                                  previewIcon: buildpreview('shock'),
+                                  icon: buildIcon('shock'),
+                                ),
+                                Reaction(
+                                  id: 7,
+                                  previewIcon: buildpreview('smirk'),
+                                  icon: buildIcon('smirk'),
+                                ),
+                              ],
+
+                              // Intial reaction showing under the post container
+                              initialReaction: Reaction(
+                                id: 1,
+                                icon: Align(
+                                  alignment: Alignment.center,
+                                  child: new Container(
+                                    height: height * 0.0585,
+                                    width: width * 0.14,
+                                    child: Stack(
+                                      children: [
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 3),
+                                            ),
+                                            child: SvgPicture.asset(
+                                              'assets/svg/haha.svg',
+                                              height: height * 0.043,
+                                            ),
+                                          ),
+                                        ),
+                                        Align(
+                                          alignment: Alignment.centerRight,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 3),
+                                            ),
+                                            child: reactionIcon == null
+                                                ? SvgPicture.asset(
+                                                    'assets/svg/like.svg',
+                                                    height: height * 0.043,
+                                                  )
+                                                : reactionIcon,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ],
                     ),
                   ],
-                )
-              ],
-            ),
+                ),
+              )
+            ],
           ),
         ),
         SizedBox(height: height * 0.014)
       ],
+    );
+  }
+
+  Padding buildpreview(
+    String emoji,
+  ) {
+    final double height = MediaQuery.of(context).size.height;
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SvgPicture.asset('assets/svg/$emoji.svg',
+          fit: BoxFit.fill, height: height * 0.058),
+    );
+  }
+
+  buildIcon(String emoji) {
+    final double height = MediaQuery.of(context).size.height;
+    return SvgPicture.asset(
+      'assets/svg/$emoji.svg',
+      fit: BoxFit.fill,
+      height: height * 0.043,
     );
   }
 }

@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 
 class Wallet extends StatefulWidget {
   @override
-  _WalletState createState() => _WalletState();
+  State<StatefulWidget> createState() {
+    return _WalletState();
+  }
 }
 
 class _WalletState extends State<Wallet> {
@@ -11,115 +13,113 @@ class _WalletState extends State<Wallet> {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: height * 0.580,
-                width: double.infinity,
-                child: Stack(
-                  children: [
-                    Positioned.fill(
-                      child: Container(
-                        decoration: BoxDecoration(gradient: linearGradient),
-                      ),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: height * 0.580,
+              width: double.infinity,
+              child: Stack(
+                children: [
+                  Positioned.fill(
+                    child: Container(
+                      decoration: BoxDecoration(gradient: linearGradient),
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.arrow_back_ios_rounded,
+                                color: Colors.white),
+                            Spacer(),
+                            buildText(fontSize: 12, text: 'SIU wallet'),
+                            Spacer(),
+                          ],
+                        ),
+                      ),
+                      Spacer(
+                        flex: 3,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          buildText(fontSize: 45, text: 'Siucoin'),
+                          buildText(
+                              fontSize: 35, color: 0xffFF8000, text: ' SIU'),
+                        ],
+                      ),
+                      Spacer(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            onPressed: () {},
+                            icon: Icon(Icons.content_copy,
+                                size: 30, color: Colors.white),
+                          ),
+                        ],
+                      ),
+                      Spacer(
+                        flex: 2,
+                      ),
+                      buildText(fontSize: 30, text: '0.02439403'),
+                      buildText(fontSize: 12, text: 'Total balance'),
+                      Spacer(
+                        flex: 2,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Column(
                             children: [
-                              Icon(Icons.arrow_back_ios_rounded,
-                                  color: Colors.white),
-                              Spacer(),
-                              buildText(fontSize: 12, text: 'SIU wallet'),
-                              Spacer(),
+                              buildText(fontSize: 21, text: '614'),
+                              buildText(fontSize: 14, text: 'Operations'),
                             ],
                           ),
-                        ),
-                        Spacer(
-                          flex: 3,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.end,
-                          children: [
-                            buildText(fontSize: 45, text: 'Siucoin'),
-                            buildText(
-                                fontSize: 35, color: 0xffFF8000, text: ' SIU'),
-                          ],
-                        ),
-                        Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            IconButton(
-                              onPressed: () {},
-                              icon: Icon(Icons.content_copy,
-                                  size: 30, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                        Spacer(
-                          flex: 2,
-                        ),
-                        buildText(fontSize: 30, text: '0.02439403'),
-                        buildText(fontSize: 12, text: 'Total balance'),
-                        Spacer(
-                          flex: 2,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Column(
-                              children: [
-                                buildText(fontSize: 21, text: '614'),
-                                buildText(fontSize: 14, text: 'Operations'),
-                              ],
-                            ),
-                            SizedBox(
-                              width: width * 0.072,
-                            ),
-                            Column(
-                              children: [
-                                buildText(fontSize: 21, text: '+\$15'),
-                                buildText(fontSize: 14, text: 'Week'),
-                              ],
-                            )
-                          ],
-                        ),
-                        Spacer(
-                          flex: 2,
-                        )
-                      ],
-                    )
-                  ],
+                          SizedBox(
+                            width: width * 0.072,
+                          ),
+                          Column(
+                            children: [
+                              buildText(fontSize: 21, text: '+\$15'),
+                              buildText(fontSize: 14, text: 'Week'),
+                            ],
+                          )
+                        ],
+                      ),
+                      Spacer(
+                        flex: 2,
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: new Text(
+                "My Last Earnings",
+                style: TextStyle(
+                  fontFamily: "Segoe UI",
+                  fontWeight: FontWeight.w600,
+                  fontSize: 20,
+                  color: Color(0xff707070),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: new Text(
-                  "My Last Earnings",
-                  style: TextStyle(
-                    fontFamily: "Segoe UI",
-                    fontWeight: FontWeight.w600,
-                    fontSize: 20,
-                    color: Color(0xff707070),
-                  ),
-                ),
-              ),
-              buildListTile(width),
-              buildListTile(width),
-              buildListTile(width),
-              buildListTile(width),
-              buildListTile(width),
-            ],
-          ),
+            ),
+            buildListTile(width),
+            buildListTile(width),
+            buildListTile(width),
+            buildListTile(width),
+            buildListTile(width),
+          ],
         ),
       ),
     );

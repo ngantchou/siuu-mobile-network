@@ -6,6 +6,7 @@ import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/user.dart';
 import 'package:Siuu/pages/home/lib/poppable_page_controller.dart';
 import 'package:Siuu/pages/home/pages/memories/memories.dart';
+import 'package:Siuu/pages/home/pages/menu/menu.dart';
 import 'package:Siuu/pages/home/pages/search/search.dart';
 import 'package:Siuu/provider.dart';
 import 'package:Siuu/res/colors.dart';
@@ -53,6 +54,7 @@ class OBTimelinePageState extends State<OBTimelinePage>
   ThemeService _themeService;
   ThemeValueParserService _themeValueParserService;
   OBMainSearchPageController _searchPageController;
+  OBMainMenuPageController _mainMenuPageController;
 
   List<Post> _initialPosts;
   List<OBNewPostData> _newPostsData;
@@ -74,6 +76,7 @@ class OBTimelinePageState extends State<OBTimelinePage>
     _timelinePostsStreamController = OBPostsStreamController();
     _timelinePostsStreamScrollController = ScrollController();
     _searchPageController = OBMainSearchPageController();
+    _mainMenuPageController = OBMainMenuPageController();
     widget.controller.attach(context: context, state: this);
     _needsBootstrap = true;
     _loggedInUserBootstrapped = false;
@@ -200,23 +203,58 @@ class OBTimelinePageState extends State<OBTimelinePage>
 
   Widget _buildFiltersButton() {
     int filtersCount = countFilters();
-
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return Row(
-      mainAxisSize: MainAxisSize.min,
-      children: <Widget>[
-        OBIconButton(
-          OBIcons.search,
-          themeColor: OBIconThemeColor.primaryText,
-          onPressed: _onWantsSearch,
+      children: [
+        InkWell(
+            onTap: () {
+              _onWantsSearch();
+            },
+            child: SizedBox(
+              height: height * 0.029,
+              width: width * 0.048,
+              child: SvgPicture.asset(
+                'assets/svg/search.svg',
+                fit: BoxFit.contain,
+                color: Colors.white,
+                width: 10,
+              ),
+            )),
+        SizedBox(width: width * 0.04),
+        InkWell(
+          onTap: () {
+            showMenu(
+              context: context,
+              position: RelativeRect.fromLTRB(100, 100, 0, 100),
+              items: [
+                PopupMenuItem(
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (BuildContext context) => OBMainMenuPage(
+                                    controller: _mainMenuPageController,
+                                  )));
+                    },
+                    child: Text('Settings'),
+                  ),
+                ),
+                PopupMenuItem(
+                  child: InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                        Navigator.of(context).pushNamed('/Wallet');
+                      },
+                      child: Text('Siucoins parameters')),
+                ),
+              ],
+            );
+          },
+          child: SvgPicture.asset('assets/svg/menu.svg'),
         ),
-        const SizedBox(
-          width: 10,
-        ),
-        OBIconButton(
-          OBIcons.moreVertical,
-          themeColor: OBIconThemeColor.primaryText,
-          onPressed: _onWantsFilters,
-        )
       ],
     );
   }

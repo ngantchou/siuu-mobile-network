@@ -18,6 +18,7 @@ import 'package:Siuu/pages/home/modals/post_reactions/post_reactions.dart';
 import 'package:Siuu/pages/home/modals/save_post/pages/share_post/pages/share_post_with_circles.dart';
 import 'package:Siuu/pages/home/modals/save_post/pages/share_post/pages/share_post_with_community.dart';
 import 'package:Siuu/pages/home/modals/save_post/pages/share_post/share_post.dart';
+import 'package:Siuu/pages/home/pages/categories.dart';
 import 'package:Siuu/pages/home/pages/community/community.dart';
 import 'package:Siuu/pages/home/pages/community/pages/community_members.dart';
 import 'package:Siuu/pages/home/pages/community/pages/community_rules.dart';
@@ -744,6 +745,17 @@ class NavigationService {
               reactionsEmojiCounts: reactionsEmojiCounts,
               reactionEmoji: reactionEmoji,
             );
+          }),
+    );
+  }
+
+  Future<void> navigateToCreateStory({@required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('postReactionsPageRoute'),
+          builder: (BuildContext context) {
+            return Categories();
           }),
     );
   }

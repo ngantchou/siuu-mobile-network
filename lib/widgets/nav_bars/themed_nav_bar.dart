@@ -151,7 +151,7 @@ class OBThemedNavigationBar extends StatelessWidget
 
   @override
   Size get preferredSize {
-    return const Size.fromHeight(44);
+    return const Size.fromHeight(0);
   }
 
   @override

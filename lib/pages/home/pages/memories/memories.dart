@@ -1,4 +1,8 @@
+import 'package:Siuu/provider.dart';
 import 'package:Siuu/res/colors.dart';
+import 'package:Siuu/services/navigation_service.dart';
+import 'package:Siuu/services/toast.dart';
+import 'package:Siuu/services/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -10,8 +14,16 @@ class Memories extends StatefulWidget {
 }
 
 class MemoriesState extends State<Memories> {
+  UserService _userService;
+  ToastService _toastService;
+  NavigationService _navigationService;
+
   @override
   Widget build(BuildContext context) {
+    var openbookProvider = OpenbookProvider.of(context);
+    _userService = openbookProvider.userService;
+    _toastService = openbookProvider.toastService;
+    _navigationService = openbookProvider.navigationService;
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Column(
@@ -57,8 +69,8 @@ class MemoriesState extends State<Memories> {
                           Positioned.fill(
                               child: InkWell(
                                   onTap: () {
-                                    Navigator.of(context)
-                                        .pushNamed('/connectionLostScreen');
+                                    _navigationService.navigateToCreateStory(
+                                        context: context);
                                   },
                                   child:
                                       Image.asset("assets/images/user.png"))),
