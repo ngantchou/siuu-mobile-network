@@ -1,0 +1,82 @@
+{
+    "videos": "Video 's",
+    "@videos": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews": "Link-voorbeelden",
+    "@link_previews": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay": "Automatisch afspelen",
+    "@videos_autoplay": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_show": "Toon",
+    "@link_previews_show": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_always": "Altijd",
+    "@videos_autoplay_always": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_wifi_only": "Alleen via Wifi",
+    "@videos_autoplay_wifi_only": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_autoplay_never": "Nooit",
+    "@videos_autoplay_never": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_always": "Altijd",
+    "@link_previews_autoplay_always": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_wifi_only": "Alleen via Wifi",
+    "@link_previews_autoplay_wifi_only": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "link_previews_autoplay_never": "Nooit",
+    "@link_previews_autoplay_never": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound": "Geluid",
+    "@videos_sound": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "tap_to_change": "(Tik om te wijzigen)",
+    "@tap_to_change": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound_enabled": "Ingeschakeld",
+    "@videos_sound_enabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "videos_sound_disabled": "Uitgeschakeld",
+    "@videos_sound_disabled": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_sort_newest_first": "Nieuwste eerst",
+    "@comment_sort_newest_first": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "comment_sort_oldest_first": "Oudste eerst",
+    "@comment_sort_oldest_first": {
+        "type": "text",
+        "placeholders": {}
+    }
+}

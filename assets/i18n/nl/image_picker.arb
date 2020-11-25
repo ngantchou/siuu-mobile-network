@@ -1,0 +1,19 @@
+{
+    "from_gallery": "Van galerij",
+    "@from_gallery": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "from_camera": "Van camera",
+    "@from_camera": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_too_large": "Bestand te groot (limiet: {limit} MB)",
+    "@error_too_large": {
+        "type": "text",
+        "placeholders": {
+            "limit": {}
+        }
+    }
+}
