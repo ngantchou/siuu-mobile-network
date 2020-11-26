@@ -1,3 +1,4 @@
+import 'package:Siuu/custom/customPostContainer.dart';
 import 'package:Siuu/models/community.dart';
 import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/user.dart';
@@ -17,6 +18,8 @@ import 'package:Siuu/widgets/theming/secondary_text.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:Siuu/res/colors.dart';
 
 class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
@@ -33,7 +36,7 @@ class OBProfilePage extends StatefulWidget {
   }
 }
 
-class OBProfilePageState extends State<OBProfilePage> {
+class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderStateMixin {
   User _user;
   bool _needsBootstrap;
   UserService _userService;
@@ -46,7 +49,10 @@ class OBProfilePageState extends State<OBProfilePage> {
   GlobalKey<RefreshIndicatorState> _protectedProfileRefreshIndicatorKey =
       GlobalKey();
   bool _needsProtectedProfileBootstrap;
+  bool isInformationPressed = true;
+  bool isPublicationsPressed = false;
 
+  TabController _tabController;
   @override
   void initState() {
     super.initState();
@@ -58,8 +64,30 @@ class OBProfilePageState extends State<OBProfilePage> {
     _profileCommunityPostsVisible =
         widget.user.getProfileCommunityPostsVisible();
     _recentlyExcludedCommunities = [];
+    _tabController = TabController(vsync: this, length: 2);
+    _tabController.addListener(_handleTabSelection);
   }
 
+  void _handleTabSelection() {
+    if (_tabController.indexIsChanging) {
+      switch (_tabController.index) {
+        case 0:
+          setState(() {
+            isInformationPressed = true;
+            isPublicationsPressed = false;
+          });
+
+          break;
+        case 1:
+          setState(() {
+            isInformationPressed = false;
+            isPublicationsPressed = true;
+          });
+
+          break;
+      }
+    }
+  }
   @override
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
@@ -72,31 +100,107 @@ class OBProfilePageState extends State<OBProfilePage> {
       _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    return Scaffold(
+      body:StreamBuilder(
+          initialData: widget.user,
+          stream: widget.user.updateSubject,
+          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+            User user = snapshot.data;
+            if (user == null) return const SizedBox();
 
-    return CupertinoPageScaffold(
-        backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBProfileNavBar(_user),
-        child: OBPrimaryColorContainer(
-          child: StreamBuilder(
-              initialData: widget.user,
-              stream: widget.user.updateSubject,
-              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-                User user = snapshot.data;
-                if (user == null) return const SizedBox();
+            if (_postsDisplayContext ==
+                OBPostDisplayContext.ownProfilePosts ||
+                user.visibility != UserVisibility.private ||
+                (user.isFollowing != null && user.isFollowing)) {
+              return _buildVisibleProfileContent();
+            }
 
-                if (_postsDisplayContext ==
-                        OBPostDisplayContext.ownProfilePosts ||
-                    user.visibility != UserVisibility.private ||
-                    (user.isFollowing != null && user.isFollowing)) {
-                  return _buildVisibleProfileContent();
-                }
+            // User is private and its not us
+            return _buildProtectedProfileContent();
+          }),
+    );
 
-                // User is private and its not us
-                return _buildProtectedProfileContent();
-              }),
-        ));
+  }
+  Column buildColumn({String title, String trailing}) {
+    final double height = MediaQuery.of(context).size.height;
+    return Column(
+      children: [
+        SizedBox(height: height * 0.014),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: TextStyle(
+                fontFamily: "Segoe UI",
+                fontWeight: FontWeight.w300,
+                fontSize: 13,
+                color: Color(0xffbbbbbb),
+              ),
+            ),
+            Text(
+              trailing,
+              style: TextStyle(
+                fontFamily: "Segoe UI",
+                fontWeight: FontWeight.w300,
+                fontSize: 16,
+                color: Color(0xff4d0cbb),
+              ),
+            )
+          ],
+        ),
+        Divider(
+          color: Color(0xff707070),
+          thickness: 1,
+        )
+      ],
+    );
   }
 
+  CustomPostContainer buildCustomPostContainer() {
+    final double height = MediaQuery.of(context).size.height;
+    return CustomPostContainer(
+      image: 'avatar',
+      commentsNumber: '256',
+      heartNumber: '428',
+      height: height * 0.357,
+      personName: 'Jerome Gaveau',
+      widget: Text(
+        "When one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us. ",
+        style: TextStyle(
+          height: height * 0.002,
+          fontFamily: "Segoe UI",
+          fontSize: 14,
+          color: Color(0xff78849e),
+        ),
+      ),
+    );
+  }
+
+  Text buildText(
+      {String label, double fontSize, int color, FontWeight fontWeight}) {
+    return Text(
+      label,
+      style: TextStyle(
+        fontFamily: "Segoe UI",
+        fontWeight: fontWeight != null ? fontWeight : null,
+        fontSize: fontSize,
+        color: Color(color),
+      ),
+    );
+  }
+
+  Container buildLineContainer() {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    return Container(
+      height: height * 0.036,
+      width: width * 0.004,
+      color: Color(0xff3b3b3b),
+    );
+  }
   Widget _buildVisibleProfileContent() {
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -201,7 +305,7 @@ class OBProfilePageState extends State<OBProfilePage> {
 
   List<Widget> _buildProfileContentDetails() {
     return [
-      OBProfileCover(_user),
+      //OBProfileCover(_user),
       OBProfileCard(
         _user,
         onUserProfileUpdated: _onUserProfileUpdated,

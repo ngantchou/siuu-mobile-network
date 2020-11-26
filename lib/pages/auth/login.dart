@@ -10,6 +10,7 @@ import 'package:Siuu/widgets/buttons/button.dart';
 import 'package:Siuu/widgets/buttons/success_button.dart';
 import 'package:Siuu/widgets/buttons/secondary_button.dart';
 import 'package:flutter/material.dart';
+import 'package:Siuu/res/colors.dart';
 
 class OBAuthLoginPage extends StatefulWidget {
   @override
@@ -89,10 +90,11 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
           color: Colors.transparent,
           elevation: 0.0,
           child: Padding(
-            padding: EdgeInsets.only(bottom: 20.0 + MediaQuery
-                .of(context)
-                .viewInsets
-                .bottom, top: 20.0, left: 20.0, right: 20.0),
+            padding: EdgeInsets.only(
+                bottom: 20.0 + MediaQuery.of(context).viewInsets.bottom,
+                top: 20.0,
+                left: 20.0,
+                right: 20.0),
             child: Row(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,7 +143,6 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   }
 
   Future<void> _login(BuildContext context) async {
-
     _setLoginInProgress(true);
     String username = _usernameController.text.trim();
     String password = _passwordController.text;
@@ -182,8 +183,8 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
   }
 
   Widget _buildForgotPasswordButton({@required BuildContext context}) {
-    String buttonText = _localizationService.trans(
-        'auth__login__forgot_password');
+    String buttonText =
+        _localizationService.trans('auth__login__forgot_password');
 
     return OBSecondaryButton(
       isFullWidth: true,
@@ -191,10 +192,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Text(
-            buttonText,
-            style: TextStyle(fontSize: 18.0),
-          )
+          CustomTextAuthScreens(buttonText),
         ],
       ),
       onPressed: () {
@@ -271,100 +269,105 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     String usernameInputLabel =
-    _localizationService.trans('auth__login__username_label');
+        _localizationService.trans('auth__login__username_label');
 
     String passwordInputLabel =
-    _localizationService.trans('auth__login__password_label');
+        _localizationService.trans('auth__login__password_label');
 
     EdgeInsetsGeometry inputContentPadding =
-    EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);
+        EdgeInsets.symmetric(vertical: 15.0, horizontal: 15.0);
 
     return Form(
         key: _formKey,
         child: Column(
           children: <Widget>[
-            CustomTextField(
-              hintText: 'NHLuong',
-              isPassword: false,
-            ),
-            SizedBox(height: height * 0.029),
-            CustomTextField(
-              isPassword: true,
-            ),
-            SizedBox(height: height * 0.073),
-            InkWell(
-              onTap: () {
-                Navigator.of(context).pushNamed('/BNB');
-              },
-              child: CustomButton(
-                label: 'Se Connecter',
-                height: height * 0.0658,
-                width: width * 0.680,
-                borderRadius: 45,
+            Container(
+              height: height * 0.070,
+              width: width * 0.678,
+              child: TextFormField(
+                cursorColor: Color(purpleColor),
+                textAlign: TextAlign.center,
+                onFieldSubmitted: (v) =>
+                    FocusScope.of(context).requestFocus(_passwordFocusNode),
+                decoration: InputDecoration(
+                  hintText: "Username",
+                  labelText: usernameInputLabel,
+                  hintStyle: TextStyle(
+                    fontFamily: "SF Pro Display",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    color: Color(0xff4d0cbb),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(48.0)),
+                    borderSide: BorderSide(
+                        width: width * 0.004, color: Color(greyishColor)),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(48.0)),
+                    borderSide: BorderSide(
+                        width: width * 0.004, color: Color(greyishColor)),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(48.0)),
+                    borderSide: BorderSide(
+                        width: width * 0.004, color: Color(greyishColor)),
+                  ),
+                ),
               ),
             ),
-            SizedBox(height: height * 0.043),
-            CustomTextAuthScreens('Vous avez oublié votre mot de passe ?'),
-            SizedBox(height: height * 0.043),
-            SizedBox(
-              child: Row(children: <Widget>[
-                new Expanded(
-                  child: DecoratedBox(
-                      decoration: BoxDecoration(
-                        color: Colors.transparent,
-                      ),
-                      child: Column(
-                        children: <Widget>[
-                          TextFormField(
-                            controller: _usernameController,
-                            validator: _validateUsername,
-                            decoration: InputDecoration(
-                                contentPadding: inputContentPadding,
-                                labelText: usernameInputLabel,
-                                border: OutlineInputBorder(),
-                                errorMaxLines: 3
-                            ),
-                            autocorrect: false,
-                            textInputAction: TextInputAction.next,
-                            onFieldSubmitted: (v) => FocusScope.of(context)
-                                .requestFocus(_passwordFocusNode),
-                          ),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          TextFormField(
-                            controller: _passwordController,
-                            focusNode: _passwordFocusNode,
-                            obscureText: !_passwordIsVisible,
-                            validator: _validatePassword,
-                            decoration: InputDecoration(
-                              suffixIcon: GestureDetector(
-                                child: Icon(_passwordIsVisible
-                                    ? Icons.visibility_off
-                                    : Icons.visibility),
-                                onTap: () {
-                                  _togglePasswordVisibility();
-                                },
-                              ),
-                              contentPadding: inputContentPadding,
-                              labelText: passwordInputLabel,
-                              border: OutlineInputBorder(),
-                            ),
-                            autocorrect: false,
-                            onFieldSubmitted: (v) => _submitForm(),
-                          ),
-                          const SizedBox(
-                            height: 20.0,
-                          ),
-                          Center(
-                              child: _buildForgotPasswordButton(
-                                  context: context)
-                          )
-                        ],
-                      )),
+            SizedBox(height: height * 0.029),
+            Container(
+              height: height * 0.070,
+              width: width * 0.678,
+              child: TextFormField(
+                controller: _passwordController,
+                focusNode: _passwordFocusNode,
+                obscureText: !_passwordIsVisible,
+                validator: _validatePassword,
+                cursorColor: Color(purpleColor),
+                textAlign: TextAlign.center,
+                decoration: InputDecoration(
+                  suffixIcon: GestureDetector(
+                    child: Icon(_passwordIsVisible
+                        ? Icons.visibility_off
+                        : Icons.visibility),
+                    onTap: () {
+                      _togglePasswordVisibility();
+                    },
+                  ),
+                  hintText: "Password",
+                  hintStyle: TextStyle(
+                    fontFamily: "SF Pro Display",
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    color: Color(0xff4d0cbb),
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(48.0)),
+                    borderSide: BorderSide(
+                        width: width * 0.004, color: Color(greyishColor)),
+                  ),
+                  disabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(48.0)),
+                    borderSide: BorderSide(
+                        width: width * 0.004, color: Color(greyishColor)),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(48.0)),
+                    borderSide: BorderSide(
+                        width: width * 0.004, color: Color(greyishColor)),
+                  ),
                 ),
-              ]),
+                autocorrect: false,
+                onFieldSubmitted: (v) => _submitForm(),
+              ),
             ),
+//            SizedBox(height: height * 0.043),
+            const SizedBox(
+              height: 20.0,
+            ),
+            Center(child: _buildForgotPasswordButton(context: context))
           ],
         ));
   }

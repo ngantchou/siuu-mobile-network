@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:Siuu/provider.dart';
+import 'package:Siuu/res/colors.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 class OBCover extends StatelessWidget {
   final String coverUrl;
@@ -24,7 +26,7 @@ class OBCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget image;
-
+    final double height = MediaQuery.of(context).size.height;
     double coverHeight;
 
     switch (size) {
@@ -86,7 +88,7 @@ class OBCover extends StatelessWidget {
       }
     }
 
-    return SizedBox(
+    /*return SizedBox(
       height: coverHeight,
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -97,6 +99,38 @@ class OBCover extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );*/
+    return Container(
+      decoration: coverFile==null ? BoxDecoration(
+        gradient: linearGradient,
+      ): BoxDecoration(
+      image: DecorationImage(image: NetworkImage(coverUrl)),
+      ),
+      height: height * 0.336,
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        child: Column(
+          children: [
+            Spacer(),
+            Row(
+              mainAxisAlignment:
+              MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      color: Colors.white,
+                    ),
+                    onPressed: null),
+                SvgPicture.asset('assets/svg/menu.svg'),
+              ],
+            ),
+            Spacer(
+              flex: 3,
+            ),
+          ],
+        ),
       ),
     );
   }

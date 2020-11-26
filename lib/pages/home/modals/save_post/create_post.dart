@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Siuu/custom/customAppBars/appBar2.dart';
 import 'package:Siuu/models/community.dart';
 import 'package:Siuu/models/link_preview/link_preview.dart';
 import 'package:Siuu/models/post.dart';
@@ -203,11 +204,28 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       bootstrap();
       _needsBootstrap = false;
     }
+    final double width = MediaQuery.of(context).size.width;
+    final double height = MediaQuery.of(context).size.height;
 
-    return CupertinoPageScaffold(
+    return Scaffold(
+        appBar: PreferredSize(
+          preferredSize: Size(width, height * 0.1755),
+          child: Appbar2(
+            title: 'Home',
+            trailing: Text(
+              "Share",
+              style: TextStyle(
+                fontFamily: "Segoe UI",
+                fontWeight: FontWeight.w300,
+                fontSize: 15,
+                color: Color(0xffffffff),
+              ),
+            ),
+          ),
+        ),
         backgroundColor: Colors.transparent,
-        navigationBar: _buildNavigationBar(_localizationService),
-        child: OBPrimaryColorContainer(
+        //navigationBar: _buildNavigationBar(_localizationService),
+        body: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
             Expanded(
@@ -332,24 +350,41 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   Widget _buildNewPostContent() {
+    final double width = MediaQuery.of(context).size.width;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Column(
-          children: <Widget>[
-            OBLoggedInUserAvatar(
-              size: OBAvatarSize.medium,
-            ),
-            const SizedBox(
-              height: 12.0,
-            ),
-            OBRemainingPostCharacters(
-              maxCharacters: ValidationService.POST_MAX_LENGTH,
-              currentCharacters: _charactersCount,
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.all(50.0),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  OBLoggedInUserAvatar(
+                    size: OBAvatarSize.medium,
+                  ),
+                  SizedBox(width: width * 0.024),
+                  Text(
+                    "Jerome Gaveau",
+                    style: TextStyle(
+                      fontFamily: "Segoe UI",
+                      fontSize: 17,
+                      color: Color(0xff454F63),
+                    ),
+                  )
+                ],
+              ),
+              Container(
+                child:OBRemainingPostCharacters(
+                  maxCharacters: ValidationService.POST_MAX_LENGTH,
+                  currentCharacters: _charactersCount,
+                ),
+              ),
+            ],
+          ),
         ),
+
         Expanded(
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
