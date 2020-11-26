@@ -11,6 +11,8 @@ class OBProfileCounts extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return StreamBuilder(
       stream: user.updateSubject,
       initialData: user,
@@ -19,7 +21,7 @@ class OBProfileCounts extends StatelessWidget {
 
         return Padding(
           padding: EdgeInsets.only(top: 20.0),
-          child: Row(
+          /*child: Row(
             children: <Widget>[
               Expanded(
                 child: SizedBox(
@@ -34,9 +36,36 @@ class OBProfileCounts extends StatelessWidget {
                 ),
               )
             ],
-          ),
+          ),*/
+          child: Row(
+                      children: [
+                        Spacer(
+                          flex: 2,
+                        ),
+OBUserPostsCount(user),
+                        Spacer(),
+                        buildLineContainer(width,height),
+                        Spacer(),
+OBProfileFollowersCount(user),
+                        Spacer(),
+                       buildLineContainer(width,height),
+                        Spacer(),
+OBProfileFollowingCount(user),
+                        Spacer(
+                          flex: 2,
+                        ),
+                      ],
+                    ),
         );
       },
+    );
+  }
+    Container buildLineContainer( double width, double height) {
+
+    return Container(
+      height: height * 0.036,
+      width: width * 0.004,
+      color: Color(0xff3b3b3b),
     );
   }
 }

@@ -61,7 +61,8 @@ class OBProfileAgeState extends State<OBProfileAge> {
       },
       child: Row(
         mainAxisSize: MainAxisSize.min,
-        crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
+            crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
         children: <Widget>[
           OBIcon(this._getIsUserBaby() ? OBIcons.Siuu_age_baby : OBIcons.Siuu_age_smile,
             customSize: 17.0,

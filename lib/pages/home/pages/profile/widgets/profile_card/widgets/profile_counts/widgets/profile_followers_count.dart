@@ -39,26 +39,20 @@ class OBProfileFollowersCount extends StatelessWidget {
                 navigationService.navigateToFollowersPage(context: context);
               }
             },
-            child: Row(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Flexible(
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: count,
+                    Text(count,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: themeValueParserService
-                                .parseColor(theme.primaryTextColor))),
-                    TextSpan(
-                        text: followersCount == 1 ? _localizationService.post__profile_counts_follower : _localizationService.post__profile_counts_followers,
+                                    fontFamily: "Segoe UI",
+                                    fontSize: 22,
+                            color: Color(0xff000000))),
+                    Text( followersCount == 1 ? _localizationService.post__profile_counts_follower : _localizationService.post__profile_counts_followers,
                         style: TextStyle(
-                            color: themeValueParserService
-                                .parseColor(theme.secondaryTextColor)))
-                  ])),
-                ),
+                                    fontFamily: "Segoe UI",
+                                    fontSize: 11,
+                            color: Color(0xffaeb5bc))),
                 const SizedBox(
                   width: 10,
                 )
@@ -67,4 +61,5 @@ class OBProfileFollowersCount extends StatelessWidget {
           );
         });
   }
+  
 }

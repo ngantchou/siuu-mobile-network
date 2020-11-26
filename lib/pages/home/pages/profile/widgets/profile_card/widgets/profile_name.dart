@@ -21,12 +21,14 @@ class OBProfileName extends StatelessWidget {
             height: 20.0,
           );
 
-        return OBText(
-          name,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-          style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-        );
+        return  Text(
+                      name,
+                      style: TextStyle(
+                        fontFamily: "Segoe UI",
+                        fontSize: 40,
+                        color: Color(0xff4d0cbb),
+                      ),
+                    );
       },
     );
   }

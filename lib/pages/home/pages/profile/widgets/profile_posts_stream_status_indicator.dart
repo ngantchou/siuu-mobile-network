@@ -42,6 +42,7 @@ class OBProfilePostsStreamStatusIndicator extends StatelessWidget {
         statusIndicator = OBRetryTile(
           text: provider.localizationService.post__profile_retry_loading_posts,
           onWantsToRetry: streamRefresher,
+          isLoading: false,
         );
         break;
       default:

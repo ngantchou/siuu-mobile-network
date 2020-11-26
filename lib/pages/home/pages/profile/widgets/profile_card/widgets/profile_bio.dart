@@ -22,6 +22,8 @@ class OBProfileBio extends StatelessWidget {
           padding: const EdgeInsets.only(top: 10),
           child: Row(
             mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
+            crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
             children: <Widget>[
               Flexible(
                 child: OBActionableSmartText(

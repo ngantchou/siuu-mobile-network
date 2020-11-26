@@ -1,8 +1,9 @@
 import 'dart:async';
 import 'dart:io';
-
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Siuu/models/push_notification.dart';
 import 'package:Siuu/pages/home/lib/poppable_page_controller.dart';
+import 'package:Siuu/screens/home/home.dart';
 import 'package:Siuu/services/intercom.dart';
 import 'package:Siuu/services/media/media.dart';
 import 'package:Siuu/services/push_notifications/push_notifications.dart';
@@ -30,6 +31,7 @@ import 'package:Siuu/widgets/icon.dart';
 import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:Siuu/res/colors.dart';
 
 class OBHomePage extends StatefulWidget {
   @override
@@ -38,8 +40,7 @@ class OBHomePage extends StatefulWidget {
   }
 }
 
-class OBHomePageState extends State<OBHomePage>
-    with WidgetsBindingObserver {
+class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
   UserService _userService;
   ToastService _toastService;
@@ -170,7 +171,42 @@ class OBHomePageState extends State<OBHomePage>
     return page;
   }
 
+  Widget buildBottomNavigationBarItem(
+      {String iconPath, int index, String title}) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+
+    return Container(
+      width: width * 0.170,
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.only(bottom: 5),
+            child: SvgPicture.asset(
+              iconPath,
+            ),
+          ),
+          title != null
+              ? FittedBox(
+                  child: Text(
+                    title,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      fontFamily: "Segoe UI",
+                      fontSize: 12,
+                      color: Color(0xff78849e),
+                    ),
+                  ),
+                )
+              : Container(),
+        ],
+      ),
+    );
+  }
+
   Widget _createTabBar() {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return OBCupertinoTabBar(
       backgroundColor: Colors.white,
       currentIndex: _currentIndex,
@@ -243,59 +279,73 @@ class OBHomePageState extends State<OBHomePage>
       items: [
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: const OBIcon(OBIcons.home),
-          activeIcon: const OBIcon(
-            OBIcons.home,
-            themeColor: OBIconThemeColor.primaryAccent,
-          ),
+          icon: buildBottomNavigationBarItem(
+              iconPath: "assets/svg/home.svg", index: 0, title: 'Accueil'),
+          activeIcon: buildBottomNavigationBarItem(
+              iconPath: "assets/svg/home.svg", index: 0, title: 'Accueil'),
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: const OBIcon(OBIcons.search),
-          activeIcon: const OBIcon(
-            OBIcons.search,
-            themeColor: OBIconThemeColor.primaryAccent,
-          ),
+          icon: buildBottomNavigationBarItem(
+              iconPath: "assets/svg/message.svg", index: 1, title: 'Message'),
+          activeIcon: buildBottomNavigationBarItem(
+              iconPath: "assets/svg/message.svg", index: 1, title: 'Message'),
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: const OBIcon(OBIcons.communities),
-          activeIcon: const OBIcon(
-            OBIcons.communities,
-            themeColor: OBIconThemeColor.primaryAccent,
+          icon: Container(
+            height: 50,
+            width: 50,
+            decoration:
+                BoxDecoration(color: Colors.redAccent, shape: BoxShape.circle),
           ),
-        ),
-        BottomNavigationBarItem(
-          title: const SizedBox(),
-          icon: Stack(
-            overflow: Overflow.visible,
-            children: <Widget>[
-              const OBIcon(OBIcons.notifications),
-              _loggedInUserUnreadNotifications != null
-                  && _loggedInUserUnreadNotifications > 0 ? Positioned(
-                      right: -8,
-                      child: OBBadge(
-                        size: 10,
+          activeIcon: Align(
+            alignment: Alignment.bottomCenter,
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: InkWell(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      child: Container(
+                        height: height * 0.102,
+                        width: width * 0.170,
+                        decoration: BoxDecoration(
+                            gradient: linearGradient, shape: BoxShape.circle),
+                        child: Center(
+                          child:
+                              SvgPicture.asset('assets/svg/lightningIcon.svg'),
+                        ),
                       ),
-                    )
-                  : const SizedBox()
-            ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
+        ),
+        BottomNavigationBarItem(
+          title: const SizedBox(),
+          icon: buildBottomNavigationBarItem(
+              iconPath: "assets/svg/memories.svg", index: 2, title: 'Memories'),
           activeIcon: const OBIcon(
             OBIcons.notifications,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
         ),
         BottomNavigationBarItem(
-            title: const SizedBox(),
-            icon: OBAvatar(
-              avatarUrl: _loggedInUserAvatarUrl,
-              size: OBAvatarSize.extraSmall,
-            ),
-            activeIcon: OBOwnProfileActiveIcon(
-              avatarUrl: _loggedInUserAvatarUrl,
-              size: OBAvatarSize.extraSmall,
-            )),
+          title: const SizedBox(),
+          icon: buildBottomNavigationBarItem(
+              iconPath: "assets/svg/notification.svg",
+              index: 3,
+              title: 'Notifications'),
+          activeIcon: buildBottomNavigationBarItem(
+              iconPath: "assets/svg/notification.svg",
+              index: 3,
+              title: 'Notifications'),
+        ),
         BottomNavigationBarItem(
           title: const SizedBox(),
           icon: const OBIcon(OBIcons.menu),
@@ -408,7 +458,8 @@ class OBHomePageState extends State<OBHomePage>
         _modalService.openAcceptGuidelines(context: context);
       }
 
-      if (newUser.language == null || !supportedLanguages.contains(newUser.language.code)) {
+      if (newUser.language == null ||
+          !supportedLanguages.contains(newUser.language.code)) {
         _userService.setLanguageFromDefaults();
       }
       _userService.checkAndClearTempDirectories();

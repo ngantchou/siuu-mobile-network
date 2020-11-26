@@ -31,30 +31,22 @@ class OBPostsCount extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
           var theme = snapshot.data;
 
-          return Row(
+          return Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Flexible(
-                child: RichText(
-                    text: TextSpan(children: [
-                  TextSpan(
-                      text: count,
+                  Text(count,
                       style: TextStyle(
-                        fontSize: fontSize,
-                          fontWeight: FontWeight.bold,
-                          color: color ?? themeValueParserService
-                              .parseColor(theme.primaryTextColor))),
-                  TextSpan(
-                      text: postsCount == 1
+                                    fontFamily: "Segoe UI",
+                                    fontSize: 22,
+                            color: Color(0xff000000))),
+                  Text( postsCount == 1
                           ? _localizationService.post__profile_counts_post
                           : _localizationService.post__profile_counts_posts,
                       style: TextStyle(
-                          fontSize: fontSize,
-                          color: color ?? themeValueParserService
-                              .parseColor(theme.secondaryTextColor)))
-                ])),
-              ),
+                                    fontFamily: "Segoe UI",
+                                    fontSize: 11,
+                            color: Color(0xffaeb5bc))),
               const SizedBox(
                 width: 10,
               )

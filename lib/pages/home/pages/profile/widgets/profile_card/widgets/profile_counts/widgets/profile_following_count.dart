@@ -37,27 +37,21 @@ class OBProfileFollowingCount extends StatelessWidget {
                 navigationService.navigateToFollowingPage(context: context);
               }
             },
-            child: Row(
+            child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Flexible(
-                  child: RichText(
-                      text: TextSpan(children: [
-                    TextSpan(
-                        text: count,
+                    Text(count,
                         style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            color: themeValueParserService
-                                .parseColor(theme.primaryTextColor))),
-                    TextSpan(
-                        text: localizationService.post__profile_counts_following,
+                                    fontFamily: "Segoe UI",
+                                    fontSize: 22,
+                            color: Color(0xff000000))),
+                    Text( localizationService.post__profile_counts_following,
                         style: TextStyle(
-                            color: themeValueParserService
-                                .parseColor(theme.secondaryTextColor)))
-                  ])),
-                ),
-                const SizedBox(
+                                    fontFamily: "Segoe UI",
+                                    fontSize: 11,
+                            color: Color(0xffaeb5bc))),
+                SizedBox(
                   width: 10,
                 )
               ],

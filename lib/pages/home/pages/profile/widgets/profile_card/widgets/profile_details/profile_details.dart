@@ -28,7 +28,8 @@ class OBProfileDetails extends StatelessWidget {
         return Padding(
             padding: EdgeInsets.only(top: 20),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center, //Center Row contents horizontally,
+              crossAxisAlignment: CrossAxisAlignment.center, //Center Row contents vertically,
               children: <Widget>[
                 Expanded(
                   child: SizedBox(
