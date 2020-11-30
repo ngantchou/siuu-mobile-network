@@ -181,7 +181,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
       child: Column(
         children: [
           Padding(
-            padding: EdgeInsets.only(bottom: 5),
+            padding: EdgeInsets.only(bottom: 3),
             child: SvgPicture.asset(
               iconPath,
             ),
@@ -293,11 +293,31 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: Container(
-            height: 50,
-            width: 50,
-            decoration:
-                BoxDecoration(color: Colors.redAccent, shape: BoxShape.circle),
+          icon: Align(
+            alignment: Alignment.bottomCenter,
+            child: Stack(
+              children: [
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: InkWell(
+                    onTap: () {},
+                    child: Padding(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      child: Container(
+                        height: height * 0.102,
+                        width: width * 0.170,
+                        decoration: BoxDecoration(
+                            gradient: linearGradient, shape: BoxShape.circle),
+                        child: Center(
+                          child:
+                              SvgPicture.asset('assets/svg/lightningIcon.svg'),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
           activeIcon: Align(
             alignment: Alignment.bottomCenter,
@@ -346,14 +366,14 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
               index: 3,
               title: 'Notifications'),
         ),
-        BottomNavigationBarItem(
+        /*BottomNavigationBarItem(
           title: const SizedBox(),
           icon: const OBIcon(OBIcons.menu),
           activeIcon: const OBIcon(
             OBIcons.menu,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
-        ),
+        ),*/
       ],
     );
   }

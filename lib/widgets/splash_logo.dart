@@ -10,7 +10,7 @@ class OBSplashLogo extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
         Image.asset(
-          'assets/images/openbook-o-logo.png',
+          'assets/images/Siu.png',
           height: 50.0,
           width: 35.0,
         ),
@@ -25,11 +25,10 @@ class OBSplashLogo extends StatelessWidget {
         Padding(
           padding: EdgeInsets.only(top: 10),
           child: Text('Siuu',
-              style: TextStyle(
-                  fontSize: 38.0,
-                  fontFamily: 'CogogooseProSemilight'
-                //color: Colors.white
-              )),
+              style:
+                  TextStyle(fontSize: 38.0, fontFamily: 'CogogooseProSemilight'
+                      //color: Colors.white
+                      )),
         ),
       ],
     );

@@ -285,13 +285,13 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
               height: height * 0.070,
               width: width * 0.678,
               child: TextFormField(
+                controller: _usernameController,
                 cursorColor: Color(purpleColor),
                 textAlign: TextAlign.center,
                 onFieldSubmitted: (v) =>
                     FocusScope.of(context).requestFocus(_passwordFocusNode),
                 decoration: InputDecoration(
                   hintText: "Username",
-                  labelText: usernameInputLabel,
                   hintStyle: TextStyle(
                     fontFamily: "SF Pro Display",
                     fontWeight: FontWeight.w600,

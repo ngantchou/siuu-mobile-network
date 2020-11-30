@@ -48,7 +48,8 @@ class OBSharePostPageState extends State<OBSharePostPage> {
       _bootstrap();
       _needsBootstrap = false;
     }
-
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     User loggedInUser = _userService.getLoggedInUser();
 
     return OBCupertinoPageScaffold(
@@ -98,6 +99,9 @@ class OBSharePostPageState extends State<OBSharePostPage> {
 
               return Column(
                 children: <Widget>[
+                  Container(
+                    height: height * 0.058,
+                  ),
                   Expanded(
                       child: ListView(
                           physics: const ClampingScrollPhysics(),

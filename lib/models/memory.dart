@@ -55,11 +55,12 @@ class Post extends UpdatableModel<Post> {
   bool isEdited;
   bool isClosed;
   bool isReported;
+  bool isView;
 
   // stored only in the app
   bool isExcludedFromTopPosts = false;
   bool isExcludedFromProfilePosts = false;
-  bool isView = false;
+
   // Stored as cache
   LinkPreview linkPreview;
 
@@ -111,7 +112,8 @@ class Post extends UpdatableModel<Post> {
       'is_encircled': isEncircled,
       'is_edited': isEdited,
       'is_closed': isClosed,
-      'is_reported': isReported
+      'is_reported': isReported,
+      'is_view': isView
     };
   }
 
@@ -147,7 +149,8 @@ class Post extends UpdatableModel<Post> {
       this.isEncircled,
       this.isClosed,
       this.isReported,
-      this.isEdited})
+      this.isEdited,
+      this.isView})
       : super() {
     this._updateHashtagsMap();
   }
@@ -196,6 +199,8 @@ class Post extends UpdatableModel<Post> {
     if (json.containsKey('is_closed')) isClosed = json['is_closed'];
 
     if (json.containsKey('is_reported')) isReported = json['is_reported'];
+
+    if (json.containsKey('is_view')) isView = json['is_view'];
 
     if (json.containsKey('media_thumbnail'))
       mediaThumbnail = json['media_thumbnail'];
@@ -478,6 +483,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         isEncircled: json['is_encircled'],
         isEdited: json['is_edited'],
         isClosed: json['is_closed'],
+        isView: json['is_View'],
         reactionsEmojiCounts:
             parseReactionsEmojiCounts(json['reactions_emoji_counts']));
   }

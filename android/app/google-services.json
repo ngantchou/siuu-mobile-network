@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "249207575665",
+    "firebase_url": "https://siuu-289207.firebaseio.com",
+    "project_id": "siuu-289207",
+    "storage_bucket": "siuu-289207.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249207575665:android:241f19fc9c5f2f566a77d0",
+        "android_client_info": {
+          "package_name": "social.siuu.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "249207575665-0639llf1alq7s516hr7q5c72bcitipec.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "social.siuu.app",
+            "certificate_hash": "acc4b7cc9abfb72102b4f6e95e233b0679040288"
+          }
+        },
+        {
+          "client_id": "249207575665-fsgokqo7n3734ks0naopbq3cftuqo23f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBWAXJtd4-Nb2i5H7gPr7NYflD8Ncu9o-M"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249207575665-fsgokqo7n3734ks0naopbq3cftuqo23f.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

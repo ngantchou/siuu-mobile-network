@@ -207,27 +207,33 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     final double width = MediaQuery.of(context).size.width;
     final double height = MediaQuery.of(context).size.height;
 
+    bool isPrimaryActionButtonIsEnabled =
+        (_isPostTextAllowedLength && _charactersCount > 0) ||
+            _hasImage ||
+            _hasVideo;
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size(width, height * 0.1755),
           child: Appbar2(
-            title: 'Home',
-            trailing: Text(
-              "Share",
-              style: TextStyle(
-                fontFamily: "Segoe UI",
-                fontWeight: FontWeight.w300,
-                fontSize: 15,
-                color: Color(0xffffffff),
-              ),
-            ),
+            close: () {
+              if (this._postImageFile != null) this._postImageFile.delete();
+              if (this._postVideoFile != null)
+                _mediaService.clearThumbnailForFile(this._postVideoFile);
+              if (this._postVideoFile != null) this._postVideoFile.delete();
+              Navigator.pop(context);
+            },
+            title: _isEditingPost
+                ? _localizationService.post__edit_title
+                : _localizationService.trans('post__create_new'),
+            trailing: _buildPrimaryActionButton(
+                isEnabled: isPrimaryActionButtonIsEnabled),
           ),
         ),
         backgroundColor: Colors.transparent,
-        //navigationBar: _buildNavigationBar(_localizationService),
         body: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
+            // _buildNavigationBar(_localizationService),
             Expanded(
                 flex: isAutocompleting ? 3 : 1,
                 child: Padding(
@@ -302,12 +308,26 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       if (isEnabled) {
         nextButton = GestureDetector(
           onTap: _onWantsToGoNext,
-          child: OBText(_localizationService.trans('post__create_next')),
+          child: Text(
+            _localizationService.trans('post__create_next'),
+            style: TextStyle(
+              fontFamily: "Segoe UI",
+              fontSize: 19,
+              color: Color(0xffffffff),
+            ),
+          ),
         );
       } else {
         nextButton = Opacity(
           opacity: 0.5,
-          child: OBText(_localizationService.trans('post__create_next')),
+          child: Text(
+            _localizationService.trans('post__create_next'),
+            style: TextStyle(
+              fontFamily: "Segoe UI",
+              fontSize: 19,
+              color: Color(0xffffffff),
+            ),
+          ),
         );
       }
     }
@@ -366,7 +386,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
                   ),
                   SizedBox(width: width * 0.024),
                   Text(
-                    "Jerome Gaveau",
+                    _userService.getLoggedInUser().username,
                     style: TextStyle(
                       fontFamily: "Segoe UI",
                       fontSize: 17,
@@ -376,7 +396,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
                 ],
               ),
               Container(
-                child:OBRemainingPostCharacters(
+                child: OBRemainingPostCharacters(
                   maxCharacters: ValidationService.POST_MAX_LENGTH,
                   currentCharacters: _charactersCount,
                 ),
@@ -384,7 +404,6 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
             ],
           ),
         ),
-
         Expanded(
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),

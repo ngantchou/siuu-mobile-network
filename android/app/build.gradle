@@ -50,7 +50,7 @@ android {
     lintOptions {
         disable 'InvalidPackage'
     }
-
+    ndkVersion '22.0.6917172-rc1'
     compileOptions {
         sourceCompatibility 1.8
         targetCompatibility 1.8
@@ -91,3 +91,4 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]'
 }
+apply plugin: 'com.google.gms.google-services'

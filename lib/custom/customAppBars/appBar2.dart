@@ -4,7 +4,8 @@ import 'package:Siuu/res/colors.dart';
 class Appbar2 extends StatelessWidget {
   final String title;
   final Widget trailing;
-  Appbar2({this.title, this.trailing});
+  final VoidCallback close;
+  Appbar2({this.title, this.trailing, this.close});
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -25,7 +26,7 @@ class Appbar2 extends StatelessWidget {
                 children: [
                   IconButton(
                       icon: Icon(Icons.arrow_back_ios, color: Colors.white),
-                      onPressed: null),
+                      onPressed: close),
                   Text(
                     title,
                     style: TextStyle(

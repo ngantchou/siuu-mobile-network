@@ -7,6 +7,7 @@ import 'package:Siuu/pages/auth/create_account/done_step/done_step.dart';
 import 'package:Siuu/pages/auth/create_account/email_step.dart';
 import 'package:Siuu/pages/auth/create_account/suggested_communities/suggested_communities.dart';
 import 'package:Siuu/pages/auth/create_account/username_step.dart';
+import 'package:Siuu/pages/auth/otp_screen.dart';
 import 'package:Siuu/pages/auth/reset_password/forgot_password_step.dart';
 import 'package:Siuu/pages/auth/create_account/get_started.dart';
 import 'package:Siuu/pages/auth/create_account/legal_step.dart';
@@ -26,6 +27,7 @@ import 'package:Siuu/services/localization.dart';
 import 'package:Siuu/services/universal_links/universal_links.dart';
 import 'package:Siuu/widgets/toast.dart';
 import 'package:Siuu/translation/constants.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter\_localizations/flutter\_localizations.dart';
@@ -146,6 +148,10 @@ class _MyAppState extends State<MyApp> {
                 bootstrapOpenbookProviderInContext(context);
                 return OBHomePage();
               },
+              '/intro': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return OBHomePage();
+              },
               '/auth': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
                 return OBAuthSplashPage();
@@ -157,6 +163,10 @@ class _MyAppState extends State<MyApp> {
               '/auth/get-started': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
                 return OBAuthGetStartedPage();
+              },
+              '/auth/phone-verification': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return OtpScreen();
               },
               '/auth/legal_step': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
@@ -250,7 +260,8 @@ class _MyAppState extends State<MyApp> {
 
 Future<Null> main() async {
   MyApp app = MyApp();
-
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 // Run the whole app in a zone to capture all uncaught errors.
   runZonedGuarded(() => runApp(app), (Object error, StackTrace stackTrace) {
     if (isInDebugMode) {

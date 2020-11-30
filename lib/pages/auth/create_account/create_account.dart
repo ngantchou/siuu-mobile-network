@@ -1,5 +1,7 @@
+import 'package:Siuu/auth/OTPVerificationScreen.dart';
 import 'package:Siuu/provider.dart';
 import 'package:Siuu/pages/auth/create_account/blocs/create_account.dart';
+import 'package:Siuu/services/auth_api.dart';
 import 'package:Siuu/services/httpie.dart';
 import 'package:Siuu/services/localization.dart';
 import 'package:Siuu/services/toast.dart';
@@ -8,8 +10,11 @@ import 'package:Siuu/widgets/buttons/button.dart';
 import 'package:Siuu/widgets/buttons/success_button.dart';
 import 'package:Siuu/widgets/buttons/secondary_button.dart';
 import 'package:Siuu/pages/auth/create_account/widgets/auth_text_field.dart';
+import 'package:Siuu/widgets/country_picker.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
+import 'package:flutter/services.dart';
 
 class OBAuthCreateAccountPage extends StatefulWidget {
   @override
@@ -25,6 +30,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
   LocalizationService _localizationService;
   ValidationService _validationService;
   ToastService _toastService;
+  AuthApiService _authApiService;
 
   TextEditingController _linkController = TextEditingController();
 
@@ -55,6 +61,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
     _validationService = openbookProvider.validationService;
     _createAccountBloc = openbookProvider.createAccountBloc;
     _toastService = openbookProvider.toastService;
+    _authApiService = openbookProvider.authApiService;
 
     return Scaffold(
       body: Center(
@@ -63,17 +70,19 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
                 padding: EdgeInsets.symmetric(horizontal: 40.0),
                 child: Column(
                   children: <Widget>[
-                    _buildPasteRegisterLink(context: context),
+                    _buildFormField(context),
+                    //OTPVerificationScreen(),
+                    /*_buildPasteRegisterLink(context: context),
                     const SizedBox(
                       height: 20.0,
                     ),
-                    _buildLinkForm(),
+                    _buildLinkForm(),*/
                     const SizedBox(height: 20.0),
                     _buildRequestInvite(context: context)
                   ],
                 ))),
       ),
-      backgroundColor: Colors.indigoAccent,
+      //backgroundColor: Colors.indigoAccent,
       bottomNavigationBar: BottomAppBar(
         color: Colors.transparent,
         elevation: 0.0,
@@ -98,13 +107,8 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
     );
   }
 
-  Future<bool> _validateForm() async {
-    if (_formKey.currentState.validate()) {
-      bool tokenIsValid = await _validateToken();
-      if (!tokenIsValid) _setTokenIsInvalid(true);
-      return tokenIsValid;
-    }
-    return false;
+  bool _validateForm() {
+    return _formKey.currentState.validate();
   }
 
   void onPressedNextStep(BuildContext context) async {
@@ -112,10 +116,14 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
 
     if (isFormValid) {
       setState(() {
-        var token = _getTokenFromLink(_linkController.text.trim());
-        _createAccountBloc.setToken(token);
-        Navigator.pushNamed(context, '/auth/get-started');
+        //var token = _getTokenFromLink(_linkController.text.trim());
+        _createAccountBloc
+            .setPhone('$_dialCode${_contactEditingController.text}');
       });
+      print('$_dialCode${_contactEditingController.text}');
+      await _authApiService
+          .sendVerificationCode('$_dialCode${_contactEditingController.text}');
+      Navigator.pushNamed(context, '/auth/phone-verification');
     }
   }
 
@@ -129,6 +137,175 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
       token = uri.split('?token=')[1];
     }
     return token;
+  }
+
+  final _contactEditingController = TextEditingController();
+  var _dialCode = '';
+
+  //Login click with contact number validation
+  Future<void> clickOnLogin(BuildContext context) async {
+    if (_contactEditingController.text.isEmpty) {
+      showErrorDialog(context, 'Contact number can\'t be empty.');
+    } else {
+      final responseMessage = await Navigator.pushNamed(context, '/otpScreen',
+          arguments: '$_dialCode${_contactEditingController.text}');
+      if (responseMessage != null) {
+        showErrorDialog(context, responseMessage as String);
+      }
+    }
+  }
+
+  //callback function of country picker
+  void _callBackFunction(String name, String dialCode, String flag) {
+    _dialCode = dialCode;
+  }
+
+  //Alert dialogue to show error and response
+  void showErrorDialog(BuildContext context, String message) {
+    // set up the AlertDialog
+    final CupertinoAlertDialog alert = CupertinoAlertDialog(
+      title: const Text('Error'),
+      content: Text('\n$message'),
+      actions: <Widget>[
+        CupertinoDialogAction(
+          isDefaultAction: true,
+          child: const Text('Yes'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        )
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  Widget _buildFormField(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
+    return Center(
+      child: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
+          width: double.infinity,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: screenHeight * 0.02,
+              ),
+              Image.asset(
+                'assets/images/Siu.png',
+                width: screenWidth * 0.7,
+                fit: BoxFit.contain,
+              ),
+              SizedBox(
+                height: screenHeight * 0.02,
+              ),
+              const Text(
+                'Login',
+                style: TextStyle(fontSize: 28, color: Colors.black),
+              ),
+              SizedBox(
+                height: screenHeight * 0.02,
+              ),
+              const Text(
+                'Enter your mobile number to receive a verification code',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black,
+                ),
+              ),
+              SizedBox(
+                height: screenHeight * 0.04,
+              ),
+              Container(
+                margin: EdgeInsets.symmetric(
+                    horizontal: screenWidth > 600 ? screenWidth * 0.2 : 16),
+                padding: const EdgeInsets.all(16.0),
+                decoration: BoxDecoration(
+                    color: Colors.white,
+                    // ignore: prefer_const_literals_to_create_immutables
+                    boxShadow: [
+                      const BoxShadow(
+                        color: Colors.grey,
+                        offset: Offset(0.0, 1.0), //(x,y)
+                        blurRadius: 6.0,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(16.0)),
+                child: Column(
+                  children: [
+                    Form(
+                        key: _formKey,
+                        child: Container(
+                          margin: const EdgeInsets.all(8),
+                          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                          height: 45,
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: const Color.fromARGB(255, 253, 188, 51),
+                            ),
+                            borderRadius: BorderRadius.circular(36),
+                          ),
+                          child: Row(
+                            // ignore: prefer_const_literals_to_create_immutables
+                            children: [
+                              CountryPicker(
+                                callBackFunction: _callBackFunction,
+                                headerText: 'Select Country',
+                                headerBackgroundColor:
+                                    Theme.of(context).primaryColor,
+                                headerTextColor: Colors.white,
+                              ),
+                              SizedBox(
+                                width: screenWidth * 0.01,
+                              ),
+                              Expanded(
+                                child: TextFormField(
+                                  decoration: const InputDecoration(
+                                    hintText: 'Contact Number',
+                                    border: InputBorder.none,
+                                    enabledBorder: InputBorder.none,
+                                    focusedBorder: InputBorder.none,
+                                    contentPadding:
+                                        EdgeInsets.symmetric(vertical: 13.5),
+                                  ),
+                                  validator: (String phone) {
+                                    String validatephone = _validationService
+                                        .validateUserProfileName(phone);
+                                    if (validatephone != null)
+                                      return validatephone;
+                                  },
+                                  controller: _contactEditingController,
+                                  keyboardType: TextInputType.number,
+                                  inputFormatters: [
+                                    LengthLimitingTextInputFormatter(10)
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        )),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    // CustomButton(clickOnLogin),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 
   Widget _buildNextButton(BuildContext context) {
@@ -156,14 +333,14 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
         children: <Widget>[
           Icon(
             Icons.arrow_back_ios,
-            color: Colors.white,
+            color: Colors.black,
           ),
           const SizedBox(
             width: 10.0,
           ),
           Text(
             buttonText,
-            style: TextStyle(fontSize: 18.0, color: Colors.white),
+            style: TextStyle(fontSize: 18.0, color: Colors.black),
           )
         ],
       ),
@@ -239,7 +416,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
         children: <Widget>[
           Text(
             requestInviteText,
-            style: TextStyle(fontSize: 18.0, color: Colors.white),
+            style: TextStyle(fontSize: 18.0, color: Colors.black),
           )
         ],
       ),

@@ -23,6 +23,7 @@ class CreateAccountBloc {
   final _passwordSubject = BehaviorSubject<String>();
   final _avatarSubject = BehaviorSubject<File>();
   final _usernameSubject = BehaviorSubject<String>();
+  final _phoneSubject = BehaviorSubject<String>();
   final registrationTokenSubject = BehaviorSubject<String>();
   final _passwordResetTokenSubject = BehaviorSubject<String>();
 
@@ -51,6 +52,7 @@ class CreateAccountBloc {
     _emailSubject.stream.listen(_onEmailChange);
     _passwordSubject.listen(_onPasswordChange);
     _avatarSubject.listen(_onAvatarChange);
+    _phoneSubject.listen(_onPhoneChange);
     registrationTokenSubject.listen(_onTokenChange);
     _passwordResetTokenSubject.listen(_onPasswordResetTokenChange);
   }
@@ -62,6 +64,7 @@ class CreateAccountBloc {
     _passwordSubject.close();
     _avatarSubject.close();
     _usernameSubject.close();
+    _phoneSubject.close();
     _passwordResetTokenSubject.close();
     registrationTokenSubject.close();
   }
@@ -125,8 +128,29 @@ class CreateAccountBloc {
   void _clearName() {
     userRegistrationData.name = null;
   }
+  // phone begins
 
-  // Name ends
+  bool hasPhone() {
+    return userRegistrationData.phone != null;
+  }
+
+  String getPhone() {
+    return userRegistrationData.phone;
+  }
+
+  void setPhone(String phone) {
+    _phoneSubject.add(phone);
+  }
+
+  void _onPhoneChange(String phone) {
+    if (phone == null) return;
+    userRegistrationData.phone = phone;
+  }
+
+  void _clearPhone() {
+    userRegistrationData.phone = null;
+  }
+  // Phone ends
 
   // Username begins
 
@@ -293,6 +317,7 @@ class CreateAccountBloc {
           token: userRegistrationData.token,
           password: userRegistrationData.password,
           areGuidelinesAccepted: true,
+          phone: userRegistrationData.phone,
           avatar: userRegistrationData.avatar);
 
       if (!response.isCreated()) throw HttpieRequestError(response);
@@ -337,6 +362,7 @@ class CreateAccountBloc {
     _clearName();
     _clearEmail();
     _clearAvatar();
+    _clearPhone();
     _clearPassword();
     _clearToken();
     _clearPasswordResetTokenToken();
@@ -350,6 +376,7 @@ class UserRegistrationData {
   bool areGuidelinesAccepted;
   String username;
   String email;
+  String phone;
   String password;
   File avatar;
 }

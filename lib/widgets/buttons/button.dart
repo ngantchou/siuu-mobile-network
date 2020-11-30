@@ -1,5 +1,6 @@
 import 'package:Siuu/models/theme.dart';
 import 'package:Siuu/provider.dart';
+import 'package:Siuu/res/colors.dart';
 import 'package:Siuu/services/theme_value_parser.dart';
 import 'package:flutter/material.dart';
 
@@ -141,7 +142,8 @@ class OBButton extends StatelessWidget {
             themeValueParser.parseGradient(theme.primaryAccentColor);
         break;
       case OBButtonType.success:
-        buttonGradient = themeValueParser.parseGradient(theme.successColor);
+        buttonGradient = linearGradient;
+       /* buttonGradient = themeValueParser.parseGradient(theme.successColor);*/
         break;
       case OBButtonType.highlight:
         Color primaryColor = themeValueParser.parseColor(theme.primaryColor);

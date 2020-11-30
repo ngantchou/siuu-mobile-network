@@ -3,13 +3,16 @@ import 'dart:io';
 import 'package:Siuu/models/language.dart';
 import 'package:Siuu/services/httpie.dart';
 import 'package:Siuu/services/string_template.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
 class AuthApiService {
   HttpieService _httpService;
   StringTemplateService _stringTemplateService;
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
   String apiURL;
+  String verificationId;
 
   static const CHECK_USERNAME_PATH = 'api/auth/username-check/';
   static const CHECK_EMAIL_PATH = 'api/auth/email-check/';
@@ -30,7 +33,8 @@ class AuthApiService {
   static const SEARCH_LINKED_USERS_PATH = 'api/auth/linked-users/search/';
   static const GET_BLOCKED_USERS_PATH = 'api/auth/blocked-users/';
   static const SEARCH_BLOCKED_USERS_PATH = 'api/auth/blocked-users/search/';
-  static const ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH = 'api/auth/users/{userUsername}/notifications/subscribe/new-post/';
+  static const ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH =
+      'api/auth/users/{userUsername}/notifications/subscribe/new-post/';
   static const BLOCK_USER_PATH = 'api/auth/users/{userUsername}/block/';
   static const UNBLOCK_USER_PATH = 'api/auth/users/{userUsername}/unblock/';
   static const GET_FOLLOWERS_PATH = 'api/auth/followers/';
@@ -148,6 +152,7 @@ class AuthApiService {
       @required String token,
       @required String name,
       @required String username,
+      @required String phone,
       @required bool isOfLegalAge,
       @required bool areGuidelinesAccepted,
       @required String password,
@@ -157,6 +162,7 @@ class AuthApiService {
       'token': token,
       'name': name,
       'username': username,
+      'phone': phone,
       'is_of_legal_age': isOfLegalAge,
       'are_guidelines_accepted': areGuidelinesAccepted,
       'password': password
@@ -170,12 +176,36 @@ class AuthApiService {
         body: body);
   }
 
-  Future<HttpieResponse> verifyRegisterToken(
-      {@required String token}) {
+  Future<HttpieResponse> verifyRegisterToken({@required String token}) {
     Map<String, dynamic> body = {'token': token};
 
-    return _httpService.post('$apiURL$VERIFY_REGISTER_TOKEN',
-        body: body);
+    return _httpService.post('$apiURL$VERIFY_REGISTER_TOKEN', body: body);
+  }
+
+  Future<void> sendVerificationCode(String phone) async {
+    final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
+      verificationId = verId;
+    };
+    //print("phone to verify is $phone");
+    try {
+      await _auth.verifyPhoneNumber(
+          phoneNumber: phone,
+          codeAutoRetrievalTimeout: (String verId) {
+            verificationId = verId;
+          },
+          codeSent: smsOTPSent,
+          timeout: const Duration(seconds: 60),
+          verificationCompleted: (AuthCredential phoneAuthCredential) {
+            print("phone to verify is succes");
+          },
+          verificationFailed: (FirebaseAuthException exception) {
+            // Navigator.pop(context, exception.message);
+            print("phone to verify error");
+          });
+    } catch (e) {
+      //handleError(e as PlatformException);
+      print("erreur de génération du code $e");
+    }
   }
 
   Future<HttpieResponse> getUserWithAuthToken(String authToken) {
@@ -270,14 +300,20 @@ class AuthApiService {
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> enableNewPostNotificationsForUserWithUsername(String userUsername) {
-    String path = _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
-    return _httpService.putJSON(_makeApiUrl(path), appendAuthorizationToken: true);
+  Future<HttpieResponse> enableNewPostNotificationsForUserWithUsername(
+      String userUsername) {
+    String path =
+        _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
+    return _httpService.putJSON(_makeApiUrl(path),
+        appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> disableNewPostNotificationsForUserWithUsername(String userUsername) {
-    String path = _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
-    return _httpService.delete(_makeApiUrl(path), appendAuthorizationToken: true);
+  Future<HttpieResponse> disableNewPostNotificationsForUserWithUsername(
+      String userUsername) {
+    String path =
+        _makeEnableNewPostNotificationsForUserWithUsernamePath(userUsername);
+    return _httpService.delete(_makeApiUrl(path),
+        appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> searchFollowers({@required String query, int count}) {
@@ -329,7 +365,6 @@ class AuthApiService {
 
   Future<HttpieResponse> loginWithCredentials(
       {@required String username, @required String password}) {
-
     return this._httpService.postJSON('$apiURL$LOGIN_PATH',
         body: {'username': username, 'password': password});
   }
@@ -401,7 +436,8 @@ class AuthApiService {
       body['follow_request_notifications'] = followRequestNotifications;
 
     if (followRequestApprovedNotifications != null)
-      body['follow_request_approved_notifications'] = followRequestApprovedNotifications;
+      body['follow_request_approved_notifications'] =
+          followRequestApprovedNotifications;
 
     if (connectionRequestNotifications != null)
       body['connection_request_notifications'] = connectionRequestNotifications;
@@ -468,9 +504,11 @@ class AuthApiService {
         .parse(UNBLOCK_USER_PATH, {'userUsername': username});
   }
 
-  String _makeEnableNewPostNotificationsForUserWithUsernamePath(String username) {
-    return _stringTemplateService
-        .parse(ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH, {'userUsername': username});
+  String _makeEnableNewPostNotificationsForUserWithUsernamePath(
+      String username) {
+    return _stringTemplateService.parse(
+        ENABLE_NEW_POST_NOTIFICATIONS_FOR_USER_PATH,
+        {'userUsername': username});
   }
 
   String _makeReportUserPath({@required username}) {

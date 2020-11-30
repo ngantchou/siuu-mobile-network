@@ -83,7 +83,8 @@ dependencies:
   auto_size_text: ^2.1.0
   sleek_circular_slider: ^1.2.0+web
   pin_entry_text_field: ^0.1.4
-  firebase_auth: ^0.15.4
+  firebase_core: ^0.5.1
+  firebase_auth: ^0.18.2
   flutter:
     sdk: flutter
   flutter_localizations:
@@ -180,6 +181,7 @@ flutter:
     - assets/images/
     - assets/svg/
     - assets/map_style.json
+    - assets/countrycodes.json
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.io/assets-and-images/#resolution-aware.
 

@@ -83,6 +83,16 @@ class LocalizationService {
         name: 'auth__email_invalid_error');
   }
 
+  String get auth__phone_empty_error {
+    return Intl.message("Phone number cannot be empty.",
+        name: 'auth__phone_empty_error');
+  }
+
+  String get auth__phone_invalid_error {
+    return Intl.message("Please provide a valid phone number.",
+        name: 'auth__phone_invalid_error');
+  }
+
   String get auth__username_empty_error {
     return Intl.message("Username cannot be empty.",
         name: 'auth__username_empty_error');

@@ -12,7 +12,7 @@ import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:rxdart/rxdart.dart';
 
 class PushNotificationsService {
-  static const String oneSignalAppId = '66074bf4-9943-4504-a011-531c2635698b';
+  static const String oneSignalAppId = '774534c1-ee08-4891-9813-86b142d13c86';
 
   UserService _userService;
 

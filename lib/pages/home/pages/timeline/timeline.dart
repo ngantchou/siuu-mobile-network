@@ -1,12 +1,13 @@
 import 'dart:async';
 import 'dart:io';
-
 import 'package:Siuu/models/circle.dart';
 import 'package:Siuu/models/follows_list.dart';
 import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/user.dart';
 import 'package:Siuu/pages/home/lib/poppable_page_controller.dart';
+import 'package:Siuu/pages/home/pages/memories/memories.dart';
 import 'package:Siuu/provider.dart';
+import 'package:Siuu/res/colors.dart';
 import 'package:Siuu/services/localization.dart';
 import 'package:Siuu/services/modal_service.dart';
 import 'package:Siuu/services/theme.dart';
@@ -24,6 +25,7 @@ import 'package:Siuu/widgets/posts_stream/posts_stream.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OBTimelinePage extends StatefulWidget {
   final OBTimelinePageController controller;
@@ -125,39 +127,51 @@ class OBTimelinePageState extends State<OBTimelinePage>
       _bootstrap();
       _needsBootstrap = false;
     }
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
 
-    return OBCupertinoPageScaffold(
+    return Scaffold(
         backgroundColor: _themeValueParserService
             .parseColor(_themeService.getActiveTheme().primaryColor),
-        navigationBar: OBThemedNavigationBar(
-            title: 'Home', trailing: _buildFiltersButton()),
-        child: Stack(
-          children: <Widget>[
-            _loggedInUserBootstrapped
-                ? OBPostsStream(
-                    controller: _timelinePostsStreamController,
-                    scrollController: _timelinePostsStreamScrollController,
-                    prependedItems: _buildPostsStreamPrependedItems(),
-                    streamIdentifier: 'timeline',
-                    onScrollLoader: _postsStreamOnScrollLoader,
-                    refresher: _postsStreamRefresher,
-                    initialPosts: _initialPosts,
-                  )
-                : const SizedBox(),
-            Positioned(
-                bottom: 20.0,
-                right: 20.0,
-                child: Semantics(
-                    button: true,
-                    label: _localizationService.post__create_new_post_label,
-                    child: ScaleTransition(
-                        scale: _hideFloatingButtonAnimation,
-                        child: OBFloatingActionButton(
-                            type: OBButtonType.primary,
-                            onPressed: _onCreatePost,
-                            child: const OBIcon(OBIcons.createPost,
-                                size: OBIconSize.large, color: Colors.white)))))
-          ],
+        floatingActionButton: FloatingActionButton(
+            onPressed: _onCreatePost,
+            elevation: 0.0,
+            child: Container(
+              width: width * 0.145,
+              height: height * 0.087,
+              decoration: BoxDecoration(
+                  shape: BoxShape.circle, gradient: linearGradient),
+              child: Center(
+                child: SizedBox(
+                  height: height * 0.033,
+                  width: width * 0.058,
+                  child: SvgPicture.asset(
+                    'assets/svg/pencilIcon.svg',
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            )),
+        body: SingleChildScrollView(
+          child: Column(children: <Widget>[
+            OBThemedNavigationBar(
+                title: 'Home', trailing: _buildFiltersButton()),
+            Memories(),
+            Container(
+              height: height / 1.5,
+              child: _loggedInUserBootstrapped
+                  ? OBPostsStream(
+                      controller: _timelinePostsStreamController,
+                      scrollController: _timelinePostsStreamScrollController,
+                      prependedItems: _buildPostsStreamPrependedItems(),
+                      streamIdentifier: 'timeline',
+                      onScrollLoader: _postsStreamOnScrollLoader,
+                      refresher: _postsStreamRefresher,
+                      initialPosts: _initialPosts,
+                    )
+                  : const SizedBox(),
+            )
+          ]),
         ));
   }
 

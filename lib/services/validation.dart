@@ -75,6 +75,10 @@ class ValidationService {
     return validators.isEmail(email);
   }
 
+  bool isQualifiedPhone(String phone) {
+    return validators.isInt(phone);
+  }
+
   bool isQualifiedLink(String link) {
     final uri = Uri.decodeFull(link);
     return isUrl(uri) && validators.contains(uri, '?token=');
@@ -338,6 +342,20 @@ class ValidationService {
       errorMsg = _localizationService.auth__email_empty_error;
     } else if (!isQualifiedEmail(email)) {
       errorMsg = _localizationService.auth__email_invalid_error;
+    }
+
+    return errorMsg;
+  }
+
+  String validateUserPhone(String phone) {
+    assert(phone != null);
+
+    String errorMsg;
+
+    if (phone.length == 0) {
+      errorMsg = _localizationService.auth__phone_empty_error;
+    } else if (!isQualifiedPhone(phone)) {
+      errorMsg = _localizationService.auth__phone_invalid_error;
     }
 
     return errorMsg;
