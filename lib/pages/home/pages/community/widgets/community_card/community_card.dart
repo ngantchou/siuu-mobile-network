@@ -1,18 +1,18 @@
 import 'package:Siuu/models/community.dart';
-import 'package:Siuu/pages/home/pages/community/widgets/community_card/widgets/community_actions/community_actions.dart';
-import 'package:Siuu/pages/home/pages/community/widgets/community_card/widgets/community_buttons.dart';
-import 'package:Siuu/pages/home/pages/community/widgets/community_card/widgets/community_categories.dart';
-import 'package:Siuu/pages/home/pages/community/widgets/community_card/widgets/community_description.dart';
-import 'package:Siuu/pages/home/pages/community/widgets/community_card/widgets/community_details/community_details.dart';
-import 'package:Siuu/pages/home/pages/community/widgets/community_card/widgets/community_name.dart';
-import 'package:Siuu/pages/home/pages/community/widgets/community_card/widgets/community_title.dart';
 import 'package:Siuu/widgets/avatars/community_avatar.dart';
 import 'package:flutter/material.dart';
+import 'widgets/community_actions/community_actions.dart';
+import 'widgets/community_buttons.dart';
+import 'widgets/community_categories.dart';
+import 'widgets/community_description.dart';
+import 'widgets/community_details/community_details.dart';
+import 'widgets/community_name.dart';
+import 'widgets/community_title.dart';
 
-class OBCommunityCard extends StatelessWidget {
-  final Community community;
+class OBMemoryCard extends StatelessWidget {
+  final Memory memory;
 
-  OBCommunityCard(this.community);
+  OBMemoryCard(this.memory);
 
   @override
   Widget build(BuildContext context) {
@@ -24,12 +24,12 @@ class OBCommunityCard extends StatelessWidget {
         children: <Widget>[
           Row(
             children: <Widget>[
-              OBCommunityAvatar(
-                community: community,
+              OBMemoryAvatar(
+                memory: memory,
                 size: OBAvatarSize.large,
                 isZoomable: true,
               ),
-              Expanded(child: OBCommunityActions(community)),
+              Expanded(child: OBMemoryActions(memory)),
             ],
           ),
           SizedBox(
@@ -39,19 +39,19 @@ class OBCommunityCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              OBCommunityTitle(community),
-              OBCommunityName(community),
-              OBCommunityDescription(community),
+              OBMemoryTitle(memory),
+              OBMemoryName(memory),
+              OBMemoryDescription(memory),
               const SizedBox(
                 height: 15,
               ),
-              OBCommunityDetails(community),
-              OBCommunityCategories(community),
+              OBMemoryDetails(memory),
+              OBMemoryCategories(memory),
               const SizedBox(
                 height: 10,
               ),
-              OBCommunityButtons(
-                community: community,
+              OBMemoryButtons(
+                memory: memory,
               ),
             ],
           ),

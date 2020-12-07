@@ -7,22 +7,22 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:Siuu/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityModerators extends StatelessWidget {
-  final Community community;
+class OBMemoryModerators extends StatelessWidget {
+  final Memory memory;
 
-  OBCommunityModerators(this.community);
+  OBMemoryModerators(this.memory);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: community.updateSubject,
-      initialData: community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        var community = snapshot.data;
+      stream: memory.updateSubject,
+      initialData: memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        var memory = snapshot.data;
 
-        List<User> communityModerators = community?.moderators?.users;
+        List<User> memoryModerators = memory?.moderators?.users;
 
-        if (communityModerators == null || communityModerators.isEmpty)
+        if (memoryModerators == null || memoryModerators.isEmpty)
           return const SizedBox();
 
         return Row(
@@ -36,7 +36,7 @@ class OBCommunityModerators extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                     child: Row(children: [
                       OBIcon(
-                        OBIcons.communityModerators,
+                        OBIcons.memoryModerators,
                         size: OBIconSize.medium,
                       ),
                       const SizedBox(
@@ -56,15 +56,14 @@ class OBCommunityModerators extends StatelessWidget {
                     physics: const ClampingScrollPhysics(),
                     padding: EdgeInsets.all(0),
                     shrinkWrap: true,
-                    children:
-                        communityModerators.map((User communityModerator) {
+                    children: memoryModerators.map((User memoryModerator) {
                       return OBUserTile(
-                        communityModerator,
+                        memoryModerator,
                         onUserTilePressed: (User user) {
                           NavigationService navigationService =
                               OpenbookProvider.of(context).navigationService;
                           navigationService.navigateToUserProfile(
-                              user: communityModerator, context: context);
+                              user: memoryModerator, context: context);
                         },
                       );
                     }).toList(),

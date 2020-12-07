@@ -28,18 +28,18 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
-class OBSaveCommunityModal extends StatefulWidget {
-  final Community community;
+class OBSaveMemoryModal extends StatefulWidget {
+  final Memory memory;
 
-  const OBSaveCommunityModal({this.community});
+  const OBSaveMemoryModal({this.memory});
 
   @override
-  OBSaveCommunityModalState createState() {
-    return OBSaveCommunityModalState();
+  OBSaveMemoryModalState createState() {
+    return OBSaveMemoryModalState();
   }
 }
 
-class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
+class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
@@ -50,7 +50,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   bool _requestInProgress;
   bool _formWasSubmitted;
   bool _formValid;
-  bool _isEditingExistingCommunity;
+  bool _isEditingExistingMemory;
   String _takenName;
 
   GlobalKey<FormState> _formKey;
@@ -64,7 +64,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   OBCategoriesFieldController _categoriesFieldController;
 
   String _color;
-  CommunityType _type;
+  MemoryType _type;
   String _avatarUrl;
   String _coverUrl;
   File _avatarFile;
@@ -86,26 +86,26 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     _usersAdjectiveController = TextEditingController();
     _rulesController = TextEditingController();
     _categoriesFieldController = OBCategoriesFieldController();
-    _type = CommunityType.public;
+    _type = MemoryType.public;
     _invitesEnabled = true;
     _categories = [];
 
     _formKey = GlobalKey<FormState>();
-    _isEditingExistingCommunity = widget.community != null;
+    _isEditingExistingMemory = widget.memory != null;
 
-    if (_isEditingExistingCommunity) {
-      _nameController.text = widget.community.name;
-      _titleController.text = widget.community.title;
-      _descriptionController.text = widget.community.description;
-      _userAdjectiveController.text = widget.community.userAdjective;
-      _usersAdjectiveController.text = widget.community.usersAdjective;
-      _rulesController.text = widget.community.rules;
-      _color = widget.community.color;
-      _categories = widget.community.categories.categories.toList();
-      _type = widget.community.type;
-      _avatarUrl = widget.community.avatar;
-      _coverUrl = widget.community.cover;
-      _invitesEnabled = widget.community.invitesEnabled;
+    if (_isEditingExistingMemory) {
+      _nameController.text = widget.memory.name;
+      _titleController.text = widget.memory.title;
+      _descriptionController.text = widget.memory.description;
+      _userAdjectiveController.text = widget.memory.userAdjective;
+      _usersAdjectiveController.text = widget.memory.usersAdjective;
+      _rulesController.text = widget.memory.rules;
+      _color = widget.memory.color;
+      _categories = widget.memory.categories.categories.toList();
+      _type = widget.memory.type;
+      _avatarUrl = widget.memory.avatar;
+      _coverUrl = widget.memory.cover;
+      _invitesEnabled = widget.memory.invitesEnabled;
     }
 
     _nameController.addListener(_updateFormValid);
@@ -174,13 +174,15 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 size: OBTextFormFieldSize.medium,
                                 controller: _titleController,
                                 decoration: InputDecoration(
-                                  labelText: _localizationService.community__save_community_label_title,
-                                  hintText: _localizationService.community__save_community_label_title_hint_text,
-                                  prefixIcon: const OBIcon(OBIcons.communities),
+                                  labelText: _localizationService
+                                      .community__save_community_label_title,
+                                  hintText: _localizationService
+                                      .community__save_community_label_title_hint_text,
+                                  prefixIcon: const OBIcon(OBIcons.memories),
                                 ),
-                                validator: (String communityTitle) {
+                                validator: (String memoryTitle) {
                                   return _validationService
-                                      .validateCommunityTitle(communityTitle);
+                                      .validateMemoryTitle(memoryTitle);
                                 }),
                             OBTextFormField(
                                 textCapitalization: TextCapitalization.none,
@@ -189,41 +191,49 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 autocorrect: false,
                                 decoration: InputDecoration(
                                     prefixIcon: const OBIcon(OBIcons.shortText),
-                                    labelText: _localizationService.community__save_community_name_title,
+                                    labelText: _localizationService
+                                        .community__save_community_name_title,
                                     prefixText: 'c/',
-                                    hintText:
-                                    _localizationService.community__save_community_name_title_hint_text),
-                                validator: (String communityName) {
+                                    hintText: _localizationService
+                                        .community__save_community_name_title_hint_text),
+                                validator: (String memoryName) {
                                   if (_takenName != null &&
-                                      _takenName == communityName) {
-                                    return _localizationService.community__save_community_name_taken(_takenName);
+                                      _takenName == memoryName) {
+                                    return _localizationService
+                                        .community__save_community_name_taken(
+                                            _takenName);
                                   }
 
                                   return _validationService
-                                      .validateCommunityName(communityName);
+                                      .validateMemoryName(memoryName);
                                 }),
                             OBColorField(
                               initialColor: _color,
                               onNewColor: _onNewColor,
-                              labelText: _localizationService.community__save_community_name_label_color,
-                              hintText: _localizationService.community__save_community_name_label_color_hint_text,
+                              labelText: _localizationService
+                                  .community__save_community_name_label_color,
+                              hintText: _localizationService
+                                  .community__save_community_name_label_color_hint_text,
                             ),
-                            OBCommunityTypeField(
+                            OBMemoryTypeField(
                               value: _type,
-                              title: _localizationService.community__save_community_name_label_type,
-                              hintText: _localizationService.community__save_community_name_label_type_hint_text,
-                              onChanged: (CommunityType type) {
+                              title: _localizationService
+                                  .community__save_community_name_label_type,
+                              hintText: _localizationService
+                                  .community__save_community_name_label_type_hint_text,
+                              onChanged: (MemoryType type) {
                                 setState(() {
                                   _type = type;
                                 });
                               },
                             ),
-                            _type == CommunityType.private
-                              ? OBToggleField(
+                            _type == MemoryType.private
+                                ? OBToggleField(
                                     value: _invitesEnabled,
-                                    title: _localizationService.community__save_community_name_member_invites,
-                                    subtitle: OBText(
-                                        _localizationService.community__save_community_name_member_invites_subtitle),
+                                    title: _localizationService
+                                        .community__save_community_name_member_invites,
+                                    subtitle: OBText(_localizationService
+                                        .community__save_community_name_member_invites_subtitle),
                                     onChanged: (bool value) {
                                       setState(() {
                                         _invitesEnabled = value;
@@ -237,7 +247,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                   )
                                 : const SizedBox(),
                             OBCategoriesField(
-                              title: _localizationService.community__save_community_name_category,
+                              title: _localizationService
+                                  .community__save_community_name_category,
                               min: 1,
                               max: 3,
                               controller: _categoriesFieldController,
@@ -253,28 +264,30 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 maxLines: 3,
                                 textInputAction: TextInputAction.newline,
                                 decoration: InputDecoration(
-                                    prefixIcon: const OBIcon(
-                                        OBIcons.communityDescription),
-                                    labelText: _localizationService.community__save_community_name_label_desc_optional,
-                                    hintText: _localizationService.community__save_community_name_label_desc_optional_hint_text),
-                                validator: (String communityDescription) {
+                                    prefixIcon:
+                                        const OBIcon(OBIcons.memoryDescription),
+                                    labelText: _localizationService
+                                        .community__save_community_name_label_desc_optional,
+                                    hintText: _localizationService
+                                        .community__save_community_name_label_desc_optional_hint_text),
+                                validator: (String memoryDescription) {
                                   return _validationService
-                                      .validateCommunityDescription(
-                                          communityDescription);
+                                      .validateMemoryDescription(
+                                          memoryDescription);
                                 }),
                             OBTextFormField(
                               textCapitalization: TextCapitalization.sentences,
                               size: OBTextFormFieldSize.medium,
                               controller: _rulesController,
                               decoration: InputDecoration(
-                                  prefixIcon:
-                                      const OBIcon(OBIcons.communityRules),
-                                  labelText: _localizationService.community__save_community_name_label_rules_optional,
-                                  hintText:
-                                  _localizationService.community__save_community_name_label_rules_optional_hint_text),
-                              validator: (String communityRules) {
+                                  prefixIcon: const OBIcon(OBIcons.memoryRules),
+                                  labelText: _localizationService
+                                      .community__save_community_name_label_rules_optional,
+                                  hintText: _localizationService
+                                      .community__save_community_name_label_rules_optional_hint_text),
+                              validator: (String memoryRules) {
                                 return _validationService
-                                    .validateCommunityRules(communityRules);
+                                    .validateMemoryRules(memoryRules);
                               },
                               keyboardType: TextInputType.multiline,
                               textInputAction: TextInputAction.newline,
@@ -287,14 +300,15 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 controller: _userAdjectiveController,
                                 decoration: InputDecoration(
                                     prefixIcon:
-                                        const OBIcon(OBIcons.communityMember),
-                                    labelText: _localizationService.community__save_community_name_label_member_adjective,
-                                    hintText:
-                                        _localizationService.community__save_community_name_label_member_adjective_hint_text),
-                                validator: (String communityUserAdjective) {
+                                        const OBIcon(OBIcons.memoryMember),
+                                    labelText: _localizationService
+                                        .community__save_community_name_label_member_adjective,
+                                    hintText: _localizationService
+                                        .community__save_community_name_label_member_adjective_hint_text),
+                                validator: (String memoryUserAdjective) {
                                   return _validationService
-                                      .validateCommunityUserAdjective(
-                                          communityUserAdjective);
+                                      .validateMemoryUserAdjective(
+                                          memoryUserAdjective);
                                 }),
                             OBTextFormField(
                                 textCapitalization:
@@ -303,14 +317,15 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                                 controller: _usersAdjectiveController,
                                 decoration: InputDecoration(
                                     prefixIcon:
-                                        const OBIcon(OBIcons.communityMembers),
-                                    labelText: _localizationService.community__save_community_name_label_members_adjective,
-                                    hintText:
-                                        _localizationService.community__save_community_name_label_members_adjective_hint_text),
-                                validator: (String communityUsersAdjective) {
+                                        const OBIcon(OBIcons.memoryMembers),
+                                    labelText: _localizationService
+                                        .community__save_community_name_label_members_adjective,
+                                    hintText: _localizationService
+                                        .community__save_community_name_label_members_adjective_hint_text),
+                                validator: (String memoryUsersAdjective) {
                                   return _validationService
-                                      .validateCommunityUserAdjective(
-                                          communityUsersAdjective);
+                                      .validateMemoryUserAdjective(
+                                          memoryUsersAdjective);
                                 }),
                           ],
                         )),
@@ -336,8 +351,9 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
             Navigator.pop(context);
           },
         ),
-        title:
-            _isEditingExistingCommunity ? _localizationService.community__save_community_edit_community : _localizationService.community__save_community_create_community,
+        title: _isEditingExistingMemory
+            ? _localizationService.community__save_community_edit_memory
+            : _localizationService.community__save_community_create_memory,
         trailing: _requestInProgress
             ? OBProgressIndicator(color: actionsColor)
             : OBButton(
@@ -345,7 +361,10 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
                 isLoading: _requestInProgress,
                 size: OBButtonSize.small,
                 onPressed: _submitForm,
-                child: Text(_isEditingExistingCommunity ? _localizationService.community__save_community_save_text : _localizationService.community__save_community_create_text),
+                child: Text(_isEditingExistingMemory
+                    ? _localizationService.community__save_community_save_text
+                    : _localizationService
+                        .community__save_community_create_text),
               ));
   }
 
@@ -389,7 +408,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
               child: ConstrainedBox(
                 constraints: BoxConstraints(maxWidth: 30, maxHeight: 30),
                 child: FloatingActionButton(
-                  heroTag: Key('editCommunityAvatar'),
+                  heroTag: Key('editMemoryAvatar'),
                   backgroundColor: Colors.white,
                   child: icon,
                   onPressed: _onPressed,
@@ -401,8 +420,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   }
 
   void _pickNewAvatar() async {
-    File newAvatar =
-        await _imagePickerService.pickImage(imageType: OBImageType.avatar, context: context);
+    File newAvatar = await _imagePickerService.pickImage(
+        imageType: OBImageType.avatar, context: context);
     if (newAvatar != null) _setAvatarFile(newAvatar);
   }
 
@@ -432,7 +451,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
             child: ConstrainedBox(
               constraints: BoxConstraints(maxWidth: 40, maxHeight: 40),
               child: FloatingActionButton(
-                heroTag: Key('editCommunityCover'),
+                heroTag: Key('editMemoryCover'),
                 backgroundColor: Colors.white,
                 child: icon,
                 onPressed: _onPressed,
@@ -445,8 +464,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
   }
 
   void _pickNewCover() async {
-    File newCover =
-        await _imagePickerService.pickImage(imageType: OBImageType.cover, context: context);
+    File newCover = await _imagePickerService.pickImage(
+        imageType: OBImageType.cover, context: context);
     if (newCover != null) _setCoverFile(newCover);
   }
 
@@ -507,20 +526,19 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
 
     _setRequestInProgress(true);
     try {
-      var communityName = _nameController.text;
-      bool communityNameTaken = await _isNameTaken(communityName);
+      var memoryName = _nameController.text;
+      bool memoryNameTaken = await _isNameTaken(memoryName);
 
-      if (communityNameTaken) {
-        _setTakenName(communityName);
+      if (memoryNameTaken) {
+        _setTakenName(memoryName);
         _validateForm();
         return;
       }
 
-      Community community = await (_isEditingExistingCommunity
-          ? _updateCommunity()
-          : _createCommunity());
+      Memory memory =
+          await (_isEditingExistingMemory ? _updateMemory() : _createMemory());
 
-      Navigator.of(context).pop(community);
+      Navigator.of(context).pop(memory);
     } catch (error) {
       _onError(error);
     } finally {
@@ -536,17 +554,18 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
 
-  Future<Community> _updateCommunity() async {
-    await _updateCommunityAvatar();
-    await _updateCommunityCover();
+  Future<Memory> _updateMemory() async {
+    await _updateMemoryAvatar();
+    await _updateMemoryCover();
 
-    return _userService.updateCommunity(widget.community,
-        name: _nameController.text != widget.community.name
+    return _userService.updateMemory(widget.memory,
+        name: _nameController.text != widget.memory.name
             ? _nameController.text
             : null,
         title: _titleController.text,
@@ -560,7 +579,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
         color: _color);
   }
 
-  Future<void> _updateCommunityCover() {
+  Future<void> _updateMemoryCover() {
     bool hasCoverFile = _coverFile != null;
     bool hasCoverUrl = _coverUrl != null;
     bool hasCover = hasCoverFile || hasCoverUrl;
@@ -568,14 +587,14 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     Future<void> updateFuture;
 
     if (!hasCover) {
-      if (widget.community.cover != null) {
+      if (widget.memory.cover != null) {
         // Remove cover!
-        updateFuture = _userService.deleteCoverForCommunity(widget.community);
+        updateFuture = _userService.deleteCoverForMemory(widget.memory);
       }
     } else if (hasCoverFile) {
       // New cover
-      updateFuture = _userService.updateCoverForCommunity(widget.community,
-          cover: _coverFile);
+      updateFuture =
+          _userService.updateCoverForMemory(widget.memory, cover: _coverFile);
     } else {
       updateFuture = Future.value();
     }
@@ -583,7 +602,7 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     return updateFuture;
   }
 
-  Future<void> _updateCommunityAvatar() {
+  Future<void> _updateMemoryAvatar() {
     bool hasAvatarFile = _avatarFile != null;
     bool hasAvatarUrl = _avatarUrl != null;
     bool hasAvatar = hasAvatarFile || hasAvatarUrl;
@@ -591,13 +610,13 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     Future<void> updateFuture;
 
     if (!hasAvatar) {
-      if (widget.community.avatar != null) {
+      if (widget.memory.avatar != null) {
         // Remove avatar!
-        updateFuture = _userService.deleteAvatarForCommunity(widget.community);
+        updateFuture = _userService.deleteAvatarForMemory(widget.memory);
       }
     } else if (hasAvatarFile) {
       // New avatar
-      updateFuture = _userService.updateAvatarForCommunity(widget.community,
+      updateFuture = _userService.updateAvatarForMemory(widget.memory,
           avatar: _avatarFile);
     } else {
       updateFuture = Future.value();
@@ -606,8 +625,8 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     return updateFuture;
   }
 
-  Future<Community> _createCommunity() {
-    return _userService.createCommunity(
+  Future<Memory> _createMemory() {
+    return _userService.createMemory(
         type: _type,
         name: _nameController.text,
         title: _titleController.text,
@@ -622,12 +641,12 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
         cover: _coverFile);
   }
 
-  Future<bool> _isNameTaken(String communityName) async {
-    if (_isEditingExistingCommunity &&
-        widget.community.name == _nameController.text) {
+  Future<bool> _isNameTaken(String memoryName) async {
+    if (_isEditingExistingMemory &&
+        widget.memory.name == _nameController.text) {
       return false;
     }
-    return _validationService.isCommunityNameTaken(communityName);
+    return _validationService.isMemoryNameTaken(memoryName);
   }
 
   void _onNewColor(String newColor) {
@@ -658,9 +677,9 @@ class OBSaveCommunityModalState extends State<OBSaveCommunityModal> {
     });
   }
 
-  void _setTakenName(String takenCommunityName) {
+  void _setTakenName(String takenMemoryName) {
     setState(() {
-      _takenName = takenCommunityName;
+      _takenName = takenMemoryName;
     });
   }
 }

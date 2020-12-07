@@ -12,7 +12,7 @@ import 'localization.dart';
 
 class ValidationService {
   AuthApiService _authApiService;
-  CommunitiesApiService _communitiesApiService;
+  CommunitiesApiService _memoriesApiService;
   FollowsListsApiService _followsListsApiService;
   ConnectionsCirclesApiService _connectionsCirclesApiService;
   LocalizationService _localizationService;
@@ -53,8 +53,8 @@ class ValidationService {
     _utilsService = utilsService;
   }
 
-  void setCommunitiesApiService(CommunitiesApiService communitiesApiService) {
-    _communitiesApiService = communitiesApiService;
+  void setCommunitiesApiService(CommunitiesApiService memoriesApiService) {
+    _memoriesApiService = memoriesApiService;
   }
 
   void setFollowsListsApiService(
@@ -147,24 +147,24 @@ class ValidationService {
         postComment.length <= POST_COMMENT_MAX_LENGTH;
   }
 
-  bool isCommunityNameAllowedLength(String name) {
+  bool isMemoryNameAllowedLength(String name) {
     return name.length > 0 && name.length <= COMMUNITY_NAME_MAX_LENGTH;
   }
 
-  bool isCommunityDescriptionAllowedLength(String description) {
+  bool isMemoryDescriptionAllowedLength(String description) {
     return description.length > 0 &&
         description.length <= COMMUNITY_DESCRIPTION_MAX_LENGTH;
   }
 
-  bool isCommunityTitleAllowedLength(String title) {
+  bool isMemoryTitleAllowedLength(String title) {
     return title.length > 0 && title.length <= COMMUNITY_TITLE_MAX_LENGTH;
   }
 
-  bool isCommunityRulesAllowedLength(String rules) {
+  bool isMemoryRulesAllowedLength(String rules) {
     return rules.length > 0 && rules.length <= COMMUNITY_RULES_MAX_LENGTH;
   }
 
-  bool isCommunityUserAdjectiveAllowedLength(String userAdjective) {
+  bool isMemoryUserAdjectiveAllowedLength(String userAdjective) {
     return userAdjective.length > 0 &&
         userAdjective.length <= COMMUNITY_USER_ADJECTIVE_MAX_LENGTH;
   }
@@ -186,7 +186,7 @@ class ValidationService {
     return regExp.hasMatch(username);
   }
 
-  bool isCommunityNameAllowedCharacters(String name) {
+  bool isMemoryNameAllowedCharacters(String name) {
     String p = r'^[a-zA-Z0-9_]+$';
 
     RegExp regExp = new RegExp(p, caseSensitive: false);
@@ -219,9 +219,9 @@ class ValidationService {
     }
   }
 
-  Future<bool> isCommunityNameTaken(String name) async {
+  Future<bool> isMemoryNameTaken(String name) async {
     HttpieResponse response =
-        await _communitiesApiService.checkNameIsAvailable(name: name);
+        await _memoriesApiService.checkNameIsAvailable(name: name);
     if (response.isAccepted()) {
       return false;
     } else if (response.isBadRequest()) {
@@ -493,38 +493,38 @@ class ValidationService {
     return errorMsg;
   }
 
-  String validateCommunityName(String name) {
+  String validateMemoryName(String name) {
     assert(name != null);
 
     String errorMsg;
 
     if (name.length == 0) {
       errorMsg = _localizationService.community__name_empty_error;
-    } else if (!isCommunityNameAllowedLength(name)) {
+    } else if (!isMemoryNameAllowedLength(name)) {
       errorMsg = _localizationService
           .community__name_range_error(COMMUNITY_NAME_MAX_LENGTH);
-    } else if (!isCommunityNameAllowedCharacters(name)) {
+    } else if (!isMemoryNameAllowedCharacters(name)) {
       errorMsg = _localizationService.community__name_characters_error;
     }
 
     return errorMsg;
   }
 
-  String validateCommunityTitle(String title) {
+  String validateMemoryTitle(String title) {
     assert(title != null);
 
     String errorMsg;
 
     if (title.length == 0) {
       errorMsg = _localizationService.community__title_empty_error;
-    } else if (!isCommunityTitleAllowedLength(title)) {
+    } else if (!isMemoryTitleAllowedLength(title)) {
       errorMsg = _localizationService
           .community__title_range_error(COMMUNITY_TITLE_MAX_LENGTH);
     }
     return errorMsg;
   }
 
-  String validateCommunityRules(String rules) {
+  String validateMemoryRules(String rules) {
     assert(rules != null);
 
     if (rules.isEmpty) return null;
@@ -533,35 +533,35 @@ class ValidationService {
 
     if (rules.length == 0) {
       errorMsg = _localizationService.community__rules_empty_error;
-    } else if (!isCommunityRulesAllowedLength(rules)) {
+    } else if (!isMemoryRulesAllowedLength(rules)) {
       errorMsg = _localizationService
           .community__rules_range_error(COMMUNITY_RULES_MAX_LENGTH);
     }
     return errorMsg;
   }
 
-  String validateCommunityDescription(String description) {
+  String validateMemoryDescription(String description) {
     assert(description != null);
 
     if (description.isEmpty) return null;
 
     String errorMsg;
 
-    if (!isCommunityDescriptionAllowedLength(description)) {
+    if (!isMemoryDescriptionAllowedLength(description)) {
       errorMsg = _localizationService
           .community__description_range_error(COMMUNITY_DESCRIPTION_MAX_LENGTH);
     }
     return errorMsg;
   }
 
-  String validateCommunityUserAdjective(String userAdjective) {
+  String validateMemoryUserAdjective(String userAdjective) {
     assert(userAdjective != null);
 
     if (userAdjective.isEmpty) return null;
 
     String errorMsg;
 
-    if (!isCommunityUserAdjectiveAllowedLength(userAdjective)) {
+    if (!isMemoryUserAdjectiveAllowedLength(userAdjective)) {
       errorMsg = _localizationService.community__adjectives_range_error(
           COMMUNITY_USER_ADJECTIVE_MAX_LENGTH);
     }

@@ -11,12 +11,12 @@ class DocumentsService {
       'https://about.siuu.io/docs/TERMS_OF_USE.md';
 
   // Cache
-  String _communityGuidelines = '';
+  String _memoryGuidelines = '';
   String _termsOfUse = '';
   String _privacyPolicy = '';
 
   void preload() {
-    getCommunityGuidelines();
+    getMemoryGuidelines();
     getPrivacyPolicy();
     getTermsOfUse();
   }
@@ -25,11 +25,11 @@ class DocumentsService {
     _httpService = httpService;
   }
 
-  Future<String> getCommunityGuidelines() async {
-    if (_communityGuidelines.isNotEmpty) return _communityGuidelines;
+  Future<String> getMemoryGuidelines() async {
+    if (_memoryGuidelines.isNotEmpty) return _memoryGuidelines;
     HttpieResponse response = await _httpService.get(guidelinesUrl);
-    _communityGuidelines = response.body;
-    return _communityGuidelines;
+    _memoryGuidelines = response.body;
+    return _memoryGuidelines;
   }
 
   Future<String> getPrivacyPolicy() async {

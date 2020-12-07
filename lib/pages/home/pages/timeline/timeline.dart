@@ -6,10 +6,12 @@ import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/user.dart';
 import 'package:Siuu/pages/home/lib/poppable_page_controller.dart';
 import 'package:Siuu/pages/home/pages/memories/memories.dart';
+import 'package:Siuu/pages/home/pages/search/search.dart';
 import 'package:Siuu/provider.dart';
 import 'package:Siuu/res/colors.dart';
 import 'package:Siuu/services/localization.dart';
 import 'package:Siuu/services/modal_service.dart';
+import 'package:Siuu/services/navigation_service.dart';
 import 'package:Siuu/services/theme.dart';
 import 'package:Siuu/services/theme_value_parser.dart';
 import 'package:Siuu/services/user.dart';
@@ -45,10 +47,12 @@ class OBTimelinePageState extends State<OBTimelinePage>
   OBPostsStreamController _timelinePostsStreamController;
   ScrollController _timelinePostsStreamScrollController;
   ModalService _modalService;
+  NavigationService _navigationService;
   UserService _userService;
   LocalizationService _localizationService;
   ThemeService _themeService;
   ThemeValueParserService _themeValueParserService;
+  OBMainSearchPageController _searchPageController;
 
   List<Post> _initialPosts;
   List<OBNewPostData> _newPostsData;
@@ -69,6 +73,7 @@ class OBTimelinePageState extends State<OBTimelinePage>
     super.initState();
     _timelinePostsStreamController = OBPostsStreamController();
     _timelinePostsStreamScrollController = ScrollController();
+    _searchPageController = OBMainSearchPageController();
     widget.controller.attach(context: context, state: this);
     _needsBootstrap = true;
     _loggedInUserBootstrapped = false;
@@ -119,6 +124,7 @@ class OBTimelinePageState extends State<OBTimelinePage>
     if (_needsBootstrap) {
       var openbookProvider = OpenbookProvider.of(context);
       _modalService = openbookProvider.modalService;
+      _navigationService = openbookProvider.navigationService;
       _localizationService = openbookProvider.localizationService;
       _userService = openbookProvider.userService;
       _themeService = openbookProvider.themeService;
@@ -198,15 +204,17 @@ class OBTimelinePageState extends State<OBTimelinePage>
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        OBBadge(
-          count: filtersCount,
+        OBIconButton(
+          OBIcons.search,
+          themeColor: OBIconThemeColor.primaryText,
+          onPressed: _onWantsSearch,
         ),
         const SizedBox(
           width: 10,
         ),
         OBIconButton(
-          OBIcons.filter,
-          themeColor: OBIconThemeColor.primaryAccent,
+          OBIcons.moreVertical,
+          themeColor: OBIconThemeColor.primaryText,
           onPressed: _onWantsFilters,
         )
       ],
@@ -317,6 +325,11 @@ class OBTimelinePageState extends State<OBTimelinePage>
   void _onWantsFilters() {
     _modalService.openTimelineFilters(
         timelineController: widget.controller, context: context);
+  }
+
+  void _onWantsSearch() {
+    _navigationService.navigateToSearch(
+        context: context, searchPageController: _searchPageController);
   }
 }
 

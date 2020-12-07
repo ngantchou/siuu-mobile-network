@@ -42,7 +42,8 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
 
           String commenterUsername = postComment.commenter.username;
           String commenterName = postComment.commenter.getProfileName();
-          String created = utilsService.timeAgo(postComment.created, localizationService);
+          String created =
+              utilsService.timeAgo(postComment.created, localizationService);
 
           return Opacity(
             opacity: 0.8,
@@ -86,43 +87,46 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
 
     if (postCommenter.hasProfileBadges()) badges.add(_buildProfileBadge());
 
-    if (post.hasCommunity()) {
-      Community postCommunity = post.community;
+    if (post.hasMemory()) {
+      Memory postMemory = post.memory;
 
-      bool isCommunityAdministrator =
-          postCommenter.isAdministratorOfCommunity(postCommunity);
+      bool isMemoryAdministrator =
+          postCommenter.isAdministratorOfMemory(postMemory);
 
-      if (isCommunityAdministrator) {
-        badges.add(_buildCommunityAdministratorBadge());
+      if (isMemoryAdministrator) {
+        badges.add(_buildMemoryAdministratorBadge());
       }
 
-      bool isCommunityModerator =
-          postCommenter.isModeratorOfCommunity(postCommunity);
+      bool isMemoryModerator = postCommenter.isModeratorOfMemory(postMemory);
 
-      if (isCommunityModerator) {
-        badges.add(_buildCommunityModeratorBadge());
+      if (isMemoryModerator) {
+        badges.add(_buildMemoryModeratorBadge());
       }
     }
 
-    return badges.isNotEmpty ? Row(children: badges,) : const SizedBox();
+    return badges.isNotEmpty
+        ? Row(
+            children: badges,
+          )
+        : const SizedBox();
   }
 
-  Widget _buildCommunityAdministratorBadge() {
+  Widget _buildMemoryAdministratorBadge() {
     return const Padding(
       padding: const EdgeInsets.symmetric(horizontal: 1),
       child: OBIcon(
-        OBIcons.communityAdministrators,
+        OBIcons.memoryAdministrators,
         size: OBIconSize.small,
         themeColor: OBIconThemeColor.primaryAccent,
       ),
     );
   }
 
-  Widget _buildCommunityModeratorBadge() {
+  Widget _buildMemoryModeratorBadge() {
     return const Padding(
         padding: const EdgeInsets.symmetric(horizontal: 1),
         child: OBIcon(
-          OBIcons.communityModerators,
+          OBIcons.memoryModerators,
           size: OBIconSize.small,
           themeColor: OBIconThemeColor.primaryAccent,
         ));

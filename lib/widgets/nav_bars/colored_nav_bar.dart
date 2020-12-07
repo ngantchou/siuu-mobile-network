@@ -3,7 +3,7 @@ import 'package:Siuu/services/theme_value_parser.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-/// A coloured navigation bar, used in communities.
+/// A coloured navigation bar, used in memories.
 class OBColoredNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
   final Color color;

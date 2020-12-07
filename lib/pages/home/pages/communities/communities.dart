@@ -6,7 +6,6 @@ import 'package:Siuu/models/theme.dart';
 import 'package:Siuu/models/user.dart';
 import 'package:Siuu/pages/home/lib/poppable_page_controller.dart';
 import 'package:Siuu/pages/home/pages/communities/widgets/category_tab.dart';
-import 'package:Siuu/pages/home/pages/communities/widgets/my_communities/my_communities.dart';
 import 'package:Siuu/pages/home/pages/communities/widgets/trending_communities.dart';
 import 'package:Siuu/pages/home/pages/communities/widgets/user_avatar_tab.dart';
 import 'package:Siuu/provider.dart';
@@ -27,6 +26,8 @@ import 'package:Siuu/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
+
+import 'widgets/my_communities/my_communities.dart';
 
 class OBMainCommunitiesPage extends StatefulWidget {
   final OBCommunitiesPageController controller;
@@ -92,11 +93,11 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
 
     return CupertinoPageScaffold(
         navigationBar: OBThemedNavigationBar(
-            title: _localizationService.community__communities_title,
+            title: _localizationService.community__memories_title,
             trailing: OBIconButton(
               OBIcons.add,
               themeColor: OBIconThemeColor.primaryAccent,
-              onPressed: _onWantsToCreateCommunity,
+              onPressed: _onWantsToCreateMemory,
             )),
         child: OBPrimaryColorContainer(
             child: _categories.isEmpty && !_refreshInProgress
@@ -109,9 +110,9 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBButtonAlert(
-          text: _localizationService.community__communities_no_category_found,
+          text: _localizationService.community__memories_no_category_found,
           onPressed: _refreshCategories,
-          buttonText: _localizationService.community__communities_refresh_text,
+          buttonText: _localizationService.community__memories_refresh_text,
           buttonIcon: OBIcons.refresh,
           assetImage: 'assets/images/stickers/perplexed-owl.png',
           isLoading: _refreshInProgress,
@@ -163,7 +164,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
         user: loggedInUser,
       ),
       OBImageTab(
-        text: _localizationService.community__communities_all_text,
+        text: _localizationService.community__memories_all_text,
         color: Pigment.fromString('#2d2d2d'),
         textColor: Pigment.fromString('#ffffff'),
         imageProvider:
@@ -231,7 +232,8 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -276,12 +278,12 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
     return controller;
   }
 
-  void _onWantsToCreateCommunity() async {
-    Community createdCommunity =
-        await _modalService.openCreateCommunity(context: context);
-    if (createdCommunity != null) {
-      _navigationService.navigateToCommunity(
-          community: createdCommunity, context: context);
+  void _onWantsToCreateMemory() async {
+    Memory createdMemory =
+        await _modalService.openCreateMemory(context: context);
+    if (createdMemory != null) {
+      _navigationService.navigateToMemory(
+          memory: createdMemory, context: context);
     }
   }
 

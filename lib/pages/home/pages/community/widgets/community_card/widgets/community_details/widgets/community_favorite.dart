@@ -6,21 +6,22 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../../../../provider.dart';
 
-class OBCommunityFavorite extends StatelessWidget {
-  final Community community;
+class OBMemoryFavorite extends StatelessWidget {
+  final Memory memory;
 
-  const OBCommunityFavorite(this.community);
+  const OBMemoryFavorite(this.memory);
 
   @override
   Widget build(BuildContext context) {
-    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     return StreamBuilder(
-      stream: community.updateSubject,
-      initialData: community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        Community community = snapshot.data;
-        if (community.isFavorite == null || !community.isFavorite)
+      stream: memory.updateSubject,
+      initialData: memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        Memory memory = snapshot.data;
+        if (memory.isFavorite == null || !memory.isFavorite)
           return const SizedBox();
 
         return Row(
@@ -28,7 +29,7 @@ class OBCommunityFavorite extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: <Widget>[
             OBIcon(
-              OBIcons.favoriteCommunity,
+              OBIcons.favoriteMemory,
               themeColor: OBIconThemeColor.primaryAccent,
               size: OBIconSize.small,
             ),

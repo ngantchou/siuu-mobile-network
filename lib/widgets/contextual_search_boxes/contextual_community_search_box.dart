@@ -12,26 +12,23 @@ import 'package:Siuu/widgets/tiles/community_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 
-class OBContextualCommunitySearchBox extends StatefulWidget {
-  final ValueChanged<Community> onCommunityPressed;
-  final OBContextualCommunitySearchBoxController controller;
+class OBContextualMemorySearchBox extends StatefulWidget {
+  final ValueChanged<Memory> onMemoryPressed;
+  final OBContextualMemorySearchBoxController controller;
   final String initialSearchQuery;
 
-  const OBContextualCommunitySearchBox(
-      {Key key,
-      this.onCommunityPressed,
-      this.controller,
-      this.initialSearchQuery})
+  const OBContextualMemorySearchBox(
+      {Key key, this.onMemoryPressed, this.controller, this.initialSearchQuery})
       : super(key: key);
 
   @override
-  OBContextualCommunitySearchBoxState createState() {
-    return OBContextualCommunitySearchBoxState();
+  OBContextualMemorySearchBoxState createState() {
+    return OBContextualMemorySearchBoxState();
   }
 }
 
-class OBContextualCommunitySearchBoxState
-    extends State<OBContextualCommunitySearchBox> {
+class OBContextualMemorySearchBoxState
+    extends State<OBContextualMemorySearchBox> {
   UserService _userService;
   LocalizationService _localizationService;
   ToastService _toastService;
@@ -42,9 +39,9 @@ class OBContextualCommunitySearchBoxState
   CancelableOperation _searchParticipantsOperation;
 
   String _searchQuery;
-  List<Community> _all;
+  List<Memory> _all;
   bool _getAllInProgress;
-  List<Community> _searchResults;
+  List<Memory> _searchResults;
   bool _searchInProgress;
 
   @override
@@ -150,26 +147,27 @@ class OBContextualCommunitySearchBoxState
               padding: const EdgeInsets.only(left: 10),
               child: const OBIcon(OBIcons.sad),
             ),
-            title: OBText(_localizationService.contextual_community_search_box__no_results));
+            title: OBText(_localizationService
+                .contextual_community_search_box__no_results));
       } else {
         return const SizedBox();
       }
     }
 
-    return OBCommunityTile(
+    return OBMemoryTile(
       _searchResults[index],
-      size: OBCommunityTileSize.small,
+      size: OBMemoryTileSize.small,
       key: Key(_searchResults[index].id.toString()),
-      onCommunityTilePressed: widget.onCommunityPressed,
+      onMemoryTilePressed: widget.onMemoryPressed,
     );
   }
 
   Widget _buildAllItem(BuildContext context, int index) {
-    return OBCommunityTile(
+    return OBMemoryTile(
       _all[index],
-      size: OBCommunityTileSize.small,
+      size: OBMemoryTileSize.small,
       key: Key(_all[index].id.toString()),
-      onCommunityTilePressed: widget.onCommunityPressed,
+      onMemoryTilePressed: widget.onMemoryPressed,
     );
   }
 
@@ -190,13 +188,13 @@ class OBContextualCommunitySearchBoxState
 
     _setGetAllInProgress(true);
 
-    debugLog('Refreshing all communitys');
+    debugLog('Refreshing all memorys');
 
     try {
       _getAllOperation =
           CancelableOperation.fromFuture(_userService.getJoinedCommunities());
       CommunitiesList all = await _getAllOperation.value;
-      _setAll(all.communities);
+      _setAll(all.memories);
     } catch (error) {
       _onError(error);
     } finally {
@@ -223,7 +221,7 @@ class OBContextualCommunitySearchBoxState
       _searchParticipantsOperation = CancelableOperation.fromFuture(
           _userService.searchCommunitiesWithQuery(searchQuery));
       CommunitiesList searchResults = await _searchParticipantsOperation.value;
-      _setSearchResults(searchResults.communities);
+      _setSearchResults(searchResults.memories);
     } catch (error) {
       _onError(error);
     } finally {
@@ -246,13 +244,13 @@ class OBContextualCommunitySearchBoxState
     }
   }
 
-  void _setSearchResults(List<Community> searchResults) {
+  void _setSearchResults(List<Memory> searchResults) {
     setState(() {
       _searchResults = searchResults;
     });
   }
 
-  void _setAll(List<Community> all) {
+  void _setAll(List<Memory> all) {
     setState(() {
       _all = all;
     });
@@ -288,15 +286,15 @@ class OBContextualCommunitySearchBoxState
   }
 
   void debugLog(String log) {
-    debugPrint('OBContextualCommunitySearchBox:$log');
+    debugPrint('OBContextualMemorySearchBox:$log');
   }
 }
 
-class OBContextualCommunitySearchBoxController {
-  OBContextualCommunitySearchBoxState _state;
+class OBContextualMemorySearchBoxController {
+  OBContextualMemorySearchBoxState _state;
   String _lastSearchQuery;
 
-  void attach(OBContextualCommunitySearchBoxState state) {
+  void attach(OBContextualMemorySearchBoxState state) {
     _state = state;
   }
 
@@ -321,6 +319,6 @@ class OBContextualCommunitySearchBoxController {
   }
 
   void debugLog(String log) {
-    debugPrint('OBContextualCommunitySearchBoxController:$log');
+    debugPrint('OBContextualMemorySearchBoxController:$log');
   }
 }

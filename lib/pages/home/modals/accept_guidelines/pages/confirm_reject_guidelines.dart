@@ -41,10 +41,12 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
     }
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-    LocalizationService localizationService = openbookProvider.localizationService;
+    LocalizationService localizationService =
+        openbookProvider.localizationService;
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title:localizationService.user__confirm_guidelines_reject_title),
+        navigationBar: OBThemedNavigationBar(
+            title: localizationService.user__confirm_guidelines_reject_title),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -65,7 +67,7 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                       height: 20,
                     ),
                     OBText(
-                     localizationService.user__confirm_guidelines_reject_info,
+                      localizationService.user__confirm_guidelines_reject_info,
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -75,21 +77,23 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                     ),
                     ListTile(
                       leading: const OBIcon(OBIcons.chat),
-                      title: OBText(localizationService.user__confirm_guidelines_reject_chat_with_team),
-                      subtitle: OBSecondaryText(
-                          localizationService.user__confirm_guidelines_reject_chat_immediately),
+                      title: OBText(localizationService
+                          .user__confirm_guidelines_reject_chat_with_team),
+                      subtitle: OBSecondaryText(localizationService
+                          .user__confirm_guidelines_reject_chat_immediately),
                       onTap: () async {
                         openbookProvider.intercomService.displayMessenger();
                       },
                     ),
                     ListTile(
                       leading: const OBIcon(OBIcons.slackChannel),
-                      title: OBText(localizationService.user__confirm_guidelines_reject_chat_community),
-                      subtitle: OBSecondaryText(
-                          localizationService.user__confirm_guidelines_reject_join_slack),
+                      title: OBText(localizationService
+                          .user__confirm_guidelines_reject_chat_memory),
+                      subtitle: OBSecondaryText(localizationService
+                          .user__confirm_guidelines_reject_join_slack),
                       onTap: () {
-                        openbookProvider.urlLauncherService.launchUrl(
-                            'https://siuu.io/slack');
+                        openbookProvider.urlLauncherService
+                            .launchUrl('https://siuu.io/slack');
                       },
                     ),
                   ],
@@ -104,7 +108,8 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text(localizationService.user__confirm_guidelines_reject_go_back),
+                      child: Text(localizationService
+                          .user__confirm_guidelines_reject_go_back),
                       onPressed: () {
                         Navigator.pop(context);
                       },
@@ -117,7 +122,8 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.danger,
-                      child: Text(localizationService.user__confirm_guidelines_reject_delete_account),
+                      child: Text(localizationService
+                          .user__confirm_guidelines_reject_delete_account),
                       onPressed: () {
                         OpenbookProviderState openbookProvider =
                             OpenbookProvider.of(context);

@@ -1,19 +1,18 @@
 import 'package:Siuu/models/community.dart';
 
 class CommunitiesList {
-  final List<Community> communities;
+  final List<Memory> memories;
 
   CommunitiesList({
-    this.communities,
+    this.memories,
   });
 
   factory CommunitiesList.fromJson(List<dynamic> parsedJson) {
-    List<Community> communities = parsedJson
-        .map((communityJson) => Community.fromJSON(communityJson))
-        .toList();
+    List<Memory> memories =
+        parsedJson.map((memoryJson) => Memory.fromJSON(memoryJson)).toList();
 
     return new CommunitiesList(
-      communities: communities,
+      memories: memories,
     );
   }
 }

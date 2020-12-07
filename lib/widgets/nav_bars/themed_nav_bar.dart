@@ -47,7 +47,7 @@ class OBThemedNavigationBar extends StatelessWidget
             height: height * 0.058,
           ),*/
           Container(
-            height: height * 0.117,
+            height: height * 0.107,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Row(
@@ -60,50 +60,57 @@ class OBThemedNavigationBar extends StatelessWidget
                       },
                       child: SvgPicture.asset('assets/svg/Camera.svg')),
                   Text(
-                    title,
+                    title == null ? 'Siuu' : title,
                     style: TextStyle(
                       fontFamily: "Segoe UI",
-                      fontSize: 19,
+                      fontSize: 15,
                       color: Color(0xffffffff),
                     ),
                   ),
-                  Row(
-                    children: [
-                      InkWell(
-                          onTap: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => OBMainSearchPage(
-                                          controller: _searchPageController,
-                                        )));
-                          },
-                          child: SizedBox(
-                            height: height * 0.029,
-                            width: width * 0.048,
-                            child: SvgPicture.asset('assets/svg/search.svg',
-                                fit: BoxFit.contain, color: Colors.white),
-                          )),
-                      SizedBox(width: width * 0.024),
-                      InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => OBMainMenuPage(
-                                        controller: _mainMenuPageController,
-                                      )));
-                        },
-                        child: SvgPicture.asset('assets/svg/menu.svg'),
-                      ),
-                    ],
-                  )
+                  trailing == null
+                      ? Row(
+                          children: [
+                            InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              OBMainSearchPage(
+                                                controller:
+                                                    _searchPageController,
+                                              )));
+                                },
+                                child: SizedBox(
+                                  height: height * 0.029,
+                                  width: width * 0.048,
+                                  child: SvgPicture.asset(
+                                      'assets/svg/search.svg',
+                                      fit: BoxFit.contain,
+                                      color: Colors.white),
+                                )),
+                            SizedBox(width: width * 0.024),
+                            InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => OBMainMenuPage(
+                                              controller:
+                                                  _mainMenuPageController,
+                                            )));
+                              },
+                              child: SvgPicture.asset('assets/svg/menu.svg'),
+                            ),
+                          ],
+                        )
+                      : Row(children: [
+                          Container(child: trailing),
+                          Container(child: leading)
+                        ]),
                 ],
               ),
             ),
-          ),
-          Container(
-            height: height * 0.058,
           ),
         ],
       ),

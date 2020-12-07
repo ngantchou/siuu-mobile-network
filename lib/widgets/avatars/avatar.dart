@@ -5,7 +5,7 @@ import 'package:flutter_advanced_networkimage/provider.dart';
 
 enum OBAvatarSize { extraSmall, small, medium, large, extraLarge }
 
-enum OBAvatarType { user, community }
+enum OBAvatarType { user, memory }
 
 class OBAvatar extends StatelessWidget {
   final String avatarUrl;

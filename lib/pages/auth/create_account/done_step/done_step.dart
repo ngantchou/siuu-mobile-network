@@ -15,7 +15,7 @@ class OBAuthDonePage extends StatefulWidget {
 class OBAuthDonePageState extends State<OBAuthDonePage> {
   LocalizationService localizationService;
   CreateAccountBloc createAccountBloc;
-  bool _isCommunitySelectionInProgress = false;
+  bool _isMemorySelectionInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -44,22 +44,21 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
       color: Colors.transparent,
       elevation: 0.0,
       child: Container(
-        padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Expanded(
-                  child: _buildContinueButton(context: context),
-                ),
-              ],
-            ),
-          ],
-        )
-      ),
+          padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 20.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Expanded(
+                    child: _buildContinueButton(context: context),
+                  ),
+                ],
+              ),
+            ],
+          )),
     );
   }
 
@@ -104,9 +103,9 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
     );
   }
 
-  void onCommunitySelectionInProgress(bool isCommunitySelectionInProgress) {
+  void onMemorySelectionInProgress(bool isMemorySelectionInProgress) {
     setState(() {
-      _isCommunitySelectionInProgress = isCommunitySelectionInProgress;
+      _isMemorySelectionInProgress = isMemorySelectionInProgress;
     });
   }
 
@@ -116,7 +115,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
     return OBSuccessButton(
       minWidth: double.infinity,
       size: OBButtonSize.large,
-      isDisabled: _isCommunitySelectionInProgress,
+      isDisabled: _isMemorySelectionInProgress,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
@@ -127,7 +126,7 @@ class OBAuthDonePageState extends State<OBAuthDonePage> {
         ],
       ),
       onPressed: () {
-        Navigator.pushNamed(context, '/auth/suggested_communities');
+        Navigator.pushNamed(context, '/auth/suggested_memories');
       },
     );
   }

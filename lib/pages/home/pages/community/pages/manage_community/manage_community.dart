@@ -14,10 +14,10 @@ import 'package:Siuu/widgets/tiles/actions/new_post_notifications_for_community_
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBManageCommunityPage extends StatelessWidget {
-  final Community community;
+class OBManageMemoryPage extends StatelessWidget {
+  final Memory memory;
 
-  const OBManageCommunityPage({@required this.community});
+  const OBManageMemoryPage({@required this.memory});
 
   @override
   Widget build(BuildContext context) {
@@ -25,158 +25,170 @@ class OBManageCommunityPage extends StatelessWidget {
     NavigationService navigationService = openbookProvider.navigationService;
     ModalService modalService = openbookProvider.modalService;
     UserService userService = openbookProvider.userService;
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
 
     User loggedInUser = userService.getLoggedInUser();
     List<Widget> menuListTiles = [];
 
     const TextStyle listItemSubtitleStyle = TextStyle(fontSize: 14);
 
-    if (loggedInUser.canChangeDetailsOfCommunity(community)) {
+    if (loggedInUser.canChangeDetailsOfMemory(memory)) {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.communities),
-        title: OBText(_localizationService.trans('community__manage_details_title')),
+        leading: const OBIcon(OBIcons.memories),
+        title: OBText(
+            _localizationService.trans('community__manage_details_title')),
         subtitle: OBText(
           _localizationService.trans('community__manage_details_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
-          modalService.openEditCommunity(
-              context: context, community: community);
+          modalService.openEditMemory(context: context, memory: memory);
         },
       ));
     }
 
-    if (loggedInUser.canAddOrRemoveAdministratorsInCommunity(community)) {
+    if (loggedInUser.canAddOrRemoveAdministratorsInMemory(memory)) {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.communityAdministrators),
-        title: OBText(_localizationService.trans('community__manage_admins_title')),
+        leading: const OBIcon(OBIcons.memoryAdministrators),
+        title: OBText(
+            _localizationService.trans('community__manage_admins_title')),
         subtitle: OBText(
           _localizationService.trans('community__manage_admins_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
-          navigationService.navigateToCommunityAdministrators(
-              context: context, community: community);
+          navigationService.navigateToMemoryAdministrators(
+              context: context, memory: memory);
         },
       ));
     }
 
-    if (loggedInUser.canAddOrRemoveModeratorsInCommunity(community)) {
+    if (loggedInUser.canAddOrRemoveModeratorsInMemory(memory)) {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.communityModerators),
-        title: OBText(_localizationService.trans('community__manage_mods_title')),
+        leading: const OBIcon(OBIcons.memoryModerators),
+        title:
+            OBText(_localizationService.trans('community__manage_mods_title')),
         subtitle: OBText(
           _localizationService.trans('community__manage_mods_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
-          navigationService.navigateToCommunityModerators(
-              context: context, community: community);
+          navigationService.navigateToMemoryModerators(
+              context: context, memory: memory);
         },
       ));
     }
 
-    if (loggedInUser.canBanOrUnbanUsersInCommunity(community)) {
+    if (loggedInUser.canBanOrUnbanUsersInMemory(memory)) {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.communityBannedUsers),
-        title: OBText(_localizationService.trans('community__manage_banned_title')),
+        leading: const OBIcon(OBIcons.memoryBannedUsers),
+        title: OBText(
+            _localizationService.trans('community__manage_banned_title')),
         subtitle: OBText(
           _localizationService.trans('community__manage_banned_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
-          navigationService.navigateToCommunityBannedUsers(
-              context: context, community: community);
+          navigationService.navigateToMemoryBannedUsers(
+              context: context, memory: memory);
         },
       ));
     }
 
-    if (loggedInUser.canBanOrUnbanUsersInCommunity(community)) {
+    if (loggedInUser.canBanOrUnbanUsersInMemory(memory)) {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.communityModerators),
-        title: OBText(_localizationService.trans('community__manage_mod_reports_title')),
+        leading: const OBIcon(OBIcons.memoryModerators),
+        title: OBText(
+            _localizationService.trans('community__manage_mod_reports_title')),
         subtitle: OBText(
           _localizationService.trans('community__manage_mod_reports_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
-          navigationService.navigateToCommunityModeratedObjects(
-              context: context, community: community);
+          navigationService.navigateToMemoryModeratedObjects(
+              context: context, memory: memory);
         },
       ));
     }
 
-    if (loggedInUser.canCloseOrOpenPostsInCommunity(community)) {
+    if (loggedInUser.canCloseOrOpenPostsInMemory(memory)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.closePost),
-        title: OBText(_localizationService.trans('community__manage_closed_posts_title')),
+        title: OBText(
+            _localizationService.trans('community__manage_closed_posts_title')),
         subtitle: OBText(
           _localizationService.trans('community__manage_closed_posts_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
-          navigationService.navigateToCommunityClosedPosts(
-              context: context, community: community);
+          navigationService.navigateToMemoryClosedPosts(
+              context: context, memory: memory);
         },
       ));
     }
 
-
-    menuListTiles.add(OBNewPostNotificationsForCommunityTile(
-        community: community,
-        title: OBText(_localizationService.community__manage_enable_new_post_notifications,
+    menuListTiles.add(OBNewPostNotificationsForMemoryTile(
+        memory: memory,
+        title: OBText(
+          _localizationService.community__manage_enable_new_post_notifications,
           style: listItemSubtitleStyle,
         ),
-        subtitle: OBText(_localizationService.community__manage_disable_new_post_notifications,
+        subtitle: OBText(
+          _localizationService.community__manage_disable_new_post_notifications,
           style: listItemSubtitleStyle,
         )));
 
     menuListTiles.add(ListTile(
-      leading: const OBIcon(OBIcons.communityInvites),
-      title: OBText(_localizationService.trans('community__manage_invite_title')),
-      subtitle: OBText(_localizationService.trans('community__manage_invite_desc'),
+      leading: const OBIcon(OBIcons.memoryInvites),
+      title:
+          OBText(_localizationService.trans('community__manage_invite_title')),
+      subtitle: OBText(
+        _localizationService.trans('community__manage_invite_desc'),
         style: listItemSubtitleStyle,
       ),
       onTap: () {
-        modalService.openInviteToCommunity(
-            context: context, community: community);
+        modalService.openInviteToMemory(context: context, memory: memory);
       },
     ));
 
-    menuListTiles.add(OBFavoriteCommunityTile(
-        community: community,
-        favoriteSubtitle: OBText(_localizationService.trans('community__manage_add_favourite'),
+    menuListTiles.add(OBFavoriteMemoryTile(
+        memory: memory,
+        favoriteSubtitle: OBText(
+          _localizationService.trans('community__manage_add_favourite'),
           style: listItemSubtitleStyle,
         ),
-        unfavoriteSubtitle: OBText(_localizationService.trans('community__manage_remove_favourite'),
+        unfavoriteSubtitle: OBText(
+          _localizationService.trans('community__manage_remove_favourite'),
           style: listItemSubtitleStyle,
         )));
 
-    if (loggedInUser.isCreatorOfCommunity(community)) {
+    if (loggedInUser.isCreatorOfMemory(memory)) {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.deleteCommunity),
-        title: OBText(_localizationService.trans('community__manage_delete_title')),
+        leading: const OBIcon(OBIcons.deleteMemory),
+        title: OBText(
+            _localizationService.trans('community__manage_delete_title')),
         subtitle: OBText(
           _localizationService.trans('community__manage_delete_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
-          navigationService.navigateToDeleteCommunity(
-              context: context, community: community);
+          navigationService.navigateToDeleteMemory(
+              context: context, memory: memory);
         },
       ));
     } else {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.leaveCommunity),
-        title: OBText(_localizationService.trans('community__manage_leave_title')),
+        leading: const OBIcon(OBIcons.leaveMemory),
+        title:
+            OBText(_localizationService.trans('community__manage_leave_title')),
         subtitle: OBText(
           _localizationService.trans('community__manage_leave_desc'),
           style: listItemSubtitleStyle,
         ),
         onTap: () {
-          navigationService.navigateToLeaveCommunity(
-              context: context, community: community);
+          navigationService.navigateToLeaveMemory(
+              context: context, memory: memory);
         },
       ));
     }

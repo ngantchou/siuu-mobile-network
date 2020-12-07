@@ -45,69 +45,68 @@ class OBProfilePostsExcludedCommunitiesState
 
     return CupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: _localizationService.user__profile_posts_exclude_communities,
+        title: _localizationService.user__profile_posts_exclude_memories,
       ),
       child: OBPrimaryColorContainer(
-        child: OBHttpList<Community>(
+        child: OBHttpList<Memory>(
           isSelectable: true,
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           controller: _httpListController,
-          listItemBuilder: _buildCommunityListItem,
-          searchResultListItemBuilder: _buildCommunityListItem,
-          selectedListItemBuilder: _buildCommunityListItem,
+          listItemBuilder: _buildMemoryListItem,
+          searchResultListItemBuilder: _buildMemoryListItem,
+          selectedListItemBuilder: _buildMemoryListItem,
           listRefresher: _refreshJoinedCommunities,
           listOnScrollLoader: _loadMoreJoinedCommunities,
           listSearcher: _searchCommunities,
           selectionSubmitter: _excludeCommunities,
           onSelectionSubmitted: _onCommunitiesWereExcluded,
-          resourceSingularName: _localizationService.community__community,
-          resourcePluralName: _localizationService.community__communities,
+          resourceSingularName: _localizationService.community__memory,
+          resourcePluralName: _localizationService.community__memories,
         ),
       ),
     );
   }
 
-  Widget _buildCommunityListItem(BuildContext context, Community community) {
+  Widget _buildMemoryListItem(BuildContext context, Memory memory) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0),
-      child: OBCommunityTile(
-        community,
-        size: OBCommunityTileSize.small,
+      child: OBMemoryTile(
+        memory,
+        size: OBMemoryTileSize.small,
       ),
     );
   }
 
-  Future<void> _excludeCommunities(List<Community> communities) {
-    return Future.wait(communities
-        .map((community) =>
-            _userService.excludeCommunityFromProfilePosts(community))
+  Future<void> _excludeCommunities(List<Memory> memories) {
+    return Future.wait(memories
+        .map((memory) => _userService.excludeMemoryFromProfilePosts(memory))
         .toList());
   }
 
-  void _onCommunitiesWereExcluded(List<Community> communities) {
-    Navigator.pop(context, communities);
+  void _onCommunitiesWereExcluded(List<Memory> memories) {
+    Navigator.pop(context, memories);
   }
 
-  Future<List<Community>> _refreshJoinedCommunities() async {
+  Future<List<Memory>> _refreshJoinedCommunities() async {
     CommunitiesList joinedCommunities = await _userService.getJoinedCommunities(
         excludedFromProfilePosts: false);
-    return joinedCommunities.communities;
+    return joinedCommunities.memories;
   }
 
-  Future<List<Community>> _loadMoreJoinedCommunities(
-      List<Community> joinedCommunitiesList) async {
+  Future<List<Memory>> _loadMoreJoinedCommunities(
+      List<Memory> joinedCommunitiesList) async {
     var moreJoinedCommunities = (await _userService.getJoinedCommunities(
       offset: joinedCommunitiesList.length,
     ))
-        .communities;
+        .memories;
 
     return moreJoinedCommunities;
   }
 
-  Future<List<Community>> _searchCommunities(String query) async {
+  Future<List<Memory>> _searchCommunities(String query) async {
     CommunitiesList results = await _userService
         .searchCommunitiesWithQuery(query, excludedFromProfilePosts: false);
 
-    return results.communities;
+    return results.memories;
   }
 }

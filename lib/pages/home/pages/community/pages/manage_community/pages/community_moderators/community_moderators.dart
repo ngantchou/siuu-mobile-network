@@ -20,20 +20,19 @@ import 'package:Siuu/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityModeratorsPage extends StatefulWidget {
-  final Community community;
+class OBMemoryModeratorsPage extends StatefulWidget {
+  final Memory memory;
 
-  const OBCommunityModeratorsPage({Key key, @required this.community})
+  const OBMemoryModeratorsPage({Key key, @required this.memory})
       : super(key: key);
 
   @override
-  State<OBCommunityModeratorsPage> createState() {
-    return OBCommunityModeratorsPageState();
+  State<OBMemoryModeratorsPage> createState() {
+    return OBMemoryModeratorsPageState();
   }
 }
 
-class OBCommunityModeratorsPageState
-    extends State<OBCommunityModeratorsPage> {
+class OBMemoryModeratorsPageState extends State<OBMemoryModeratorsPage> {
   UserService _userService;
   ModalService _modalService;
   NavigationService _navigationService;
@@ -74,42 +73,47 @@ class OBCommunityModeratorsPageState
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
           controller: _httpListController,
-          listItemBuilder: _buildCommunityModeratorListItem,
-          searchResultListItemBuilder: _buildCommunityModeratorListItem,
-          listRefresher: _refreshCommunityModerators,
-          listOnScrollLoader: _loadMoreCommunityModerators,
-          listSearcher: _searchCommunityModerators,
-          resourceSingularName: _localizationService.trans('community__moderator_resource_name'),
-          resourcePluralName: _localizationService.trans('community__moderators_resource_name'),
+          listItemBuilder: _buildMemoryModeratorListItem,
+          searchResultListItemBuilder: _buildMemoryModeratorListItem,
+          listRefresher: _refreshMemoryModerators,
+          listOnScrollLoader: _loadMoreMemoryModerators,
+          listSearcher: _searchMemoryModerators,
+          resourceSingularName:
+              _localizationService.trans('community__moderator_resource_name'),
+          resourcePluralName:
+              _localizationService.trans('community__moderators_resource_name'),
         ),
       ),
     );
   }
 
-  Widget _buildCommunityModeratorListItem(BuildContext context, User user) {
+  Widget _buildMemoryModeratorListItem(BuildContext context, User user) {
     bool isLoggedInUser = _userService.isLoggedInUser(user);
 
     return OBUserTile(
       user,
-      onUserTilePressed: _onCommunityModeratorListItemPressed,
+      onUserTilePressed: _onMemoryModeratorListItemPressed,
       onUserTileDeleted:
-          isLoggedInUser ? null : _onCommunityModeratorListItemDeleted,
-      trailing: isLoggedInUser ? OBText(_localizationService.trans('community__moderators_you'),
-        style: TextStyle(fontWeight: FontWeight.bold),) : null,
+          isLoggedInUser ? null : _onMemoryModeratorListItemDeleted,
+      trailing: isLoggedInUser
+          ? OBText(
+              _localizationService.trans('community__moderators_you'),
+              style: TextStyle(fontWeight: FontWeight.bold),
+            )
+          : null,
     );
   }
 
-  void _onCommunityModeratorListItemPressed(User communityModerator) {
+  void _onMemoryModeratorListItemPressed(User memoryModerator) {
     _navigationService.navigateToUserProfile(
-        user: communityModerator, context: context);
+        user: memoryModerator, context: context);
   }
 
-  void _onCommunityModeratorListItemDeleted(
-      User communityModerator) async {
+  void _onMemoryModeratorListItemDeleted(User memoryModerator) async {
     try {
-      await _userService.removeCommunityModerator(
-          community: widget.community, user: communityModerator);
-      _httpListController.removeListItem(communityModerator);
+      await _userService.removeMemoryModerator(
+          memory: widget.memory, user: memoryModerator);
+      _httpListController.removeListItem(memoryModerator);
     } catch (error) {
       _onError(error);
     }
@@ -123,50 +127,49 @@ class OBCommunityModeratorsPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }
 
-  Future<List<User>> _refreshCommunityModerators() async {
-    UsersList communityModerators =
-        await _userService.getModeratorsForCommunity(widget.community);
-    return communityModerators.users;
+  Future<List<User>> _refreshMemoryModerators() async {
+    UsersList memoryModerators =
+        await _userService.getModeratorsForMemory(widget.memory);
+    return memoryModerators.users;
   }
 
-  Future<List<User>> _loadMoreCommunityModerators(
-      List<User> communityModeratorsList) async {
-    var lastCommunityModerator = communityModeratorsList.last;
-    var lastCommunityModeratorId = lastCommunityModerator.id;
-    var moreCommunityModerators =
-        (await _userService.getModeratorsForCommunity(
-      widget.community,
-      maxId: lastCommunityModeratorId,
+  Future<List<User>> _loadMoreMemoryModerators(
+      List<User> memoryModeratorsList) async {
+    var lastMemoryModerator = memoryModeratorsList.last;
+    var lastMemoryModeratorId = lastMemoryModerator.id;
+    var moreMemoryModerators = (await _userService.getModeratorsForMemory(
+      widget.memory,
+      maxId: lastMemoryModeratorId,
       count: 20,
     ))
-            .users;
-    return moreCommunityModerators;
+        .users;
+    return moreMemoryModerators;
   }
 
-  Future<List<User>> _searchCommunityModerators(String query) async {
-    UsersList results = await _userService.searchCommunityModerators(
-        query: query, community: widget.community);
+  Future<List<User>> _searchMemoryModerators(String query) async {
+    UsersList results = await _userService.searchMemoryModerators(
+        query: query, memory: widget.memory);
 
     return results.users;
   }
 
   void _onWantsToAddNewModerator() async {
-    User addedCommunityModerator =
-        await _modalService.openAddCommunityModerator(
-            context: context, community: widget.community);
+    User addedMemoryModerator = await _modalService.openAddMemoryModerator(
+        context: context, memory: widget.memory);
 
-    if (addedCommunityModerator != null) {
-      _httpListController.insertListItem(addedCommunityModerator);
+    if (addedMemoryModerator != null) {
+      _httpListController.insertListItem(addedMemoryModerator);
     }
   }
 }
 
-typedef Future<User> OnWantsToCreateCommunityModerator();
-typedef Future<User> OnWantsToEditCommunityModerator(
-    User communityModerator);
-typedef void OnWantsToSeeCommunityModerator(User communityModerator);
+typedef Future<User> OnWantsToCreateMemoryModerator();
+typedef Future<User> OnWantsToEditMemoryModerator(User memoryModerator);
+typedef void OnWantsToSeeMemoryModerator(User memoryModerator);

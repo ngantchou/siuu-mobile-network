@@ -10,15 +10,15 @@ import 'package:flutter/material.dart';
 
 import '../../../../../provider.dart';
 
-class OBCommunityRulesPage extends StatelessWidget {
-  final Community community;
+class OBMemoryRulesPage extends StatelessWidget {
+  final Memory memory;
 
-  const OBCommunityRulesPage({Key key, @required this.community})
-      : super(key: key);
+  const OBMemoryRulesPage({Key key, @required this.memory}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
@@ -26,17 +26,17 @@ class OBCommunityRulesPage extends StatelessWidget {
       ),
       child: OBPrimaryColorContainer(
         child: StreamBuilder(
-          stream: community.updateSubject,
-          initialData: community,
-          builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-            var community = snapshot.data;
+          stream: memory.updateSubject,
+          initialData: memory,
+          builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+            var memory = snapshot.data;
 
-            String communityRules = community?.rules;
-            String communityColor = community?.color;
+            String memoryRules = memory?.rules;
+            String memoryColor = memory?.color;
 
-            if (communityRules == null ||
-                communityRules.isEmpty ||
-                communityColor == null) return const SizedBox();
+            if (memoryRules == null ||
+                memoryRules.isEmpty ||
+                memoryColor == null) return const SizedBox();
 
             return SingleChildScrollView(
               physics: const ClampingScrollPhysics(),
@@ -67,7 +67,7 @@ class OBCommunityRulesPage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    OBActionableSmartText(text: community.rules)
+                    OBActionableSmartText(text: memory.rules)
                   ],
                 ),
               ),

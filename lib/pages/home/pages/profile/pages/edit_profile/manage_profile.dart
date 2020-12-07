@@ -19,13 +19,13 @@ import 'package:flutter/material.dart';
 class OBManageProfilePage extends StatefulWidget {
   final User user;
   final VoidCallback onUserProfileUpdated;
-  final ValueChanged<Community> onExcludedCommunityRemoved;
-  final ValueChanged<List<Community>> onExcludedCommunitiesAdded;
+  final ValueChanged<Memory> onExcludedMemoryRemoved;
+  final ValueChanged<List<Memory>> onExcludedCommunitiesAdded;
 
   const OBManageProfilePage(this.user,
       {Key key,
       this.onUserProfileUpdated,
-      this.onExcludedCommunityRemoved,
+      this.onExcludedMemoryRemoved,
       this.onExcludedCommunitiesAdded})
       : super(key: key);
 
@@ -44,7 +44,7 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
   NavigationService _navigationService;
   UserService _userService;
 
-  bool _communityPostsVisible;
+  bool _memoryPostsVisible;
   bool _isFirstBuild;
 
   @override
@@ -52,7 +52,7 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
     super.initState();
     _isFirstBuild = true;
 
-    _communityPostsVisible = widget.user.getProfileCommunityPostsVisible();
+    _memoryPostsVisible = widget.user.getProfileMemoryPostsVisible();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => _isFirstBuild = false);
   }
@@ -94,9 +94,9 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
                   const SizedBox(
                     height: 20,
                   ),
-                  OBDisplayProfileCommunityPostsToggleTile(
+                  OBDisplayProfileMemoryPostsToggleTile(
                     user: widget.user,
-                    onChanged: _onCommunityPostsVisibleChanged,
+                    onChanged: _onMemoryPostsVisibleChanged,
                   ),
                   _buildExcludedCommunitiesTile(),
                   Padding(
@@ -138,9 +138,9 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
         )));
   }
 
-  void _onCommunityPostsVisibleChanged(bool newValue) {
+  void _onMemoryPostsVisibleChanged(bool newValue) {
     setState(() {
-      _communityPostsVisible = newValue;
+      _memoryPostsVisible = newValue;
     });
   }
 
@@ -151,22 +151,22 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
   }
 
   Widget _buildExcludedCommunitiesTile() {
-    if (!_communityPostsVisible) return const SizedBox();
+    if (!_memoryPostsVisible) return const SizedBox();
 
     Widget tile = ListTile(
-      leading: OBIcon(OBIcons.excludePostCommunity),
+      leading: OBIcon(OBIcons.excludePostMemory),
       title: new OBText(
-        _localizationService.user__profile_posts_excluded_communities,
+        _localizationService.user__profile_posts_excluded_memories,
         style: TextStyle(fontWeight: FontWeight.bold),
       ),
       subtitle: OBText(
-        _localizationService.user__profile_posts_excluded_communities_desc,
+        _localizationService.user__profile_posts_excluded_memories_desc,
         size: OBTextSize.mediumSecondary,
       ),
       onTap: () async {
         _navigationService.navigateToProfilePostsExcludedCommunities(
             context: context,
-            onExcludedCommunityRemoved: widget.onExcludedCommunityRemoved,
+            onExcludedMemoryRemoved: widget.onExcludedMemoryRemoved,
             onExcludedCommunitiesAdded: widget.onExcludedCommunitiesAdded);
       },
     );

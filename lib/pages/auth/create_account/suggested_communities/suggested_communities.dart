@@ -17,7 +17,7 @@ class OBSuggestedCommunitiesPageState
     extends State<OBSuggestedCommunitiesPage> {
   LocalizationService localizationService;
   CreateAccountBloc createAccountBloc;
-  bool _isCommunitySelectionInProgress = false;
+  bool _isMemorySelectionInProgress = false;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class OBSuggestedCommunitiesPageState
   }
 
   Widget _buildHooray() {
-    String title = localizationService.auth__create_acc__suggested_communities;
+    String title = localizationService.auth__create_acc__suggested_memories;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.end,
@@ -85,9 +85,9 @@ class OBSuggestedCommunitiesPageState
     );
   }
 
-  void onCommunitySelectionInProgress(bool isCommunitySelectionInProgress) {
+  void onMemorySelectionInProgress(bool isMemorySelectionInProgress) {
     setState(() {
-      _isCommunitySelectionInProgress = isCommunitySelectionInProgress;
+      _isMemorySelectionInProgress = isMemorySelectionInProgress;
     });
   }
 
@@ -97,7 +97,7 @@ class OBSuggestedCommunitiesPageState
     return OBSuccessButton(
         minWidth: double.infinity,
         size: OBButtonSize.large,
-        isDisabled: _isCommunitySelectionInProgress,
+        isDisabled: _isMemorySelectionInProgress,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[

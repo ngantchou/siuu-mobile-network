@@ -5,20 +5,20 @@ import 'package:Siuu/widgets/theming/secondary_text.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityCategories extends StatelessWidget {
-  final Community community;
+class OBMemoryCategories extends StatelessWidget {
+  final Memory memory;
 
-  OBCommunityCategories(this.community);
+  OBMemoryCategories(this.memory);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      initialData: community,
-      stream: community.updateSubject,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        Community community = snapshot.data;
-        if (community.categories == null) return const SizedBox();
-        List<Category> categories = community.categories.categories;
+      initialData: memory,
+      stream: memory.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        Memory memory = snapshot.data;
+        if (memory.categories == null) return const SizedBox();
+        List<Category> categories = memory.categories.categories;
 
         List<Widget> connectionItems = [];
 

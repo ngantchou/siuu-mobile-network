@@ -45,7 +45,7 @@ class Post extends UpdatableModel<Post> {
 
   PostMediaList media;
   PostCommentList commentsList;
-  Community community;
+  Memory memory;
   HashtagsList hashtagsList;
   PostLinksList postLinksList;
   Map<String, Hashtag> hashtagsMap;
@@ -107,7 +107,7 @@ class Post extends UpdatableModel<Post> {
       'links': postLinksList?.postLinks
           ?.map((PostLink postLink) => postLink.toJson())
           ?.toList(),
-      'community': community?.toJson(),
+      'memory': memory?.toJson(),
       'is_muted': isMuted,
       'is_encircled': isEncircled,
       'is_edited': isEdited,
@@ -142,7 +142,7 @@ class Post extends UpdatableModel<Post> {
       this.reactionsEmojiCounts,
       this.areCommentsEnabled,
       this.circles,
-      this.community,
+      this.memory,
       this.status,
       this.publicReactions,
       this.isMuted,
@@ -207,8 +207,8 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('media')) media = factory.parseMedia(json['media']);
 
-    if (json.containsKey('community'))
-      community = factory.parseCommunity(json['community']);
+    if (json.containsKey('memory'))
+      memory = factory.parseMemory(json['memory']);
 
     if (json.containsKey('creator'))
       creator = factory.parseUser(json['creator']);
@@ -246,8 +246,8 @@ class Post extends UpdatableModel<Post> {
     return reaction != null;
   }
 
-  bool hasCommunity() {
-    return community != null;
+  bool hasMemory() {
+    return memory != null;
   }
 
   bool isReactionEmoji(Emoji emoji) {
@@ -258,8 +258,8 @@ class Post extends UpdatableModel<Post> {
     return publicReactions && areCommentsEnabled;
   }
 
-  bool isCommunityPost() {
-    return community != null;
+  bool isMemoryPost() {
+    return memory != null;
   }
 
   bool hasMediaThumbnail() {
@@ -476,7 +476,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         mediaThumbnail: json['media_thumbnail'],
         media: parseMedia(json['media']),
         reaction: parseReaction(json['reaction']),
-        community: parseCommunity(json['community']),
+        memory: parseMemory(json['memory']),
         commentsList: parseCommentList(json['comments']),
         hashtagsList: parseHashtagsList(json['hashtags']),
         postLinksList: parsePostLinksList(json['links']),
@@ -513,9 +513,9 @@ class PostFactory extends UpdatableModelFactory<Post> {
     return PostReaction.fromJson(postReaction);
   }
 
-  Community parseCommunity(Map communityData) {
-    if (communityData == null) return null;
-    return Community.fromJSON(communityData);
+  Memory parseMemory(Map memoryData) {
+    if (memoryData == null) return null;
+    return Memory.fromJSON(memoryData);
   }
 
   ReactionsEmojiCountList parseReactionsEmojiCounts(List reactionsEmojiCounts) {

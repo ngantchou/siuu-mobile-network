@@ -39,7 +39,10 @@ class OBPrimaryColorContainer extends StatelessWidget {
 
           return Column(
             mainAxisSize: mainAxisSize,
-            children: <Widget>[Expanded(child: container)],
+            children: <Widget>[
+              SizedBox(height: MediaQuery.of(context).size.height / 8),
+              Expanded(child: container)
+            ],
           );
         });
   }

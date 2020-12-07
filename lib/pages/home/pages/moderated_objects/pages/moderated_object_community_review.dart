@@ -19,22 +19,22 @@ import 'package:Siuu/widgets/tile_group_title.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
-class OBModeratedObjectCommunityReviewPage extends StatefulWidget {
+class OBModeratedObjectMemoryReviewPage extends StatefulWidget {
   final ModeratedObject moderatedObject;
-  final Community community;
+  final Memory memory;
 
-  const OBModeratedObjectCommunityReviewPage(
-      {Key key, @required this.moderatedObject, @required this.community})
+  const OBModeratedObjectMemoryReviewPage(
+      {Key key, @required this.moderatedObject, @required this.memory})
       : super(key: key);
 
   @override
-  OBModeratedObjectCommunityReviewPageState createState() {
-    return OBModeratedObjectCommunityReviewPageState();
+  OBModeratedObjectMemoryReviewPageState createState() {
+    return OBModeratedObjectMemoryReviewPageState();
   }
 }
 
-class OBModeratedObjectCommunityReviewPageState
-    extends State<OBModeratedObjectCommunityReviewPage> {
+class OBModeratedObjectMemoryReviewPageState
+    extends State<OBModeratedObjectMemoryReviewPage> {
   bool _requestInProgress;
   bool _isEditable;
 
@@ -82,7 +82,8 @@ class OBModeratedObjectCommunityReviewPageState
             child: ListView(
               children: <Widget>[
                 OBTileGroupTitle(
-                  title:  _localizationService.trans('moderation__community_review_object'),
+                  title: _localizationService
+                      .trans('moderation__community_review_object'),
                 ),
                 OBModeratedObjectPreview(
                   moderatedObject: widget.moderatedObject,
@@ -154,7 +155,8 @@ class OBModeratedObjectCommunityReviewPageState
       child: OBButton(
         size: OBButtonSize.large,
         type: OBButtonType.danger,
-        child: Text(_localizationService.trans('moderation__community_review_reject')),
+        child: Text(
+            _localizationService.trans('moderation__community_review_reject')),
         onPressed: _onWantsToRejectModeratedObject,
         isLoading: _requestInProgress,
       ),
@@ -165,7 +167,8 @@ class OBModeratedObjectCommunityReviewPageState
     return Expanded(
       child: OBButton(
         size: OBButtonSize.large,
-        child: Text(_localizationService.trans('moderation__community_review_approve')),
+        child: Text(
+            _localizationService.trans('moderation__community_review_approve')),
         type: OBButtonType.success,
         onPressed: _onWantsToApproveModeratedObject,
         isLoading: _requestInProgress,
@@ -178,7 +181,8 @@ class OBModeratedObjectCommunityReviewPageState
       child: OBButton(
         size: OBButtonSize.large,
         type: OBButtonType.highlight,
-        child: Text(_localizationService.trans('moderation__community_review_item_verified')),
+        child: Text(_localizationService
+            .trans('moderation__community_review_item_verified')),
         onPressed: null,
       ),
     );
@@ -254,7 +258,9 @@ class OBModeratedObjectCommunityReviewPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }

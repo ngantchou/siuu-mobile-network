@@ -10,19 +10,18 @@ import 'package:Siuu/widgets/theming/primary_color_container.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 
-class OBLeaveCommunityPage<T> extends StatefulWidget {
-  final Community community;
+class OBLeaveMemoryPage<T> extends StatefulWidget {
+  final Memory memory;
 
-  const OBLeaveCommunityPage({Key key, @required this.community})
-      : super(key: key);
+  const OBLeaveMemoryPage({Key key, @required this.memory}) : super(key: key);
 
   @override
-  OBLeaveCommunityPageState createState() {
-    return OBLeaveCommunityPageState();
+  OBLeaveMemoryPageState createState() {
+    return OBLeaveMemoryPageState();
   }
 }
 
-class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
+class OBLeaveMemoryPageState extends State<OBLeaveMemoryPage> {
   bool _confirmationInProgress;
   UserService _userService;
   ToastService _toastService;
@@ -47,7 +46,8 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: _localizationService.community__confirmation_title),
+        navigationBar: OBThemedNavigationBar(
+            title: _localizationService.community__confirmation_title),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -60,14 +60,15 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     OBIcon(
-                      OBIcons.leaveCommunity,
+                      OBIcons.leaveMemory,
                       themeColor: OBIconThemeColor.primaryAccent,
                       size: OBIconSize.extraLarge,
                     ),
                     const SizedBox(
                       height: 20,
                     ),
-                    OBText(_localizationService.community__leave_confirmation,
+                    OBText(
+                      _localizationService.community__leave_confirmation,
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -113,10 +114,10 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
   void _onConfirm() async {
     _setConfirmationInProgress(true);
     try {
-      await _userService.leaveCommunity(widget.community);
-      // Pop back to manage community
+      await _userService.leaveMemory(widget.memory);
+      // Pop back to manage memory
       Navigator.of(context).pop();
-      // Pop back to community
+      // Pop back to memory
       Navigator.of(context).pop();
     } catch (error) {
       _onError(error);
@@ -133,7 +134,9 @@ class OBLeaveCommunityPageState extends State<OBLeaveCommunityPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }

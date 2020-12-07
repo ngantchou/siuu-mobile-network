@@ -11,22 +11,22 @@ import 'package:Siuu/widgets/theming/primary_color_container.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 
-class OBConfirmAddCommunityModerator<T> extends StatefulWidget {
+class OBConfirmAddMemoryModerator<T> extends StatefulWidget {
   final User user;
-  final Community community;
+  final Memory memory;
 
-  const OBConfirmAddCommunityModerator(
-      {Key key, @required this.user, @required this.community})
+  const OBConfirmAddMemoryModerator(
+      {Key key, @required this.user, @required this.memory})
       : super(key: key);
 
   @override
-  OBConfirmAddCommunityModeratorState createState() {
-    return OBConfirmAddCommunityModeratorState();
+  OBConfirmAddMemoryModeratorState createState() {
+    return OBConfirmAddMemoryModeratorState();
   }
 }
 
-class OBConfirmAddCommunityModeratorState
-    extends State<OBConfirmAddCommunityModerator> {
+class OBConfirmAddMemoryModeratorState
+    extends State<OBConfirmAddMemoryModerator> {
   bool _confirmationInProgress;
   UserService _userService;
   ToastService _toastService;
@@ -53,7 +53,8 @@ class OBConfirmAddCommunityModeratorState
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: _localizationService.trans('community__confirmation_title')),
+        navigationBar: OBThemedNavigationBar(
+            title: _localizationService.trans('community__confirmation_title')),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -66,7 +67,7 @@ class OBConfirmAddCommunityModeratorState
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     OBIcon(
-                      OBIcons.communityModerators,
+                      OBIcons.memoryModerators,
                       themeColor: OBIconThemeColor.primaryAccent,
                       size: OBIconSize.extraLarge,
                     ),
@@ -74,7 +75,8 @@ class OBConfirmAddCommunityModeratorState
                       height: 20,
                     ),
                     OBText(
-                      _localizationService.community__moderator_add_confirmation(username),
+                      _localizationService
+                          .community__moderator_add_confirmation(username),
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -82,7 +84,8 @@ class OBConfirmAddCommunityModeratorState
                     const SizedBox(
                       height: 40,
                     ),
-                    OBText(_localizationService.trans('community__moderator_desc'))
+                    OBText(
+                        _localizationService.trans('community__moderator_desc'))
                   ],
                 ),
               ),
@@ -120,8 +123,8 @@ class OBConfirmAddCommunityModeratorState
   void _onConfirm() async {
     _setConfirmationInProgress(true);
     try {
-      await _userService.addCommunityModerator(
-          community: widget.community, user: widget.user);
+      await _userService.addMemoryModerator(
+          memory: widget.memory, user: widget.user);
       Navigator.of(context).pop(true);
     } catch (error) {
       _onError(error);
@@ -138,7 +141,9 @@ class OBConfirmAddCommunityModeratorState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }

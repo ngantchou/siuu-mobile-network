@@ -11,21 +11,21 @@ import 'package:Siuu/widgets/theming/primary_color_container.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 
-class OBConfirmBanCommunityUser<T> extends StatefulWidget {
+class OBConfirmBanMemoryUser<T> extends StatefulWidget {
   final User user;
-  final Community community;
+  final Memory memory;
 
-  const OBConfirmBanCommunityUser(
-      {Key key, @required this.user, @required this.community})
+  const OBConfirmBanMemoryUser(
+      {Key key, @required this.user, @required this.memory})
       : super(key: key);
 
   @override
-  OBConfirmBanCommunityUserState createState() {
-    return OBConfirmBanCommunityUserState();
+  OBConfirmBanMemoryUserState createState() {
+    return OBConfirmBanMemoryUserState();
   }
 }
 
-class OBConfirmBanCommunityUserState extends State<OBConfirmBanCommunityUser> {
+class OBConfirmBanMemoryUserState extends State<OBConfirmBanMemoryUser> {
   bool _confirmationInProgress;
   UserService _userService;
   ToastService _toastService;
@@ -52,7 +52,8 @@ class OBConfirmBanCommunityUserState extends State<OBConfirmBanCommunityUser> {
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: _localizationService.trans('community__confirmation_title')),
+        navigationBar: OBThemedNavigationBar(
+            title: _localizationService.trans('community__confirmation_title')),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -65,7 +66,7 @@ class OBConfirmBanCommunityUserState extends State<OBConfirmBanCommunityUser> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     OBIcon(
-                      OBIcons.communityBannedUsers,
+                      OBIcons.memoryBannedUsers,
                       themeColor: OBIconThemeColor.primaryAccent,
                       size: OBIconSize.extraLarge,
                     ),
@@ -73,7 +74,8 @@ class OBConfirmBanCommunityUserState extends State<OBConfirmBanCommunityUser> {
                       height: 20,
                     ),
                     OBText(
-                      _localizationService.community__ban_confirmation(username),
+                      _localizationService
+                          .community__ban_confirmation(username),
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -119,8 +121,8 @@ class OBConfirmBanCommunityUserState extends State<OBConfirmBanCommunityUser> {
   void _onConfirm() async {
     _setConfirmationInProgress(true);
     try {
-      await _userService.banCommunityUser(
-          community: widget.community, user: widget.user);
+      await _userService.banMemoryUser(
+          memory: widget.memory, user: widget.user);
       Navigator.of(context).pop(true);
     } catch (error) {
       _onError(error);
@@ -137,7 +139,9 @@ class OBConfirmBanCommunityUserState extends State<OBConfirmBanCommunityUser> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }

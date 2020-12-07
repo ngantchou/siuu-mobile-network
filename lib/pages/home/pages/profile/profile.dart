@@ -36,16 +36,17 @@ class OBProfilePage extends StatefulWidget {
   }
 }
 
-class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderStateMixin {
+class OBProfilePageState extends State<OBProfilePage>
+    with SingleTickerProviderStateMixin {
   User _user;
   bool _needsBootstrap;
   UserService _userService;
   LocalizationService _localizationService;
   OBPostsStreamController _obPostsStreamController;
-  bool _profileCommunityPostsVisible;
+  bool _profileMemoryPostsVisible;
   OBPostDisplayContext _postsDisplayContext;
 
-  List<Community> _recentlyExcludedCommunities;
+  List<Memory> _recentlyExcludedCommunities;
   GlobalKey<RefreshIndicatorState> _protectedProfileRefreshIndicatorKey =
       GlobalKey();
   bool _needsProtectedProfileBootstrap;
@@ -61,8 +62,7 @@ class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderS
     _needsProtectedProfileBootstrap = true;
     _user = widget.user;
     if (widget.controller != null) widget.controller.attach(this);
-    _profileCommunityPostsVisible =
-        widget.user.getProfileCommunityPostsVisible();
+    _profileMemoryPostsVisible = widget.user.getProfileMemoryPostsVisible();
     _recentlyExcludedCommunities = [];
     _tabController = TabController(vsync: this, length: 2);
     _tabController.addListener(_handleTabSelection);
@@ -88,6 +88,7 @@ class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderS
       }
     }
   }
+
   @override
   Widget build(BuildContext context) {
     if (_needsBootstrap) {
@@ -103,15 +104,14 @@ class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderS
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      body:StreamBuilder(
+      body: StreamBuilder(
           initialData: widget.user,
           stream: widget.user.updateSubject,
           builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
             User user = snapshot.data;
             if (user == null) return const SizedBox();
 
-            if (_postsDisplayContext ==
-                OBPostDisplayContext.ownProfilePosts ||
+            if (_postsDisplayContext == OBPostDisplayContext.ownProfilePosts ||
                 user.visibility != UserVisibility.private ||
                 (user.isFollowing != null && user.isFollowing)) {
               return _buildVisibleProfileContent();
@@ -121,8 +121,8 @@ class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderS
             return _buildProtectedProfileContent();
           }),
     );
-
   }
+
   Column buildColumn({String title, String trailing}) {
     final double height = MediaQuery.of(context).size.height;
     return Column(
@@ -201,6 +201,7 @@ class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderS
       color: Color(0xff3b3b3b),
     );
   }
+
   Widget _buildVisibleProfileContent() {
     return Column(
       mainAxisSize: MainAxisSize.max,
@@ -310,7 +311,7 @@ class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderS
         _user,
         onUserProfileUpdated: _onUserProfileUpdated,
         onExcludedCommunitiesAdded: _onExcludedCommunitiesAdded,
-        onExcludedCommunityRemoved: _onExcludedCommunityRemoved,
+        onExcludedMemoryRemoved: _onExcludedMemoryRemoved,
       )
     ];
   }
@@ -334,7 +335,7 @@ class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderS
     OBPostDisplayContext displayContext,
     ValueChanged<Post> onPostDeleted,
   }) {
-    return _recentlyExcludedCommunities.contains(post.community)
+    return _recentlyExcludedCommunities.contains(post.memory)
         ? const SizedBox()
         : OBPost(
             post,
@@ -342,8 +343,8 @@ class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderS
             onPostDeleted: onPostDeleted,
             displayContext: displayContext,
             inViewId: postIdentifier,
-            onPostCommunityExcludedFromProfilePosts:
-                _onPostCommunityExcludedFromProfilePosts,
+            onPostMemoryExcludedFromProfilePosts:
+                _onPostMemoryExcludedFromProfilePosts,
           );
   }
 
@@ -353,24 +354,23 @@ class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderS
         : _localizationService.user__follow_button_follow_text;
   }
 
-  void _onPostCommunityExcludedFromProfilePosts(Community community) {
-    _addRecentlyExcludedCommunity(community);
+  void _onPostMemoryExcludedFromProfilePosts(Memory memory) {
+    _addRecentlyExcludedMemory(memory);
   }
 
   void _onUserProfileUpdated() {
-    if (_profileCommunityPostsVisible !=
-        _user.getProfileCommunityPostsVisible()) {
+    if (_profileMemoryPostsVisible != _user.getProfileMemoryPostsVisible()) {
       _refreshPosts();
     }
   }
 
-  void _onExcludedCommunitiesAdded(List<Community> excludedCommunities) {
-    excludedCommunities.forEach((excludedCommunity) {
-      _addRecentlyExcludedCommunity(excludedCommunity);
+  void _onExcludedCommunitiesAdded(List<Memory> excludedCommunities) {
+    excludedCommunities.forEach((excludedMemory) {
+      _addRecentlyExcludedMemory(excludedMemory);
     });
   }
 
-  void _onExcludedCommunityRemoved(Community excludedCommunity) {
+  void _onExcludedMemoryRemoved(Memory excludedMemory) {
     _obPostsStreamController.refresh();
   }
 
@@ -397,7 +397,7 @@ class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderS
   }
 
   void _onPostsRefreshed(List<Post> posts) {
-    _clearRecentlyExcludedCommunity();
+    _clearRecentlyExcludedMemory();
   }
 
   void _setUser(User user) {
@@ -406,15 +406,15 @@ class OBProfilePageState extends State<OBProfilePage> with SingleTickerProviderS
     });
   }
 
-  void _clearRecentlyExcludedCommunity() {
+  void _clearRecentlyExcludedMemory() {
     setState(() {
       _recentlyExcludedCommunities = [];
     });
   }
 
-  void _addRecentlyExcludedCommunity(Community community) {
+  void _addRecentlyExcludedMemory(Memory memory) {
     setState(() {
-      _recentlyExcludedCommunities.add(community);
+      _recentlyExcludedCommunities.add(memory);
     });
   }
 }

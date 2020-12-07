@@ -10,8 +10,8 @@ String modelTypeToString(dynamic modelInstance, {bool capitalize = false}) {
     result = 'post';
   } else if (modelInstance is PostComment) {
     result = 'post comment';
-  } else if (modelInstance is Community) {
-    result = 'community';
+  } else if (modelInstance is Memory) {
+    result = 'memory';
   } else if (modelInstance is User) {
     result = 'user';
   } else {

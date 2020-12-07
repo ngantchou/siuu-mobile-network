@@ -104,7 +104,7 @@ class AuthApiService {
     String username,
     String url,
     bool followersCountVisible,
-    bool communityPostsVisible,
+    bool memoryPostsVisible,
     String bio,
     String location,
     String visibility,
@@ -138,8 +138,8 @@ class AuthApiService {
     if (followersCountVisible != null)
       body['followers_count_visible'] = followersCountVisible;
 
-    if (communityPostsVisible != null)
-      body['community_posts_visible'] = communityPostsVisible;
+    if (memoryPostsVisible != null)
+      body['community_posts_visible'] = memoryPostsVisible;
 
     if (location != null) body['location'] = location;
 
@@ -235,12 +235,12 @@ class AuthApiService {
   }
 
   Future<HttpieResponse> searchLinkedUsers(
-      {@required String query, int count, String withCommunity}) {
+      {@required String query, int count, String withMemory}) {
     Map<String, dynamic> queryParams = {'query': query};
 
     if (count != null) queryParams['count'] = count;
 
-    if (withCommunity != null) queryParams['with_community'] = withCommunity;
+    if (withMemory != null) queryParams['with_memory'] = withMemory;
 
     return _httpService.get('$apiURL$SEARCH_LINKED_USERS_PATH',
         queryParameters: queryParams, appendAuthorizationToken: true);
@@ -250,14 +250,14 @@ class AuthApiService {
       {bool authenticatedRequest = true,
       int maxId,
       int count,
-      String withCommunity}) {
+      String withMemory}) {
     Map<String, dynamic> queryParams = {};
 
     if (count != null) queryParams['count'] = count;
 
     if (maxId != null) queryParams['max_id'] = maxId;
 
-    if (withCommunity != null) queryParams['with_community'] = withCommunity;
+    if (withMemory != null) queryParams['with_memory'] = withMemory;
 
     return _httpService.get('$apiURL$GET_LINKED_USERS_PATH',
         queryParameters: queryParams,
@@ -403,8 +403,8 @@ class AuthApiService {
     bool followRequestApprovedNotifications,
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
-    bool communityInviteNotifications,
-    bool communityNewPostNotifications,
+    bool memoryInviteNotifications,
+    bool memoryNewPostNotifications,
     bool userNewPostNotifications,
   }) {
     Map<String, dynamic> body = {};
@@ -442,11 +442,11 @@ class AuthApiService {
     if (connectionRequestNotifications != null)
       body['connection_request_notifications'] = connectionRequestNotifications;
 
-    if (communityInviteNotifications != null)
-      body['community_invite_notifications'] = communityInviteNotifications;
+    if (memoryInviteNotifications != null)
+      body['community_invite_notifications'] = memoryInviteNotifications;
 
-    if (communityNewPostNotifications != null)
-      body['community_new_post_notifications'] = communityNewPostNotifications;
+    if (memoryNewPostNotifications != null)
+      body['community_new_post_notifications'] = memoryNewPostNotifications;
 
     if (userNewPostNotifications != null)
       body['user_new_post_notifications'] = userNewPostNotifications;

@@ -5,21 +5,25 @@ import 'package:Siuu/widgets/buttons/button.dart';
 import 'package:Siuu/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityButtons extends StatelessWidget {
-  final Community community;
+class OBMemoryButtons extends StatelessWidget {
+  final Memory memory;
 
-  const OBCommunityButtons({Key key, this.community}) : super(key: key);
+  const OBMemoryButtons({Key key, this.memory}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> communityButtons = [];
+    List<Widget> memoryButtons = [];
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-    LocalizationService localizationService = openbookProvider.localizationService;
-    communityButtons.add(
+    LocalizationService localizationService =
+        openbookProvider.localizationService;
+    memoryButtons.add(
       OBButton(
         child: Row(
           children: <Widget>[
-            const OBIcon(OBIcons.communityStaff, size: OBIconSize.small,),
+            const OBIcon(
+              OBIcons.memoryStaff,
+              size: OBIconSize.small,
+            ),
             const SizedBox(
               width: 10,
             ),
@@ -27,19 +31,22 @@ class OBCommunityButtons extends StatelessWidget {
           ],
         ),
         onPressed: () async {
-          openbookProvider.navigationService.navigateToCommunityStaffPage(
-              context: context, community: community);
+          openbookProvider.navigationService
+              .navigateToMemoryStaffPage(context: context, memory: memory);
         },
         type: OBButtonType.highlight,
       ),
     );
 
-    if (community.rules != null && community.rules.isNotEmpty) {
-      communityButtons.add(
+    if (memory.rules != null && memory.rules.isNotEmpty) {
+      memoryButtons.add(
         OBButton(
           child: Row(
             children: <Widget>[
-              const OBIcon(OBIcons.rules, size: OBIconSize.small,),
+              const OBIcon(
+                OBIcons.rules,
+                size: OBIconSize.small,
+              ),
               const SizedBox(
                 width: 10,
               ),
@@ -47,8 +54,8 @@ class OBCommunityButtons extends StatelessWidget {
             ],
           ),
           onPressed: () async {
-            openbookProvider.navigationService.navigateToCommunityRulesPage(
-                context: context, community: community);
+            openbookProvider.navigationService
+                .navigateToMemoryRulesPage(context: context, memory: memory);
           },
           type: OBButtonType.highlight,
         ),
@@ -61,10 +68,10 @@ class OBCommunityButtons extends StatelessWidget {
         height: 35,
         child: ListView.separated(
           physics: const ClampingScrollPhysics(),
-          itemCount: communityButtons.length,
+          itemCount: memoryButtons.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (BuildContext context, index) {
-            return communityButtons[index];
+            return memoryButtons[index];
           },
           separatorBuilder: (BuildContext context, index) {
             return const SizedBox(

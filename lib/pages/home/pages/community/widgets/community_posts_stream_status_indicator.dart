@@ -9,12 +9,12 @@ import 'package:Siuu/widgets/tiles/loading_indicator_tile.dart';
 import 'package:Siuu/widgets/tiles/retry_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityPostsStreamStatusIndicator extends StatelessWidget {
+class OBMemoryPostsStreamStatusIndicator extends StatelessWidget {
   final VoidCallback streamRefresher;
   final OBPostsStreamStatus streamStatus;
   final List<Widget> streamPrependedItems;
 
-  OBCommunityPostsStreamStatusIndicator({
+  OBMemoryPostsStreamStatusIndicator({
     @required this.streamRefresher,
     this.streamStatus,
     this.streamPrependedItems,

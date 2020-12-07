@@ -10,19 +10,18 @@ import 'package:Siuu/widgets/theming/primary_color_container.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 
-class OBDeleteCommunityPage<T> extends StatefulWidget {
-  final Community community;
+class OBDeleteMemoryPage<T> extends StatefulWidget {
+  final Memory memory;
 
-  const OBDeleteCommunityPage({Key key, @required this.community})
-      : super(key: key);
+  const OBDeleteMemoryPage({Key key, @required this.memory}) : super(key: key);
 
   @override
-  OBDeleteCommunityPageState createState() {
-    return OBDeleteCommunityPageState();
+  OBDeleteMemoryPageState createState() {
+    return OBDeleteMemoryPageState();
   }
 }
 
-class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
+class OBDeleteMemoryPageState extends State<OBDeleteMemoryPage> {
   bool _confirmationInProgress;
   UserService _userService;
   ToastService _toastService;
@@ -47,7 +46,8 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: _localizationService.trans('community__confirmation_title')),
+        navigationBar: OBThemedNavigationBar(
+            title: _localizationService.trans('community__confirmation_title')),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -60,7 +60,7 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     OBIcon(
-                      OBIcons.deleteCommunity,
+                      OBIcons.deleteMemory,
                       themeColor: OBIconThemeColor.primaryAccent,
                       size: OBIconSize.extraLarge,
                     ),
@@ -68,7 +68,8 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
                       height: 20,
                     ),
                     OBText(
-                      _localizationService.trans('community__delete_confirmation'),
+                      _localizationService
+                          .trans('community__delete_confirmation'),
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -76,8 +77,7 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
                     const SizedBox(
                       height: 40,
                     ),
-                    OBText(
-                        _localizationService.trans('community__delete_desc'))
+                    OBText(_localizationService.trans('community__delete_desc'))
                   ],
                 ),
               ),
@@ -115,12 +115,12 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
   void _onConfirm() async {
     _setConfirmationInProgress(true);
     try {
-      await _userService.deleteCommunity(widget.community);
-      // Pop back to manage community
+      await _userService.deleteMemory(widget.memory);
+      // Pop back to manage memory
       Navigator.of(context).pop();
-      // Pop back to deleted community
+      // Pop back to deleted memory
       Navigator.of(context).pop();
-      // Pop out of deleted community
+      // Pop out of deleted memory
       Navigator.of(context).pop();
     } catch (error) {
       _onError(error);
@@ -137,7 +137,9 @@ class OBDeleteCommunityPageState extends State<OBDeleteCommunityPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }

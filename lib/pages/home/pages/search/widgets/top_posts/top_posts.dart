@@ -162,7 +162,7 @@ class OBTopPostsState extends State<OBTopPosts>
       OBPostDisplayContext displayContext,
       String postIdentifier,
       ValueChanged<Post> onPostDeleted}) {
-    if (_excludedCommunities.contains(post.community.id)) {
+    if (_excludedCommunities.contains(post.memory.id)) {
       post.updateIsExcludedFromTopPosts(true);
     } else {
       post.updateIsExcludedFromTopPosts(false);
@@ -174,8 +174,8 @@ class OBTopPostsState extends State<OBTopPosts>
       onPostDeleted: onPostDeleted,
       displayContext: displayContext,
       onPostIsInView: onPostIsInView,
-      onCommunityExcluded: _onCommunityExcluded,
-      onUndoCommunityExcluded: _onUndoCommunityExcluded,
+      onMemoryExcluded: _onMemoryExcluded,
+      onUndoMemoryExcluded: _onUndoMemoryExcluded,
       inViewId: postIdentifier,
     );
   }
@@ -208,19 +208,19 @@ class OBTopPostsState extends State<OBTopPosts>
       refresh();
   }
 
-  void _onCommunityExcluded(Community community) {
-    _excludedCommunities.add(community.id);
+  void _onMemoryExcluded(Memory memory) {
+    _excludedCommunities.add(memory.id);
     _currentPosts.forEach((post) {
-      if (post.community.id == community.id) {
+      if (post.memory.id == memory.id) {
         post.updateIsExcludedFromTopPosts(true);
       }
     });
   }
 
-  void _onUndoCommunityExcluded(Community community) {
-    _excludedCommunities.remove(community.id);
+  void _onUndoMemoryExcluded(Memory memory) {
+    _excludedCommunities.remove(memory.id);
     _currentPosts.forEach((post) {
-      if (post.community.id == community.id) {
+      if (post.memory.id == memory.id) {
         post.updateIsExcludedFromTopPosts(false);
       }
     });

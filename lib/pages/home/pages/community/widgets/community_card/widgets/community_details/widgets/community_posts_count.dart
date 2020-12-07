@@ -7,18 +7,18 @@ import 'package:Siuu/widgets/posts_count.dart';
 import 'package:Siuu/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityPostsCount extends StatefulWidget {
-  final Community community;
+class OBMemoryPostsCount extends StatefulWidget {
+  final Memory memory;
 
-  OBCommunityPostsCount(this.community);
+  OBMemoryPostsCount(this.memory);
 
   @override
-  OBCommunityPostsCountState createState() {
-    return OBCommunityPostsCountState();
+  OBMemoryPostsCountState createState() {
+    return OBMemoryPostsCountState();
   }
 }
 
-class OBCommunityPostsCountState extends State<OBCommunityPostsCount> {
+class OBMemoryPostsCountState extends State<OBMemoryPostsCount> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
@@ -38,31 +38,31 @@ class OBCommunityPostsCountState extends State<OBCommunityPostsCount> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _userService = openbookProvider.userService;
-    if(_needsBootstrap){
+    if (_needsBootstrap) {
       _localizationService = openbookProvider.localizationService;
       _toastService = openbookProvider.toastService;
-      _refreshCommunityPostsCount();
+      _refreshMemoryPostsCount();
       _needsBootstrap = false;
     }
 
     return StreamBuilder(
-      stream: widget.community.updateSubject,
-      initialData: widget.community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        var community = snapshot.data;
+      stream: widget.memory.updateSubject,
+      initialData: widget.memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        var memory = snapshot.data;
 
         return _hasError
             ? _buildErrorIcon()
             : _requestInProgress
                 ? _buildLoadingIcon()
-                : _buildPostsCount(community);
+                : _buildPostsCount(memory);
       },
     );
   }
 
-  Widget _buildPostsCount(Community community) {
+  Widget _buildPostsCount(Memory memory) {
     return OBPostsCount(
-      community.postsCount,
+      memory.postsCount,
       showZero: true,
       fontSize: 16,
     );
@@ -78,10 +78,10 @@ class OBCommunityPostsCountState extends State<OBCommunityPostsCount> {
     );
   }
 
-  void _refreshCommunityPostsCount() async {
+  void _refreshMemoryPostsCount() async {
     _setRequestInProgress(true);
     try {
-      await _userService.countPostsForCommunity(widget.community);
+      await _userService.countPostsForMemory(widget.memory);
     } catch (e) {
       _onError(e);
     } finally {

@@ -15,19 +15,19 @@ import 'package:Siuu/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBInviteToCommunityModal extends StatefulWidget {
-  final Community community;
+class OBInviteToMemoryModal extends StatefulWidget {
+  final Memory memory;
 
-  const OBInviteToCommunityModal({Key key, @required this.community})
+  const OBInviteToMemoryModal({Key key, @required this.memory})
       : super(key: key);
 
   @override
-  State<OBInviteToCommunityModal> createState() {
-    return OBInviteToCommunityModalState();
+  State<OBInviteToMemoryModal> createState() {
+    return OBInviteToMemoryModalState();
   }
 }
 
-class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
+class OBInviteToMemoryModalState extends State<OBInviteToMemoryModal> {
   UserService _userService;
   LocalizationService _localizationService;
 
@@ -60,14 +60,16 @@ class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
-          key: Key('inviteToCommunityUserList'),
+          key: Key('inviteToMemoryUserList'),
           listItemBuilder: _buildLinkedUserListItem,
           searchResultListItemBuilder: _buildLinkedUserListItem,
           listRefresher: _refreshLinkedUsers,
           listOnScrollLoader: _loadMoreLinkedUsers,
           listSearcher: _searchLinkedUsers,
-          resourceSingularName: _localizationService.community__invite_to_community_resource_singular,
-          resourcePluralName: _localizationService.community__invite_to_community_resource_plural,
+          resourceSingularName: _localizationService
+              .community__invite_to_community_resource_singular,
+          resourcePluralName: _localizationService
+              .community__invite_to_community_resource_plural,
         ),
       ),
     );
@@ -77,9 +79,9 @@ class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
     return OBUserTile(
       user,
       key: Key(user.id.toString()),
-      trailing: OBInviteUserToCommunityButton(
+      trailing: OBInviteUserToMemoryButton(
         user: user,
-        community: widget.community,
+        memory: widget.memory,
       ),
       //trailing: OBButton,
     );
@@ -87,7 +89,7 @@ class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
 
   Future<List<User>> _refreshLinkedUsers() async {
     UsersList linkedUsers =
-        await _userService.getLinkedUsers(withCommunity: widget.community);
+        await _userService.getLinkedUsers(withMemory: widget.memory);
     return linkedUsers.users;
   }
 
@@ -95,16 +97,14 @@ class OBInviteToCommunityModalState extends State<OBInviteToCommunityModal> {
     var lastLinkedUser = linkedUsersList.last;
     var lastLinkedUserId = lastLinkedUser.id;
     var moreLinkedUsers = (await _userService.getLinkedUsers(
-            maxId: lastLinkedUserId,
-            count: 10,
-            withCommunity: widget.community))
+            maxId: lastLinkedUserId, count: 10, withMemory: widget.memory))
         .users;
     return moreLinkedUsers;
   }
 
   Future<List<User>> _searchLinkedUsers(String query) async {
     UsersList results = await _userService.searchLinkedUsers(
-        query: query, withCommunity: widget.community);
+        query: query, withMemory: widget.memory);
 
     return results.users;
   }

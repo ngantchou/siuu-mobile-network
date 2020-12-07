@@ -20,20 +20,20 @@ import 'package:Siuu/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityAdministratorsPage extends StatefulWidget {
-  final Community community;
+class OBMemoryAdministratorsPage extends StatefulWidget {
+  final Memory memory;
 
-  const OBCommunityAdministratorsPage({Key key, @required this.community})
+  const OBMemoryAdministratorsPage({Key key, @required this.memory})
       : super(key: key);
 
   @override
-  State<OBCommunityAdministratorsPage> createState() {
-    return OBCommunityAdministratorsPageState();
+  State<OBMemoryAdministratorsPage> createState() {
+    return OBMemoryAdministratorsPageState();
   }
 }
 
-class OBCommunityAdministratorsPageState
-    extends State<OBCommunityAdministratorsPage> {
+class OBMemoryAdministratorsPageState
+    extends State<OBMemoryAdministratorsPage> {
   UserService _userService;
   ModalService _modalService;
   NavigationService _navigationService;
@@ -74,26 +74,28 @@ class OBCommunityAdministratorsPageState
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
           controller: _httpListController,
-          listItemBuilder: _buildCommunityAdministratorListItem,
-          searchResultListItemBuilder: _buildCommunityAdministratorListItem,
-          listRefresher: _refreshCommunityAdministrators,
-          listOnScrollLoader: _loadMoreCommunityAdministrators,
-          listSearcher: _searchCommunityAdministrators,
-          resourceSingularName: _localizationService.community__administrator_text,
-          resourcePluralName: _localizationService.community__administrator_plural,
+          listItemBuilder: _buildMemoryAdministratorListItem,
+          searchResultListItemBuilder: _buildMemoryAdministratorListItem,
+          listRefresher: _refreshMemoryAdministrators,
+          listOnScrollLoader: _loadMoreMemoryAdministrators,
+          listSearcher: _searchMemoryAdministrators,
+          resourceSingularName:
+              _localizationService.community__administrator_text,
+          resourcePluralName:
+              _localizationService.community__administrator_plural,
         ),
       ),
     );
   }
 
-  Widget _buildCommunityAdministratorListItem(BuildContext context, User user) {
+  Widget _buildMemoryAdministratorListItem(BuildContext context, User user) {
     bool isLoggedInUser = _userService.isLoggedInUser(user);
 
     return OBUserTile(
       user,
-      onUserTilePressed: _onCommunityAdministratorListItemPressed,
+      onUserTilePressed: _onMemoryAdministratorListItemPressed,
       onUserTileDeleted:
-          isLoggedInUser ? null : _onCommunityAdministratorListItemDeleted,
+          isLoggedInUser ? null : _onMemoryAdministratorListItemDeleted,
       trailing: isLoggedInUser
           ? OBText(
               _localizationService.community__administrator_you,
@@ -103,17 +105,16 @@ class OBCommunityAdministratorsPageState
     );
   }
 
-  void _onCommunityAdministratorListItemPressed(User communityAdministrator) {
+  void _onMemoryAdministratorListItemPressed(User memoryAdministrator) {
     _navigationService.navigateToUserProfile(
-        user: communityAdministrator, context: context);
+        user: memoryAdministrator, context: context);
   }
 
-  void _onCommunityAdministratorListItemDeleted(
-      User communityAdministrator) async {
+  void _onMemoryAdministratorListItemDeleted(User memoryAdministrator) async {
     try {
-      await _userService.removeCommunityAdministrator(
-          community: widget.community, user: communityAdministrator);
-      _httpListController.removeListItem(communityAdministrator);
+      await _userService.removeMemoryAdministrator(
+          memory: widget.memory, user: memoryAdministrator);
+      _httpListController.removeListItem(memoryAdministrator);
     } catch (error) {
       _onError(error);
     }
@@ -127,50 +128,49 @@ class OBCommunityAdministratorsPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
 
-  Future<List<User>> _refreshCommunityAdministrators() async {
-    UsersList communityAdministrators =
-        await _userService.getAdministratorsForCommunity(widget.community);
-    return communityAdministrators.users;
+  Future<List<User>> _refreshMemoryAdministrators() async {
+    UsersList memoryAdministrators =
+        await _userService.getAdministratorsForMemory(widget.memory);
+    return memoryAdministrators.users;
   }
 
-  Future<List<User>> _loadMoreCommunityAdministrators(
-      List<User> communityAdministratorsList) async {
-    var lastCommunityAdministrator = communityAdministratorsList.last;
-    var lastCommunityAdministratorId = lastCommunityAdministrator.id;
-    var moreCommunityAdministrators =
-        (await _userService.getAdministratorsForCommunity(
-      widget.community,
-      maxId: lastCommunityAdministratorId,
+  Future<List<User>> _loadMoreMemoryAdministrators(
+      List<User> memoryAdministratorsList) async {
+    var lastMemoryAdministrator = memoryAdministratorsList.last;
+    var lastMemoryAdministratorId = lastMemoryAdministrator.id;
+    var moreMemoryAdministrators =
+        (await _userService.getAdministratorsForMemory(
+      widget.memory,
+      maxId: lastMemoryAdministratorId,
       count: 20,
     ))
             .users;
-    return moreCommunityAdministrators;
+    return moreMemoryAdministrators;
   }
 
-  Future<List<User>> _searchCommunityAdministrators(String query) async {
-    UsersList results = await _userService.searchCommunityAdministrators(
-        query: query, community: widget.community);
+  Future<List<User>> _searchMemoryAdministrators(String query) async {
+    UsersList results = await _userService.searchMemoryAdministrators(
+        query: query, memory: widget.memory);
 
     return results.users;
   }
 
   void _onWantsToAddNewAdministrator() async {
-    User addedCommunityAdministrator =
-        await _modalService.openAddCommunityAdministrator(
-            context: context, community: widget.community);
+    User addedMemoryAdministrator = await _modalService
+        .openAddMemoryAdministrator(context: context, memory: widget.memory);
 
-    if (addedCommunityAdministrator != null) {
-      _httpListController.insertListItem(addedCommunityAdministrator);
+    if (addedMemoryAdministrator != null) {
+      _httpListController.insertListItem(addedMemoryAdministrator);
     }
   }
 }
 
-typedef Future<User> OnWantsToCreateCommunityAdministrator();
-typedef Future<User> OnWantsToEditCommunityAdministrator(
-    User communityAdministrator);
-typedef void OnWantsToSeeCommunityAdministrator(User communityAdministrator);
+typedef Future<User> OnWantsToCreateMemoryAdministrator();
+typedef Future<User> OnWantsToEditMemoryAdministrator(User memoryAdministrator);
+typedef void OnWantsToSeeMemoryAdministrator(User memoryAdministrator);

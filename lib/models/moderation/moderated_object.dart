@@ -18,7 +18,7 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
 
   static String objectTypePost = 'P';
   static String objectTypePostComment = 'PC';
-  static String objectTypeCommunity = 'C';
+  static String objectTypeMemory = 'C';
   static String objectTypeUser = 'U';
   static String objectTypeHashtag = 'H';
 
@@ -27,7 +27,7 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
   static String statusRejected = 'R';
 
   final int id;
-  final Community community;
+  final Memory memory;
 
   dynamic contentObject;
   ModeratedObjectType type;
@@ -40,7 +40,7 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
 
   ModeratedObject(
       {this.id,
-      this.community,
+      this.memory,
       this.contentObject,
       this.type,
       this.status,
@@ -114,11 +114,11 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
     ModeratedObjectType type = parseType(json['object_type']);
     ModeratedObjectStatus status = parseStatus(json['status']);
     ModerationCategory category = parseModerationCategory(json['category']);
-    Community community = parseCommunity(json['community']);
+    Memory memory = parseMemory(json['memory']);
 
     return ModeratedObject(
         id: json['id'],
-        community: community,
+        memory: memory,
         category: category,
         description: json['description'],
         reportsCount: json['reports_count'],
@@ -129,9 +129,9 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
         verified: json['verified']);
   }
 
-  Community parseCommunity(Map communityData) {
-    if (communityData == null) return null;
-    return Community.fromJSON(communityData);
+  Memory parseMemory(Map memoryData) {
+    if (memoryData == null) return null;
+    return Memory.fromJSON(memoryData);
   }
 
   ModerationCategory parseModerationCategory(Map moderationCategoryData) {
@@ -143,8 +143,8 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
     if (moderatedObjectTypeStr == null) return null;
 
     ModeratedObjectType moderatedObjectType;
-    if (moderatedObjectTypeStr == ModeratedObject.objectTypeCommunity) {
-      moderatedObjectType = ModeratedObjectType.community;
+    if (moderatedObjectTypeStr == ModeratedObject.objectTypeMemory) {
+      moderatedObjectType = ModeratedObjectType.memory;
     } else if (moderatedObjectTypeStr == ModeratedObject.objectTypePost) {
       moderatedObjectType = ModeratedObjectType.post;
     } else if (moderatedObjectTypeStr ==
@@ -222,11 +222,11 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
     if (moderatedObjectType == null) return null;
 
     switch (moderatedObjectType) {
-      case ModeratedObjectType.community:
-        return ModeratedObject.objectTypeCommunity;
+      case ModeratedObjectType.memory:
+        return ModeratedObject.objectTypeMemory;
       case ModeratedObjectType.user:
         return ModeratedObject.objectTypeUser;
-        case ModeratedObjectType.hashtag:
+      case ModeratedObjectType.hashtag:
         return ModeratedObject.objectTypeHashtag;
       case ModeratedObjectType.post:
         return ModeratedObject.objectTypePost;
@@ -245,8 +245,8 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
     String result = 'object';
 
     switch (moderatedObjectType) {
-      case ModeratedObjectType.community:
-        result = 'community';
+      case ModeratedObjectType.memory:
+        result = 'memory';
         break;
       case ModeratedObjectType.user:
         result = 'user';
@@ -278,8 +278,8 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
       case ModeratedObjectType.postComment:
         contentObject = PostComment.fromJSON(contentObjectData);
         break;
-      case ModeratedObjectType.community:
-        contentObject = Community.fromJSON(contentObjectData);
+      case ModeratedObjectType.memory:
+        contentObject = Memory.fromJSON(contentObjectData);
         break;
       case ModeratedObjectType.user:
         contentObject = User.fromJson(contentObjectData);
@@ -297,7 +297,7 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
   }
 }
 
-enum ModeratedObjectType { post, postComment, user, community, hashtag }
+enum ModeratedObjectType { post, postComment, user, memory, hashtag }
 
 enum ModeratedObjectStatus {
   approved,

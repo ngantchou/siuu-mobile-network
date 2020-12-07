@@ -20,20 +20,19 @@ import 'package:Siuu/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityBannedUsersPage extends StatefulWidget {
-  final Community community;
+class OBMemoryBannedUsersPage extends StatefulWidget {
+  final Memory memory;
 
-  const OBCommunityBannedUsersPage({Key key, @required this.community})
+  const OBMemoryBannedUsersPage({Key key, @required this.memory})
       : super(key: key);
 
   @override
-  State<OBCommunityBannedUsersPage> createState() {
-    return OBCommunityBannedUsersPageState();
+  State<OBMemoryBannedUsersPage> createState() {
+    return OBMemoryBannedUsersPageState();
   }
 }
 
-class OBCommunityBannedUsersPageState
-    extends State<OBCommunityBannedUsersPage> {
+class OBMemoryBannedUsersPageState extends State<OBMemoryBannedUsersPage> {
   UserService _userService;
   ModalService _modalService;
   NavigationService _navigationService;
@@ -74,26 +73,27 @@ class OBCommunityBannedUsersPageState
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
           controller: _httpListController,
-          listItemBuilder: _buildCommunityBannedUserListItem,
-          searchResultListItemBuilder: _buildCommunityBannedUserListItem,
-          listRefresher: _refreshCommunityBannedUsers,
-          listOnScrollLoader: _loadMoreCommunityBannedUsers,
-          listSearcher: _searchCommunityBannedUsers,
-          resourceSingularName: _localizationService.community__banned_user_text,
+          listItemBuilder: _buildMemoryBannedUserListItem,
+          searchResultListItemBuilder: _buildMemoryBannedUserListItem,
+          listRefresher: _refreshMemoryBannedUsers,
+          listOnScrollLoader: _loadMoreMemoryBannedUsers,
+          listSearcher: _searchMemoryBannedUsers,
+          resourceSingularName:
+              _localizationService.community__banned_user_text,
           resourcePluralName: _localizationService.community__banned_users_text,
         ),
       ),
     );
   }
 
-  Widget _buildCommunityBannedUserListItem(BuildContext context, User user) {
+  Widget _buildMemoryBannedUserListItem(BuildContext context, User user) {
     bool isLoggedInUser = _userService.isLoggedInUser(user);
 
     return OBUserTile(
       user,
-      onUserTilePressed: _onCommunityBannedUserListItemPressed,
+      onUserTilePressed: _onMemoryBannedUserListItemPressed,
       onUserTileDeleted:
-          isLoggedInUser ? null : _onCommunityBannedUserListItemDeleted,
+          isLoggedInUser ? null : _onMemoryBannedUserListItemDeleted,
       trailing: isLoggedInUser
           ? OBText(
               _localizationService.community__user_you_text,
@@ -103,16 +103,16 @@ class OBCommunityBannedUsersPageState
     );
   }
 
-  void _onCommunityBannedUserListItemPressed(User communityBannedUser) {
+  void _onMemoryBannedUserListItemPressed(User memoryBannedUser) {
     _navigationService.navigateToUserProfile(
-        user: communityBannedUser, context: context);
+        user: memoryBannedUser, context: context);
   }
 
-  void _onCommunityBannedUserListItemDeleted(User communityBannedUser) async {
+  void _onMemoryBannedUserListItemDeleted(User memoryBannedUser) async {
     try {
-      await _userService.unbanCommunityUser(
-          community: widget.community, user: communityBannedUser);
-      _httpListController.removeListItem(communityBannedUser);
+      await _userService.unbanMemoryUser(
+          memory: widget.memory, user: memoryBannedUser);
+      _httpListController.removeListItem(memoryBannedUser);
     } catch (error) {
       _onError(error);
     }
@@ -126,44 +126,44 @@ class OBCommunityBannedUsersPageState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
 
-  Future<List<User>> _refreshCommunityBannedUsers() async {
-    UsersList communityBannedUsers =
-        await _userService.getBannedUsersForCommunity(widget.community);
-    return communityBannedUsers.users;
+  Future<List<User>> _refreshMemoryBannedUsers() async {
+    UsersList memoryBannedUsers =
+        await _userService.getBannedUsersForMemory(widget.memory);
+    return memoryBannedUsers.users;
   }
 
-  Future<List<User>> _loadMoreCommunityBannedUsers(
-      List<User> communityBannedUsersList) async {
-    var lastCommunityBannedUser = communityBannedUsersList.last;
-    var lastCommunityBannedUserId = lastCommunityBannedUser.id;
-    var moreCommunityBannedUsers =
-        (await _userService.getBannedUsersForCommunity(
-      widget.community,
-      maxId: lastCommunityBannedUserId,
+  Future<List<User>> _loadMoreMemoryBannedUsers(
+      List<User> memoryBannedUsersList) async {
+    var lastMemoryBannedUser = memoryBannedUsersList.last;
+    var lastMemoryBannedUserId = lastMemoryBannedUser.id;
+    var moreMemoryBannedUsers = (await _userService.getBannedUsersForMemory(
+      widget.memory,
+      maxId: lastMemoryBannedUserId,
       count: 20,
     ))
-            .users;
-    return moreCommunityBannedUsers;
+        .users;
+    return moreMemoryBannedUsers;
   }
 
-  Future<List<User>> _searchCommunityBannedUsers(String query) async {
-    UsersList results = await _userService.searchCommunityBannedUsers(
-        query: query, community: widget.community);
+  Future<List<User>> _searchMemoryBannedUsers(String query) async {
+    UsersList results = await _userService.searchMemoryBannedUsers(
+        query: query, memory: widget.memory);
 
     return results.users;
   }
 
   void _onWantsToAddNewBannedUser() async {
-    User addedCommunityBannedUser = await _modalService.openBanCommunityUser(
-        context: context, community: widget.community);
+    User addedMemoryBannedUser = await _modalService.openBanMemoryUser(
+        context: context, memory: widget.memory);
 
-    if (addedCommunityBannedUser != null) {
-      _httpListController.insertListItem(addedCommunityBannedUser);
+    if (addedMemoryBannedUser != null) {
+      _httpListController.insertListItem(addedMemoryBannedUser);
     }
   }
 }

@@ -15,7 +15,8 @@ class OBModerationPenaltyActions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     List<Widget> moderationPenaltyActions = [
       Expanded(
@@ -31,7 +32,8 @@ class OBModerationPenaltyActions extends StatelessWidget {
                   const SizedBox(
                     width: 10.0,
                   ),
-                  OBText(_localizationService.trans('moderation__actions_chat_with_team')),
+                  OBText(_localizationService
+                      .trans('moderation__actions_chat_with_team')),
                 ],
               ),
               onPressed: () {

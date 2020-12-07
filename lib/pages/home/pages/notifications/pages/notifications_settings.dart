@@ -45,8 +45,8 @@ class OBNotificationsSettingsPageState
   bool _followRequestNotifications;
   bool _followRequestApprovedNotifications;
   bool _connectionRequestNotifications;
-  bool _communityInviteNotifications;
-  bool _communityNewPostNotifications;
+  bool _memoryInviteNotifications;
+  bool _memoryNewPostNotifications;
   bool _userNewPostNotifications;
 
   @override
@@ -62,8 +62,8 @@ class OBNotificationsSettingsPageState
     _followRequestNotifications = true;
     _followRequestApprovedNotifications = true;
     _connectionRequestNotifications = true;
-    _communityInviteNotifications = true;
-    _communityNewPostNotifications = true;
+    _memoryInviteNotifications = true;
+    _memoryNewPostNotifications = true;
     _userNewPostNotifications = true;
     _postUserMentionNotifications = true;
     _postCommentUserMentionNotifications = true;
@@ -145,8 +145,8 @@ class OBNotificationsSettingsPageState
           key: Key('Follow request'),
           value: _followRequestNotifications,
           title: _localizationService.notifications__follow_request_title,
-          subtitle: OBText(
-              _localizationService.notifications__follow_request_desc),
+          subtitle:
+              OBText(_localizationService.notifications__follow_request_desc),
           onChanged: _setFollowRequestNotifications,
           onTap: _toggleFollowRequestNotifications,
           hasDivider: false,
@@ -154,9 +154,10 @@ class OBNotificationsSettingsPageState
         OBToggleField(
           key: Key('Follow request approved'),
           value: _followRequestApprovedNotifications,
-          title: _localizationService.notifications__follow_request_approved_title,
-          subtitle: OBText(
-              _localizationService.notifications__follow_request_approved_title_desc),
+          title:
+              _localizationService.notifications__follow_request_approved_title,
+          subtitle: OBText(_localizationService
+              .notifications__follow_request_approved_title_desc),
           onChanged: _setFollowRequestApprovedNotifications,
           onTap: _toggleFollowRequestApprovedNotifications,
           hasDivider: false,
@@ -239,32 +240,32 @@ class OBNotificationsSettingsPageState
           hasDivider: false,
         ),
         OBToggleField(
-          key: Key('Community invite'),
-          value: _communityInviteNotifications,
+          key: Key('Memory invite'),
+          value: _memoryInviteNotifications,
           title: _localizationService
               .trans('notifications__community_invite_title'),
           subtitle: OBText(_localizationService
               .trans('notifications__community_invite_desc')),
-          onChanged: _setCommunityInviteNotifications,
-          onTap: _toggleCommunityInviteNotifications,
+          onChanged: _setMemoryInviteNotifications,
+          onTap: _toggleMemoryInviteNotifications,
           hasDivider: false,
         ),
         OBToggleField(
-          key: Key('Community new post'),
-          value: _communityNewPostNotifications,
+          key: Key('Memory new post'),
+          value: _memoryNewPostNotifications,
           title: _localizationService.notifications__community_new_post_title,
-          subtitle: OBText(_localizationService
-              .notifications__community_new_post_desc),
-          onChanged: _setCommunityNewPostNotifications,
-          onTap: _toggleCommunityNewPostNotifications,
+          subtitle: OBText(
+              _localizationService.notifications__community_new_post_desc),
+          onChanged: _setMemoryNewPostNotifications,
+          onTap: _toggleMemoryNewPostNotifications,
           hasDivider: false,
         ),
         OBToggleField(
           key: Key('User new post'),
           value: _userNewPostNotifications,
           title: _localizationService.notifications__user_new_post_title,
-          subtitle: OBText(_localizationService
-              .notifications__user_new_post_desc),
+          subtitle:
+              OBText(_localizationService.notifications__user_new_post_desc),
           onChanged: _setUserNewPostNotifications,
           onTap: _toggleUserNewPostNotifications,
           hasDivider: false,
@@ -333,7 +334,8 @@ class OBNotificationsSettingsPageState
   }
 
   void _toggleFollowRequestApprovedNotifications() {
-    _setFollowRequestApprovedNotifications(!_followRequestApprovedNotifications);
+    _setFollowRequestApprovedNotifications(
+        !_followRequestApprovedNotifications);
   }
 
   void _setFollowRequestApprovedNotifications(bool newValue) {
@@ -344,25 +346,25 @@ class OBNotificationsSettingsPageState
     _submitNotificationsSettings();
   }
 
-  void _toggleCommunityInviteNotifications() {
-    _setCommunityInviteNotifications(!_communityInviteNotifications);
+  void _toggleMemoryInviteNotifications() {
+    _setMemoryInviteNotifications(!_memoryInviteNotifications);
   }
 
-  void _setCommunityInviteNotifications(bool newValue) {
+  void _setMemoryInviteNotifications(bool newValue) {
     setState(() {
-      _communityInviteNotifications = newValue;
+      _memoryInviteNotifications = newValue;
     });
 
     _submitNotificationsSettings();
   }
 
-  void _toggleCommunityNewPostNotifications() {
-    _setCommunityNewPostNotifications(!_communityNewPostNotifications);
+  void _toggleMemoryNewPostNotifications() {
+    _setMemoryNewPostNotifications(!_memoryNewPostNotifications);
   }
 
-  void _setCommunityNewPostNotifications(bool newValue) {
+  void _setMemoryNewPostNotifications(bool newValue) {
     setState(() {
-      _communityNewPostNotifications = newValue;
+      _memoryNewPostNotifications = newValue;
     });
 
     _submitNotificationsSettings();
@@ -486,17 +488,19 @@ class OBNotificationsSettingsPageState
       _userService.updateAuthenticatedUserNotificationsSettings(
           followNotifications: _followNotifications,
           followRequestNotifications: _followRequestNotifications,
-          followRequestApprovedNotifications: _followRequestApprovedNotifications,
+          followRequestApprovedNotifications:
+              _followRequestApprovedNotifications,
           postCommentNotifications: _postCommentNotifications,
           postCommentReplyNotifications: _postCommentReplyNotifications,
-          postCommentUserMentionNotifications: _postCommentUserMentionNotifications,
+          postCommentUserMentionNotifications:
+              _postCommentUserMentionNotifications,
           postUserMentionNotifications: _postUserMentionNotifications,
           postCommentReactionNotifications: _postCommentReactionNotifications,
           postReactionNotifications: _postReactionNotifications,
           connectionRequestNotifications: _connectionRequestNotifications,
-          communityNewPostNotifications: _communityNewPostNotifications,
+          memoryNewPostNotifications: _memoryNewPostNotifications,
           userNewPostNotifications: _userNewPostNotifications,
-          communityInviteNotifications: _communityInviteNotifications);
+          memoryInviteNotifications: _memoryInviteNotifications);
     } catch (error) {
       _onError(error);
     }
@@ -534,14 +538,15 @@ class OBNotificationsSettingsPageState
       _postReactionNotifications =
           notificationSettings.postReactionNotifications;
       _followNotifications = notificationSettings.followNotifications;
-      _followRequestNotifications = notificationSettings.followRequestNotifications;
-      _followRequestApprovedNotifications = notificationSettings.followRequestApprovedNotifications;
-      _communityInviteNotifications =
-          notificationSettings.communityInviteNotifications;
-      _communityNewPostNotifications =
-          notificationSettings.communityNewPostNotifications;
-      _userNewPostNotifications =
-          notificationSettings.userNewPostNotifications;
+      _followRequestNotifications =
+          notificationSettings.followRequestNotifications;
+      _followRequestApprovedNotifications =
+          notificationSettings.followRequestApprovedNotifications;
+      _memoryInviteNotifications =
+          notificationSettings.memoryInviteNotifications;
+      _memoryNewPostNotifications =
+          notificationSettings.memoryNewPostNotifications;
+      _userNewPostNotifications = notificationSettings.userNewPostNotifications;
     });
   }
 

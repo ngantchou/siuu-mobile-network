@@ -17,21 +17,21 @@ class OBPost extends StatelessWidget {
   final ValueChanged<Post> onPostIsInView;
   final OnTextExpandedChange onTextExpandedChange;
   final String inViewId;
-  final Function onCommunityExcluded;
-  final Function onUndoCommunityExcluded;
-  final ValueChanged<Community> onPostCommunityExcludedFromProfilePosts;
+  final Function onMemoryExcluded;
+  final Function onUndoMemoryExcluded;
+  final ValueChanged<Memory> onPostMemoryExcludedFromProfilePosts;
   final OBPostDisplayContext displayContext;
 
   const OBPost(this.post,
       {Key key,
       @required this.onPostDeleted,
       this.onPostIsInView,
-      this.onCommunityExcluded,
-      this.onUndoCommunityExcluded,
+      this.onMemoryExcluded,
+      this.onUndoMemoryExcluded,
       this.onTextExpandedChange,
       this.inViewId,
       this.displayContext = OBPostDisplayContext.timelinePosts,
-      this.onPostCommunityExcludedFromProfilePosts})
+      this.onPostMemoryExcludedFromProfilePosts})
       : super(key: key);
 
   @override
@@ -52,10 +52,10 @@ class OBPost extends StatelessWidget {
           onPostDeleted: onPostDeleted,
           onPostReported: onPostDeleted,
           displayContext: displayContext,
-          onCommunityExcluded: onCommunityExcluded,
-          onUndoCommunityExcluded: onUndoCommunityExcluded,
-          onPostCommunityExcludedFromProfilePosts:
-              onPostCommunityExcludedFromProfilePosts,
+          onMemoryExcluded: onMemoryExcluded,
+          onUndoMemoryExcluded: onUndoMemoryExcluded,
+          onPostMemoryExcludedFromProfilePosts:
+              onPostMemoryExcludedFromProfilePosts,
         ),
         OBPostBody(post,
             onTextExpandedChange: onTextExpandedChange, inViewId: inViewId),
@@ -99,7 +99,7 @@ class OBPost extends StatelessWidget {
 enum OBPostDisplayContext {
   timelinePosts,
   topPosts,
-  communityPosts,
+  memoryPosts,
   foreignProfilePosts,
   ownProfilePosts
 }

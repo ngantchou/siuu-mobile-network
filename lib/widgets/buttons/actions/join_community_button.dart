@@ -9,19 +9,19 @@ import 'package:Siuu/widgets/buttons/button.dart';
 import 'package:Siuu/widgets/buttons/community_button.dart';
 import 'package:flutter/material.dart';
 
-class OBJoinCommunityButton extends StatefulWidget {
-  final Community community;
-  final bool communityThemed;
+class OBJoinMemoryButton extends StatefulWidget {
+  final Memory memory;
+  final bool memoryThemed;
 
-  OBJoinCommunityButton(this.community, {this.communityThemed = true});
+  OBJoinMemoryButton(this.memory, {this.memoryThemed = true});
 
   @override
-  OBJoinCommunityButtonState createState() {
-    return OBJoinCommunityButtonState();
+  OBJoinMemoryButtonState createState() {
+    return OBJoinMemoryButtonState();
   }
 }
 
-class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
+class OBJoinMemoryButtonState extends State<OBJoinMemoryButton> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
@@ -41,49 +41,49 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
     _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
-      stream: widget.community.updateSubject,
-      initialData: widget.community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        var community = snapshot.data;
+      stream: widget.memory.updateSubject,
+      initialData: widget.memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        var memory = snapshot.data;
 
-        bool isCreator = community.isCreator ?? true;
+        bool isCreator = memory.isCreator ?? true;
 
         if (isCreator) return SizedBox();
 
-        bool isInvited = community.isInvited ?? false;
+        bool isInvited = memory.isInvited ?? false;
 
         User loggedInUser = _userService.getLoggedInUser();
 
-        bool isMember = community.isMember(loggedInUser) ?? false;
+        bool isMember = memory.isMember(loggedInUser) ?? false;
 
-        if (community.type == CommunityType.private && !isMember && !isInvited)
+        if (memory.type == MemoryType.private && !isMember && !isInvited)
           return SizedBox();
 
-        return widget.communityThemed
-            ? OBCommunityButton(
-                community: community,
+        return widget.memoryThemed
+            ? OBMemoryButton(
+                memory: memory,
                 text: isMember
-                    ? _localizationService.community__leave_community
-                    : _localizationService.community__join_community,
+                    ? _localizationService.community__leave_memory
+                    : _localizationService.community__join_memory,
                 isLoading: _requestInProgress,
-                onPressed: isMember ? _leaveCommunity : _joinCommunity,
+                onPressed: isMember ? _leaveMemory : _joinMemory,
               )
             : OBButton(
                 child: Text(isMember
-                    ? _localizationService.community__leave_community
-                    : _localizationService.community__join_community),
+                    ? _localizationService.community__leave_memory
+                    : _localizationService.community__join_memory),
                 isLoading: _requestInProgress,
-                onPressed: isMember ? _leaveCommunity : _joinCommunity,
+                onPressed: isMember ? _leaveMemory : _joinMemory,
               );
       },
     );
   }
 
-  void _joinCommunity() async {
+  void _joinMemory() async {
     _setRequestInProgress(true);
     try {
-      await _userService.joinCommunity(widget.community);
-      widget.community.incrementMembersCount();
+      await _userService.joinMemory(widget.memory);
+      widget.memory.incrementMembersCount();
     } catch (error) {
       _onError(error);
     } finally {
@@ -91,11 +91,11 @@ class OBJoinCommunityButtonState extends State<OBJoinCommunityButton> {
     }
   }
 
-  void _leaveCommunity() async {
+  void _leaveMemory() async {
     _setRequestInProgress(true);
     try {
-      await _userService.leaveCommunity(widget.community);
-      widget.community.decrementMembersCount();
+      await _userService.leaveMemory(widget.memory);
+      widget.memory.decrementMembersCount();
     } catch (error) {
       _onError(error);
     } finally {

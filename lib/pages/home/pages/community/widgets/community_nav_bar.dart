@@ -5,24 +5,24 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityNavBar extends StatelessWidget
+class OBMemoryNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
-  final Community community;
+  final Memory memory;
 
-  const OBCommunityNavBar(this.community);
+  const OBMemoryNavBar(this.memory);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: community.updateSubject,
-        initialData: community,
-        builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-          var community = snapshot.data;
+        stream: memory.updateSubject,
+        initialData: memory,
+        builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+          var memory = snapshot.data;
 
-          String communityColor = community.color;
+          String memoryColor = memory.color;
           ThemeValueParserService themeValueParserService =
               OpenbookProvider.of(context).themeValueParserService;
-          Color color = themeValueParserService.parseColor(communityColor);
+          Color color = themeValueParserService.parseColor(memoryColor);
           bool isDarkColor = themeValueParserService.isDarkColor(color);
           Color actionsColor = isDarkColor ? Colors.white : Colors.black;
 
@@ -30,8 +30,9 @@ class OBCommunityNavBar extends StatelessWidget
             border: null,
             actionsForegroundColor: actionsColor,
             middle: OBText(
-              'c/' + community.name,
-              style: TextStyle(color: actionsColor, fontWeight: FontWeight.bold),
+              'c/' + memory.name,
+              style:
+                  TextStyle(color: actionsColor, fontWeight: FontWeight.bold),
             ),
             transitionBetweenRoutes: false,
             backgroundColor: color,

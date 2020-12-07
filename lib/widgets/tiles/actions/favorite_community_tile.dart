@@ -8,29 +8,29 @@ import 'package:Siuu/widgets/icon.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBFavoriteCommunityTile extends StatefulWidget {
-  final Community community;
-  final VoidCallback onFavoritedCommunity;
-  final VoidCallback onUnfavoritedCommunity;
+class OBFavoriteMemoryTile extends StatefulWidget {
+  final Memory memory;
+  final VoidCallback onFavoritedMemory;
+  final VoidCallback onUnfavoritedMemory;
   final Widget favoriteSubtitle;
   final Widget unfavoriteSubtitle;
 
-  const OBFavoriteCommunityTile(
+  const OBFavoriteMemoryTile(
       {Key key,
-      @required this.community,
-      this.onFavoritedCommunity,
-      this.onUnfavoritedCommunity,
+      @required this.memory,
+      this.onFavoritedMemory,
+      this.onUnfavoritedMemory,
       this.favoriteSubtitle,
       this.unfavoriteSubtitle})
       : super(key: key);
 
   @override
-  OBFavoriteCommunityTileState createState() {
-    return OBFavoriteCommunityTileState();
+  OBFavoriteMemoryTileState createState() {
+    return OBFavoriteMemoryTileState();
   }
 }
 
-class OBFavoriteCommunityTileState extends State<OBFavoriteCommunityTile> {
+class OBFavoriteMemoryTileState extends State<OBFavoriteMemoryTile> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
@@ -50,21 +50,21 @@ class OBFavoriteCommunityTileState extends State<OBFavoriteCommunityTile> {
     _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
-      stream: widget.community.updateSubject,
-      initialData: widget.community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        var community = snapshot.data;
+      stream: widget.memory.updateSubject,
+      initialData: widget.memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        var memory = snapshot.data;
 
-        bool isFavorite = community.isFavorite;
+        bool isFavorite = memory.isFavorite;
 
         return ListTile(
           enabled: !_requestInProgress,
-          leading: OBIcon(isFavorite
-              ? OBIcons.unfavoriteCommunity
-              : OBIcons.favoriteCommunity),
-          title: OBText(
-              isFavorite ? _localizationService.community__unfavorite_action : _localizationService.community__favorite_action),
-          onTap: isFavorite ? _unfavoriteCommunity : _favoriteCommunity,
+          leading: OBIcon(
+              isFavorite ? OBIcons.unfavoriteMemory : OBIcons.favoriteMemory),
+          title: OBText(isFavorite
+              ? _localizationService.community__unfavorite_action
+              : _localizationService.community__favorite_action),
+          onTap: isFavorite ? _unfavoriteMemory : _favoriteMemory,
           subtitle:
               isFavorite ? widget.unfavoriteSubtitle : widget.favoriteSubtitle,
         );
@@ -72,11 +72,11 @@ class OBFavoriteCommunityTileState extends State<OBFavoriteCommunityTile> {
     );
   }
 
-  void _favoriteCommunity() async {
+  void _favoriteMemory() async {
     _setRequestInProgress(true);
     try {
-      await _userService.favoriteCommunity(widget.community);
-      if (widget.onFavoritedCommunity != null) widget.onFavoritedCommunity();
+      await _userService.favoriteMemory(widget.memory);
+      if (widget.onFavoritedMemory != null) widget.onFavoritedMemory();
     } catch (e) {
       _onError(e);
     } finally {
@@ -84,12 +84,11 @@ class OBFavoriteCommunityTileState extends State<OBFavoriteCommunityTile> {
     }
   }
 
-  void _unfavoriteCommunity() async {
+  void _unfavoriteMemory() async {
     _setRequestInProgress(true);
     try {
-      await _userService.unfavoriteCommunity(widget.community);
-      if (widget.onUnfavoritedCommunity != null)
-        widget.onUnfavoritedCommunity();
+      await _userService.unfavoriteMemory(widget.memory);
+      if (widget.onUnfavoritedMemory != null) widget.onUnfavoritedMemory();
     } catch (e) {
       _onError(e);
     } finally {
@@ -105,7 +104,8 @@ class OBFavoriteCommunityTileState extends State<OBFavoriteCommunityTile> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

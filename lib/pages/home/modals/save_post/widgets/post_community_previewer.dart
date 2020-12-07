@@ -11,15 +11,16 @@ import 'package:flutter/material.dart';
 
 import '../../../../../provider.dart';
 
-class OBPostCommunityPreviewer extends StatelessWidget {
-  final Community community;
+class OBPostMemoryPreviewer extends StatelessWidget {
+  final Memory memory;
 
-  const OBPostCommunityPreviewer({Key key, @required this.community})
+  const OBPostMemoryPreviewer({Key key, @required this.memory})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService localizationService =
+        OpenbookProvider.of(context).localizationService;
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,9 +29,9 @@ class OBPostCommunityPreviewer extends StatelessWidget {
         const SizedBox(
           height: 10,
         ),
-        OBCommunityTile(
-          community,
-          size: OBCommunityTileSize.small,
+        OBMemoryTile(
+          memory,
+          size: OBMemoryTileSize.small,
         )
       ],
     );

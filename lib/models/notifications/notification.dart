@@ -144,12 +144,11 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
       case NotificationType.postUserMention:
         contentObject = PostUserMentionNotification.fromJson(contentObjectData);
         break;
-      case NotificationType.communityInvite:
-        contentObject = CommunityInviteNotification.fromJson(contentObjectData);
+      case NotificationType.memoryInvite:
+        contentObject = MemoryInviteNotification.fromJson(contentObjectData);
         break;
-      case NotificationType.communityNewPost:
-        contentObject =
-            CommunityNewPostNotification.fromJson(contentObjectData);
+      case NotificationType.memoryNewPost:
+        contentObject = MemoryNewPostNotification.fromJson(contentObjectData);
         break;
       case NotificationType.userNewPost:
         contentObject = UserNewPostNotification.fromJson(contentObjectData);
@@ -183,11 +182,11 @@ class NotificationType {
   static const follow = const NotificationType._internal('F');
   static const followRequest = const NotificationType._internal('FR');
   static const followRequestApproved = const NotificationType._internal('FRA');
-  static const communityInvite = const NotificationType._internal('CI');
+  static const memoryInvite = const NotificationType._internal('CI');
   static const postCommentUserMention =
       const NotificationType._internal('PCUM');
   static const postUserMention = const NotificationType._internal('PUM');
-  static const communityNewPost = const NotificationType._internal('CNP');
+  static const memoryNewPost = const NotificationType._internal('CNP');
   static const userNewPost = const NotificationType._internal('UNP');
 
   static const _values = const <NotificationType>[
@@ -200,10 +199,10 @@ class NotificationType {
     follow,
     followRequest,
     followRequestApproved,
-    communityInvite,
+    memoryInvite,
     postCommentUserMention,
     postUserMention,
-    communityNewPost,
+    memoryNewPost,
     userNewPost
   ];
 

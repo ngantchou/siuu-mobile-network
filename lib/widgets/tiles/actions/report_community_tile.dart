@@ -7,25 +7,25 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:Siuu/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBReportCommunityTile extends StatefulWidget {
-  final Community community;
-  final ValueChanged<dynamic> onCommunityReported;
-  final VoidCallback onWantsToReportCommunity;
+class OBReportMemoryTile extends StatefulWidget {
+  final Memory memory;
+  final ValueChanged<dynamic> onMemoryReported;
+  final VoidCallback onWantsToReportMemory;
 
-  const OBReportCommunityTile({
+  const OBReportMemoryTile({
     Key key,
-    this.onCommunityReported,
-    @required this.community,
-    this.onWantsToReportCommunity,
+    this.onMemoryReported,
+    @required this.memory,
+    this.onWantsToReportMemory,
   }) : super(key: key);
 
   @override
-  OBReportCommunityTileState createState() {
-    return OBReportCommunityTileState();
+  OBReportMemoryTileState createState() {
+    return OBReportMemoryTileState();
   }
 }
 
-class OBReportCommunityTileState extends State<OBReportCommunityTile> {
+class OBReportMemoryTileState extends State<OBReportMemoryTile> {
   NavigationService _navigationService;
   bool _requestInProgress;
 
@@ -39,34 +39,35 @@ class OBReportCommunityTileState extends State<OBReportCommunityTile> {
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     _navigationService = openbookProvider.navigationService;
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
 
     return StreamBuilder(
-      stream: widget.community.updateSubject,
-      initialData: widget.community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        var community = snapshot.data;
+      stream: widget.memory.updateSubject,
+      initialData: widget.memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        var memory = snapshot.data;
 
-        bool isReported = community.isReported ?? false;
+        bool isReported = memory.isReported ?? false;
 
         return OBLoadingTile(
           isLoading: _requestInProgress || isReported,
           leading: OBIcon(OBIcons.report),
           title: OBText(isReported
-              ? _localizationService.moderation__you_have_reported_community_text
+              ? _localizationService
+                  .moderation__you_have_reported_community_text
               : _localizationService.moderation__report_community_text),
-          onTap: isReported ? () {} : _reportCommunity,
+          onTap: isReported ? () {} : _reportMemory,
         );
       },
     );
   }
 
-  void _reportCommunity() {
-    if (widget.onWantsToReportCommunity != null)
-      widget.onWantsToReportCommunity();
+  void _reportMemory() {
+    if (widget.onWantsToReportMemory != null) widget.onWantsToReportMemory();
     _navigationService.navigateToReportObject(
         context: context,
-        object: widget.community,
-        onObjectReported: widget.onCommunityReported);
+        object: widget.memory,
+        onObjectReported: widget.onMemoryReported);
   }
 }

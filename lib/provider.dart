@@ -90,7 +90,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
   EmojiPickerService emojiPickerService = EmojiPickerService();
   FollowsApiService followsApiService = FollowsApiService();
   PermissionsService permissionService = PermissionsService();
-  CommunitiesApiService communitiesApiService = CommunitiesApiService();
+  CommunitiesApiService memoriesApiService = CommunitiesApiService();
   HashtagsApiService hashtagsApiService = HashtagsApiService();
   CategoriesApiService categoriesApiService = CategoriesApiService();
   NotificationsApiService notificationsApiService = NotificationsApiService();
@@ -134,8 +134,8 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     httpService.setUtilsService(utilsService);
     connectionsCirclesApiService
         .setStringTemplateService(stringTemplateService);
-    communitiesApiService.setHttpieService(httpService);
-    communitiesApiService.setStringTemplateService(stringTemplateService);
+    memoriesApiService.setHttpieService(httpService);
+    memoriesApiService.setStringTemplateService(stringTemplateService);
     followsListsApiService.setHttpService(httpService);
     followsListsApiService.setStringTemplateService(stringTemplateService);
     userInvitesApiService.setHttpService(httpService);
@@ -159,7 +159,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     userService.setFollowsListsApiService(followsListsApiService);
     userService.setConnectionsApiService(connectionsApiService);
     userService.setConnectionsCirclesApiService(connectionsCirclesApiService);
-    userService.setCommunitiesApiService(communitiesApiService);
+    userService.setCommunitiesApiService(memoriesApiService);
     userService.setCategoriesApiService(categoriesApiService);
     userService.setNotificationsApiService(notificationsApiService);
     userService.setDevicesApiService(devicesApiService);
@@ -179,7 +179,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     validationService.setAuthApiService(authApiService);
     validationService.setUtilsService(utilsService);
     validationService.setFollowsListsApiService(followsListsApiService);
-    validationService.setCommunitiesApiService(communitiesApiService);
+    validationService.setCommunitiesApiService(memoriesApiService);
     validationService
         .setConnectionsCirclesApiService(connectionsCirclesApiService);
     themeService.setStorageService(storageService);
@@ -221,7 +221,7 @@ class OpenbookProviderState extends State<OpenbookProvider> {
     connectionsApiService.setApiURL(environment.apiUrl);
     connectionsCirclesApiService.setApiURL(environment.apiUrl);
     followsListsApiService.setApiURL(environment.apiUrl);
-    communitiesApiService.setApiURL(environment.apiUrl);
+    memoriesApiService.setApiURL(environment.apiUrl);
     hashtagsApiService.setApiURL(environment.apiUrl);
     categoriesApiService.setApiURL(environment.apiUrl);
     notificationsApiService.setApiURL(environment.apiUrl);

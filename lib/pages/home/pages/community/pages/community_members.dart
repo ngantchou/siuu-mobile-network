@@ -16,19 +16,18 @@ import 'package:Siuu/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityMembersPage extends StatefulWidget {
-  final Community community;
+class OBMemoryMembersPage extends StatefulWidget {
+  final Memory memory;
 
-  const OBCommunityMembersPage({Key key, @required this.community})
-      : super(key: key);
+  const OBMemoryMembersPage({Key key, @required this.memory}) : super(key: key);
 
   @override
-  State<OBCommunityMembersPage> createState() {
-    return OBCommunityMembersPageState();
+  State<OBMemoryMembersPage> createState() {
+    return OBMemoryMembersPageState();
   }
 }
 
-class OBCommunityMembersPageState extends State<OBCommunityMembersPage> {
+class OBMemoryMembersPageState extends State<OBMemoryMembersPage> {
   UserService _userService;
   NavigationService _navigationService;
   LocalizationService _localizationService;
@@ -53,9 +52,12 @@ class OBCommunityMembersPageState extends State<OBCommunityMembersPage> {
       _needsBootstrap = false;
     }
 
-    String title = widget.community.usersAdjective ?? _localizationService.community__community_members;
-    String singularName = widget.community.userAdjective ?? _localizationService.community__member;
-    String pluralName = widget.community.usersAdjective ?? _localizationService.community__member_plural;
+    String title = widget.memory.usersAdjective ??
+        _localizationService.community__community_members;
+    String singularName =
+        widget.memory.userAdjective ?? _localizationService.community__member;
+    String pluralName = widget.memory.usersAdjective ??
+        _localizationService.community__member_plural;
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
@@ -64,11 +66,11 @@ class OBCommunityMembersPageState extends State<OBCommunityMembersPage> {
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
           controller: _httpListController,
-          listItemBuilder: _buildCommunityMemberListItem,
-          searchResultListItemBuilder: _buildCommunityMemberListItem,
-          listRefresher: _refreshCommunityMembers,
-          listOnScrollLoader: _loadMoreCommunityMembers,
-          listSearcher: _searchCommunityMembers,
+          listItemBuilder: _buildMemoryMemberListItem,
+          searchResultListItemBuilder: _buildMemoryMemberListItem,
+          listRefresher: _refreshMemoryMembers,
+          listOnScrollLoader: _loadMoreMemoryMembers,
+          listSearcher: _searchMemoryMembers,
           resourceSingularName: singularName.toLowerCase(),
           resourcePluralName: pluralName.toLowerCase(),
         ),
@@ -76,11 +78,11 @@ class OBCommunityMembersPageState extends State<OBCommunityMembersPage> {
     );
   }
 
-  Widget _buildCommunityMemberListItem(BuildContext context, User user) {
+  Widget _buildMemoryMemberListItem(BuildContext context, User user) {
     bool isLoggedInUser = _userService.isLoggedInUser(user);
 
     return OBUserTile(user,
-        onUserTilePressed: _onCommunityMemberListItemPressed,
+        onUserTilePressed: _onMemoryMemberListItemPressed,
         trailing: isLoggedInUser
             ? null
             : OBFollowButton(
@@ -90,33 +92,33 @@ class OBCommunityMembersPageState extends State<OBCommunityMembersPage> {
               ));
   }
 
-  void _onCommunityMemberListItemPressed(User communityMember) {
+  void _onMemoryMemberListItemPressed(User memoryMember) {
     _navigationService.navigateToUserProfile(
-        user: communityMember, context: context);
+        user: memoryMember, context: context);
   }
 
-  Future<List<User>> _refreshCommunityMembers() async {
-    UsersList communityMembers =
-        await _userService.getMembersForCommunity(widget.community);
-    return communityMembers.users;
+  Future<List<User>> _refreshMemoryMembers() async {
+    UsersList memoryMembers =
+        await _userService.getMembersForMemory(widget.memory);
+    return memoryMembers.users;
   }
 
-  Future<List<User>> _loadMoreCommunityMembers(
-      List<User> communityMembersList) async {
-    var lastCommunityMember = communityMembersList.last;
-    var lastCommunityMemberId = lastCommunityMember.id;
-    var moreCommunityMembers = (await _userService.getMembersForCommunity(
-      widget.community,
-      maxId: lastCommunityMemberId,
+  Future<List<User>> _loadMoreMemoryMembers(
+      List<User> memoryMembersList) async {
+    var lastMemoryMember = memoryMembersList.last;
+    var lastMemoryMemberId = lastMemoryMember.id;
+    var moreMemoryMembers = (await _userService.getMembersForMemory(
+      widget.memory,
+      maxId: lastMemoryMemberId,
       count: 20,
     ))
         .users;
-    return moreCommunityMembers;
+    return moreMemoryMembers;
   }
 
-  Future<List<User>> _searchCommunityMembers(String query) async {
-    UsersList results = await _userService.searchCommunityMembers(
-        query: query, community: widget.community);
+  Future<List<User>> _searchMemoryMembers(String query) async {
+    UsersList results = await _userService.searchMemoryMembers(
+        query: query, memory: widget.memory);
 
     return results.users;
   }

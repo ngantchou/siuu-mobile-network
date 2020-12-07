@@ -11,7 +11,7 @@ import 'package:Siuu/widgets/new_post_data_uploader.dart';
 import 'package:flutter/material.dart';
 import 'package:tinycolor/tinycolor.dart';
 
-class OBCommunityNewPostButton extends StatelessWidget {
+class OBMemoryNewPostButton extends StatelessWidget {
   final bool isDisabled;
   final bool isLoading;
   final Color textColor;
@@ -19,10 +19,10 @@ class OBCommunityNewPostButton extends StatelessWidget {
   final double minWidth;
   final EdgeInsets padding;
   final OBButtonType type;
-  final Community community;
+  final Memory memory;
   final ValueChanged<OBNewPostData> onWantsToUploadNewPostData;
 
-  const OBCommunityNewPostButton({
+  const OBMemoryNewPostButton({
     this.type = OBButtonType.primary,
     this.size = OBButtonSize.medium,
     this.textColor = Colors.white,
@@ -30,7 +30,7 @@ class OBCommunityNewPostButton extends StatelessWidget {
     this.isLoading = false,
     this.padding,
     this.minWidth,
-    this.community,
+    this.memory,
     this.onWantsToUploadNewPostData,
   });
 
@@ -38,12 +38,12 @@ class OBCommunityNewPostButton extends StatelessWidget {
     LocalizationService _localizationService =
         OpenbookProvider.of(context).localizationService;
     return StreamBuilder(
-      stream: community.updateSubject,
-      initialData: community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        Community community = snapshot.data;
+      stream: memory.updateSubject,
+      initialData: memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        Memory memory = snapshot.data;
 
-        String communityHexColor = community.color;
+        String memoryHexColor = memory.color;
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
         ThemeValueParserService themeValueParserService =
             openbookProvider.themeValueParserService;
@@ -55,34 +55,33 @@ class OBCommunityNewPostButton extends StatelessWidget {
         double currentThemePrimaryColorLuminance =
             currentThemePrimaryColor.computeLuminance();
 
-        Color communityColor =
-            themeValueParserService.parseColor(communityHexColor);
-        Color textColor = themeValueParserService.isDarkColor(communityColor)
+        Color memoryColor = themeValueParserService.parseColor(memoryHexColor);
+        Color textColor = themeValueParserService.isDarkColor(memoryColor)
             ? Colors.white
             : Colors.black;
-        double communityColorLuminance = communityColor.computeLuminance();
+        double memoryColorLuminance = memoryColor.computeLuminance();
 
-        if (communityColorLuminance > 0.9 &&
+        if (memoryColorLuminance > 0.9 &&
             currentThemePrimaryColorLuminance > 0.9) {
           // Is extremely white and our current theem is also extremely white, darken it
-          communityColor = TinyColor(communityColor).darken(5).color;
-        } else if (communityColorLuminance < 0.1) {
+          memoryColor = TinyColor(memoryColor).darken(5).color;
+        } else if (memoryColorLuminance < 0.1) {
           // Is extremely dark and our current theme is also extremely dark, lighten it
-          communityColor = TinyColor(communityColor).lighten(10).color;
+          memoryColor = TinyColor(memoryColor).lighten(10).color;
         }
 
         return Semantics(
             button: true,
             label: _localizationService.post__create_new_community_post_label,
             child: OBFloatingActionButton(
-                color: communityColor,
+                color: memoryColor,
                 textColor: textColor,
                 onPressed: () async {
                   OpenbookProviderState openbookProvider =
                       OpenbookProvider.of(context);
                   OBNewPostData createPostData = await openbookProvider
                       .modalService
-                      .openCreatePost(context: context, community: community);
+                      .openCreatePost(context: context, memory: memory);
                   if (createPostData != null &&
                       onWantsToUploadNewPostData != null)
                     onWantsToUploadNewPostData(createPostData);

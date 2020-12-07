@@ -200,7 +200,7 @@ class _MyAppState extends State<MyApp> {
                 bootstrapOpenbookProviderInContext(context);
                 return OBAuthDonePage();
               },
-              '/auth/suggested_communities': (BuildContext context) {
+              '/auth/suggested_memories': (BuildContext context) {
                 bootstrapOpenbookProviderInContext(context);
                 return OBSuggestedCommunitiesPage();
               },

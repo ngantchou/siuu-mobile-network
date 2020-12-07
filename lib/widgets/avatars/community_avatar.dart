@@ -9,17 +9,17 @@ import 'package:Siuu/widgets/avatars/letter_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:tinycolor/tinycolor.dart';
 
-class OBCommunityAvatar extends StatelessWidget {
-  final Community community;
+class OBMemoryAvatar extends StatelessWidget {
+  final Memory memory;
   final OBAvatarSize size;
   final VoidCallback onPressed;
   final bool isZoomable;
   final double borderRadius;
   final double customSize;
 
-  const OBCommunityAvatar(
+  const OBMemoryAvatar(
       {Key key,
-      @required this.community,
+      @required this.memory,
       this.size = OBAvatarSize.small,
       this.isZoomable = false,
       this.borderRadius,
@@ -30,24 +30,24 @@ class OBCommunityAvatar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: community.updateSubject,
-        initialData: community,
-        builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-          Community community = snapshot.data;
-          bool communityHasAvatar = community.hasAvatar();
+        stream: memory.updateSubject,
+        initialData: memory,
+        builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+          Memory memory = snapshot.data;
+          bool memoryHasAvatar = memory.hasAvatar();
 
           Widget avatar;
 
-          if (communityHasAvatar) {
+          if (memoryHasAvatar) {
             avatar = OBAvatar(
-                avatarUrl: community?.avatar,
+                avatarUrl: memory?.avatar,
                 size: size,
                 onPressed: onPressed,
                 isZoomable: isZoomable,
                 borderRadius: borderRadius,
                 customSize: customSize);
           } else {
-            String communityHexColor = community.color ?? '#ffffff';
+            String memoryHexColor = memory.color ?? '#ffffff';
 
             OpenbookProviderState openbookProviderState =
                 OpenbookProvider.of(context);
@@ -61,26 +61,25 @@ class OBCommunityAvatar extends StatelessWidget {
             double currentThemePrimaryColorLuminance =
                 currentThemePrimaryColor.computeLuminance();
 
-            Color communityColor =
-                themeValueParserService.parseColor(communityHexColor);
-            double communityColorLuminance = communityColor.computeLuminance();
-            Color textColor =
-                themeValueParserService.isDarkColor(communityColor)
-                    ? Colors.white
-                    : Colors.black;
+            Color memoryColor =
+                themeValueParserService.parseColor(memoryHexColor);
+            double memoryColorLuminance = memoryColor.computeLuminance();
+            Color textColor = themeValueParserService.isDarkColor(memoryColor)
+                ? Colors.white
+                : Colors.black;
 
-            if (communityColorLuminance > 0.9 &&
+            if (memoryColorLuminance > 0.9 &&
                 currentThemePrimaryColorLuminance > 0.9) {
               // Is extremely white and our current theem is also extremely white, darken it
-              communityColor = TinyColor(communityColor).darken(5).color;
-            } else if (communityColorLuminance < 0.1) {
+              memoryColor = TinyColor(memoryColor).darken(5).color;
+            } else if (memoryColorLuminance < 0.1) {
               // Is extremely dark and our current theme is also extremely dark, lighten it
-              communityColor = TinyColor(communityColor).lighten(10).color;
+              memoryColor = TinyColor(memoryColor).lighten(10).color;
             }
 
             avatar = OBLetterAvatar(
-                letter: community.name[0],
-                color: communityColor,
+                letter: memory.name[0],
+                color: memoryColor,
                 size: size,
                 onPressed: onPressed,
                 borderRadius: borderRadius,

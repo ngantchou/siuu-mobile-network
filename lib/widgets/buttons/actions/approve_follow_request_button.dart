@@ -25,7 +25,8 @@ class OBApproveFollowRequestButton extends StatefulWidget {
   }
 }
 
-class OBApproveFollowRequestButtonState extends State<OBApproveFollowRequestButton> {
+class OBApproveFollowRequestButtonState
+    extends State<OBApproveFollowRequestButton> {
   ToastService _toastService;
   LocalizationService _localizationService;
   UserService _userService;
@@ -66,10 +67,10 @@ class OBApproveFollowRequestButtonState extends State<OBApproveFollowRequestButt
 
     try {
       _followRequestActionOperation = CancelableOperation.fromFuture(
-          _userService
-              .approveFollowRequestFromUser(widget.user));
+          _userService.approveFollowRequestFromUser(widget.user));
       await _followRequestActionOperation.value;
-      if(widget.onFollowRequestApproved != null) widget.onFollowRequestApproved();
+      if (widget.onFollowRequestApproved != null)
+        widget.onFollowRequestApproved();
     } catch (error) {
       _onError(error);
       rethrow;

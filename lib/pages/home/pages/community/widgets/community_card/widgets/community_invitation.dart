@@ -4,19 +4,19 @@ import 'package:Siuu/widgets/buttons/actions/join_community_button.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityInvitation extends StatelessWidget {
-  final Community community;
+class OBMemoryInvitation extends StatelessWidget {
+  final Memory memory;
 
-  OBCommunityInvitation(this.community);
+  OBMemoryInvitation(this.memory);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: community.updateSubject,
-      initialData: community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        Community community = snapshot.data;
-        bool isInvited = community?.isInvited;
+      stream: memory.updateSubject,
+      initialData: memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        Memory memory = snapshot.data;
+        bool isInvited = memory?.isInvited;
 
         if (isInvited == null) return const SizedBox();
 
@@ -29,7 +29,7 @@ class OBCommunityInvitation extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   OBText(
-                    'You have been invited to join the community.',
+                    'You have been invited to join the memory.',
                     maxLines: 4,
                     size: OBTextSize.medium,
                     overflow: TextOverflow.ellipsis,
@@ -40,7 +40,7 @@ class OBCommunityInvitation extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      OBJoinCommunityButton(community),
+                      OBJoinMemoryButton(memory),
                     ],
                   )
                 ],

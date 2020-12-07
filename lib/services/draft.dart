@@ -8,8 +8,7 @@ class DraftService {
   String getCommentDraft(int postId, [int commentId]) =>
       _drafts[_buildCommentKey(postId, commentId)] ?? '';
 
-  String getPostDraft([int communityId]) =>
-      _drafts[_buildPostKey(communityId)] ?? '';
+  String getPostDraft([int memoryId]) => _drafts[_buildPostKey(memoryId)] ?? '';
 
   void _set(String key, String text) {
     _drafts.update(key, (e) => text, ifAbsent: () => text);
@@ -24,19 +23,19 @@ class DraftService {
     }
   }
 
-  void setPostDraft(String text, [int communityId]) {
+  void setPostDraft(String text, [int memoryId]) {
     if (text.trim().isNotEmpty) {
-      _set(_buildPostKey(communityId), text);
+      _set(_buildPostKey(memoryId), text);
     } else {
-      removePostDraft(communityId);
+      removePostDraft(memoryId);
     }
   }
 
   void removeCommentDraft(int postId, [commentId]) =>
       _drafts.remove(_buildCommentKey(postId, commentId));
 
-  void removePostDraft([int communityId]) =>
-      _drafts.remove(_buildPostKey(communityId));
+  void removePostDraft([int memoryId]) =>
+      _drafts.remove(_buildPostKey(memoryId));
 
   void _trimDraftsIfNeeded() {
     if (_drafts.length > _maxSavedDrafts) {
@@ -51,5 +50,5 @@ class DraftService {
   String _buildCommentKey(int postId, int commentId) =>
       'c|$postId|${commentId ?? "-1"}';
 
-  String _buildPostKey(int communityId) => 'p|${communityId ?? "-1"}';
+  String _buildPostKey(int memoryId) => 'p|${memoryId ?? "-1"}';
 }

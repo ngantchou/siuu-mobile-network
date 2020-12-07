@@ -12,7 +12,7 @@ class ModerationApiService {
   static const USER_MODERATION_PENALTIES_PATH =
       'api/moderation/user/penalties/';
   static const USER_PENDING_MODERATED_OBJECTS_COMMUNITIES_PATH =
-      'api/moderation/user/pending-moderated-objects-communities/';
+      'api/moderation/user/pending-moderated-objects-memories/';
   static const GET_MODERATION_CATEGORIES_PATH = 'api/moderation/categories/';
   static const MODERATED_OBJECT_PATH =
       'api/moderation/moderated-objects/{moderatedObjectId}/';

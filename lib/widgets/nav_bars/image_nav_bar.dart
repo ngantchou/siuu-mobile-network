@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
 //AutomaticKeepAliveClientMixin
-/// A coloured navigation bar, used in communities.
+/// A coloured navigation bar, used in memories.
 class OBImageNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
   final String imageSrc;

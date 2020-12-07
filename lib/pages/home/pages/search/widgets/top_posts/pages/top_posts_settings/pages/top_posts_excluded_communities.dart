@@ -22,7 +22,8 @@ class OBTopPostsExcludedCommunitiesPage extends StatefulWidget {
   }
 }
 
-class OBTopPostsExcludedCommunitiesState extends State<OBTopPostsExcludedCommunitiesPage> {
+class OBTopPostsExcludedCommunitiesState
+    extends State<OBTopPostsExcludedCommunitiesPage> {
   UserService _userService;
   NavigationService _navigationService;
   LocalizationService _localizationService;
@@ -51,45 +52,44 @@ class OBTopPostsExcludedCommunitiesState extends State<OBTopPostsExcludedCommuni
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: _localizationService.community__top_posts_excluded_communities,
+        title: _localizationService.community__top_posts_excluded_memories,
       ),
       child: OBPrimaryColorContainer(
-        child: OBHttpList<Community>(
+        child: OBHttpList<Memory>(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           controller: _httpListController,
-          listItemBuilder: _buildExcludedCommunityListItem,
-          searchResultListItemBuilder: _buildExcludedCommunityListItem,
+          listItemBuilder: _buildExcludedMemoryListItem,
+          searchResultListItemBuilder: _buildExcludedMemoryListItem,
           listRefresher: _refreshExcludedCommunities,
           listOnScrollLoader: _loadMoreExcludedCommunities,
           listSearcher: _searchExcludedCommunities,
-          resourceSingularName: _localizationService.community__excluded_community,
-          resourcePluralName: _localizationService.community__excluded_communities,
+          resourceSingularName: _localizationService.community__excluded_memory,
+          resourcePluralName: _localizationService.community__excluded_memories,
         ),
       ),
     );
   }
 
-  Widget _buildExcludedCommunityListItem(BuildContext context, Community community) {
+  Widget _buildExcludedMemoryListItem(BuildContext context, Memory memory) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0),
-      child: OBCommunityTile(
-        community,
-        size: OBCommunityTileSize.small,
-        onCommunityTilePressed: _onExcludedCommunityListItemPressed,
-        onCommunityTileDeleted: _onExcludedCommunityListItemDeleted,
+      child: OBMemoryTile(
+        memory,
+        size: OBMemoryTileSize.small,
+        onMemoryTilePressed: _onExcludedMemoryListItemPressed,
+        onMemoryTileDeleted: _onExcludedMemoryListItemDeleted,
       ),
     );
   }
 
-  void _onExcludedCommunityListItemPressed(Community community) {
-    _navigationService.navigateToCommunity(
-        community: community, context: context);
+  void _onExcludedMemoryListItemPressed(Memory memory) {
+    _navigationService.navigateToMemory(memory: memory, context: context);
   }
 
-  void _onExcludedCommunityListItemDeleted(Community excludedCommunity) async {
+  void _onExcludedMemoryListItemDeleted(Memory excludedMemory) async {
     try {
-      await _userService.undoExcludeCommunityFromTopPosts(excludedCommunity);
-      _httpListController.removeListItem(excludedCommunity);
+      await _userService.undoExcludeMemoryFromTopPosts(excludedMemory);
+      _httpListController.removeListItem(excludedMemory);
     } catch (error) {
       _onError(error);
     }
@@ -103,30 +103,36 @@ class OBTopPostsExcludedCommunitiesState extends State<OBTopPostsExcludedCommuni
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
 
-  Future<List<Community>> _refreshExcludedCommunities() async {
-    CommunitiesList excludedCommunities = await _userService.getTopPostsExcludedCommunities();
-    return excludedCommunities.communities;
+  Future<List<Memory>> _refreshExcludedCommunities() async {
+    CommunitiesList excludedCommunities =
+        await _userService.getTopPostsExcludedCommunities();
+    return excludedCommunities.memories;
   }
 
-  Future<List<Community>> _loadMoreExcludedCommunities(List<Community> excludedCommunitiesList) async {
-    var lastExcludedCommunity = excludedCommunitiesList.last;
-    var lastExcludedCommunityId = lastExcludedCommunity.id;
-    var moreExcludedCommunities = (await _userService.getTopPostsExcludedCommunities(
-      offset: lastExcludedCommunityId,
+  Future<List<Memory>> _loadMoreExcludedCommunities(
+      List<Memory> excludedCommunitiesList) async {
+    var lastExcludedMemory = excludedCommunitiesList.last;
+    var lastExcludedMemoryId = lastExcludedMemory.id;
+    var moreExcludedCommunities =
+        (await _userService.getTopPostsExcludedCommunities(
+      offset: lastExcludedMemoryId,
       count: 10,
-    )).communities;
+    ))
+            .memories;
 
     return moreExcludedCommunities;
   }
 
-  Future<List<Community>> _searchExcludedCommunities(String query) async {
-    CommunitiesList results = await _userService.searchTopPostsExcludedCommunities(query: query);
+  Future<List<Memory>> _searchExcludedCommunities(String query) async {
+    CommunitiesList results =
+        await _userService.searchTopPostsExcludedCommunities(query: query);
 
-    return results.communities;
+    return results.memories;
   }
 }

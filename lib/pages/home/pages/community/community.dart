@@ -24,20 +24,20 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
-class OBCommunityPage extends StatefulWidget {
-  final Community community;
+class OBMemoryPage extends StatefulWidget {
+  final Memory memory;
 
-  OBCommunityPage(this.community);
+  OBMemoryPage(this.memory);
 
   @override
-  OBCommunityPageState createState() {
-    return OBCommunityPageState();
+  OBMemoryPageState createState() {
+    return OBMemoryPageState();
   }
 }
 
-class OBCommunityPageState extends State<OBCommunityPage>
+class OBMemoryPageState extends State<OBMemoryPage>
     with TickerProviderStateMixin {
-  Community _community;
+  Memory _memory;
   OBPostsStreamController _obPostsStreamController;
   ScrollController _obPostsStreamScrollController;
   UserService _userService;
@@ -45,7 +45,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
 
   bool _needsBootstrap;
 
-  CancelableOperation _refreshCommunityOperation;
+  CancelableOperation _refreshMemoryOperation;
 
   List<OBNewPostData> _newPostsData;
 
@@ -59,14 +59,13 @@ class OBCommunityPageState extends State<OBCommunityPage>
     _obPostsStreamScrollController = ScrollController();
     _obPostsStreamController = OBPostsStreamController();
     _needsBootstrap = true;
-    _community = widget.community;
+    _memory = widget.memory;
     _newPostsData = [];
 
     _hideFloatingButtonAnimation =
         AnimationController(vsync: this, duration: kThemeAnimationDuration);
     _previousScrollPixels = 0;
     _hideFloatingButtonAnimation.forward();
-
 
     _obPostsStreamScrollController.addListener(() {
       double newScrollPixelPosition =
@@ -97,7 +96,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
   void dispose() {
     _hideFloatingButtonAnimation.dispose();
     super.dispose();
-    if (_refreshCommunityOperation != null) _refreshCommunityOperation.cancel();
+    if (_refreshMemoryOperation != null) _refreshMemoryOperation.cancel();
   }
 
   @override
@@ -108,21 +107,21 @@ class OBCommunityPageState extends State<OBCommunityPage>
       _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
 
-      // If the user doesn't have permission to view the community we need to
+      // If the user doesn't have permission to view the memory we need to
       // manually trigger a refresh here to make sure the model contains all
-      // relevant community information (like admins and moderators).
+      // relevant memory information (like admins and moderators).
       //
       // If the user can see the content, a refresh will be triggered
       // automatically by the OBPostsStream.
-      if (!_userCanSeeCommunityContent(_community)) {
-        _refreshCommunity();
+      if (!_userCanSeeMemoryContent(_memory)) {
+        _refreshMemory();
       }
     }
 
     return CupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBCommunityNavBar(
-          _community,
+        navigationBar: OBMemoryNavBar(
+          _memory,
         ),
         child: OBPrimaryColorContainer(
           child: Column(
@@ -130,15 +129,15 @@ class OBCommunityPageState extends State<OBCommunityPage>
             children: <Widget>[
               Expanded(
                 child: StreamBuilder(
-                    stream: _community.updateSubject,
-                    initialData: _community,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<Community> snapshot) {
-                      Community latestCommunity = snapshot.data;
+                    stream: _memory.updateSubject,
+                    initialData: _memory,
+                    builder:
+                        (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+                      Memory latestMemory = snapshot.data;
 
-                      return _userCanSeeCommunityContent(latestCommunity)
-                          ? _buildCommunityContent()
-                          : _buildPrivateCommunityContent();
+                      return _userCanSeeMemoryContent(latestMemory)
+                          ? _buildMemoryContent()
+                          : _buildPrivateMemoryContent();
                     }),
               )
             ],
@@ -146,20 +145,20 @@ class OBCommunityPageState extends State<OBCommunityPage>
         ));
   }
 
-  bool _userCanSeeCommunityContent(Community community) {
-    bool communityIsPrivate = community.isPrivate();
+  bool _userCanSeeMemoryContent(Memory memory) {
+    bool memoryIsPrivate = memory.isPrivate();
 
     User loggedInUser = _userService.getLoggedInUser();
-    bool userIsMember = community.isMember(loggedInUser);
+    bool userIsMember = memory.isMember(loggedInUser);
 
-    return !communityIsPrivate || userIsMember;
+    return !memoryIsPrivate || userIsMember;
   }
 
-  Widget _buildCommunityContent() {
+  Widget _buildMemoryContent() {
     List<Widget> prependedItems = [
-      OBCommunityCover(_community),
-      OBCommunityCard(
-        _community,
+      OBMemoryCover(_memory),
+      OBMemoryCard(
+        _memory,
       )
     ];
 
@@ -172,29 +171,29 @@ class OBCommunityPageState extends State<OBCommunityPage>
     List<Widget> stackItems = [
       OBPostsStream(
         scrollController: _obPostsStreamScrollController,
-        onScrollLoader: _loadMoreCommunityPosts,
-        refresher: _refreshCommunityPosts,
+        onScrollLoader: _loadMoreMemoryPosts,
+        refresher: _refreshMemoryPosts,
         controller: _obPostsStreamController,
         prependedItems: prependedItems,
-        displayContext: OBPostDisplayContext.communityPosts,
-        streamIdentifier: 'community_' + widget.community.name,
-        secondaryRefresher: _refreshCommunity,
+        displayContext: OBPostDisplayContext.memoryPosts,
+        streamIdentifier: 'community_' + widget.memory.name,
+        secondaryRefresher: _refreshMemory,
         statusIndicatorBuilder: _buildPostsStreamStatusIndicator,
       ),
     ];
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     User loggedInUser = openbookProvider.userService.getLoggedInUser();
-    bool isMemberOfCommunity = _community.isMember(loggedInUser);
+    bool isMemberOfMemory = _memory.isMember(loggedInUser);
 
-    if (isMemberOfCommunity) {
+    if (isMemberOfMemory) {
       stackItems.add(Positioned(
           bottom: 20.0,
           right: 20.0,
           child: ScaleTransition(
             scale: _hideFloatingButtonAnimation,
-            child: OBCommunityNewPostButton(
-              community: _community,
+            child: OBMemoryNewPostButton(
+              memory: _memory,
               onWantsToUploadNewPostData: _onWantsToUploadNewPostData,
             ),
           )));
@@ -210,7 +209,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
       OBPostsStreamStatus streamStatus,
       List<Widget> streamPrependedItems,
       Function streamRefresher}) {
-    return OBCommunityPostsStreamStatusIndicator(
+    return OBMemoryPostsStreamStatusIndicator(
         streamRefresher: streamRefresher,
         streamPrependedItems: streamPrependedItems,
         streamStatus: streamStatus);
@@ -231,19 +230,19 @@ class OBCommunityPageState extends State<OBCommunityPage>
   void _onNewPostDataUploaderPostPublished(
       Post publishedPost, OBNewPostData newPostData) {
     _removeNewPostData(newPostData);
-    _community.incrementPostsCount();
+    _memory.incrementPostsCount();
     _obPostsStreamController.addPostToTop(publishedPost);
   }
 
-  Widget _buildPrivateCommunityContent() {
-    bool communityHasInvitesEnabled = _community.invitesEnabled;
+  Widget _buildPrivateMemoryContent() {
+    bool memoryHasInvitesEnabled = _memory.invitesEnabled;
     return ListView(
       padding: EdgeInsets.all(0),
       physics: const ClampingScrollPhysics(),
       children: <Widget>[
-        OBCommunityCover(_community),
-        OBCommunityCard(
-          _community,
+        OBMemoryCover(_memory),
+        OBMemoryCard(
+          _memory,
         ),
         Padding(
           padding: const EdgeInsets.all(20),
@@ -257,7 +256,7 @@ class OBCommunityPageState extends State<OBCommunityPage>
                   height: 10,
                 ),
                 OBText(
-                  communityHasInvitesEnabled
+                  memoryHasInvitesEnabled
                       ? _localizationService
                           .trans('community__invited_by_member')
                       : _localizationService
@@ -268,45 +267,43 @@ class OBCommunityPageState extends State<OBCommunityPage>
             ),
           ),
         ),
-        OBCommunityAdministrators(_community),
-        OBCommunityModerators(_community)
+        OBMemoryAdministrators(_memory),
+        OBMemoryModerators(_memory)
       ],
     );
   }
 
-  Future<void> _refreshCommunity() async {
-    if (_refreshCommunityOperation != null) _refreshCommunityOperation.cancel();
-    _refreshCommunityOperation = CancelableOperation.fromFuture(
-        _userService.getCommunityWithName(_community.name));
+  Future<void> _refreshMemory() async {
+    if (_refreshMemoryOperation != null) _refreshMemoryOperation.cancel();
+    _refreshMemoryOperation = CancelableOperation.fromFuture(
+        _userService.getMemoryWithName(_memory.name));
     debugPrint(_localizationService.trans('community__refreshing'));
-    var community = await _refreshCommunityOperation.value;
-    _setCommunity(community);
+    var memory = await _refreshMemoryOperation.value;
+    _setMemory(memory);
   }
 
-  Future<List<Post>> _refreshCommunityPosts() async {
-    debugPrint('Refreshing community posts');
-    PostsList communityPosts =
-        await _userService.getPostsForCommunity(widget.community);
-    return communityPosts.posts;
+  Future<List<Post>> _refreshMemoryPosts() async {
+    debugPrint('Refreshing memory posts');
+    PostsList memoryPosts = await _userService.getPostsForMemory(widget.memory);
+    return memoryPosts.posts;
   }
 
-  Future<List<Post>> _loadMoreCommunityPosts(
-      List<Post> communityPostsList) async {
-    debugPrint('Loading more community posts');
-    var lastCommunityPost = communityPostsList.last;
-    var lastCommunityPostId = lastCommunityPost.id;
-    var moreCommunityPosts = (await _userService.getPostsForCommunity(
-      widget.community,
-      maxId: lastCommunityPostId,
+  Future<List<Post>> _loadMoreMemoryPosts(List<Post> memoryPostsList) async {
+    debugPrint('Loading more memory posts');
+    var lastMemoryPost = memoryPostsList.last;
+    var lastMemoryPostId = lastMemoryPost.id;
+    var moreMemoryPosts = (await _userService.getPostsForMemory(
+      widget.memory,
+      maxId: lastMemoryPostId,
       count: 10,
     ))
         .posts;
-    return moreCommunityPosts;
+    return moreMemoryPosts;
   }
 
-  void _setCommunity(Community community) {
+  void _setMemory(Memory memory) {
     setState(() {
-      _community = community;
+      _memory = memory;
     });
   }
 
@@ -323,15 +320,15 @@ class OBCommunityPageState extends State<OBCommunityPage>
   }
 }
 
-class CommunityTabBarDelegate extends SliverPersistentHeaderDelegate {
-  CommunityTabBarDelegate({
+class MemoryTabBarDelegate extends SliverPersistentHeaderDelegate {
+  MemoryTabBarDelegate({
     this.controller,
     this.pageStorageKey,
-    this.community,
+    this.memory,
   });
 
   final TabController controller;
-  final Community community;
+  final Memory memory;
   final PageStorageKey pageStorageKey;
 
   @override
@@ -374,9 +371,9 @@ class CommunityTabBarDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  bool shouldRebuild(covariant CommunityTabBarDelegate oldDelegate) {
+  bool shouldRebuild(covariant MemoryTabBarDelegate oldDelegate) {
     return oldDelegate.controller != controller;
   }
 }
 
-typedef void OnWantsToEditUserCommunity(User user);
+typedef void OnWantsToEditUserMemory(User user);

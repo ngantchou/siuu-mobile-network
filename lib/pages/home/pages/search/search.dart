@@ -52,11 +52,11 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
 
   bool _hasSearch;
   bool _userSearchRequestInProgress;
-  bool _communitySearchRequestInProgress;
+  bool _memorySearchRequestInProgress;
   bool _hashtagSearchRequestInProgress;
   String _searchQuery;
   List<User> _userSearchResults;
-  List<Community> _communitySearchResults;
+  List<Memory> _memorySearchResults;
   List<Hashtag> _hashtagSearchResults;
   OBTopPostsController _topPostsController;
   OBTrendingPostsController _trendingPostsController;
@@ -88,16 +88,17 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _topPostsController = OBTopPostsController();
     _trendingPostsController = OBTrendingPostsController();
     _userSearchRequestInProgress = false;
-    _communitySearchRequestInProgress = false;
+    _memorySearchRequestInProgress = false;
     _hashtagSearchRequestInProgress = false;
     _hasSearch = false;
     _heightTabs = HEIGHT_TABS_SECTION;
     _userSearchResults = [];
-    _communitySearchResults = [];
+    _memorySearchResults = [];
     _hashtagSearchResults = [];
     _selectedSearchResultsTab = OBUserSearchResultsTab.users;
     _tabController = new TabController(length: 2, vsync: this);
-    _setScrollPositionThrottler = new Throttling(duration: Duration(milliseconds: 300));
+    _setScrollPositionThrottler =
+        new Throttling(duration: Duration(milliseconds: 300));
     _animationController =
         AnimationController(vsync: this, duration: Duration(milliseconds: 100));
     _offset = Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
@@ -171,12 +172,12 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
             searchQuery: _searchQuery,
             userResults: _userSearchResults,
             userSearchInProgress: _userSearchRequestInProgress,
-            communityResults: _communitySearchResults,
-            communitySearchInProgress: _communitySearchRequestInProgress,
+            memoryResults: _memorySearchResults,
+            memorySearchInProgress: _memorySearchRequestInProgress,
             hashtagResults: _hashtagSearchResults,
             hashtagSearchInProgress: _hashtagSearchRequestInProgress,
             onUserPressed: _onSearchUserPressed,
-            onCommunityPressed: _onSearchCommunityPressed,
+            onMemoryPressed: _onSearchMemoryPressed,
             onHashtagPressed: _onSearchHashtagPressed,
             selectedTab: _selectedSearchResultsTab,
             onScroll: _onScrollSearchResults,
@@ -203,8 +204,10 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     return Positioned(
         left: 0,
         top: 0,
-        height:
-            HEIGHT_SEARCH_BAR + _heightTabs + _extraPaddingForSlidableSection,
+        height: HEIGHT_SEARCH_BAR +
+            _heightTabs +
+            _extraPaddingForSlidableSection +
+            6,
         width: existingMediaQuery.size.width,
         child: OBCupertinoPageScaffold(
           backgroundColor: Colors.transparent,
@@ -256,19 +259,22 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
   }
 
   void _onScrollPositionChange(ScrollPosition position) {
-    bool isScrollingUp = position.userScrollDirection == ScrollDirection.forward;
+    bool isScrollingUp =
+        position.userScrollDirection == ScrollDirection.forward;
     _hideKeyboard();
     if (position.pixels < (HEIGHT_SEARCH_BAR + HEIGHT_TABS_SECTION)) {
       if (_offset.value.dy == -1.0) _showTabSection();
       return;
     }
-    _setScrollPositionThrottler.throttle(() => _handleScrollThrottle(position.pixels, isScrollingUp));
+    _setScrollPositionThrottler
+        .throttle(() => _handleScrollThrottle(position.pixels, isScrollingUp));
   }
 
   void _handleScrollThrottle(double scrollPixels, bool isScrollingUp) {
     if (_lastScrollPosition != null) {
-        double offset = (scrollPixels - _lastScrollPosition).abs();
-        if (offset > MIN_SCROLL_OFFSET_TO_ANIMATE_TABS) _checkScrollDirectionAndAnimateTabs(isScrollingUp);
+      double offset = (scrollPixels - _lastScrollPosition).abs();
+      if (offset > MIN_SCROLL_OFFSET_TO_ANIMATE_TABS)
+        _checkScrollDirectionAndAnimateTabs(isScrollingUp);
     }
     _setScrollPosition(scrollPixels);
   }
@@ -311,7 +317,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
 
   Future<void> _searchWithQuery(String query) {
     String cleanedUpQuery = _cleanUpQuery(query);
-    if(cleanedUpQuery.isEmpty) return null;
+    if (cleanedUpQuery.isEmpty) return null;
 
     return Future.wait([
       _searchForUsersWithQuery(cleanedUpQuery),
@@ -354,16 +360,16 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     if (_getCommunitiesWithQuerySubscription != null)
       _getCommunitiesWithQuerySubscription.cancel();
 
-    _setCommunitySearchRequestInProgress(true);
+    _setMemorySearchRequestInProgress(true);
 
     _getCommunitiesWithQuerySubscription =
         _userService.searchCommunitiesWithQuery(query).asStream().listen(
-            (CommunitiesList communitiesList) {
-              _setCommunitySearchResults(communitiesList.communities);
+            (CommunitiesList memoriesList) {
+              _setMemorySearchResults(memoriesList.memories);
             },
             onError: _onError,
             onDone: () {
-              _setCommunitySearchRequestInProgress(false);
+              _setMemorySearchRequestInProgress(false);
             });
   }
 
@@ -408,9 +414,9 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     });
   }
 
-  void _setCommunitySearchRequestInProgress(bool requestInProgress) {
+  void _setMemorySearchRequestInProgress(bool requestInProgress) {
     setState(() {
-      _communitySearchRequestInProgress = requestInProgress;
+      _memorySearchRequestInProgress = requestInProgress;
     });
   }
 
@@ -453,9 +459,9 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     });
   }
 
-  void _setCommunitySearchResults(List<Community> searchResults) {
+  void _setMemorySearchResults(List<Memory> searchResults) {
     setState(() {
-      _communitySearchResults = searchResults;
+      _memorySearchResults = searchResults;
     });
   }
 
@@ -470,10 +476,9 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _navigationService.navigateToUserProfile(user: user, context: context);
   }
 
-  void _onSearchCommunityPressed(Community community) {
+  void _onSearchMemoryPressed(Memory memory) {
     _hideKeyboard();
-    _navigationService.navigateToCommunity(
-        community: community, context: context);
+    _navigationService.navigateToMemory(memory: memory, context: context);
   }
 
   void _onSearchHashtagPressed(Hashtag hashtag) {

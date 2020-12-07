@@ -408,9 +408,9 @@ class LocalizationService {
         name: 'auth__create_acc__done_created');
   }
 
-  String get auth__create_acc__suggested_communities {
-    return Intl.message("🥳 Get started by joining the following communities.",
-        name: 'auth__create_acc__suggested_communities');
+  String get auth__create_acc__suggested_memories {
+    return Intl.message("🥳 Get started by joining the following memories.",
+        name: 'auth__create_acc__suggested_memories');
   }
 
   String get auth__create_acc__submit_loading_title {
@@ -471,7 +471,7 @@ class LocalizationService {
 
   String get auth__create_acc__legal_confirmation_desc {
     return Intl.message(
-        "By registering in Siuu, I certify that I'm older than 16 years old and have read the Community Guidelines, Privacy Policy and Terms of Use and agree to all of the items included",
+        "By registering in Siuu, I certify that I'm older than 16 years old and have read the Memory Guidelines, Privacy Policy and Terms of Use and agree to all of the items included",
         name: 'auth__create_acc__legal_confirmation_desc');
   }
 
@@ -860,12 +860,12 @@ class LocalizationService {
   }
 
   String get drawer__useful_links_slack_channel {
-    return Intl.message("Community Slack channel",
+    return Intl.message("Memory Slack channel",
         name: 'drawer__useful_links_slack_channel');
   }
 
   String get drawer__useful_links_community_guidelines {
-    return Intl.message("Community guidelines",
+    return Intl.message("Memory guidelines",
         name: 'drawer__useful_links_community_guidelines');
   }
 
@@ -925,32 +925,31 @@ class LocalizationService {
     return Intl.message("Rules", name: 'community__button_rules');
   }
 
-  String get community__community {
-    return Intl.message("community", name: 'community__community');
+  String get community__memory {
+    return Intl.message("memory", name: 'community__memory');
   }
 
-  String get community__communities {
-    return Intl.message("communities", name: 'community__communities');
+  String get community__memories {
+    return Intl.message("memories", name: 'community__memories');
   }
 
-  String get community__excluded_community {
-    return Intl.message("hidden community",
-        name: 'community__excluded_community');
+  String get community__excluded_memory {
+    return Intl.message("hidden memory", name: 'community__excluded_memory');
   }
 
-  String get community__excluded_communities {
-    return Intl.message("hidden communities",
-        name: 'community__excluded_communities');
+  String get community__excluded_memories {
+    return Intl.message("hidden memories",
+        name: 'community__excluded_memories');
   }
 
-  String get community__exclude_joined_communities {
-    return Intl.message("Exclude joined communities",
-        name: 'community__exclude_joined_communities');
+  String get community__exclude_joined_memories {
+    return Intl.message("Exclude joined memories",
+        name: 'community__exclude_joined_memories');
   }
 
-  String get community__exclude_joined_communities_desc {
-    return Intl.message("Don't show posts from communities I'm a member of",
-        name: 'community__exclude_joined_communities_desc');
+  String get community__exclude_joined_memories_desc {
+    return Intl.message("Don't show posts from memories I'm a member of",
+        name: 'community__exclude_joined_memories_desc');
   }
 
   String get community__type_public {
@@ -975,7 +974,7 @@ class LocalizationService {
 
   String get community__admin_desc {
     return Intl.message(
-        "This will allow the member to edit the community details, administrators, moderators and banned users.",
+        "This will allow the member to edit the memory details, administrators, moderators and banned users.",
         name: 'community__admin_desc');
   }
 
@@ -989,7 +988,7 @@ class LocalizationService {
 
   String community__admin_add_confirmation(String username) {
     return Intl.message(
-        "Are you sure you want to add @$username as a community administrator?",
+        "Are you sure you want to add @$username as a memory administrator?",
         args: [username],
         name: 'community__admin_add_confirmation');
   }
@@ -1001,20 +1000,20 @@ class LocalizationService {
 
   String get community__ban_desc {
     return Intl.message(
-        "This will remove the user from the community and disallow them from joining again.",
+        "This will remove the user from the memory and disallow them from joining again.",
         name: 'community__ban_desc');
   }
 
   String community__moderator_add_confirmation(String username) {
     return Intl.message(
-        "Are you sure you want to add @$username as a community moderator?",
+        "Are you sure you want to add @$username as a memory moderator?",
         args: [username],
         name: 'community__moderator_add_confirmation');
   }
 
   String get community__moderator_desc {
     return Intl.message(
-        "This will allow the member to edit the community details, moderators and banned users.",
+        "This will allow the member to edit the memory details, moderators and banned users.",
         name: 'community__moderator_desc');
   }
 
@@ -1033,7 +1032,7 @@ class LocalizationService {
   }
 
   String get community__leave_confirmation {
-    return Intl.message("Are you sure you want to leave the community?",
+    return Intl.message("Are you sure you want to leave the memory?",
         name: 'community__leave_confirmation');
   }
 
@@ -1053,7 +1052,7 @@ class LocalizationService {
   }
 
   String get community__delete_confirmation {
-    return Intl.message("Are you sure you want to delete the community?",
+    return Intl.message("Are you sure you want to delete the memory?",
         name: 'community__delete_confirmation');
   }
 
@@ -1068,7 +1067,7 @@ class LocalizationService {
   }
 
   String get community__manage_title {
-    return Intl.message("Manage community", name: 'community__manage_title');
+    return Intl.message("Manage memory", name: 'community__manage_title');
   }
 
   String get community__manage_details_title {
@@ -1114,7 +1113,7 @@ class LocalizationService {
   }
 
   String get community__manage_mod_reports_desc {
-    return Intl.message("Review the community moderation reports.",
+    return Intl.message("Review the memory moderation reports.",
         name: 'community__manage_mod_reports_desc');
   }
 
@@ -1135,37 +1134,36 @@ class LocalizationService {
 
   String get community__manage_invite_desc {
     return Intl.message(
-        "Invite your connections and followers to join the community.",
+        "Invite your connections and followers to join the memory.",
         name: 'community__manage_invite_desc');
   }
 
   String get community__manage_delete_title {
-    return Intl.message("Delete community",
+    return Intl.message("Delete memory",
         name: 'community__manage_delete_title');
   }
 
   String get community__manage_delete_desc {
-    return Intl.message("Delete the community, forever.",
+    return Intl.message("Delete the memory, forever.",
         name: 'community__manage_delete_desc');
   }
 
   String get community__manage_leave_title {
-    return Intl.message("Leave community",
-        name: 'community__manage_leave_title');
+    return Intl.message("Leave memory", name: 'community__manage_leave_title');
   }
 
   String get community__manage_leave_desc {
-    return Intl.message("Leave the community.",
+    return Intl.message("Leave the memory.",
         name: 'community__manage_leave_desc');
   }
 
   String get community__manage_add_favourite {
-    return Intl.message("Add the community to your favorites",
+    return Intl.message("Add the memory to your favorites",
         name: 'community__manage_add_favourite');
   }
 
   String get community__manage_remove_favourite {
-    return Intl.message("Remove the community from your favorites",
+    return Intl.message("Remove the memory from your favorites",
         name: 'community__manage_remove_favourite');
   }
 
@@ -1180,7 +1178,7 @@ class LocalizationService {
   }
 
   String get community__is_private {
-    return Intl.message("This community is private.",
+    return Intl.message("This memory is private.",
         name: 'community__is_private');
   }
 
@@ -1195,7 +1193,7 @@ class LocalizationService {
   }
 
   String get community__refreshing {
-    return Intl.message("Refreshing community", name: 'community__refreshing');
+    return Intl.message("Refreshing memory", name: 'community__refreshing');
   }
 
   String get community__posts {
@@ -1220,8 +1218,7 @@ class LocalizationService {
   }
 
   String get community__community_members {
-    return Intl.message("Community members",
-        name: 'community__community_members');
+    return Intl.message("Memory members", name: 'community__community_members');
   }
 
   String get community__member {
@@ -1314,18 +1311,18 @@ class LocalizationService {
     return Intl.message("Favorites", name: 'community__favorites_title');
   }
 
-  String get community__favorite_community {
-    return Intl.message("favorite community",
+  String get community__favorite_memory {
+    return Intl.message("favorite memory",
         desc:
-            'Currently unsused, reserved for potential use. Could be used as Showing 1 favorite community',
-        name: 'community__favorite_community');
+            'Currently unsused, reserved for potential use. Could be used as Showing 1 favorite memory',
+        name: 'community__favorite_memory');
   }
 
-  String get community__favorite_communities {
-    return Intl.message("favorite communities",
+  String get community__favorite_memories {
+    return Intl.message("favorite memories",
         desc:
-            'Egs. Search favorite communities, See list_search_text in user_search.arb ',
-        name: 'community__favorite_communities');
+            'Egs. Search favorite memories, See list_search_text in user_search.arb ',
+        name: 'community__favorite_memories');
   }
 
   String get community__administrated_title {
@@ -1333,59 +1330,59 @@ class LocalizationService {
         name: 'community__administrated_title');
   }
 
-  String get community__administrated_community {
-    return Intl.message("administrated community",
+  String get community__administrated_memory {
+    return Intl.message("administrated memory",
         desc:
-            'Currently unsused, reserved for potential use. Could be used as Showing 1 administrated community',
-        name: 'community__administrated_community');
+            'Currently unsused, reserved for potential use. Could be used as Showing 1 administrated memory',
+        name: 'community__administrated_memory');
   }
 
-  String get community__administrated_communities {
-    return Intl.message("administrated communities",
+  String get community__administrated_memories {
+    return Intl.message("administrated memories",
         desc:
-            'Egs. Search administrated communities, See list_search_text in user_search.arb ',
-        name: 'community__administrated_communities');
+            'Egs. Search administrated memories, See list_search_text in user_search.arb ',
+        name: 'community__administrated_memories');
   }
 
   String get community__moderated_title {
     return Intl.message("Moderated", name: 'community__moderated_title');
   }
 
-  String get community__moderated_community {
-    return Intl.message("moderated community",
+  String get community__moderated_memory {
+    return Intl.message("moderated memory",
         desc:
-            'Currently unsused, reserved for potential use. Could be used as Showing 1 moderated community',
-        name: 'community__moderated_community');
+            'Currently unsused, reserved for potential use. Could be used as Showing 1 moderated memory',
+        name: 'community__moderated_memory');
   }
 
-  String get community__moderated_communities {
-    return Intl.message("moderated communities",
+  String get community__moderated_memories {
+    return Intl.message("moderated memories",
         desc:
-            'Egs. Search moderated communities, See list_search_text in user_search.arb ',
-        name: 'community__moderated_communities');
+            'Egs. Search moderated memories, See list_search_text in user_search.arb ',
+        name: 'community__moderated_memories');
   }
 
   String get community__joined_title {
     return Intl.message("Joined", name: 'community__joined_title');
   }
 
-  String get community__joined_community {
-    return Intl.message("joined community",
+  String get community__joined_memory {
+    return Intl.message("joined memory",
         desc:
-            'Currently unsused, reserved for potential use. Could be used as Showing 1 joined community',
-        name: 'community__joined_community');
+            'Currently unsused, reserved for potential use. Could be used as Showing 1 joined memory',
+        name: 'community__joined_memory');
   }
 
-  String get community__joined_communities {
-    return Intl.message("joined communities",
+  String get community__joined_memories {
+    return Intl.message("joined memories",
         desc:
-            'Egs. Search joined communities, See list_search_text in user_search.arb ',
-        name: 'community__joined_communities');
+            'Egs. Search joined memories, See list_search_text in user_search.arb ',
+        name: 'community__joined_memories');
   }
 
-  String get community__join_communities_desc {
-    return Intl.message("Join communities to see this tab come to life!",
-        name: 'community__join_communities_desc');
+  String get community__join_memories_desc {
+    return Intl.message("Join memories to see this tab come to life!",
+        name: 'community__join_memories_desc');
   }
 
   String get community__refresh_text {
@@ -1394,7 +1391,7 @@ class LocalizationService {
 
   String get community__trending_none_found {
     return Intl.message(
-        "No trending communities found. Try again in a few minutes.",
+        "No trending memories found. Try again in a few minutes.",
         name: 'community__trending_none_found');
   }
 
@@ -1412,26 +1409,26 @@ class LocalizationService {
         args: [categoryName], name: 'community__trending_in_category');
   }
 
-  String get community__communities_title {
-    return Intl.message("Communities", name: 'community__communities_title');
+  String get community__memories_title {
+    return Intl.message("Communities", name: 'community__memories_title');
   }
 
-  String get community__communities_no_category_found {
+  String get community__memories_no_category_found {
     return Intl.message(
         "No categories found. Please try again in a few minutes.",
-        name: 'community__communities_no_category_found');
+        name: 'community__memories_no_category_found');
   }
 
-  String get community__communities_refresh_text {
-    return Intl.message("Refresh", name: 'community__communities_refresh_text');
+  String get community__memories_refresh_text {
+    return Intl.message("Refresh", name: 'community__memories_refresh_text');
   }
 
-  String get community__communities_all_text {
-    return Intl.message("All", name: 'community__communities_all_text');
+  String get community__memories_all_text {
+    return Intl.message("All", name: 'community__memories_all_text');
   }
 
   String get community__invite_to_community_title {
-    return Intl.message("Invite to community",
+    return Intl.message("Invite to memory",
         name: 'community__invite_to_community_title');
   }
 
@@ -1450,12 +1447,11 @@ class LocalizationService {
   }
 
   String get community__favorite_action {
-    return Intl.message("Favorite community",
-        name: 'community__favorite_action');
+    return Intl.message("Favorite memory", name: 'community__favorite_action');
   }
 
   String get community__unfavorite_action {
-    return Intl.message("Unfavorite community",
+    return Intl.message("Unfavorite memory",
         name: 'community__unfavorite_action');
   }
 
@@ -1478,7 +1474,7 @@ class LocalizationService {
   }
 
   String community__save_community_name_taken(String takenName) {
-    return Intl.message("Community name '$takenName' is taken",
+    return Intl.message("Memory name '$takenName' is taken",
         args: [takenName], name: 'community__save_community_name_taken');
   }
 
@@ -1504,7 +1500,7 @@ class LocalizationService {
 
   String get community__community_type_private_community_hint_text {
     return Intl.message(
-        "Note: Private communities cannot be later changed to Public",
+        "Note: Private memories cannot be later changed to Public",
         name: 'community__community_type_private_community_hint_text');
   }
 
@@ -1514,7 +1510,7 @@ class LocalizationService {
   }
 
   String get community__save_community_name_member_invites_subtitle {
-    return Intl.message("Members can invite people to the community",
+    return Intl.message("Members can invite people to the memory",
         name: 'community__save_community_name_member_invites_subtitle');
   }
 
@@ -1529,7 +1525,7 @@ class LocalizationService {
   }
 
   String get community__save_community_name_label_desc_optional_hint_text {
-    return Intl.message("What is your community about?",
+    return Intl.message("What is your memory about?",
         name: 'community__save_community_name_label_desc_optional_hint_text');
   }
 
@@ -1565,14 +1561,14 @@ class LocalizationService {
             'community__save_community_name_label_members_adjective_hint_text');
   }
 
-  String get community__save_community_edit_community {
-    return Intl.message("Edit community",
-        name: 'community__save_community_edit_community');
+  String get community__save_community_edit_memory {
+    return Intl.message("Edit memory",
+        name: 'community__save_community_edit_memory');
   }
 
-  String get community__save_community_create_community {
-    return Intl.message("Create community",
-        name: 'community__save_community_create_community');
+  String get community__save_community_create_memory {
+    return Intl.message("Create memory",
+        name: 'community__save_community_create_memory');
   }
 
   String get community__save_community_save_text {
@@ -1585,7 +1581,7 @@ class LocalizationService {
   }
 
   String get community__actions_invite_people_title {
-    return Intl.message("Invite people to community",
+    return Intl.message("Invite people to memory",
         name: 'community__actions_invite_people_title');
   }
 
@@ -1609,16 +1605,16 @@ class LocalizationService {
         name: 'community__actions_disable_new_post_notifications_success');
   }
 
-  String get community__join_community {
-    return Intl.message("Join", name: 'community__join_community');
+  String get community__join_memory {
+    return Intl.message("Join", name: 'community__join_memory');
   }
 
-  String get community__leave_community {
-    return Intl.message("Leave", name: 'community__leave_community');
+  String get community__leave_memory {
+    return Intl.message("Leave", name: 'community__leave_memory');
   }
 
   String get community__community_staff {
-    return Intl.message("Community staff", name: 'community__community_staff');
+    return Intl.message("Memory staff", name: 'community__community_staff');
   }
 
   String get community__post_singular {
@@ -1630,7 +1626,7 @@ class LocalizationService {
   }
 
   String get community__rules_title {
-    return Intl.message("Community rules", name: 'community__rules_title');
+    return Intl.message("Memory rules", name: 'community__rules_title');
   }
 
   String get community__rules_text {
@@ -1685,18 +1681,18 @@ class LocalizationService {
         "Adjectives can't be longer than $maxLength characters.",
         args: [maxLength],
         desc:
-            'This refers to the customisable adjectives assigned to community members,eg. 1k travellers,5k photographers',
+            'This refers to the customisable adjectives assigned to memory members,eg. 1k travellers,5k photographers',
         name: 'community__adjectives_range_error');
   }
 
-  String get community__top_posts_excluded_communities {
-    return Intl.message("Hidden communities",
-        name: 'community__top_posts_excluded_communities');
+  String get community__top_posts_excluded_memories {
+    return Intl.message("Hidden memories",
+        name: 'community__top_posts_excluded_memories');
   }
 
-  String get community__top_posts_excluded_communities_desc {
-    return Intl.message("Manage communities hidden from the explore timeline",
-        name: 'community__top_posts_excluded_communities_desc');
+  String get community__top_posts_excluded_memories_desc {
+    return Intl.message("Manage memories hidden from the explore timeline",
+        name: 'community__top_posts_excluded_memories_desc');
   }
 
   String get community__top_posts_settings {
@@ -1708,8 +1704,8 @@ class LocalizationService {
     return Intl.message("Search...", name: 'user_search__search_text');
   }
 
-  String get user_search__communities {
-    return Intl.message("Communities", name: 'user_search__communities');
+  String get user_search__memories {
+    return Intl.message("Communities", name: 'user_search__memories');
   }
 
   String get user_search__hashtags {
@@ -1724,7 +1720,7 @@ class LocalizationService {
     return Intl.message("Search $resourcePluralName ...",
         args: [resourcePluralName],
         desc:
-            'resourcePluralName can take many forms foreg. Search members... , Search accepted invites, Search communities.. etc.',
+            'resourcePluralName can take many forms foreg. Search members... , Search accepted invites, Search memories.. etc.',
         name: 'user_search__list_search_text');
   }
 
@@ -1732,7 +1728,7 @@ class LocalizationService {
     return Intl.message("No $resourcePluralName found.",
         args: [resourcePluralName],
         desc:
-            'Used in a generic list widget. Can be No users found. No communities found. No pending invites found. Its always a plural. ',
+            'Used in a generic list widget. Can be No users found. No memories found. No pending invites found. Its always a plural. ',
         name: 'user_search__list_no_results_found');
   }
 
@@ -1758,9 +1754,9 @@ class LocalizationService {
         args: [searchQuery], name: 'user_search__no_results_for');
   }
 
-  String user_search__no_communities_for(String searchQuery) {
-    return Intl.message("No communities found for '$searchQuery'.",
-        args: [searchQuery], name: 'user_search__no_communities_for');
+  String user_search__no_memories_for(String searchQuery) {
+    return Intl.message("No memories found for '$searchQuery'.",
+        args: [searchQuery], name: 'user_search__no_memories_for');
   }
 
   String user_search__no_hashtags_for(String searchQuery) {
@@ -1818,7 +1814,7 @@ class LocalizationService {
   }
 
   String get post__timeline_posts_no_more_drhoo_subtitle {
-    return Intl.message("Follow users or join a community to get started!",
+    return Intl.message("Follow users or join a memory to get started!",
         name: 'post__timeline_posts_no_more_drhoo_subtitle');
   }
 
@@ -1921,20 +1917,20 @@ class LocalizationService {
         args: [postCreatorUsername], name: 'post__usernames_circles');
   }
 
-  String get post__share_community {
-    return Intl.message("Share", name: 'post__share_community');
+  String get post__share_memory {
+    return Intl.message("Share", name: 'post__share_memory');
   }
 
-  String get post__share_to_community {
-    return Intl.message("Share to community", name: 'post__share_to_community');
+  String get post__share_to_memory {
+    return Intl.message("Share to memory", name: 'post__share_to_memory');
   }
 
   String get post__share_community_title {
-    return Intl.message("A community", name: 'post__share_community_title');
+    return Intl.message("A memory", name: 'post__share_community_title');
   }
 
   String get post__share_community_desc {
-    return Intl.message("Share the post to a community you're part of.",
+    return Intl.message("Share the post to a memory you're part of.",
         name: 'post__share_community_desc');
   }
 
@@ -2234,29 +2230,29 @@ class LocalizationService {
         name: 'post__enable_post_comments');
   }
 
-  String get post__exclude_post_community {
-    return Intl.message("Don't show posts from this community",
-        name: 'post__exclude_post_community');
+  String get post__exclude_post_memory {
+    return Intl.message("Don't show posts from this memory",
+        name: 'post__exclude_post_memory');
   }
 
-  String get post__undo_exclude_post_community {
-    return Intl.message("Show posts from this community",
-        name: 'post__undo_exclude_post_community');
+  String get post__undo_exclude_post_memory {
+    return Intl.message("Show posts from this memory",
+        name: 'post__undo_exclude_post_memory');
   }
 
   String get post__exclude_community_from_profile_posts {
-    return Intl.message("Hide this community from my profile",
+    return Intl.message("Hide this memory from my profile",
         name: 'post__exclude_community_from_profile_posts');
   }
 
   String get post__exclude_community_from_profile_posts_success {
-    return Intl.message("Community hidden",
+    return Intl.message("Memory hidden",
         name: 'post__exclude_community_from_profile_posts_success');
   }
 
   String get post__exclude_community_from_profile_posts_confirmation {
     return Intl.message(
-        "This will hide all posts from this community from your profile.",
+        "This will hide all posts from this memory from your profile.",
         name: 'post__exclude_community_from_profile_posts_confirmation');
   }
 
@@ -2708,13 +2704,13 @@ class LocalizationService {
   }
 
   String get user__manage_profile_community_posts_toggle {
-    return Intl.message("Community posts",
+    return Intl.message("Memory posts",
         name: 'user__manage_profile_community_posts_toggle');
   }
 
   String get user__manage_profile_community_posts_toggle__descr {
     return Intl.message(
-        "Display posts you share with public communities, on your profile.",
+        "Display posts you share with public memories, on your profile.",
         name: 'user__manage_profile_community_posts_toggle__descr');
   }
 
@@ -2762,20 +2758,20 @@ class LocalizationService {
         name: 'user__manage_profile_visibility_title_desc');
   }
 
-  String get user__profile_posts_excluded_communities {
-    return Intl.message("Hidden communities",
-        name: 'user__profile_posts_excluded_communities');
+  String get user__profile_posts_excluded_memories {
+    return Intl.message("Hidden memories",
+        name: 'user__profile_posts_excluded_memories');
   }
 
-  String get user__profile_posts_exclude_communities {
-    return Intl.message("Exclude communities",
-        name: 'user__profile_posts_exclude_communities');
+  String get user__profile_posts_exclude_memories {
+    return Intl.message("Exclude memories",
+        name: 'user__profile_posts_exclude_memories');
   }
 
-  String get user__profile_posts_excluded_communities_desc {
+  String get user__profile_posts_excluded_memories_desc {
     return Intl.message(
-        "See, add and remove hidden communities from your profile.",
-        name: 'user__profile_posts_excluded_communities_desc');
+        "See, add and remove hidden memories from your profile.",
+        name: 'user__profile_posts_excluded_memories_desc');
   }
 
   String get user__protected_account_title {
@@ -3254,7 +3250,7 @@ class LocalizationService {
     return Intl.message("See all $groupName",
         args: [groupName],
         desc:
-            'Can be, See all joined communities, See all pending invites, See all moderated communities etc. ',
+            'Can be, See all joined memories, See all pending invites, See all moderated memories etc. ',
         name: 'user__groups_see_all');
   }
 
@@ -3313,9 +3309,9 @@ class LocalizationService {
         name: 'user__confirm_guidelines_reject_chat_immediately');
   }
 
-  String get user__confirm_guidelines_reject_chat_community {
-    return Intl.message("Chat with the community.",
-        name: 'user__confirm_guidelines_reject_chat_community');
+  String get user__confirm_guidelines_reject_chat_memory {
+    return Intl.message("Chat with the memory.",
+        name: 'user__confirm_guidelines_reject_chat_memory');
   }
 
   String get user__confirm_guidelines_reject_join_slack {
@@ -3423,7 +3419,7 @@ class LocalizationService {
 
   String get user__block_description {
     return Intl.message(
-        "You will both dissapear from each other\'s social network experience, with the exception of communities which the person is a staff member of.",
+        "You will both dissapear from each other\'s social network experience, with the exception of memories which the person is a staff member of.",
         name: 'user__block_description');
   }
 
@@ -3620,24 +3616,23 @@ class LocalizationService {
   }
 
   String get notifications__community_invite_title {
-    return Intl.message("Community invite",
+    return Intl.message("Memory invite",
         name: 'notifications__community_invite_title');
   }
 
   String get notifications__community_invite_desc {
-    return Intl.message(
-        "Be notified when someone invites you to join a community",
+    return Intl.message("Be notified when someone invites you to join a memory",
         name: 'notifications__community_invite_desc');
   }
 
   String get notifications__community_new_post_title {
-    return Intl.message("Community new post",
+    return Intl.message("Memory new post",
         name: 'notifications__community_new_post_title');
   }
 
   String get notifications__community_new_post_desc {
     return Intl.message(
-        "Be notified when there is a new post in a community you enabled post notifications on",
+        "Be notified when there is a new post in a memory you enabled post notifications on",
         name: 'notifications__community_new_post_desc');
   }
 
@@ -3714,17 +3709,17 @@ class LocalizationService {
         name: 'notifications__following_you_tile');
   }
 
-  String notifications__user_community_invite_tile(String communityName) {
+  String notifications__user_community_invite_tile(String memoryName) {
     return Intl.message(
-        "[name] [username] has invited you to join community c/$communityName.",
-        args: [communityName],
-        desc: "Eg.: James @jamest has invited you to join community c/Siuu.",
+        "[name] [username] has invited you to join memory c/$memoryName.",
+        args: [memoryName],
+        desc: "Eg.: James @jamest has invited you to join memory c/Siuu.",
         name: 'notifications__user_community_invite_tile');
   }
 
-  String notifications__community_new_post_tile(String communityName) {
-    return Intl.message("There was a new post in c/$communityName.",
-        args: [communityName],
+  String notifications__community_new_post_tile(String memoryName) {
+    return Intl.message("There was a new post in c/$memoryName.",
+        args: [memoryName],
         desc: "Eg.: There was a new post in c/Siuu.",
         name: 'notifications__community_new_post_tile');
   }
@@ -3944,10 +3939,10 @@ class LocalizationService {
   String get moderation__confirm_report_provide_happen_next_desc {
     return Intl.message(
         "- Your report will be submitted anonymously. \n"
-        "- If you are reporting a post or comment, the report will be sent to the Siuu staff and the community moderators if applicable and the post will be hidden from your feed. \n"
-        "- If you are reporting an account or community, it will be sent to the Siuu staff. \n"
+        "- If you are reporting a post or comment, the report will be sent to the Siuu staff and the memory moderators if applicable and the post will be hidden from your feed. \n"
+        "- If you are reporting an account or memory, it will be sent to the Siuu staff. \n"
         "- We'll review it, if approved, content will be deleted and penalties delivered to the people involved ranging from a temporary suspension to deletion of the account depending on the severity of the transgression. \n"
-        "- If the report is found to be made in an attempt to damage the reputation of another member or community in the platform with no infringement of the stated reason, penalties will be applied to you. \n",
+        "- If the report is found to be made in an attempt to damage the reputation of another member or memory in the platform with no infringement of the stated reason, penalties will be applied to you. \n",
         name: 'moderation__confirm_report_provide_happen_next_desc');
   }
 
@@ -3962,7 +3957,7 @@ class LocalizationService {
   }
 
   String get moderation__confirm_report_community_reported {
-    return Intl.message("Community reported",
+    return Intl.message("Memory reported",
         name: 'moderation__confirm_report_community_reported');
   }
 
@@ -3982,7 +3977,7 @@ class LocalizationService {
   }
 
   String get moderation__community_moderated_objects {
-    return Intl.message("Community moderated objects",
+    return Intl.message("Memory moderated objects",
         name: 'moderation__community_moderated_objects');
   }
 
@@ -4026,12 +4021,12 @@ class LocalizationService {
   }
 
   String get moderation__report_community_text {
-    return Intl.message("Report community",
+    return Intl.message("Report memory",
         name: 'moderation__report_community_text');
   }
 
   String get moderation__you_have_reported_community_text {
-    return Intl.message("You have reported this community",
+    return Intl.message("You have reported this memory",
         name: 'moderation__you_have_reported_community_text');
   }
 
@@ -4151,7 +4146,7 @@ class LocalizationService {
   String get contextual_community_search_box__suggestions {
     return Intl.message("Suggestions",
         desc:
-            "The title to display on the suggestions when searching for communitys when trying to mention someone.",
+            "The title to display on the suggestions when searching for memorys when trying to mention someone.",
         name: 'contextual_community_search_box__suggestions');
   }
 

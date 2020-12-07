@@ -73,59 +73,61 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                   key: Key('FavoriteCommunitiesGroup'),
                   controller: _favoriteCommunitiesGroupController,
                   title: _localizationService.community__favorites_title,
-                  groupName: _localizationService.community__favorite_communities,
-                  groupItemName: _localizationService.community__favorite_community,
+                  groupName: _localizationService.community__favorite_memories,
+                  groupItemName:
+                      _localizationService.community__favorite_memory,
                   maxGroupListPreviewItems: 5,
-                  communityGroupListSearcher: _searchFavoriteCommunities,
-                  communitySearchResultListItemBuilder: _buildFavoriteCommunityListItem,
-                  communityGroupListItemBuilder:
-                      _buildFavoriteCommunityListItem,
-                  communityGroupListRefresher: _refreshFavoriteCommunities,
-                  communityGroupListOnScrollLoader:
-                      _loadMoreFavoriteCommunities,
+                  memoryGroupListSearcher: _searchFavoriteCommunities,
+                  memorySearchResultListItemBuilder:
+                      _buildFavoriteMemoryListItem,
+                  memoryGroupListItemBuilder: _buildFavoriteMemoryListItem,
+                  memoryGroupListRefresher: _refreshFavoriteCommunities,
+                  memoryGroupListOnScrollLoader: _loadMoreFavoriteCommunities,
                 ),
                 OBMyCommunitiesGroup(
                     key: Key('AdministratedCommunitiesGroup'),
                     controller: _administratedCommunitiesGroupController,
                     title: _localizationService.community__administrated_title,
-                    groupName: _localizationService.community__administrated_communities,
-                    groupItemName: _localizationService.community__administrated_community,
+                    groupName:
+                        _localizationService.community__administrated_memories,
+                    groupItemName:
+                        _localizationService.community__administrated_memory,
                     maxGroupListPreviewItems: 5,
-                    communityGroupListSearcher: _searchAdministratedCommunities,
-                    communitySearchResultListItemBuilder: _buildAdministratedCommunityListItem,
-                    communityGroupListItemBuilder:
-                        _buildAdministratedCommunityListItem,
-                    communityGroupListRefresher:
-                        _refreshAdministratedCommunities,
-                    communityGroupListOnScrollLoader:
+                    memoryGroupListSearcher: _searchAdministratedCommunities,
+                    memorySearchResultListItemBuilder:
+                        _buildAdministratedMemoryListItem,
+                    memoryGroupListItemBuilder:
+                        _buildAdministratedMemoryListItem,
+                    memoryGroupListRefresher: _refreshAdministratedCommunities,
+                    memoryGroupListOnScrollLoader:
                         _loadMoreAdministratedCommunities),
                 OBMyCommunitiesGroup(
                   key: Key('ModeratedCommunitiesGroup'),
                   controller: _moderatedCommunitiesGroupController,
                   title: _localizationService.community__moderated_title,
-                  groupName: _localizationService.community__moderated_communities,
-                  groupItemName: _localizationService.community__moderated_community,
+                  groupName: _localizationService.community__moderated_memories,
+                  groupItemName:
+                      _localizationService.community__moderated_memory,
                   maxGroupListPreviewItems: 5,
-                  communityGroupListSearcher: _searchModeratedCommunities,
-                  communitySearchResultListItemBuilder: _buildModeratedCommunityListItem,
-                  communityGroupListItemBuilder:
-                      _buildModeratedCommunityListItem,
-                  communityGroupListRefresher: _refreshModeratedCommunities,
-                  communityGroupListOnScrollLoader:
-                      _loadMoreModeratedCommunities,
+                  memoryGroupListSearcher: _searchModeratedCommunities,
+                  memorySearchResultListItemBuilder:
+                      _buildModeratedMemoryListItem,
+                  memoryGroupListItemBuilder: _buildModeratedMemoryListItem,
+                  memoryGroupListRefresher: _refreshModeratedCommunities,
+                  memoryGroupListOnScrollLoader: _loadMoreModeratedCommunities,
                 ),
                 OBMyCommunitiesGroup(
                   key: Key('JoinedCommunitiesGroup'),
                   controller: _joinedCommunitiesGroupController,
                   title: _localizationService.community__joined_title,
-                  groupName: _localizationService.community__joined_communities,
-                  groupItemName: _localizationService.community__joined_community,
+                  groupName: _localizationService.community__joined_memories,
+                  groupItemName: _localizationService.community__joined_memory,
                   maxGroupListPreviewItems: 5,
-                  communityGroupListSearcher: _searchJoinedCommunities,
-                  communitySearchResultListItemBuilder: _buildJoinedCommunityListItem,
-                  communityGroupListItemBuilder: _buildJoinedCommunityListItem,
-                  communityGroupListRefresher: _refreshJoinedCommunities,
-                  communityGroupListOnScrollLoader: _loadMoreJoinedCommunities,
+                  memoryGroupListSearcher: _searchJoinedCommunities,
+                  memorySearchResultListItemBuilder: _buildJoinedMemoryListItem,
+                  memoryGroupListItemBuilder: _buildJoinedMemoryListItem,
+                  memoryGroupListRefresher: _refreshJoinedCommunities,
+                  memoryGroupListOnScrollLoader: _loadMoreJoinedCommunities,
                   noGroupItemsFallbackBuilder:
                       _buildNoJoinedCommunitiesFallback,
                 )
@@ -135,72 +137,72 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
     );
   }
 
-  Future<List<Community>> _refreshJoinedCommunities() async {
+  Future<List<Memory>> _refreshJoinedCommunities() async {
     CommunitiesList joinedCommunitiesList =
         await _userService.getJoinedCommunities();
-    return joinedCommunitiesList.communities;
+    return joinedCommunitiesList.memories;
   }
 
-  Future<List<Community>> _loadMoreJoinedCommunities(
-      List<Community> currentJoinedCommunities) async {
+  Future<List<Memory>> _loadMoreJoinedCommunities(
+      List<Memory> currentJoinedCommunities) async {
     int offset = currentJoinedCommunities.length;
 
     CommunitiesList moreJoinedCommunitiesList =
         await _userService.getJoinedCommunities(offset: offset);
-    return moreJoinedCommunitiesList.communities;
+    return moreJoinedCommunitiesList.memories;
   }
 
-  Future<List<Community>> _refreshFavoriteCommunities() async {
+  Future<List<Memory>> _refreshFavoriteCommunities() async {
     CommunitiesList favoriteCommunitiesList =
         await _userService.getFavoriteCommunities();
-    return favoriteCommunitiesList.communities;
+    return favoriteCommunitiesList.memories;
   }
 
-  Future<List<Community>> _loadMoreFavoriteCommunities(
-      List<Community> currentFavoriteCommunities) async {
+  Future<List<Memory>> _loadMoreFavoriteCommunities(
+      List<Memory> currentFavoriteCommunities) async {
     int offset = currentFavoriteCommunities.length;
 
     CommunitiesList moreFavoriteCommunitiesList =
         await _userService.getFavoriteCommunities(offset: offset);
-    return moreFavoriteCommunitiesList.communities;
+    return moreFavoriteCommunitiesList.memories;
   }
 
-  Future<List<Community>> _refreshAdministratedCommunities() async {
+  Future<List<Memory>> _refreshAdministratedCommunities() async {
     CommunitiesList administratedCommunitiesList =
         await _userService.getAdministratedCommunities();
-    return administratedCommunitiesList.communities;
+    return administratedCommunitiesList.memories;
   }
 
-  Future<List<Community>> _loadMoreAdministratedCommunities(
-      List<Community> currentAdministratedCommunities) async {
+  Future<List<Memory>> _loadMoreAdministratedCommunities(
+      List<Memory> currentAdministratedCommunities) async {
     int offset = currentAdministratedCommunities.length;
 
     CommunitiesList moreAdministratedCommunitiesList =
         await _userService.getAdministratedCommunities(offset: offset);
-    return moreAdministratedCommunitiesList.communities;
+    return moreAdministratedCommunitiesList.memories;
   }
 
-  Future<List<Community>> _refreshModeratedCommunities() async {
+  Future<List<Memory>> _refreshModeratedCommunities() async {
     CommunitiesList moderatedCommunitiesList =
         await _userService.getModeratedCommunities();
-    return moderatedCommunitiesList.communities;
+    return moderatedCommunitiesList.memories;
   }
 
-  Future<List<Community>> _loadMoreModeratedCommunities(
-      List<Community> currentModeratedCommunities) async {
+  Future<List<Memory>> _loadMoreModeratedCommunities(
+      List<Memory> currentModeratedCommunities) async {
     int offset = currentModeratedCommunities.length;
 
     CommunitiesList moreModeratedCommunitiesList =
         await _userService.getModeratedCommunities(offset: offset);
-    return moreModeratedCommunitiesList.communities;
+    return moreModeratedCommunitiesList.memories;
   }
 
   Widget _buildNoJoinedCommunitiesFallback(
       BuildContext context, OBMyCommunitiesGroupRetry retry) {
     return OBButtonAlert(
-      text: _localizationService.community__join_communities_desc,
+      text: _localizationService.community__join_memories_desc,
       onPressed: _refreshAllGroups,
-      buttonText:_localizationService.community__refresh_text,
+      buttonText: _localizationService.community__refresh_text,
       buttonIcon: OBIcons.refresh,
       isLoading: _refreshInProgress,
       assetImage: 'assets/images/stickers/got-it.png',
@@ -208,104 +210,104 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
     );
   }
 
-  Widget _buildJoinedCommunityListItem(
-      BuildContext context, Community community) {
+  Widget _buildJoinedMemoryListItem(BuildContext context, Memory memory) {
     return StreamBuilder(
-      stream: community.updateSubject,
-      initialData: community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        Community latestCommunity = snapshot.data;
+      stream: memory.updateSubject,
+      initialData: memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        Memory latestMemory = snapshot.data;
 
         User loggedInUser = _userService.getLoggedInUser();
-        return latestCommunity.isMember(loggedInUser)
-            ? _buildCommunityListItem(community)
+        return latestMemory.isMember(loggedInUser)
+            ? _buildMemoryListItem(memory)
             : const SizedBox();
       },
     );
   }
 
-  Widget _buildModeratedCommunityListItem(
-      BuildContext context, Community community) {
+  Widget _buildModeratedMemoryListItem(BuildContext context, Memory memory) {
     return StreamBuilder(
-      stream: community.updateSubject,
-      initialData: community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        Community latestCommunity = snapshot.data;
+      stream: memory.updateSubject,
+      initialData: memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        Memory latestMemory = snapshot.data;
 
         User loggedInUser = _userService.getLoggedInUser();
-        return latestCommunity.isModerator(loggedInUser)
-            ? _buildCommunityListItem(community)
+        return latestMemory.isModerator(loggedInUser)
+            ? _buildMemoryListItem(memory)
             : const SizedBox();
       },
     );
   }
 
-  Widget _buildAdministratedCommunityListItem(
-      BuildContext context, Community community) {
+  Widget _buildAdministratedMemoryListItem(
+      BuildContext context, Memory memory) {
     return StreamBuilder(
-      stream: community.updateSubject,
-      initialData: community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        Community latestCommunity = snapshot.data;
+      stream: memory.updateSubject,
+      initialData: memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        Memory latestMemory = snapshot.data;
 
         User loggedInUser = _userService.getLoggedInUser();
-        return latestCommunity.isAdministrator(loggedInUser)
-            ? _buildCommunityListItem(community)
+        return latestMemory.isAdministrator(loggedInUser)
+            ? _buildMemoryListItem(memory)
             : const SizedBox();
       },
     );
   }
 
-  Widget _buildFavoriteCommunityListItem(
-      BuildContext context, Community community) {
+  Widget _buildFavoriteMemoryListItem(BuildContext context, Memory memory) {
     return StreamBuilder(
-      initialData: community,
-      stream: community.updateSubject,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        Community latestCommunity = snapshot.data;
+      initialData: memory,
+      stream: memory.updateSubject,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        Memory latestMemory = snapshot.data;
 
-        return latestCommunity.isFavorite
-            ? _buildCommunityListItem(community)
+        return latestMemory.isFavorite
+            ? _buildMemoryListItem(memory)
             : const SizedBox();
       },
     );
   }
 
-  Future<List<Community>> _searchFavoriteCommunities(String query) async {
-    CommunitiesList results = await _userService.searchFavoriteCommunities(query: query);
+  Future<List<Memory>> _searchFavoriteCommunities(String query) async {
+    CommunitiesList results =
+        await _userService.searchFavoriteCommunities(query: query);
 
-    return results.communities;
+    return results.memories;
   }
 
-  Future<List<Community>> _searchAdministratedCommunities(String query) async {
-    CommunitiesList results = await _userService.searchAdministratedCommunities(query: query);
+  Future<List<Memory>> _searchAdministratedCommunities(String query) async {
+    CommunitiesList results =
+        await _userService.searchAdministratedCommunities(query: query);
 
-    return results.communities;
+    return results.memories;
   }
 
-  Future<List<Community>> _searchModeratedCommunities(String query) async {
-    CommunitiesList results = await _userService.searchModeratedCommunities(query: query);
+  Future<List<Memory>> _searchModeratedCommunities(String query) async {
+    CommunitiesList results =
+        await _userService.searchModeratedCommunities(query: query);
 
-    return results.communities;
+    return results.memories;
   }
 
-  Future<List<Community>> _searchJoinedCommunities(String query) async {
-    CommunitiesList results = await _userService.searchJoinedCommunities(query: query);
+  Future<List<Memory>> _searchJoinedCommunities(String query) async {
+    CommunitiesList results =
+        await _userService.searchJoinedCommunities(query: query);
 
-    return results.communities;
+    return results.memories;
   }
 
-  Widget _buildCommunityListItem(Community community) {
-    return OBCommunityTile(
-      community,
-      size: OBCommunityTileSize.small,
-      onCommunityTilePressed: _onCommunityPressed,
+  Widget _buildMemoryListItem(Memory memory) {
+    return OBMemoryTile(
+      memory,
+      size: OBMemoryTileSize.small,
+      onMemoryTilePressed: _onMemoryPressed,
     );
   }
 
-  void _onCommunityPressed(Community community) {
-    _navigationService.navigateToCommunity(
-        context: context, community: community);
+  void _onMemoryPressed(Memory memory) {
+    _navigationService.navigateToMemory(context: context, memory: memory);
   }
 
   Future<void> _refreshAllGroups() async {

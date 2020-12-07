@@ -19,13 +19,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBProfilePostsExcludedCommunitiesPage extends StatefulWidget {
-  final ValueChanged<Community> onExcludedCommunityRemoved;
-  final ValueChanged<List<Community>> onExcludedCommunitiesAdded;
+  final ValueChanged<Memory> onExcludedMemoryRemoved;
+  final ValueChanged<List<Memory>> onExcludedCommunitiesAdded;
 
   const OBProfilePostsExcludedCommunitiesPage(
-      {Key key,
-      this.onExcludedCommunityRemoved,
-      this.onExcludedCommunitiesAdded})
+      {Key key, this.onExcludedMemoryRemoved, this.onExcludedCommunitiesAdded})
       : super(key: key);
 
   @override
@@ -66,72 +64,67 @@ class OBProfilePostsExcludedCommunitiesState
 
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
-        title: _localizationService.user__profile_posts_excluded_communities,
+        title: _localizationService.user__profile_posts_excluded_memories,
         trailing: OBIconButton(
           OBIcons.add,
           themeColor: OBIconThemeColor.primaryAccent,
-          onPressed: _onWantsToExcludeCommunityFromProfilePosts,
+          onPressed: _onWantsToExcludeMemoryFromProfilePosts,
         ),
       ),
       child: OBPrimaryColorContainer(
-        child: OBHttpList<Community>(
+        child: OBHttpList<Memory>(
           padding: EdgeInsets.symmetric(horizontal: 20.0),
           controller: _httpListController,
-          listItemBuilder: _buildExcludedCommunityListItem,
-          searchResultListItemBuilder: _buildExcludedCommunityListItem,
-          selectedListItemBuilder: _buildExcludedCommunityListItem,
+          listItemBuilder: _buildExcludedMemoryListItem,
+          searchResultListItemBuilder: _buildExcludedMemoryListItem,
+          selectedListItemBuilder: _buildExcludedMemoryListItem,
           listRefresher: _refreshExcludedCommunities,
           listOnScrollLoader: _loadMoreExcludedCommunities,
           listSearcher: _searchExcludedCommunities,
-          resourceSingularName:
-              _localizationService.community__excluded_community,
-          resourcePluralName:
-              _localizationService.community__excluded_communities,
+          resourceSingularName: _localizationService.community__excluded_memory,
+          resourcePluralName: _localizationService.community__excluded_memories,
         ),
       ),
     );
   }
 
-  Widget _buildExcludedCommunityListItem(
-      BuildContext context, Community community) {
+  Widget _buildExcludedMemoryListItem(BuildContext context, Memory memory) {
     return Padding(
-      key: Key(community.id.toString()),
+      key: Key(memory.id.toString()),
       padding: EdgeInsets.symmetric(vertical: 10.0),
-      child: OBCommunityTile(
-        community,
-        size: OBCommunityTileSize.small,
-        onCommunityTilePressed: _onExcludedCommunityListItemPressed,
-        onCommunityTileDeleted: _onExcludedCommunityListItemDeleted,
+      child: OBMemoryTile(
+        memory,
+        size: OBMemoryTileSize.small,
+        onMemoryTilePressed: _onExcludedMemoryListItemPressed,
+        onMemoryTileDeleted: _onExcludedMemoryListItemDeleted,
       ),
     );
   }
 
-  void _onExcludedCommunityListItemPressed(Community community) {
-    _navigationService.navigateToCommunity(
-        community: community, context: context);
+  void _onExcludedMemoryListItemPressed(Memory memory) {
+    _navigationService.navigateToMemory(memory: memory, context: context);
   }
 
-  void _onExcludedCommunityListItemDeleted(Community excludedCommunity) async {
+  void _onExcludedMemoryListItemDeleted(Memory excludedMemory) async {
     try {
-      await _userService
-          .undoExcludeCommunityFromProfilePosts(excludedCommunity);
-      _httpListController.removeListItem(excludedCommunity);
-      if (widget.onExcludedCommunityRemoved != null)
-        widget.onExcludedCommunityRemoved(excludedCommunity);
+      await _userService.undoExcludeMemoryFromProfilePosts(excludedMemory);
+      _httpListController.removeListItem(excludedMemory);
+      if (widget.onExcludedMemoryRemoved != null)
+        widget.onExcludedMemoryRemoved(excludedMemory);
     } catch (error) {
       _onError(error);
     }
   }
 
-  void _onWantsToExcludeCommunityFromProfilePosts() async {
-    List<Community> excludedCommunities = await _modalService
+  void _onWantsToExcludeMemoryFromProfilePosts() async {
+    List<Memory> excludedCommunities = await _modalService
         .openExcludeCommunitiesFromProfilePosts(context: context);
     if (excludedCommunities != null && excludedCommunities.isNotEmpty) {
       if (widget.onExcludedCommunitiesAdded != null)
         widget.onExcludedCommunitiesAdded(excludedCommunities);
 
-      excludedCommunities.forEach((excludedCommunity) => _httpListController
-          .insertListItem(excludedCommunity, shouldScrollToTop: true));
+      excludedCommunities.forEach((excludedMemory) => _httpListController
+          .insertListItem(excludedMemory, shouldScrollToTop: true));
     }
   }
 
@@ -149,28 +142,28 @@ class OBProfilePostsExcludedCommunitiesState
     }
   }
 
-  Future<List<Community>> _refreshExcludedCommunities() async {
+  Future<List<Memory>> _refreshExcludedCommunities() async {
     CommunitiesList excludedCommunities =
         await _userService.getProfilePostsExcludedCommunities();
-    return excludedCommunities.communities;
+    return excludedCommunities.memories;
   }
 
-  Future<List<Community>> _loadMoreExcludedCommunities(
-      List<Community> excludedCommunitiesList) async {
+  Future<List<Memory>> _loadMoreExcludedCommunities(
+      List<Memory> excludedCommunitiesList) async {
     var moreExcludedCommunities =
         (await _userService.getProfilePostsExcludedCommunities(
       offset: excludedCommunitiesList.length,
       count: 10,
     ))
-            .communities;
+            .memories;
 
     return moreExcludedCommunities;
   }
 
-  Future<List<Community>> _searchExcludedCommunities(String query) async {
+  Future<List<Memory>> _searchExcludedCommunities(String query) async {
     CommunitiesList results =
         await _userService.searchProfilePostsExcludedCommunities(query: query);
 
-    return results.communities;
+    return results.memories;
   }
 }

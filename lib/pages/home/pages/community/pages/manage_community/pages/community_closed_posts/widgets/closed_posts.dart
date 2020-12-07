@@ -15,18 +15,18 @@ import 'package:Siuu/widgets/tiles/retry_tile.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityClosedPosts extends StatefulWidget {
-  final Community community;
+class OBMemoryClosedPosts extends StatefulWidget {
+  final Memory memory;
 
-  const OBCommunityClosedPosts({this.community});
+  const OBMemoryClosedPosts({this.memory});
 
   @override
-  OBCommunityClosedPostsState createState() {
-    return OBCommunityClosedPostsState();
+  OBMemoryClosedPostsState createState() {
+    return OBMemoryClosedPostsState();
   }
 }
 
-class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
+class OBMemoryClosedPostsState extends State<OBMemoryClosedPosts> {
   List<Post> _posts;
   bool _needsBootstrap;
   bool _isFirstLoad;
@@ -37,7 +37,7 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
-  OBCommunityClosedPostsStatus _status;
+  OBMemoryClosedPostsStatus _status;
   CancelableOperation _postsRequest;
 
   @override
@@ -46,7 +46,7 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
     _posts = [];
     _needsBootstrap = true;
     _isFirstLoad = true;
-    _status = OBCommunityClosedPostsStatus.refreshingPosts;
+    _status = OBMemoryClosedPostsStatus.refreshingPosts;
     _postsScrollController = ScrollController();
     _postsScrollController.addListener(_onScroll);
   }
@@ -105,9 +105,9 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
 
           bool isLastItem = index == _posts.length - 1;
 
-          if (isLastItem && _status != OBCommunityClosedPostsStatus.idle) {
+          if (isLastItem && _status != OBMemoryClosedPostsStatus.idle) {
             switch (_status) {
-              case OBCommunityClosedPostsStatus.loadingMorePosts:
+              case OBMemoryClosedPostsStatus.loadingMorePosts:
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -116,7 +116,7 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
                   ],
                 );
                 break;
-              case OBCommunityClosedPostsStatus.loadingMorePostsFailed:
+              case OBMemoryClosedPostsStatus.loadingMorePostsFailed:
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -127,7 +127,7 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
                   ],
                 );
                 break;
-              case OBCommunityClosedPostsStatus.noMorePostsToLoad:
+              case OBMemoryClosedPostsStatus.noMorePostsToLoad:
                 return Column(
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
@@ -152,13 +152,13 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
     String loadingTitle;
 
     switch (_status) {
-      case OBCommunityClosedPostsStatus.refreshingPosts:
+      case OBMemoryClosedPostsStatus.refreshingPosts:
         loadingTitle = 'Loading closed posts.';
         break;
-      case OBCommunityClosedPostsStatus.noMorePostsToLoad:
+      case OBMemoryClosedPostsStatus.noMorePostsToLoad:
         loadingTitle = 'No closed posts.';
         break;
-      case OBCommunityClosedPostsStatus.loadingMorePostsFailed:
+      case OBMemoryClosedPostsStatus.loadingMorePostsFailed:
         loadingTitle = 'Could not load posts.';
         break;
       default:
@@ -204,8 +204,8 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
   }
 
   void _onScroll() {
-    if (_status == OBCommunityClosedPostsStatus.loadingMorePosts ||
-        _status == OBCommunityClosedPostsStatus.noMorePostsToLoad) return;
+    if (_status == OBMemoryClosedPostsStatus.loadingMorePosts ||
+        _status == OBMemoryClosedPostsStatus.noMorePostsToLoad) return;
     if (_postsScrollController.position.pixels >
         _postsScrollController.position.maxScrollExtent * 0.1) {
       _loadMorePosts();
@@ -221,17 +221,17 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
 
   Future _bootstrap() async {
     PostsList closedPosts =
-        await _userService.getClosedPostsForCommunity(widget.community);
+        await _userService.getClosedPostsForMemory(widget.memory);
     if (closedPosts.posts != null) _setPosts(closedPosts.posts);
     _refreshIndicatorKey.currentState.show();
   }
 
   Future<void> _refreshPosts() async {
     _cancelPreviousPostsRequest();
-    _setStatus(OBCommunityClosedPostsStatus.refreshingPosts);
+    _setStatus(OBMemoryClosedPostsStatus.refreshingPosts);
     try {
       Future<PostsList> postsListFuture =
-          _userService.getClosedPostsForCommunity(widget.community, count: 10);
+          _userService.getClosedPostsForMemory(widget.memory, count: 10);
 
       _postsRequest = CancelableOperation.fromFuture(postsListFuture);
 
@@ -240,13 +240,13 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
       if (_isFirstLoad) _isFirstLoad = false;
 
       if (posts.length == 0) {
-        _setStatus(OBCommunityClosedPostsStatus.noMorePostsToLoad);
+        _setStatus(OBMemoryClosedPostsStatus.noMorePostsToLoad);
       } else {
-        _setStatus(OBCommunityClosedPostsStatus.idle);
+        _setStatus(OBMemoryClosedPostsStatus.idle);
       }
       _setPosts(posts);
     } catch (error) {
-      _setStatus(OBCommunityClosedPostsStatus.loadingMorePostsFailed);
+      _setStatus(OBMemoryClosedPostsStatus.loadingMorePostsFailed);
       _onError(error);
     } finally {
       _postsRequest = null;
@@ -254,30 +254,29 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
   }
 
   Future _loadMorePosts() async {
-    if (_status == OBCommunityClosedPostsStatus.refreshingPosts ||
-        _status == OBCommunityClosedPostsStatus.noMorePostsToLoad) return null;
+    if (_status == OBMemoryClosedPostsStatus.refreshingPosts ||
+        _status == OBMemoryClosedPostsStatus.noMorePostsToLoad) return null;
     _cancelPreviousPostsRequest();
-    _setStatus(OBCommunityClosedPostsStatus.loadingMorePosts);
+    _setStatus(OBMemoryClosedPostsStatus.loadingMorePosts);
 
     var lastPost = _posts.last;
     var lastPostId = lastPost.id;
     try {
-      Future<PostsList> morePostsListFuture =
-          _userService.getClosedPostsForCommunity(widget.community,
-              maxId: lastPostId, count: 10);
+      Future<PostsList> morePostsListFuture = _userService
+          .getClosedPostsForMemory(widget.memory, maxId: lastPostId, count: 10);
 
       _postsRequest = CancelableOperation.fromFuture(morePostsListFuture);
 
       List<Post> morePosts = (await morePostsListFuture).posts;
 
       if (morePosts.length == 0) {
-        _setStatus(OBCommunityClosedPostsStatus.noMorePostsToLoad);
+        _setStatus(OBMemoryClosedPostsStatus.noMorePostsToLoad);
       } else {
-        _setStatus(OBCommunityClosedPostsStatus.idle);
+        _setStatus(OBMemoryClosedPostsStatus.idle);
         _addPosts(morePosts);
       }
     } catch (error) {
-      _setStatus(OBCommunityClosedPostsStatus.loadingMorePostsFailed);
+      _setStatus(OBMemoryClosedPostsStatus.loadingMorePostsFailed);
       _onError(error);
     } finally {
       _postsRequest = null;
@@ -315,14 +314,14 @@ class OBCommunityClosedPostsState extends State<OBCommunityClosedPosts> {
     });
   }
 
-  void _setStatus(OBCommunityClosedPostsStatus status) {
+  void _setStatus(OBMemoryClosedPostsStatus status) {
     setState(() {
       _status = status;
     });
   }
 }
 
-enum OBCommunityClosedPostsStatus {
+enum OBMemoryClosedPostsStatus {
   refreshingPosts,
   loadingMorePosts,
   loadingMorePostsFailed,

@@ -9,34 +9,36 @@ import 'package:Siuu/widgets/buttons/actions/join_community_button.dart';
 import 'package:Siuu/widgets/buttons/community_button.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityActions extends StatelessWidget {
-  final Community community;
+class OBMemoryActions extends StatelessWidget {
+  final Memory memory;
 
-  OBCommunityActions(this.community);
+  OBMemoryActions(this.memory);
 
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
     NavigationService navigationService = openbookProvider.navigationService;
     UserService userService = openbookProvider.userService;
-    LocalizationService localizationService = openbookProvider.localizationService;
+    LocalizationService localizationService =
+        openbookProvider.localizationService;
 
     User loggedInUser = userService.getLoggedInUser();
 
-    bool isCommunityAdmin = community?.isAdministrator(loggedInUser) ?? false;
-    bool isCommunityModerator = community?.isModerator(loggedInUser) ?? false;
+    bool isMemoryAdmin = memory?.isAdministrator(loggedInUser) ?? false;
+    bool isMemoryModerator = memory?.isModerator(loggedInUser) ?? false;
 
     List<Widget> actions = [];
 
-    if (isCommunityAdmin || isCommunityModerator) {
-      actions.add(_buildManageButton(navigationService, context, localizationService));
+    if (isMemoryAdmin || isMemoryModerator) {
+      actions.add(
+          _buildManageButton(navigationService, context, localizationService));
     } else {
       actions.addAll([
-        OBJoinCommunityButton(community),
+        OBJoinMemoryButton(memory),
         const SizedBox(
           width: 10,
         ),
-        OBCommunityActionMore(community)
+        OBMemoryActionMore(memory)
       ]);
     }
 
@@ -46,14 +48,15 @@ class OBCommunityActions extends StatelessWidget {
     );
   }
 
-  _buildManageButton(NavigationService navigationService, context, LocalizationService localizationService) {
-    return OBCommunityButton(
-        community: community,
+  _buildManageButton(NavigationService navigationService, context,
+      LocalizationService localizationService) {
+    return OBMemoryButton(
+        memory: memory,
         isLoading: false,
         text: localizationService.community__actions_manage_text,
         onPressed: () {
-          navigationService.navigateToManageCommunity(
-              community: community, context: context);
+          navigationService.navigateToManageMemory(
+              memory: memory, context: context);
         });
   }
 }

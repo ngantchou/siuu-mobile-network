@@ -74,7 +74,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
       maxlength: widget.maxlength,
       overflow: widget.overflow,
       lengthOverflow: widget.lengthOverflow,
-      onCommunityNameTapped: _onCommunityNameTapped,
+      onMemoryNameTapped: _onMemoryNameTapped,
       onUsernameTapped: _onUsernameTapped,
       onLinkTapped: _onLinkTapped,
       onHashtagTapped: _onHashtagNameHashtagRetrieved,
@@ -84,20 +84,19 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     );
   }
 
-  void _onCommunityNameTapped(String communityName) {
+  void _onMemoryNameTapped(String memoryName) {
     _clearRequestSubscription();
 
     StreamSubscription requestSubscription = _userService
-        .getCommunityWithName(communityName)
+        .getMemoryWithName(memoryName)
         .asStream()
-        .listen(_onCommunityNameCommunityRetrieved,
+        .listen(_onMemoryNameMemoryRetrieved,
             onError: _onError, onDone: _onRequestDone);
     _setRequestSubscription(requestSubscription);
   }
 
-  void _onCommunityNameCommunityRetrieved(Community community) {
-    _navigationService.navigateToCommunity(
-        community: community, context: context);
+  void _onMemoryNameMemoryRetrieved(Memory memory) {
+    _navigationService.navigateToMemory(memory: memory, context: context);
   }
 
   void _onUsernameTapped(String username) {
@@ -122,8 +121,11 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     StreamSubscription requestSubscription = _userService
         .getHashtagWithName(rawHashtagName)
         .asStream()
-        .listen((Hashtag hashtag)=> _onHashtagRetrieved(hashtag: hashtag, rawHashtagName: rawHashtagName),
-            onError: _onError, onDone: _onRequestDone);
+        .listen(
+            (Hashtag hashtag) => _onHashtagRetrieved(
+                hashtag: hashtag, rawHashtagName: rawHashtagName),
+            onError: _onError,
+            onDone: _onRequestDone);
     _setRequestSubscription(requestSubscription);
   }
 

@@ -3,23 +3,23 @@ import 'package:Siuu/provider.dart';
 import 'package:Siuu/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityActionMore extends StatelessWidget {
-  final Community community;
+class OBMemoryActionMore extends StatelessWidget {
+  final Memory memory;
 
-  const OBCommunityActionMore(this.community);
+  const OBMemoryActionMore(this.memory);
 
   @override
   Widget build(BuildContext context) {
-
     return IconButton(
-    icon: const OBIcon(
-      OBIcons.moreVertical,
-      customSize: 30,
-    ),
-    onPressed: () {
-      OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-      openbookProvider.bottomSheetService.showCommunityActions(context: context, community: community);
-    },
-  );
+      icon: const OBIcon(
+        OBIcons.moreVertical,
+        customSize: 30,
+      ),
+      onPressed: () {
+        OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+        openbookProvider.bottomSheetService
+            .showMemoryActions(context: context, memory: memory);
+      },
+    );
   }
 }

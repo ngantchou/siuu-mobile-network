@@ -10,7 +10,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/widgets.dart';
 
 // Standard iOS 10 tab bar height.
-const double _kTabBarHeight = 50.0;
+const double _kTabBarHeight = 80.0;
 
 const Color _kDefaultTabBarBackgroundColor = Color(0xCCF8F8F8);
 
@@ -132,7 +132,7 @@ class OBCupertinoTabBar extends StatelessWidget implements PreferredSizeWidget {
                     color: inactiveColor,
                   ),
                   child: Padding(
-                    padding: EdgeInsets.only(bottom: bottomPadding),
+                    padding: EdgeInsets.only(bottom: bottomPadding, top: 15),
                     child: Row(
                       // Align bottom since we want the labels to be aligned.
                       crossAxisAlignment: CrossAxisAlignment.end,

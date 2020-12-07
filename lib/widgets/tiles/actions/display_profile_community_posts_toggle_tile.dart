@@ -10,23 +10,23 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBDisplayProfileCommunityPostsToggleTile extends StatefulWidget {
+class OBDisplayProfileMemoryPostsToggleTile extends StatefulWidget {
   final User user;
   final ValueChanged<bool> onChanged;
   final bool hasDivider;
 
-  const OBDisplayProfileCommunityPostsToggleTile(
+  const OBDisplayProfileMemoryPostsToggleTile(
       {Key key, this.onChanged, @required this.user, this.hasDivider = false})
       : super(key: key);
 
   @override
-  OBDisplayProfileCommunityPostsToggleTileState createState() {
-    return OBDisplayProfileCommunityPostsToggleTileState();
+  OBDisplayProfileMemoryPostsToggleTileState createState() {
+    return OBDisplayProfileMemoryPostsToggleTileState();
   }
 }
 
-class OBDisplayProfileCommunityPostsToggleTileState
-    extends State<OBDisplayProfileCommunityPostsToggleTile> {
+class OBDisplayProfileMemoryPostsToggleTileState
+    extends State<OBDisplayProfileMemoryPostsToggleTile> {
   static const double inputIconsSize = 16;
   static EdgeInsetsGeometry inputContentPadding =
       EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0);
@@ -37,7 +37,7 @@ class OBDisplayProfileCommunityPostsToggleTileState
 
   bool _requestInProgress;
 
-  bool _communityPostsVisible;
+  bool _memoryPostsVisible;
 
   @override
   void initState() {
@@ -45,7 +45,7 @@ class OBDisplayProfileCommunityPostsToggleTileState
 
     _requestInProgress = false;
 
-    _communityPostsVisible = widget.user.getProfileCommunityPostsVisible();
+    _memoryPostsVisible = widget.user.getProfileMemoryPostsVisible();
   }
 
   @override
@@ -57,28 +57,30 @@ class OBDisplayProfileCommunityPostsToggleTileState
 
     return OBToggleField(
       hasDivider: widget.hasDivider,
-      value: _communityPostsVisible,
+      value: _memoryPostsVisible,
       title: _localizationService.user__manage_profile_community_posts_toggle,
-      subtitle: OBText(_localizationService
-          .user__manage_profile_community_posts_toggle__descr, size: OBTextSize.mediumSecondary,),
-      leading: const OBIcon(OBIcons.communities),
+      subtitle: OBText(
+        _localizationService.user__manage_profile_community_posts_toggle__descr,
+        size: OBTextSize.mediumSecondary,
+      ),
+      leading: const OBIcon(OBIcons.memories),
       isLoading: _requestInProgress,
       onTap: () {
         setState(() {
-          _communityPostsVisible = !_communityPostsVisible;
-          _saveCommunityPosts();
+          _memoryPostsVisible = !_memoryPostsVisible;
+          _saveMemoryPosts();
         });
-        },
+      },
     );
   }
 
-  void _saveCommunityPosts() async {
+  void _saveMemoryPosts() async {
     _setRequestInProgress(true);
     try {
       await _userService.updateUser(
-        communityPostsVisible: _communityPostsVisible,
+        memoryPostsVisible: _memoryPostsVisible,
       );
-      if (widget.onChanged != null) widget.onChanged(_communityPostsVisible);
+      if (widget.onChanged != null) widget.onChanged(_memoryPostsVisible);
     } catch (error) {
       _onError(error);
     } finally {

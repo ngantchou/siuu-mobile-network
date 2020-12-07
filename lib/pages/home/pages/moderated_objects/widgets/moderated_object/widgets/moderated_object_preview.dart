@@ -34,16 +34,16 @@ class OBModeratedObjectPreview extends StatelessWidget {
           ],
         );
         break;
-      case ModeratedObjectType.community:
+      case ModeratedObjectType.memory:
         widget = Padding(
           padding: EdgeInsets.all(10),
-          child: OBCommunityTile(
+          child: OBMemoryTile(
             moderatedObject.contentObject,
-            onCommunityTilePressed: (Community community) {
+            onMemoryTilePressed: (Memory memory) {
               OpenbookProviderState openbookProvider =
                   OpenbookProvider.of(context);
               openbookProvider.navigationService
-                  .navigateToCommunity(community: community, context: context);
+                  .navigateToMemory(memory: memory, context: context);
             },
           ),
         );

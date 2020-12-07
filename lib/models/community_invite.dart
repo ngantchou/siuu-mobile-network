@@ -1,26 +1,26 @@
 import 'package:Siuu/models/community.dart';
 import 'package:Siuu/models/user.dart';
 
-class CommunityInvite {
+class MemoryInvite {
   final int id;
   final int creatorId;
-  final int communityId;
+  final int memoryId;
   final int invitedUserId;
 
   User invitedUser;
   User creator;
-  Community community;
+  Memory memory;
 
-  CommunityInvite(
+  MemoryInvite(
       {this.id,
       this.creatorId,
       this.invitedUserId,
-      this.communityId,
-      this.community,
+      this.memoryId,
+      this.memory,
       this.invitedUser,
       this.creator});
 
-  factory CommunityInvite.fromJSON(Map<String, dynamic> parsedJson) {
+  factory MemoryInvite.fromJSON(Map<String, dynamic> parsedJson) {
     assert(parsedJson != null);
     User invitedUser;
     if (parsedJson.containsKey('invited_user'))
@@ -30,16 +30,16 @@ class CommunityInvite {
     if (parsedJson.containsKey('creator'))
       creator = User.fromJson(parsedJson['creator']);
 
-    Community community;
-    if (parsedJson.containsKey('community'))
-      community = Community.fromJSON(parsedJson['community']);
+    Memory memory;
+    if (parsedJson.containsKey('memory'))
+      memory = Memory.fromJSON(parsedJson['memory']);
 
-    return CommunityInvite(
+    return MemoryInvite(
         id: parsedJson['id'],
-        communityId: parsedJson['community_id'],
+        memoryId: parsedJson['community_id'],
         creatorId: parsedJson['creator_id'],
         invitedUserId: parsedJson['invited_user_id'],
-        community: community,
+        memory: memory,
         invitedUser: invitedUser,
         creator: creator);
   }
@@ -49,8 +49,8 @@ class CommunityInvite {
       'id': id,
       'creator_id': creatorId,
       'invited_user_id': invitedUserId,
-      'community_id': communityId,
-      'community': community?.toJson(),
+      'community_id': memoryId,
+      'memory': memory?.toJson(),
       'invited_user': invitedUser?.toJson(),
       'creator': creator?.toJson()
     };

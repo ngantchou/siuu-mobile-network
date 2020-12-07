@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:Siuu/pages/home/pages/Messages/Message.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Siuu/models/push_notification.dart';
 import 'package:Siuu/pages/home/lib/poppable_page_controller.dart';
@@ -8,7 +9,6 @@ import 'package:Siuu/services/intercom.dart';
 import 'package:Siuu/services/media/media.dart';
 import 'package:Siuu/services/push_notifications/push_notifications.dart';
 import 'package:Siuu/models/user.dart';
-import 'package:Siuu/pages/home/pages/communities/communities.dart';
 import 'package:Siuu/pages/home/pages/notifications/notifications.dart';
 import 'package:Siuu/pages/home/pages/own_profile.dart';
 import 'package:Siuu/pages/home/pages/timeline/timeline.dart';
@@ -32,6 +32,8 @@ import 'package:back_button_interceptor/back_button_interceptor.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:Siuu/res/colors.dart';
+
+import 'pages/communities/communities.dart';
 
 class OBHomePage extends StatefulWidget {
   @override
@@ -64,7 +66,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   OBOwnProfilePageController _ownProfilePageController;
   OBMainSearchPageController _searchPageController;
   OBMainMenuPageController _mainMenuPageController;
-  OBCommunitiesPageController _communitiesPageController;
+  OBCommunitiesPageController _memoriesPageController;
   OBNotificationsPageController _notificationsPageController;
 
   int _loggedInUserUnreadNotifications;
@@ -83,7 +85,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     _ownProfilePageController = OBOwnProfilePageController();
     _searchPageController = OBMainSearchPageController();
     _mainMenuPageController = OBMainMenuPageController();
-    _communitiesPageController = OBCommunitiesPageController();
+    _memoriesPageController = OBCommunitiesPageController();
     _notificationsPageController = OBNotificationsPageController();
   }
 
@@ -142,23 +144,23 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         );
         break;
       case OBHomePageTabs.search:
-        page = OBMainSearchPage(
-          controller: _searchPageController,
-        );
+        page = MessagePage(
+            //controller: _searchPageController,
+            );
         break;
       case OBHomePageTabs.notifications:
         page = OBNotificationsPage(
           controller: _notificationsPageController,
         );
         break;
-      case OBHomePageTabs.communities:
+      case OBHomePageTabs.memories:
         page = OBMainCommunitiesPage(
-          controller: _communitiesPageController,
+          controller: _memoriesPageController,
         );
         break;
-      case OBHomePageTabs.profile:
+      /*case OBHomePageTabs.profile:
         page = OBOwnProfilePage(controller: _ownProfilePageController);
-        break;
+        break;*/
       case OBHomePageTabs.menu:
         page = OBMainMenuPage(
           controller: _mainMenuPageController,
@@ -208,6 +210,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return OBCupertinoTabBar(
+      activeColor: Colors.blueAccent,
       backgroundColor: Colors.white,
       currentIndex: _currentIndex,
       onTap: (int index) {
@@ -223,21 +226,21 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
           }
         }
 
-        if (tappedTab == OBHomePageTabs.profile &&
+        /*if (tappedTab == OBHomePageTabs.profile &&
             currentTab == OBHomePageTabs.profile) {
           if (_ownProfilePageController.isFirstRoute()) {
             _ownProfilePageController.scrollToTop();
           } else {
             _ownProfilePageController.popUntilFirstRoute();
           }
-        }
+        }*/
 
-        if (tappedTab == OBHomePageTabs.communities &&
-            currentTab == OBHomePageTabs.communities) {
-          if (_communitiesPageController.isFirstRoute()) {
-            _communitiesPageController.scrollToTop();
+        if (tappedTab == OBHomePageTabs.memories &&
+            currentTab == OBHomePageTabs.memories) {
+          if (_memoriesPageController.isFirstRoute()) {
+            _memoriesPageController.scrollToTop();
           } else {
-            _communitiesPageController.popUntilFirstRoute();
+            _memoriesPageController.popUntilFirstRoute();
           }
         }
 
@@ -299,8 +302,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
               children: [
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: InkWell(
-                    onTap: () {},
+                  child: Container(
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 15),
                       child: Container(
@@ -325,8 +327,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
               children: [
                 Align(
                   alignment: Alignment.bottomCenter,
-                  child: InkWell(
-                    onTap: () {},
+                  child: Container(
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 15),
                       child: Container(
@@ -349,13 +350,15 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         BottomNavigationBarItem(
           title: const SizedBox(),
           icon: buildBottomNavigationBarItem(
-              iconPath: "assets/svg/memories.svg", index: 2, title: 'Memories'),
-          activeIcon: const OBIcon(
-            OBIcons.notifications,
-            themeColor: OBIconThemeColor.primaryAccent,
-          ),
+              iconPath: "assets/svg/notification.svg",
+              index: 2,
+              title: 'Notifications'),
+          activeIcon: buildBottomNavigationBarItem(
+              iconPath: "assets/svg/notification.svg",
+              index: 3,
+              title: 'Notifications'),
         ),
-        BottomNavigationBarItem(
+        /* BottomNavigationBarItem(
           title: const SizedBox(),
           icon: buildBottomNavigationBarItem(
               iconPath: "assets/svg/notification.svg",
@@ -365,15 +368,18 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
               iconPath: "assets/svg/notification.svg",
               index: 3,
               title: 'Notifications'),
-        ),
-        /*BottomNavigationBarItem(
+        ),*/
+        BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: const OBIcon(OBIcons.menu),
+          icon: const OBIcon(
+            OBIcons.menu,
+            semanticLabel: "Setting",
+          ),
           activeIcon: const OBIcon(
             OBIcons.menu,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
-        ),*/
+        ),
       ],
     );
   }
@@ -423,8 +429,8 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
       case OBHomePageTabs.notifications:
         currentTabController = _notificationsPageController;
         break;
-      case OBHomePageTabs.communities:
-        currentTabController = _communitiesPageController;
+      case OBHomePageTabs.memories:
+        currentTabController = _memoriesPageController;
         break;
       case OBHomePageTabs.timeline:
         currentTabController = _timelinePageController;
@@ -435,9 +441,9 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
       case OBHomePageTabs.search:
         currentTabController = _searchPageController;
         break;
-      case OBHomePageTabs.profile:
+      /*case OBHomePageTabs.profile:
         currentTabController = _ownProfilePageController;
-        break;
+        break;*/
       default:
         throw 'No tab controller to pop';
     }
@@ -582,11 +588,4 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   }
 }
 
-enum OBHomePageTabs {
-  timeline,
-  search,
-  communities,
-  notifications,
-  profile,
-  menu
-}
+enum OBHomePageTabs { timeline, search, memories, notifications, menu }

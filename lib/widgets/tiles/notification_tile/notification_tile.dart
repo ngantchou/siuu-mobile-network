@@ -79,10 +79,10 @@ class OBNotificationTile extends StatelessWidget {
         : null;
 
     switch (notificationContentObject.runtimeType) {
-      case CommunityInviteNotification:
-        notificationTile = OBCommunityInviteNotificationTile(
+      case MemoryInviteNotification:
+        notificationTile = OBMemoryInviteNotificationTile(
           notification: notification,
-          communityInviteNotification: notificationContentObject,
+          memoryInviteNotification: notificationContentObject,
           onPressed: finalOnPressed,
         );
         break;
@@ -163,14 +163,14 @@ class OBNotificationTile extends StatelessWidget {
           onPressed: finalOnPressed,
         );
         break;
-      case CommunityNewPostNotification:
-        notificationTile = OBCommunityNewPostNotificationTile(
+      case MemoryNewPostNotification:
+        notificationTile = OBMemoryNewPostNotificationTile(
           notification: notification,
-          communityNewPostNotification: notificationContentObject,
+          memoryNewPostNotification: notificationContentObject,
           onPressed: finalOnPressed,
         );
         break;
-        case UserNewPostNotification:
+      case UserNewPostNotification:
         notificationTile = OBUserNewPostNotificationTile(
           notification: notification,
           userNewPostNotification: notificationContentObject,
@@ -178,7 +178,8 @@ class OBNotificationTile extends StatelessWidget {
         );
         break;
       default:
-        print('Unsupported notification content object type ${notificationContentObject}');
+        print(
+            'Unsupported notification content object type ${notificationContentObject}');
         return const SizedBox();
     }
 

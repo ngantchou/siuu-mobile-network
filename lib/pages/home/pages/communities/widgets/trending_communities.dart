@@ -33,7 +33,7 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
   ToastService _toastService;
   NavigationService _navigationService;
   LocalizationService _localizationService;
-  List<Community> _trendingCommunities;
+  List<Memory> _trendingCommunities;
   bool _refreshInProgress;
   GlobalKey<RefreshIndicatorState> _refreshIndicatorKey;
 
@@ -106,25 +106,25 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
         ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             controller: widget.scrollController,
-            separatorBuilder: _buildCommunitySeparator,
+            separatorBuilder: _buildMemorySeparator,
             padding: const EdgeInsets.only(left: 20, right: 20, bottom: 20),
             shrinkWrap: true,
             itemCount: _trendingCommunities.length,
-            itemBuilder: _buildCommunity)
+            itemBuilder: _buildMemory)
       ],
     );
   }
 
-  Widget _buildCommunity(BuildContext context, index) {
-    Community community = _trendingCommunities[index];
-    return OBCommunityTile(
-      community,
-      key: Key(community.name),
-      onCommunityTilePressed: _onTrendingCommunityPressed,
+  Widget _buildMemory(BuildContext context, index) {
+    Memory memory = _trendingCommunities[index];
+    return OBMemoryTile(
+      memory,
+      key: Key(memory.name),
+      onMemoryTilePressed: _onTrendingMemoryPressed,
     );
   }
 
-  Widget _buildCommunitySeparator(BuildContext context, int index) {
+  Widget _buildMemorySeparator(BuildContext context, int index) {
     return const SizedBox(
       height: 10,
     );
@@ -142,12 +142,12 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
   }
 
   Future<void> _refreshTrendingCommunities() async {
-    debugPrint('Refreshing trending communities');
+    debugPrint('Refreshing trending memories');
     _setRefreshInProgress(true);
     try {
       CommunitiesList trendingCommunitiesList =
           await _userService.getTrendingCommunities(category: widget.category);
-      _setTrendingCommunities(trendingCommunitiesList.communities);
+      _setTrendingCommunities(trendingCommunitiesList.memories);
     } catch (error) {
       _onError(error);
     } finally {
@@ -169,14 +169,13 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
     }
   }
 
-  void _onTrendingCommunityPressed(Community community) {
-    _navigationService.navigateToCommunity(
-        community: community, context: context);
+  void _onTrendingMemoryPressed(Memory memory) {
+    _navigationService.navigateToMemory(memory: memory, context: context);
   }
 
-  void _setTrendingCommunities(List<Community> communities) {
+  void _setTrendingCommunities(List<Memory> memories) {
     setState(() {
-      _trendingCommunities = communities;
+      _trendingCommunities = memories;
     });
   }
 

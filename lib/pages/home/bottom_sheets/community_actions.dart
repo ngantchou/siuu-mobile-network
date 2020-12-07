@@ -14,22 +14,22 @@ import 'package:Siuu/widgets/tiles/actions/new_post_notifications_for_community_
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityActionsBottomSheet extends StatefulWidget {
-  final Community community;
-  final OnCommunityReported onCommunityReported;
+class OBMemoryActionsBottomSheet extends StatefulWidget {
+  final Memory memory;
+  final OnMemoryReported onMemoryReported;
 
-  const OBCommunityActionsBottomSheet(
-      {Key key, @required this.community, this.onCommunityReported})
+  const OBMemoryActionsBottomSheet(
+      {Key key, @required this.memory, this.onMemoryReported})
       : super(key: key);
 
   @override
-  OBCommunityActionsBottomSheetState createState() {
-    return OBCommunityActionsBottomSheetState();
+  OBMemoryActionsBottomSheetState createState() {
+    return OBMemoryActionsBottomSheetState();
   }
 }
 
-class OBCommunityActionsBottomSheetState
-    extends State<OBCommunityActionsBottomSheet> {
+class OBMemoryActionsBottomSheetState
+    extends State<OBMemoryActionsBottomSheet> {
   UserService _userService;
   ToastService _toastService;
   ModalService _modalService;
@@ -43,33 +43,33 @@ class OBCommunityActionsBottomSheetState
     _modalService = openbookProvider.modalService;
     _localizationService = openbookProvider.localizationService;
 
-    List<Widget> communityActions = [
-      OBFavoriteCommunityTile(
-        community: widget.community,
-        onFavoritedCommunity: _dismiss,
-        onUnfavoritedCommunity: _dismiss,
+    List<Widget> memoryActions = [
+      OBFavoriteMemoryTile(
+        memory: widget.memory,
+        onFavoritedMemory: _dismiss,
+        onUnfavoritedMemory: _dismiss,
       )
     ];
 
     User loggedInUser = _userService.getLoggedInUser();
-    Community community = widget.community;
+    Memory memory = widget.memory;
 
-    bool isMemberOfCommunity = community.isMember(loggedInUser);
-    bool isCommunityAdministrator = community.isAdministrator(loggedInUser);
-    bool isCommunityModerator = community.isModerator(loggedInUser);
-    bool communityHasInvitesEnabled = community.invitesEnabled;
+    bool isMemberOfMemory = memory.isMember(loggedInUser);
+    bool isMemoryAdministrator = memory.isAdministrator(loggedInUser);
+    bool isMemoryModerator = memory.isModerator(loggedInUser);
+    bool memoryHasInvitesEnabled = memory.invitesEnabled;
 
-    if (isMemberOfCommunity) {
-      communityActions.add(OBNewPostNotificationsForCommunityTile(
-        community: community,
+    if (isMemberOfMemory) {
+      memoryActions.add(OBNewPostNotificationsForMemoryTile(
+        memory: memory,
         onSubscribed: _dismiss,
         onUnsubscribed: _dismiss,
       ));
     }
 
-    if (communityHasInvitesEnabled && isMemberOfCommunity) {
-      communityActions.add(ListTile(
-        leading: const OBIcon(OBIcons.communityInvites),
+    if (memoryHasInvitesEnabled && isMemberOfMemory) {
+      memoryActions.add(ListTile(
+        leading: const OBIcon(OBIcons.memoryInvites),
         title: OBText(
           _localizationService.community__actions_invite_people_title,
         ),
@@ -77,10 +77,10 @@ class OBCommunityActionsBottomSheetState
       ));
     }
 
-    if (!isCommunityAdministrator && !isCommunityModerator) {
-      communityActions.add(OBReportCommunityTile(
-        community: community,
-        onWantsToReportCommunity: () {
+    if (!isMemoryAdministrator && !isMemoryModerator) {
+      memoryActions.add(OBReportMemoryTile(
+        memory: memory,
+        onWantsToReportMemory: () {
           Navigator.of(context).pop();
         },
       ));
@@ -88,7 +88,7 @@ class OBCommunityActionsBottomSheetState
 
     return OBRoundedBottomSheet(
       child: Column(
-        children: communityActions,
+        children: memoryActions,
         mainAxisSize: MainAxisSize.min,
       ),
     );
@@ -96,8 +96,7 @@ class OBCommunityActionsBottomSheetState
 
   Future _onWantsToInvitePeople() async {
     _dismiss();
-    _modalService.openInviteToCommunity(
-        context: context, community: widget.community);
+    _modalService.openInviteToMemory(context: context, memory: widget.memory);
   }
 
   void _dismiss() {
@@ -105,4 +104,4 @@ class OBCommunityActionsBottomSheetState
   }
 }
 
-typedef OnCommunityReported(Community community);
+typedef OnMemoryReported(Memory memory);

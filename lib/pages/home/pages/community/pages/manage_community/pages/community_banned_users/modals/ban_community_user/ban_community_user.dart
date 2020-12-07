@@ -15,20 +15,19 @@ import 'package:Siuu/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBBanCommunityUserModal extends StatefulWidget {
-  final Community community;
+class OBBanMemoryUserModal extends StatefulWidget {
+  final Memory memory;
 
-  const OBBanCommunityUserModal({Key key, @required this.community})
+  const OBBanMemoryUserModal({Key key, @required this.memory})
       : super(key: key);
 
   @override
-  State<OBBanCommunityUserModal> createState() {
-    return OBBanCommunityUserModalState();
+  State<OBBanMemoryUserModal> createState() {
+    return OBBanMemoryUserModalState();
   }
 }
 
-class OBBanCommunityUserModalState
-    extends State<OBBanCommunityUserModal> {
+class OBBanMemoryUserModalState extends State<OBBanMemoryUserModal> {
   UserService _userService;
   NavigationService _navigationService;
   LocalizationService _localizationService;
@@ -57,11 +56,11 @@ class OBBanCommunityUserModalState
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
-          listItemBuilder: _buildCommunityMemberListItem,
-          searchResultListItemBuilder: _buildCommunityMemberListItem,
-          listRefresher: _refreshCommunityMembers,
-          listOnScrollLoader: _loadMoreCommunityMembers,
-          listSearcher: _searchCommunityMembers,
+          listItemBuilder: _buildMemoryMemberListItem,
+          searchResultListItemBuilder: _buildMemoryMemberListItem,
+          listRefresher: _refreshMemoryMembers,
+          listOnScrollLoader: _loadMoreMemoryMembers,
+          listSearcher: _searchMemoryMembers,
           resourceSingularName: _localizationService.community__member,
           resourcePluralName: _localizationService.community__member_plural,
         ),
@@ -69,56 +68,56 @@ class OBBanCommunityUserModalState
     );
   }
 
-  Widget _buildCommunityMemberListItem(BuildContext context, User user) {
+  Widget _buildMemoryMemberListItem(BuildContext context, User user) {
     return OBUserTile(
       user,
       onUserTilePressed: _onWantsToAddNewBannedUser,
     );
   }
 
-  Future<List<User>> _refreshCommunityMembers() async {
-    UsersList communityMembers = await _userService
-        .getMembersForCommunity(widget.community, exclude: [
-      CommunityMembersExclusion.administrators,
-      CommunityMembersExclusion.moderators
+  Future<List<User>> _refreshMemoryMembers() async {
+    UsersList memoryMembers = await _userService
+        .getMembersForMemory(widget.memory, exclude: [
+      MemoryMembersExclusion.administrators,
+      MemoryMembersExclusion.moderators
     ]);
-    return communityMembers.users;
+    return memoryMembers.users;
   }
 
-  Future<List<User>> _loadMoreCommunityMembers(
-      List<User> communityMembersList) async {
-    var lastCommunityMember = communityMembersList.last;
-    var lastCommunityMemberId = lastCommunityMember.id;
-    var moreCommunityMembers = (await _userService.getMembersForCommunity(
-            widget.community,
-            maxId: lastCommunityMemberId,
+  Future<List<User>> _loadMoreMemoryMembers(
+      List<User> memoryMembersList) async {
+    var lastMemoryMember = memoryMembersList.last;
+    var lastMemoryMemberId = lastMemoryMember.id;
+    var moreMemoryMembers = (await _userService.getMembersForMemory(
+            widget.memory,
+            maxId: lastMemoryMemberId,
             count: 20,
             exclude: [
-          CommunityMembersExclusion.administrators,
-          CommunityMembersExclusion.moderators
+          MemoryMembersExclusion.administrators,
+          MemoryMembersExclusion.moderators
         ]))
         .users;
-    return moreCommunityMembers;
+    return moreMemoryMembers;
   }
 
-  Future<List<User>> _searchCommunityMembers(String query) async {
-    UsersList results = await _userService.searchCommunityMembers(
+  Future<List<User>> _searchMemoryMembers(String query) async {
+    UsersList results = await _userService.searchMemoryMembers(
         query: query,
-        community: widget.community,
+        memory: widget.memory,
         exclude: [
-          CommunityMembersExclusion.administrators,
-          CommunityMembersExclusion.moderators
+          MemoryMembersExclusion.administrators,
+          MemoryMembersExclusion.moderators
         ]);
 
     return results.users;
   }
 
   void _onWantsToAddNewBannedUser(User user) async {
-    var addedCommunityBannedUser =
-        await _navigationService.navigateToConfirmBanCommunityUser(
-            context: context, community: widget.community, user: user);
+    var addedMemoryBannedUser =
+        await _navigationService.navigateToConfirmBanMemoryUser(
+            context: context, memory: widget.memory, user: user);
 
-    if (addedCommunityBannedUser != null && addedCommunityBannedUser) {
+    if (addedMemoryBannedUser != null && addedMemoryBannedUser) {
       Navigator.of(context).pop(user);
     }
   }

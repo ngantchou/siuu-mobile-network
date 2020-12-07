@@ -143,7 +143,8 @@ class OBAcceptGuidelinesModalState extends State {
       type: OBButtonType.success,
       minWidth: double.infinity,
       size: OBButtonSize.large,
-      child: Text(_localizationService.user__guidelines_accept, style: TextStyle(fontSize: 18.0)),
+      child: Text(_localizationService.user__guidelines_accept,
+          style: TextStyle(fontSize: 18.0)),
       isDisabled: !_acceptButtonEnabled && _guidelinesText.isNotEmpty,
       isLoading: _acceptGuidelinesInProgress,
       onPressed: _acceptGuidelines,
@@ -158,7 +159,7 @@ class OBAcceptGuidelinesModalState extends State {
       child: Row(
         children: <Widget>[
           Text(
-           _localizationService.user__guidelines_reject,
+            _localizationService.user__guidelines_reject,
             style: TextStyle(fontSize: 18.0, color: Colors.white),
           )
         ],
@@ -175,7 +176,7 @@ class OBAcceptGuidelinesModalState extends State {
     try {
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
       _getGuidelinesOperation = CancelableOperation.fromFuture(
-          openbookProvider.documentsService.getCommunityGuidelines());
+          openbookProvider.documentsService.getMemoryGuidelines());
 
       String guidelines = await _getGuidelinesOperation.value;
       _setGuidelinesText(guidelines);
@@ -207,7 +208,8 @@ class OBAcceptGuidelinesModalState extends State {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -219,8 +221,8 @@ class OBAcceptGuidelinesModalState extends State {
   }
 
   void _onGuidelinesScroll() {
-    if (!_acceptButtonEnabled
-        && _guidelinesText.isNotEmpty &&
+    if (!_acceptButtonEnabled &&
+        _guidelinesText.isNotEmpty &&
         _guidelinesScrollController.position.pixels >
             (_guidelinesScrollController.position.maxScrollExtent * 0.9)) {
       _setAcceptButtonEnabled(true);

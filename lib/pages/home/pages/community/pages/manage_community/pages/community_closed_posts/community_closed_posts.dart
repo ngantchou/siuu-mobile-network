@@ -6,23 +6,19 @@ import 'package:Siuu/widgets/theming/primary_color_container.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityClosedPostsPage extends StatelessWidget {
-  final Community community;
+class OBMemoryClosedPostsPage extends StatelessWidget {
+  final Memory memory;
 
-  OBCommunityClosedPostsPage(this.community);
+  OBMemoryClosedPostsPage(this.memory);
 
   @override
   Widget build(BuildContext context) {
-
     return OBCupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
         title: 'Closed posts',
       ),
       child: OBPrimaryColorContainer(
-        child: OBCommunityClosedPosts(
-            community: this.community
-        )
-      ),
+          child: OBMemoryClosedPosts(memory: this.memory)),
     );
   }
 }

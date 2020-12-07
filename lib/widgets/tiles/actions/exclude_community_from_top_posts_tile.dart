@@ -10,31 +10,31 @@ import 'package:Siuu/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 
-class OBExcludeCommunityFromTopPostsTile extends StatefulWidget {
+class OBExcludeMemoryFromTopPostsTile extends StatefulWidget {
   final Post post;
-  final VoidCallback onExcludedPostCommunity;
-  final VoidCallback onUndoExcludedPostCommunity;
+  final VoidCallback onExcludedPostMemory;
+  final VoidCallback onUndoExcludedPostMemory;
 
-  const OBExcludeCommunityFromTopPostsTile({
+  const OBExcludeMemoryFromTopPostsTile({
     Key key,
     @required this.post,
-    this.onExcludedPostCommunity,
-    this.onUndoExcludedPostCommunity,
+    this.onExcludedPostMemory,
+    this.onUndoExcludedPostMemory,
   }) : super(key: key);
 
   @override
-  OBExcludeCommunityFromTopPostsTileState createState() {
-    return OBExcludeCommunityFromTopPostsTileState();
+  OBExcludeMemoryFromTopPostsTileState createState() {
+    return OBExcludeMemoryFromTopPostsTileState();
   }
 }
 
-class OBExcludeCommunityFromTopPostsTileState
-    extends State<OBExcludeCommunityFromTopPostsTile> {
+class OBExcludeMemoryFromTopPostsTileState
+    extends State<OBExcludeMemoryFromTopPostsTile> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
-  CancelableOperation _excludeCommunityOperation;
-  CancelableOperation _undoExcludeCommunityOperation;
+  CancelableOperation _excludeMemoryOperation;
+  CancelableOperation _undoExcludeMemoryOperation;
 
   bool _requestInProgress;
 
@@ -62,12 +62,12 @@ class OBExcludeCommunityFromTopPostsTileState
         return OBLoadingTile(
           isLoading: _requestInProgress,
           leading: OBIcon(isExcluded
-              ? OBIcons.undoExcludePostCommunity
-              : OBIcons.excludePostCommunity),
+              ? OBIcons.undoExcludePostMemory
+              : OBIcons.excludePostMemory),
           title: OBText(isExcluded
-              ? _localizationService.post__undo_exclude_post_community
-              : _localizationService.post__exclude_post_community),
-          onTap: isExcluded ? _undoExcludePostCommunity : _excludePostCommunity,
+              ? _localizationService.post__undo_exclude_post_memory
+              : _localizationService.post__exclude_post_memory),
+          onTap: isExcluded ? _undoExcludePostMemory : _excludePostMemory,
         );
       },
     );
@@ -76,45 +76,47 @@ class OBExcludeCommunityFromTopPostsTileState
   @override
   void dispose() {
     super.dispose();
-    if (_excludeCommunityOperation != null) _excludeCommunityOperation.cancel();
-    if (_undoExcludeCommunityOperation != null)
-      _undoExcludeCommunityOperation.cancel();
+    if (_excludeMemoryOperation != null) _excludeMemoryOperation.cancel();
+    if (_undoExcludeMemoryOperation != null)
+      _undoExcludeMemoryOperation.cancel();
   }
 
-  void _excludePostCommunity() async {
-    if (_excludeCommunityOperation != null) return;
+  void _excludePostMemory() async {
+    if (_excludeMemoryOperation != null) return;
     _setRequestInProgress(true);
     try {
-      _excludeCommunityOperation = CancelableOperation.fromFuture(
-          _userService.excludeCommunityFromTopPosts(widget.post.community));
-      String message = await _excludeCommunityOperation.value;
-      if (widget.onExcludedPostCommunity != null)
-        widget.onExcludedPostCommunity();
+      _excludeMemoryOperation = CancelableOperation.fromFuture(
+          _userService.excludeMemoryFromTopPosts(widget.post.memory));
+      String message = await _excludeMemoryOperation.value;
+      if (widget.onExcludedPostMemory != null) widget.onExcludedPostMemory();
       widget.post.updateIsExcludedFromTopPosts(true);
       _toastService.success(message: message, context: context);
     } catch (e) {
       _onError(e);
     } finally {
-      _excludeCommunityOperation = null;
+      _excludeMemoryOperation = null;
       _setRequestInProgress(false);
     }
   }
 
-  void _undoExcludePostCommunity() async {
-    if (_undoExcludeCommunityOperation != null) return;
+  void _undoExcludePostMemory() async {
+    if (_undoExcludeMemoryOperation != null) return;
     _setRequestInProgress(true);
     try {
-      _undoExcludeCommunityOperation = CancelableOperation.fromFuture(
-          _userService.undoExcludeCommunityFromTopPosts(widget.post.community));
-      await _undoExcludeCommunityOperation.value;
-      if (widget.onUndoExcludedPostCommunity != null)
-        widget.onUndoExcludedPostCommunity();
-      _toastService.success(message: _localizationService.post__exclude_community_from_profile_posts_success, context: context);
+      _undoExcludeMemoryOperation = CancelableOperation.fromFuture(
+          _userService.undoExcludeMemoryFromTopPosts(widget.post.memory));
+      await _undoExcludeMemoryOperation.value;
+      if (widget.onUndoExcludedPostMemory != null)
+        widget.onUndoExcludedPostMemory();
+      _toastService.success(
+          message: _localizationService
+              .post__exclude_community_from_profile_posts_success,
+          context: context);
       widget.post.updateIsExcludedFromTopPosts(false);
     } catch (e) {
       _onError(e);
     } finally {
-      _undoExcludeCommunityOperation = null;
+      _undoExcludeMemoryOperation = null;
       _setRequestInProgress(false);
     }
   }

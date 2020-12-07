@@ -8,15 +8,16 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBModeratedObjectActions extends StatelessWidget {
-  final Community community;
+  final Memory memory;
   final ModeratedObject moderatedObject;
 
   OBModeratedObjectActions(
-      {@required this.community, @required this.moderatedObject});
+      {@required this.memory, @required this.moderatedObject});
 
   @override
   Widget build(BuildContext context) {
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
     List<Widget> moderatedObjectActions = [
       Expanded(
           child: OBButton(
@@ -31,17 +32,18 @@ class OBModeratedObjectActions extends StatelessWidget {
                   const SizedBox(
                     width: 10.0,
                   ),
-                  OBText(_localizationService.trans('moderation__actions_review')),
+                  OBText(
+                      _localizationService.trans('moderation__actions_review')),
                 ],
               ),
               onPressed: () {
                 OpenbookProviderState openbookProvider =
                     OpenbookProvider.of(context);
-                if (community != null) {
+                if (memory != null) {
                   openbookProvider.navigationService
-                      .navigateToModeratedObjectCommunityReview(
+                      .navigateToModeratedObjectMemoryReview(
                           moderatedObject: moderatedObject,
-                          community: community,
+                          memory: memory,
                           context: context);
                 } else {
                   openbookProvider.navigationService

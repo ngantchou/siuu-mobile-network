@@ -173,11 +173,11 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
                 post: widget.extraData['post'],
                 postComment: widget.object,
                 moderationCategory: widget.category));
-      } else if (widget.object is Community) {
+      } else if (widget.object is Memory) {
         _submitReportOperation = CancelableOperation.fromFuture(
-            _userService.reportCommunity(
+            _userService.reportMemory(
                 description: _descriptionController.text,
-                community: widget.object,
+                memory: widget.object,
                 moderationCategory: widget.category));
       } else if (widget.object is User) {
         _submitReportOperation = CancelableOperation.fromFuture(
@@ -196,7 +196,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
       }
       await _submitReportOperation.value;
       if (widget.object is User ||
-          widget.object is Community ||
+          widget.object is Memory ||
           widget.object is Post ||
           widget.object is PostComment ||
           widget.object is Hashtag) {
@@ -220,7 +220,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
     } else if (modelInstance is PostComment) {
       result =
           _localizationService.moderation__confirm_report_post_comment_reported;
-    } else if (modelInstance is Community) {
+    } else if (modelInstance is Memory) {
       result =
           _localizationService.moderation__confirm_report_community_reported;
     } else if (modelInstance is User) {

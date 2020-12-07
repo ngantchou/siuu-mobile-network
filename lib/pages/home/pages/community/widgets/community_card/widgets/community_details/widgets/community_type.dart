@@ -6,15 +6,16 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../../../../provider.dart';
 
-class OBCommunityType extends StatelessWidget {
-  final Community community;
+class OBMemoryType extends StatelessWidget {
+  final Memory memory;
 
-  const OBCommunityType(this.community);
+  const OBMemoryType(this.memory);
 
   @override
   Widget build(BuildContext context) {
-    CommunityType type = community.type;
-    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    MemoryType type = memory.type;
+    LocalizationService localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     if (type == null) {
       return const SizedBox();
@@ -25,7 +26,9 @@ class OBCommunityType extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         OBIcon(
-          type == CommunityType.private ? OBIcons.privateCommunity : OBIcons.publicCommunity,
+          type == MemoryType.private
+              ? OBIcons.privateMemory
+              : OBIcons.publicMemory,
           customSize: 16,
         ),
         const SizedBox(
@@ -33,7 +36,9 @@ class OBCommunityType extends StatelessWidget {
         ),
         Flexible(
           child: OBText(
-            type == CommunityType.private ? localizationService.community__type_private : localizationService.community__type_public,
+            type == MemoryType.private
+                ? localizationService.community__type_private
+                : localizationService.community__type_public,
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),

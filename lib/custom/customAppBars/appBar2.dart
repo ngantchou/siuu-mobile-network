@@ -10,12 +10,13 @@ class Appbar2 extends StatelessWidget {
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     return Container(
+      height: height * 0.117,
       decoration: BoxDecoration(
         gradient: linearGradient,
       ),
       child: Column(
         children: [
-          Container(height: height * 0.0585),
+          //Container(height: height * 0.0585),
           Container(
             height: height * 0.117,
             child: Padding(

@@ -3,15 +3,15 @@ import 'package:Siuu/widgets/checkbox.dart';
 import 'package:Siuu/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 
-class OBCommunitySelectableTile extends StatelessWidget {
-  final Community community;
-  final ValueChanged<Community> onCommunityPressed;
+class OBMemorySelectableTile extends StatelessWidget {
+  final Memory memory;
+  final ValueChanged<Memory> onMemoryPressed;
   final bool isSelected;
 
-  const OBCommunitySelectableTile(
+  const OBMemorySelectableTile(
       {Key key,
-      @required this.community,
-      @required this.onCommunityPressed,
+      @required this.memory,
+      @required this.onMemoryPressed,
       @required this.isSelected})
       : super(key: key);
 
@@ -19,14 +19,14 @@ class OBCommunitySelectableTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onCommunityPressed(community);
+        onMemoryPressed(memory);
       },
       child: Row(
         children: <Widget>[
           Expanded(
-            child: OBCommunityTile(
-              community,
-              size: OBCommunityTileSize.small,
+            child: OBMemoryTile(
+              memory,
+              size: OBMemoryTileSize.small,
             ),
           ),
           Padding(

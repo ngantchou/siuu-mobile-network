@@ -9,12 +9,13 @@ class PushNotification {
       pushNotificationType = PushNotificationType.postReaction;
     } else if (pushNotificationTypeStr == NotificationType.postComment.code) {
       pushNotificationType = PushNotificationType.postComment;
-    } else if (pushNotificationTypeStr == NotificationType.connectionRequest.code) {
+    } else if (pushNotificationTypeStr ==
+        NotificationType.connectionRequest.code) {
       pushNotificationType = PushNotificationType.connectionRequest;
     } else if (pushNotificationTypeStr == NotificationType.follow.code) {
       pushNotificationType = PushNotificationType.follow;
-    } else if (pushNotificationTypeStr == NotificationType.communityInvite.code) {
-      pushNotificationType = PushNotificationType.communityInvite;
+    } else if (pushNotificationTypeStr == NotificationType.memoryInvite.code) {
+      pushNotificationType = PushNotificationType.memoryInvite;
     } else {
       throw 'Unsupported push notification type';
     }
@@ -40,5 +41,5 @@ enum PushNotificationType {
   postComment,
   connectionRequest,
   follow,
-  communityInvite
+  memoryInvite
 }

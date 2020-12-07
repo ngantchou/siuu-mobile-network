@@ -7,24 +7,24 @@ import 'package:Siuu/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:tinycolor/tinycolor.dart';
 
-class OBCommunityButton extends StatelessWidget {
-  final Community community;
+class OBMemoryButton extends StatelessWidget {
+  final Memory memory;
   final bool isLoading;
   final String text;
   final VoidCallback onPressed;
 
   static const borderRadius = 30.0;
 
-  const OBCommunityButton(
+  const OBMemoryButton(
       {Key key,
       this.isLoading = false,
-      @required this.community,
+      @required this.memory,
       @required this.text,
       @required this.onPressed})
       : super(key: key);
 
   Widget build(BuildContext context) {
-    String communityHexColor = community.color;
+    String memoryHexColor = memory.color;
     OpenbookProviderState openbookProviderState = OpenbookProvider.of(context);
     ThemeValueParserService themeValueParserService =
         openbookProviderState.themeValueParserService;
@@ -36,20 +36,18 @@ class OBCommunityButton extends StatelessWidget {
     double currentThemePrimaryColorLuminance =
         currentThemePrimaryColor.computeLuminance();
 
-    Color communityColor =
-        themeValueParserService.parseColor(communityHexColor);
-    Color textColor = themeValueParserService.isDarkColor(communityColor)
+    Color memoryColor = themeValueParserService.parseColor(memoryHexColor);
+    Color textColor = themeValueParserService.isDarkColor(memoryColor)
         ? Colors.white
         : Colors.black;
-    double communityColorLuminance = communityColor.computeLuminance();
+    double memoryColorLuminance = memoryColor.computeLuminance();
 
-    if (communityColorLuminance > 0.9 &&
-        currentThemePrimaryColorLuminance > 0.9) {
+    if (memoryColorLuminance > 0.9 && currentThemePrimaryColorLuminance > 0.9) {
       // Is extremely white and our current theem is also extremely white, darken it
-      communityColor = TinyColor(communityColor).darken(5).color;
-    } else if (communityColorLuminance < 0.1) {
+      memoryColor = TinyColor(memoryColor).darken(5).color;
+    } else if (memoryColorLuminance < 0.1) {
       // Is extremely dark and our current theme is also extremely dark, lighten it
-      communityColor = TinyColor(communityColor).lighten(10).color;
+      memoryColor = TinyColor(memoryColor).lighten(10).color;
     }
 
     return ButtonTheme(
@@ -65,7 +63,7 @@ class OBCommunityButton extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 16),
                 ),
-          color: communityColor,
+          color: memoryColor,
           onPressed: onPressed,
           shape: new RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(borderRadius))),

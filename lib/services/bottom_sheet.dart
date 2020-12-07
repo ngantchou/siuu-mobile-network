@@ -81,21 +81,19 @@ class BottomSheetService {
         });
   }
 
-  Future<void> showCommunityTypePicker(
+  Future<void> showMemoryTypePicker(
       {@required BuildContext context,
-      ValueChanged<CommunityType> onChanged,
-      CommunityType initialType}) {
+      ValueChanged<MemoryType> onChanged,
+      MemoryType initialType}) {
     return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
-          return OBCommunityTypePickerBottomSheet(
+          return OBMemoryTypePickerBottomSheet(
               onTypeChanged: onChanged, initialType: initialType);
         });
   }
 
-
-  Future<void> showUserVisibilityPicker(
-      {@required BuildContext context}) {
+  Future<void> showUserVisibilityPicker({@required BuildContext context}) {
     return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
@@ -173,9 +171,9 @@ class BottomSheetService {
       @required OBPostDisplayContext displayContext,
       @required OnPostDeleted onPostDeleted,
       @required ValueChanged<Post> onPostReported,
-      ValueChanged<Community> onPostCommunityExcludedFromProfilePosts,
-      Function onCommunityExcluded,
-      Function onUndoCommunityExcluded,
+      ValueChanged<Memory> onPostMemoryExcludedFromProfilePosts,
+      Function onMemoryExcluded,
+      Function onUndoMemoryExcluded,
       List<FollowsList> initialPickedFollowsLists}) {
     return _showModalBottomSheetApp(
         context: context,
@@ -183,9 +181,10 @@ class BottomSheetService {
           return OBPostActionsBottomSheet(
             post: post,
             displayContext: displayContext,
-            onCommunityExcluded: onCommunityExcluded,
-            onUndoCommunityExcluded: onUndoCommunityExcluded,
-            onPostCommunityExcludedFromProfilePosts: onPostCommunityExcludedFromProfilePosts,
+            onMemoryExcluded: onMemoryExcluded,
+            onUndoMemoryExcluded: onUndoMemoryExcluded,
+            onPostMemoryExcludedFromProfilePosts:
+                onPostMemoryExcludedFromProfilePosts,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
           );
@@ -217,16 +216,16 @@ class BottomSheetService {
         });
   }
 
-  Future<void> showCommunityActions(
+  Future<void> showMemoryActions(
       {@required BuildContext context,
-      @required Community community,
-      OnCommunityReported onCommunityReported}) {
+      @required Memory memory,
+      OnMemoryReported onMemoryReported}) {
     return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
-          return OBCommunityActionsBottomSheet(
-            community: community,
-            onCommunityReported: onCommunityReported,
+          return OBMemoryActionsBottomSheet(
+            memory: memory,
+            onMemoryReported: onMemoryReported,
           );
         });
   }

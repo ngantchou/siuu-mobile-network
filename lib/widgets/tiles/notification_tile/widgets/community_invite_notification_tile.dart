@@ -13,27 +13,26 @@ import 'package:flutter/material.dart';
 import 'notification_tile_skeleton.dart';
 import 'notification_tile_title.dart';
 
-class OBCommunityInviteNotificationTile extends StatelessWidget {
+class OBMemoryInviteNotificationTile extends StatelessWidget {
   final OBNotification notification;
-  final CommunityInviteNotification communityInviteNotification;
+  final MemoryInviteNotification memoryInviteNotification;
   final VoidCallback onPressed;
   static final double postImagePreviewSize = 40;
 
-  const OBCommunityInviteNotificationTile(
+  const OBMemoryInviteNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.communityInviteNotification,
+      @required this.memoryInviteNotification,
       this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    CommunityInvite communityInvite =
-        communityInviteNotification.communityInvite;
-    User inviteCreator = communityInvite.creator;
-    Community community = communityInvite.community;
+    MemoryInvite memoryInvite = memoryInviteNotification.memoryInvite;
+    User inviteCreator = memoryInvite.creator;
+    Memory memory = memoryInvite.memory;
 
-    String communityName = community.name;
+    String memoryName = memory.name;
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     var utilsService = openbookProvider.utilsService;
@@ -42,7 +41,8 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
       openbookProvider.navigationService
           .navigateToUserProfile(user: inviteCreator, context: context);
     };
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
 
     return OBNotificationTileSkeleton(
       onTap: () {
@@ -50,7 +50,7 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
         openbookProvider.navigationService
-            .navigateToCommunity(community: community, context: context);
+            .navigateToMemory(memory: memory, context: context);
       },
       leading: OBAvatar(
         onPressed: navigateToInviteCreatorProfile,
@@ -61,13 +61,15 @@ class OBCommunityInviteNotificationTile extends StatelessWidget {
         user: inviteCreator,
         onUsernamePressed: navigateToInviteCreatorProfile,
         text: TextSpan(
-            text: _localizationService.notifications__user_community_invite_tile(communityName)),
+            text: _localizationService
+                .notifications__user_community_invite_tile(memoryName)),
       ),
-      trailing: OBCommunityAvatar(
-        community: community,
+      trailing: OBMemoryAvatar(
+        memory: memory,
         size: OBAvatarSize.medium,
       ),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
+      subtitle: OBSecondaryText(
+          utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

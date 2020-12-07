@@ -1,20 +1,19 @@
 import 'package:Siuu/models/community_invite.dart';
 
-class CommunityInviteList {
-  final List<CommunityInvite> communityInvites;
+class MemoryInviteList {
+  final List<MemoryInvite> memoryInvites;
 
-  CommunityInviteList({
-    this.communityInvites,
+  MemoryInviteList({
+    this.memoryInvites,
   });
 
-  factory CommunityInviteList.fromJson(List<dynamic> parsedJson) {
-    List<CommunityInvite> communityInvites = parsedJson
-        .map((communityInviteJson) =>
-            CommunityInvite.fromJSON(communityInviteJson))
+  factory MemoryInviteList.fromJson(List<dynamic> parsedJson) {
+    List<MemoryInvite> memoryInvites = parsedJson
+        .map((memoryInviteJson) => MemoryInvite.fromJSON(memoryInviteJson))
         .toList();
 
-    return new CommunityInviteList(
-      communityInvites: communityInvites,
+    return new MemoryInviteList(
+      memoryInvites: memoryInvites,
     );
   }
 }

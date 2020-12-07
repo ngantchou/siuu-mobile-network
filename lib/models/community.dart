@@ -8,33 +8,33 @@ import 'package:dcache/dcache.dart';
 
 import 'category.dart';
 
-class Community extends UpdatableModel<Community> {
-  static convertTypeToString(CommunityType type) {
+class Memory extends UpdatableModel<Memory> {
+  static convertTypeToString(MemoryType type) {
     String result;
     switch (type) {
-      case CommunityType.private:
+      case MemoryType.private:
         result = 'T';
         break;
-      case CommunityType.public:
+      case MemoryType.public:
         result = 'P';
         break;
       default:
-        throw 'Unsupported community type';
+        throw 'Unsupported memory type';
     }
     return result;
   }
 
-  static String convertExclusionToString(CommunityMembersExclusion exclusion) {
+  static String convertExclusionToString(MemoryMembersExclusion exclusion) {
     String result;
     switch (exclusion) {
-      case CommunityMembersExclusion.administrators:
+      case MemoryMembersExclusion.administrators:
         result = 'administrators';
         break;
-      case CommunityMembersExclusion.moderators:
+      case MemoryMembersExclusion.moderators:
         result = 'moderators';
         break;
       default:
-        throw 'Unsupported community members exclusion';
+        throw 'Unsupported memory members exclusion';
     }
     return result;
   }
@@ -58,15 +58,15 @@ class Community extends UpdatableModel<Community> {
   int postsCount;
   int pendingModeratedObjectsCount;
 
-  CommunityType type;
+  MemoryType type;
 
-  // Whether the user has been invited to the community
+  // Whether the user has been invited to the memory
   bool isInvited;
 
-  // Whether the user has subscribed to the community
+  // Whether the user has subscribed to the memory
   bool areNewPostNotificationsEnabled;
 
-  // Whether the user is the creator of the community
+  // Whether the user is the creator of the memory
   bool isCreator;
 
   bool isFavorite;
@@ -81,9 +81,9 @@ class Community extends UpdatableModel<Community> {
 
   UsersList administrators;
 
-  CommunityMembershipList memberships;
+  MemoryMembershipList memberships;
 
-  Community(
+  Memory(
       {this.id,
       this.creator,
       this.rules,
@@ -123,21 +123,21 @@ class Community extends UpdatableModel<Community> {
   }
 
   bool isPrivate() {
-    return type == CommunityType.private;
+    return type == MemoryType.private;
   }
 
   bool isPublic() {
-    return type == CommunityType.public;
+    return type == MemoryType.public;
   }
 
   bool isAdministrator(User user) {
-    CommunityMembership membership = getMembershipForUser(user);
+    MemoryMembership membership = getMembershipForUser(user);
     if (membership == null) return false;
     return membership.isAdministrator;
   }
 
   bool isModerator(User user) {
-    CommunityMembership membership = getMembershipForUser(user);
+    MemoryMembership membership = getMembershipForUser(user);
     if (membership == null) return false;
     return membership.isModerator;
   }
@@ -146,23 +146,23 @@ class Community extends UpdatableModel<Community> {
     return getMembershipForUser(user) != null;
   }
 
-  CommunityMembership getMembershipForUser(User user) {
+  MemoryMembership getMembershipForUser(User user) {
     if (memberships == null) return null;
 
-    int membershipIndex = memberships.communityMemberships
-        .indexWhere((CommunityMembership communityMembership) {
-      return communityMembership.userId == user.id &&
-          communityMembership.communityId == this.id;
+    int membershipIndex = memberships.memoryMemberships
+        .indexWhere((MemoryMembership memoryMembership) {
+      return memoryMembership.userId == user.id &&
+          memoryMembership.memoryId == this.id;
     });
 
     if (membershipIndex < 0) return null;
 
-    return memberships.communityMemberships[membershipIndex];
+    return memberships.memoryMemberships[membershipIndex];
   }
 
-  static final factory = CommunityFactory();
+  static final factory = MemoryFactory();
 
-  factory Community.fromJSON(Map<String, dynamic> json) {
+  factory Memory.fromJSON(Map<String, dynamic> json) {
     if (json == null) return null;
     return factory.fromJson(json);
   }
@@ -187,8 +187,8 @@ class Community extends UpdatableModel<Community> {
       'is_reported': isReported,
       'moderators':
           moderators?.users?.map((User user) => user.toJson())?.toList(),
-      'memberships': memberships?.communityMemberships
-          ?.map((CommunityMembership membership) => membership.toJson())
+      'memberships': memberships?.memoryMemberships
+          ?.map((MemoryMembership membership) => membership.toJson())
           ?.toList(),
       'administrators':
           administrators?.users?.map((User user) => user.toJson())?.toList(),
@@ -337,14 +337,14 @@ class Community extends UpdatableModel<Community> {
   }
 }
 
-class CommunityFactory extends UpdatableModelFactory<Community> {
+class MemoryFactory extends UpdatableModelFactory<Memory> {
   @override
-  SimpleCache<int, Community> cache =
+  SimpleCache<int, Memory> cache =
       SimpleCache(storage: UpdatableModelSimpleStorage(size: 200));
 
   @override
-  Community makeFromJson(Map json) {
-    return Community(
+  Memory makeFromJson(Map json) {
+    return Memory(
         id: json['id'],
         name: json['name'],
         title: json['title'],
@@ -383,9 +383,9 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
     return UsersList.fromJson(usersData);
   }
 
-  CommunityMembershipList parseMemberships(List membershipsData) {
+  MemoryMembershipList parseMemberships(List membershipsData) {
     if (membershipsData == null) return null;
-    return CommunityMembershipList.fromJson(membershipsData);
+    return MemoryMembershipList.fromJson(membershipsData);
   }
 
   CategoriesList parseCategories(List categoriesData) {
@@ -393,33 +393,33 @@ class CommunityFactory extends UpdatableModelFactory<Community> {
     return CategoriesList.fromJson(categoriesData);
   }
 
-  CommunityType parseType(String strType) {
+  MemoryType parseType(String strType) {
     if (strType == null) return null;
 
-    CommunityType type;
+    MemoryType type;
     if (strType == 'P') {
-      type = CommunityType.public;
+      type = MemoryType.public;
     } else if (strType == 'T') {
-      type = CommunityType.private;
+      type = MemoryType.private;
     } else {
-      throw 'Unsupported community type';
+      throw 'Unsupported memory type';
     }
 
     return type;
   }
 
-  String typeToString(CommunityType type) {
+  String typeToString(MemoryType type) {
     switch (type) {
-      case CommunityType.public:
+      case MemoryType.public:
         return 'P';
         break;
-      case CommunityType.private:
+      case MemoryType.private:
         return 'T';
         break;
     }
   }
 }
 
-enum CommunityType { public, private }
+enum MemoryType { public, private }
 
-enum CommunityMembersExclusion { administrators, moderators }
+enum MemoryMembersExclusion { administrators, moderators }

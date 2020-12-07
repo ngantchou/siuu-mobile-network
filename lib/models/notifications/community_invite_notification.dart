@@ -1,21 +1,21 @@
 import 'package:Siuu/models/community_invite.dart';
 
-class CommunityInviteNotification {
+class MemoryInviteNotification {
   final int id;
-  final CommunityInvite communityInvite;
+  final MemoryInvite memoryInvite;
 
-  const CommunityInviteNotification({
-    this.communityInvite,
+  const MemoryInviteNotification({
+    this.memoryInvite,
     this.id,
   });
 
-  factory CommunityInviteNotification.fromJson(Map<String, dynamic> json) {
-    return CommunityInviteNotification(
+  factory MemoryInviteNotification.fromJson(Map<String, dynamic> json) {
+    return MemoryInviteNotification(
         id: json['id'],
-        communityInvite: _parseCommunityInvite(json['community_invite']));
+        memoryInvite: _parseMemoryInvite(json['community_invite']));
   }
 
-  static CommunityInvite _parseCommunityInvite(Map communityInviteData) {
-    return CommunityInvite.fromJSON(communityInviteData);
+  static MemoryInvite _parseMemoryInvite(Map memoryInviteData) {
+    return MemoryInvite.fromJSON(memoryInviteData);
   }
 }

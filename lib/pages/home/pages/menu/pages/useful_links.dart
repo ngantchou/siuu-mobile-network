@@ -37,7 +37,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                     OpenbookProviderState openbookProvider =
                         OpenbookProvider.of(context);
                     openbookProvider.navigationService
-                        .navigateToCommunityGuidelinesPage(context: context);
+                        .navigateToMemoryGuidelinesPage(context: context);
                   },
                 ),
                 ListTile(
@@ -54,7 +54,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: const OBIcon(OBIcons.communityModerators),
+                  leading: const OBIcon(OBIcons.memoryModerators),
                   title: OBText(
                       _localizationService.drawer__useful_links_terms_of_use),
                   subtitle: OBSecondaryText(_localizationService

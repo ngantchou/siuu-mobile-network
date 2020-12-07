@@ -43,14 +43,14 @@ import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
 class OBSavePostModal extends StatefulWidget {
-  final Community community;
+  final Memory memory;
   final String text;
   final File image;
   final File video;
   final Post post;
 
   const OBSavePostModal(
-      {Key key, this.community, this.text, this.image, this.video, this.post})
+      {Key key, this.memory, this.text, this.image, this.video, this.post})
       : super(key: key);
 
   @override
@@ -97,7 +97,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   List<Widget> _postItemsWidgets;
 
   bool _needsBootstrap;
-  bool _isCreateCommunityPostInProgress;
+  bool _isCreateMemoryPostInProgress;
 
   bool _isEditingPost;
 
@@ -114,7 +114,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _hasFocus = false;
     _isPostTextAllowedLength = false;
     _isPostTextContainingValidHashtags = false;
-    _isCreateCommunityPostInProgress = false;
+    _isCreateMemoryPostInProgress = false;
     _needsBootstrap = true;
 
     _focusNode.addListener(_onFocusNodeChanged);
@@ -146,7 +146,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     } else {
       _textController = DraftTextEditingController.post(
           text: widget.text,
-          communityId: widget.community != null ? widget.community.id : null,
+          memoryId: widget.memory != null ? widget.memory.id : null,
           draftService: _draftService);
       _postItemsWidgets = [
         OBCreatePostText(controller: _textController, focusNode: _focusNode)
@@ -163,9 +163,9 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
     setAutocompleteTextController(_textController);
 
-    if (!_isEditingPost && widget.community != null)
-      _postItemsWidgets.add(OBPostCommunityPreviewer(
-        community: widget.community,
+    if (!_isEditingPost && widget.memory != null)
+      _postItemsWidgets.add(OBPostMemoryPreviewer(
+        memory: widget.memory,
       ));
 
     _textController.addListener(_onPostTextChanged);
@@ -296,14 +296,14 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
           onPressed: _savePost,
           isDisabled: !isEnabled || _saveInProgress,
           isLoading: _saveInProgress);
-    } else if (widget.community != null) {
+    } else if (widget.memory != null) {
       return OBButton(
           type: OBButtonType.primary,
           child: Text(_localizationService.trans('post__share')),
           size: OBButtonSize.small,
-          onPressed: _onWantsToCreateCommunityPost,
-          isDisabled: !isEnabled || _isCreateCommunityPostInProgress,
-          isLoading: _isCreateCommunityPostInProgress);
+          onPressed: _onWantsToCreateMemoryPost,
+          isDisabled: !isEnabled || _isCreateMemoryPostInProgress,
+          isLoading: _isCreateMemoryPostInProgress);
     } else {
       if (isEnabled) {
         nextButton = GestureDetector(
@@ -335,7 +335,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     return nextButton;
   }
 
-  Future<void> _onWantsToCreateCommunityPost() {
+  Future<void> _onWantsToCreateMemoryPost() {
     if (!_isPostTextContainingValidHashtags) {
       _toastService.error(
           message: _localizationService.post__create_hashtags_invalid(
@@ -344,7 +344,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
           context: context);
       return null;
     }
-    return _createCommunityPost();
+    return _createMemoryPost();
   }
 
   void _onWantsToGoNext() async {
@@ -624,7 +624,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     return true;
   }
 
-  Future<void> _createCommunityPost() async {
+  Future<void> _createMemoryPost() async {
     OBNewPostData newPostData = _makeNewPostData();
     if (this._postVideoFile != null)
       _mediaService.clearThumbnailForFile(this._postVideoFile);
@@ -751,7 +751,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     if (_postVideoFile != null) media.add(_postVideoFile);
 
     return OBNewPostData(
-        text: _textController.text, media: media, community: widget.community);
+        text: _textController.text, media: media, memory: widget.memory);
   }
 
   VoidCallback _addPostItemWidget(Widget postItemWidget) {

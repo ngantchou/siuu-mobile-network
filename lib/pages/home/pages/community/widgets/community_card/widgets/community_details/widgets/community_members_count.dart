@@ -5,22 +5,25 @@ import 'package:Siuu/provider.dart';
 import 'package:Siuu/services/localization.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityMembersCount extends StatelessWidget {
-  final Community community;
+class OBMemoryMembersCount extends StatelessWidget {
+  final Memory memory;
 
-  OBCommunityMembersCount(this.community);
+  OBMemoryMembersCount(this.memory);
 
   @override
   Widget build(BuildContext context) {
-    int membersCount = community.membersCount;
-    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    int membersCount = memory.membersCount;
+    LocalizationService localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     if (membersCount == null || membersCount == 0) return const SizedBox();
 
     String count = getPrettyCount(membersCount, localizationService);
 
-    String userAdjective = community.userAdjective ?? localizationService.community__member_capitalized;
-    String usersAdjective = community.usersAdjective ?? localizationService.community__members_capitalized;
+    String userAdjective = memory.userAdjective ??
+        localizationService.community__member_capitalized;
+    String usersAdjective = memory.usersAdjective ??
+        localizationService.community__members_capitalized;
 
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
@@ -36,13 +39,13 @@ class OBCommunityMembersCount extends StatelessWidget {
 
           return GestureDetector(
             onTap: () {
-              bool isPublicCommunity = community.isPublic();
+              bool isPublicMemory = memory.isPublic();
               bool isLoggedInUserMember =
-                  community.isMember(userService.getLoggedInUser());
+                  memory.isMember(userService.getLoggedInUser());
 
-              if (isPublicCommunity || isLoggedInUserMember) {
-                navigationService.navigateToCommunityMembers(
-                    community: community, context: context);
+              if (isPublicMemory || isLoggedInUserMember) {
+                navigationService.navigateToMemoryMembers(
+                    memory: memory, context: context);
               }
             },
             child: Row(

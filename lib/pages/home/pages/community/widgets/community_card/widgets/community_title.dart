@@ -2,19 +2,19 @@ import 'package:Siuu/models/community.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityTitle extends StatelessWidget {
-  final Community community;
+class OBMemoryTitle extends StatelessWidget {
+  final Memory memory;
 
-  OBCommunityTitle(this.community);
+  OBMemoryTitle(this.memory);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: community.updateSubject,
-      initialData: community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        var community = snapshot.data;
-        String title = community?.title;
+      stream: memory.updateSubject,
+      initialData: memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        var memory = snapshot.data;
+        String title = memory?.title;
 
         if (title == null)
           return const SizedBox(

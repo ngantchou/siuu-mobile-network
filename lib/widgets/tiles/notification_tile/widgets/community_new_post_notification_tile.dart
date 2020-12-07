@@ -12,22 +12,22 @@ import 'package:flutter/material.dart';
 import 'notification_tile_skeleton.dart';
 import 'notification_tile_title.dart';
 
-class OBCommunityNewPostNotificationTile extends StatelessWidget {
+class OBMemoryNewPostNotificationTile extends StatelessWidget {
   final OBNotification notification;
-  final CommunityNewPostNotification communityNewPostNotification;
+  final MemoryNewPostNotification memoryNewPostNotification;
   static final double postImagePreviewSize = 40;
   final VoidCallback onPressed;
 
-  const OBCommunityNewPostNotificationTile(
+  const OBMemoryNewPostNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.communityNewPostNotification,
+      @required this.memoryNewPostNotification,
       this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Post post = communityNewPostNotification.post;
+    Post post = memoryNewPostNotification.post;
 
     Widget postImagePreview;
     if (post.hasMediaThumbnail()) {
@@ -42,9 +42,9 @@ class OBCommunityNewPostNotificationTile extends StatelessWidget {
     LocalizationService _localizationService =
         openbookProvider.localizationService;
 
-    Function navigateToCommunity = () {
+    Function navigateToMemory = () {
       openbookProvider.navigationService
-          .navigateToCommunity(community: post.community, context: context);
+          .navigateToMemory(memory: post.memory, context: context);
     };
 
     return OBNotificationTileSkeleton(
@@ -54,14 +54,15 @@ class OBCommunityNewPostNotificationTile extends StatelessWidget {
         openbookProvider.navigationService
             .navigateToPost(post: post, context: context);
       },
-      leading: OBCommunityAvatar(
-        onPressed: navigateToCommunity,
+      leading: OBMemoryAvatar(
+        onPressed: navigateToMemory,
         size: OBAvatarSize.medium,
-        community: post.community,
+        memory: post.memory,
       ),
       title: OBNotificationTileTitle(
         text: TextSpan(
-          text: _localizationService.notifications__community_new_post_tile(post.community.name)),
+            text: _localizationService
+                .notifications__community_new_post_tile(post.memory.name)),
       ),
       subtitle: OBSecondaryText(
           utilsService.timeAgo(notification.created, _localizationService)),

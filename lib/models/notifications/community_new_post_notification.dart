@@ -1,18 +1,17 @@
 import '../post.dart';
 
-class CommunityNewPostNotification {
+class MemoryNewPostNotification {
   final int id;
   final Post post;
 
-  const CommunityNewPostNotification({
+  const MemoryNewPostNotification({
     this.post,
     this.id,
   });
 
-  factory CommunityNewPostNotification.fromJson(Map<String, dynamic> json) {
-    return CommunityNewPostNotification(
-        id: json['id'],
-        post: _parsePost(json['post']));
+  factory MemoryNewPostNotification.fromJson(Map<String, dynamic> json) {
+    return MemoryNewPostNotification(
+        id: json['id'], post: _parsePost(json['post']));
   }
 
   static Post _parsePost(Map postData) {

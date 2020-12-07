@@ -11,24 +11,24 @@ import '../../../provider.dart';
 // pretty much useless without the bootstrap hack
 // https://github.com/flutter/flutter/issues/28109
 
-class OBCommunityTypePickerBottomSheet extends StatefulWidget {
-  final ValueChanged<CommunityType> onTypeChanged;
+class OBMemoryTypePickerBottomSheet extends StatefulWidget {
+  final ValueChanged<MemoryType> onTypeChanged;
 
   // Useless for now given the bug
-  final CommunityType initialType;
+  final MemoryType initialType;
 
-  const OBCommunityTypePickerBottomSheet(
+  const OBMemoryTypePickerBottomSheet(
       {Key key, @required this.onTypeChanged, this.initialType})
       : super(key: key);
 
   @override
-  OBCommunityTypePickerBottomSheetState createState() {
-    return OBCommunityTypePickerBottomSheetState();
+  OBMemoryTypePickerBottomSheetState createState() {
+    return OBMemoryTypePickerBottomSheetState();
   }
 }
 
-class OBCommunityTypePickerBottomSheetState
-    extends State<OBCommunityTypePickerBottomSheet> {
+class OBMemoryTypePickerBottomSheetState
+    extends State<OBMemoryTypePickerBottomSheet> {
   bool _needsBootstrap;
 
   @override
@@ -40,11 +40,12 @@ class OBCommunityTypePickerBottomSheetState
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
     // Hack.
     if (_needsBootstrap) {
       Future.delayed(Duration(milliseconds: 0), () {
-        widget.onTypeChanged(CommunityType.values[0]);
+        widget.onTypeChanged(MemoryType.values[0]);
       });
       _needsBootstrap = false;
     }
@@ -55,12 +56,14 @@ class OBCommunityTypePickerBottomSheetState
         child: CupertinoPicker(
           backgroundColor: Colors.transparent,
           onSelectedItemChanged: (int index) {
-            CommunityType newType = CommunityType.values[index];
+            MemoryType newType = MemoryType.values[index];
             widget.onTypeChanged(newType);
           },
           itemExtent: 32,
-          children: <Widget>[OBText(_localizationService.trans('community__type_public')),
-          OBText(_localizationService.trans('community__type_private'))],
+          children: <Widget>[
+            OBText(_localizationService.trans('community__type_public')),
+            OBText(_localizationService.trans('community__type_private'))
+          ],
         ),
       ),
     );

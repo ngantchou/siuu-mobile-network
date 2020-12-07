@@ -31,6 +31,7 @@ import 'package:Siuu/pages/home/pages/moderated_objects/pages/widgets/moderated_
 import 'package:Siuu/pages/home/pages/moderated_objects/pages/widgets/moderated_object_status/modals/moderated_object_update_status.dart';
 import 'package:Siuu/pages/home/pages/profile/pages/edit_profile/modals/edit_profile.dart';
 import 'package:Siuu/pages/home/pages/profile/pages/edit_profile/pages/profile_posts_excluded_communities/modals/exclude_community_from_profile_posts.dart';
+import 'package:Siuu/pages/home/pages/search/search.dart';
 import 'package:Siuu/pages/home/pages/timeline/timeline.dart';
 import 'package:Siuu/widgets/new_post_data_uploader.dart';
 import 'package:flutter/cupertino.dart';
@@ -47,7 +48,7 @@ class ModalService {
 
   Future<OBNewPostData> openCreatePost(
       {@required BuildContext context,
-      Community community,
+      Memory memory,
       String text,
       File image,
       File video}) async {
@@ -58,7 +59,7 @@ class ModalService {
                 builder: (BuildContext context) {
                   return Material(
                     child: OBSavePostModal(
-                      community: community,
+                      memory: memory,
                       text: text,
                       image: image,
                       video: video,
@@ -199,100 +200,97 @@ class ModalService {
     return editedConnectionsCircle;
   }
 
-  Future<Community> openEditCommunity(
-      {@required BuildContext context, @required Community community}) async {
-    Community editedCommunity = await Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<Community>(
+  Future<Memory> openEditMemory(
+      {@required BuildContext context, @required Memory memory}) async {
+    Memory editedMemory = await Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<Memory>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return Material(
-                child: OBSaveCommunityModal(
-                  community: community,
+                child: OBSaveMemoryModal(
+                  memory: memory,
                 ),
               );
             }));
 
-    return editedCommunity;
+    return editedMemory;
   }
 
-  Future<void> openInviteToCommunity(
-      {@required BuildContext context, @required Community community}) async {
+  Future<void> openInviteToMemory(
+      {@required BuildContext context, @required Memory memory}) async {
     return Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<Community>(
+        .push(CupertinoPageRoute<Memory>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return Material(
-                child: OBInviteToCommunityModal(
-                  community: community,
+                child: OBInviteToMemoryModal(
+                  memory: memory,
                 ),
               );
             }));
   }
 
-  Future<Community> openCreateCommunity(
-      {@required BuildContext context}) async {
-    Community createdCommunity =
-        await Navigator.of(context, rootNavigator: true)
-            .push(CupertinoPageRoute<Community>(
-                fullscreenDialog: true,
-                builder: (BuildContext context) {
-                  return Material(
-                    child: OBSaveCommunityModal(),
-                  );
-                }));
+  Future<Memory> openCreateMemory({@required BuildContext context}) async {
+    Memory createdMemory = await Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<Memory>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBSaveMemoryModal(),
+              );
+            }));
 
-    return createdCommunity;
+    return createdMemory;
   }
 
-  Future<User> openAddCommunityAdministrator(
-      {@required BuildContext context, @required Community community}) async {
-    User addedCommunityAdministrator =
+  Future<User> openAddMemoryAdministrator(
+      {@required BuildContext context, @required Memory memory}) async {
+    User addedMemoryAdministrator =
         await Navigator.of(context, rootNavigator: true)
             .push(CupertinoPageRoute<User>(
                 fullscreenDialog: true,
                 builder: (BuildContext context) {
                   return Material(
-                    child: OBAddCommunityAdministratorModal(
-                      community: community,
+                    child: OBAddMemoryAdministratorModal(
+                      memory: memory,
                     ),
                   );
                 }));
 
-    return addedCommunityAdministrator;
+    return addedMemoryAdministrator;
   }
 
-  Future<User> openAddCommunityModerator(
-      {@required BuildContext context, @required Community community}) async {
-    User addedCommunityModerator =
+  Future<User> openAddMemoryModerator(
+      {@required BuildContext context, @required Memory memory}) async {
+    User addedMemoryModerator = await Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<User>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBAddMemoryModeratorModal(
+                  memory: memory,
+                ),
+              );
+            }));
+
+    return addedMemoryModerator;
+  }
+
+  Future<User> openBanMemoryUser(
+      {@required BuildContext context, @required Memory memory}) async {
+    User addedMemoryBannedUser =
         await Navigator.of(context, rootNavigator: true)
             .push(CupertinoPageRoute<User>(
                 fullscreenDialog: true,
                 builder: (BuildContext context) {
                   return Material(
-                    child: OBAddCommunityModeratorModal(
-                      community: community,
+                    child: OBBanMemoryUserModal(
+                      memory: memory,
                     ),
                   );
                 }));
 
-    return addedCommunityModerator;
-  }
-
-  Future<User> openBanCommunityUser(
-      {@required BuildContext context, @required Community community}) async {
-    User addedCommunityBannedUser =
-        await Navigator.of(context, rootNavigator: true)
-            .push(CupertinoPageRoute<User>(
-                fullscreenDialog: true,
-                builder: (BuildContext context) {
-                  return Material(
-                    child: OBBanCommunityUserModal(
-                      community: community,
-                    ),
-                  );
-                }));
-
-    return addedCommunityBannedUser;
+    return addedMemoryBannedUser;
   }
 
   Future<void> openTimelineFilters(
@@ -305,6 +303,21 @@ class ModalService {
               return Material(
                 child: OBTimelineFiltersModal(
                   timelinePageController: timelineController,
+                ),
+              );
+            }));
+  }
+
+  Future<void> openTimelineSearch(
+      {@required OBMainSearchPageController searchPageController,
+      @required BuildContext context}) {
+    return Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<Circle>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: OBMainSearchPage(
+                  controller: searchPageController,
                 ),
               );
             }));
@@ -412,10 +425,10 @@ class ModalService {
         }));
   }
 
-  Future<List<Community>> openExcludeCommunitiesFromProfilePosts(
+  Future<List<Memory>> openExcludeCommunitiesFromProfilePosts(
       {@required BuildContext context}) async {
     return Navigator.of(context, rootNavigator: true)
-        .push(CupertinoPageRoute<List<Community>>(
+        .push(CupertinoPageRoute<List<Memory>>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return Material(

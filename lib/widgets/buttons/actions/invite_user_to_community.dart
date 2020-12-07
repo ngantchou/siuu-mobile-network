@@ -8,21 +8,20 @@ import 'package:Siuu/services/user.dart';
 import 'package:Siuu/widgets/buttons/button.dart';
 import 'package:flutter/material.dart';
 
-class OBInviteUserToCommunityButton extends StatefulWidget {
+class OBInviteUserToMemoryButton extends StatefulWidget {
   final User user;
-  final Community community;
+  final Memory memory;
 
-  OBInviteUserToCommunityButton(
-      {@required this.user, @required this.community});
+  OBInviteUserToMemoryButton({@required this.user, @required this.memory});
 
   @override
-  OBInviteUserToCommunityButtonState createState() {
-    return OBInviteUserToCommunityButtonState();
+  OBInviteUserToMemoryButtonState createState() {
+    return OBInviteUserToMemoryButtonState();
   }
 }
 
-class OBInviteUserToCommunityButtonState
-    extends State<OBInviteUserToCommunityButton> {
+class OBInviteUserToMemoryButtonState
+    extends State<OBInviteUserToMemoryButton> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
@@ -58,25 +57,24 @@ class OBInviteUserToCommunityButtonState
             User latestUser = latestUserSnapshot.data;
             if (latestUser == null) return const SizedBox();
 
-            bool isCommunityMember =
-                latestUser.isMemberOfCommunity(widget.community);
-            bool isInvitedToCommunity =
-                latestUser.isInvitedToCommunity(widget.community);
+            bool isMemoryMember = latestUser.isMemberOfMemory(widget.memory);
+            bool isInvitedToMemory =
+                latestUser.isInvitedToMemory(widget.memory);
 
-            if (isCommunityMember) {
+            if (isMemoryMember) {
               return _buildAlreadyMemberButton();
             }
 
-            return isInvitedToCommunity
-                ? _buildUninviteUserToCommunityButton()
-                : _buildInviteUserToCommunityButton();
+            return isInvitedToMemory
+                ? _buildUninviteUserToMemoryButton()
+                : _buildInviteUserToMemoryButton();
           },
         );
       },
     );
   }
 
-  Widget _buildInviteUserToCommunityButton() {
+  Widget _buildInviteUserToMemoryButton() {
     return OBButton(
       size: OBButtonSize.small,
       type: OBButtonType.primary,
@@ -86,7 +84,7 @@ class OBInviteUserToCommunityButtonState
     );
   }
 
-  Widget _buildUninviteUserToCommunityButton() {
+  Widget _buildUninviteUserToMemoryButton() {
     return OBButton(
       size: OBButtonSize.small,
       type: OBButtonType.highlight,
@@ -110,8 +108,8 @@ class OBInviteUserToCommunityButtonState
   void _inviteUser() async {
     _setRequestInProgress(true);
     try {
-      await _userService.inviteUserToCommunity(
-          user: widget.user, community: widget.community);
+      await _userService.inviteUserToMemory(
+          user: widget.user, memory: widget.memory);
     } catch (e) {
       _onError(e);
     } finally {
@@ -122,8 +120,8 @@ class OBInviteUserToCommunityButtonState
   void _uninviteUser() async {
     _setRequestInProgress(true);
     try {
-      await _userService.uninviteUserFromCommunity(
-          user: widget.user, community: widget.community);
+      await _userService.uninviteUserFromMemory(
+          user: widget.user, memory: widget.memory);
     } catch (e) {
       _onError(e);
     } finally {
@@ -139,7 +137,9 @@ class OBInviteUserToCommunityButtonState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }

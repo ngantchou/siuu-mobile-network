@@ -16,24 +16,23 @@ import 'package:Siuu/widgets/tiles/community_selectable_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBSharePostWithCommunityPage extends StatefulWidget {
+class OBSharePostWithMemoryPage extends StatefulWidget {
   final OBNewPostData createPostData;
 
-  const OBSharePostWithCommunityPage({Key key, @required this.createPostData})
+  const OBSharePostWithMemoryPage({Key key, @required this.createPostData})
       : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
-    return OBSharePostWithCommunityPageState();
+    return OBSharePostWithMemoryPageState();
   }
 }
 
-class OBSharePostWithCommunityPageState
-    extends State<OBSharePostWithCommunityPage> {
+class OBSharePostWithMemoryPageState extends State<OBSharePostWithMemoryPage> {
   UserService _userService;
   LocalizationService _localizationService;
 
-  Community _chosenCommunity;
+  Memory _chosenMemory;
 
   @override
   void initState() {
@@ -59,16 +58,16 @@ class OBSharePostWithCommunityPageState
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
         Expanded(
-            child: OBHttpList<Community>(
+            child: OBHttpList<Memory>(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          separatorBuilder: _buildCommunitySeparator,
-          listItemBuilder: _buildCommunityItem,
-          searchResultListItemBuilder: _buildCommunityItem,
+          separatorBuilder: _buildMemorySeparator,
+          listItemBuilder: _buildMemoryItem,
+          searchResultListItemBuilder: _buildMemoryItem,
           listRefresher: _refreshCommunities,
           listOnScrollLoader: _loadMoreCommunities,
           listSearcher: _searchCommunities,
-          resourceSingularName: _localizationService.trans('community__community'),
-          resourcePluralName: _localizationService.trans('community__communities'),
+          resourceSingularName: _localizationService.trans('community__memory'),
+          resourcePluralName: _localizationService.trans('community__memories'),
         ))
       ],
     );
@@ -76,75 +75,74 @@ class OBSharePostWithCommunityPageState
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: _localizationService.trans('post__share_to_community'),
+      title: _localizationService.trans('post__share_to_memory'),
       trailing: OBButton(
         size: OBButtonSize.small,
         type: OBButtonType.primary,
-        isDisabled: _chosenCommunity == null,
+        isDisabled: _chosenMemory == null,
         onPressed: createPost,
-        child: Text(_localizationService.trans('post__share_community')),
+        child: Text(_localizationService.trans('post__share_memory')),
       ),
     );
   }
 
-  Widget _buildCommunityItem(BuildContext context, Community community) {
-    return OBCommunitySelectableTile(
-      community: community,
-      onCommunityPressed: _onCommunityPressed,
-      isSelected: community == _chosenCommunity,
+  Widget _buildMemoryItem(BuildContext context, Memory memory) {
+    return OBMemorySelectableTile(
+      memory: memory,
+      onMemoryPressed: _onMemoryPressed,
+      isSelected: memory == _chosenMemory,
     );
   }
 
-  Widget _buildCommunitySeparator(BuildContext context, int index) {
+  Widget _buildMemorySeparator(BuildContext context, int index) {
     return const SizedBox(
       height: 10,
     );
   }
 
   Future<void> createPost() async {
-    widget.createPostData.setCommunity(_chosenCommunity);
+    widget.createPostData.setMemory(_chosenMemory);
 
     Navigator.pop(context, widget.createPostData);
   }
 
-  Future<List<Community>> _refreshCommunities() async {
-    CommunitiesList communities = await _userService.getJoinedCommunities();
-    return communities.communities;
+  Future<List<Memory>> _refreshCommunities() async {
+    CommunitiesList memories = await _userService.getJoinedCommunities();
+    return memories.memories;
   }
 
-  Future<List<Community>> _loadMoreCommunities(
-      List<Community> communitiesList) async {
-    int offset = communitiesList.length;
+  Future<List<Memory>> _loadMoreCommunities(List<Memory> memoriesList) async {
+    int offset = memoriesList.length;
 
-    List<Community> moreCommunities = (await _userService.getJoinedCommunities(
+    List<Memory> moreCommunities = (await _userService.getJoinedCommunities(
       offset: offset,
     ))
-        .communities;
+        .memories;
     return moreCommunities;
   }
 
-  Future<List<Community>> _searchCommunities(String query) async {
+  Future<List<Memory>> _searchCommunities(String query) async {
     CommunitiesList results =
         await _userService.searchJoinedCommunities(query: query);
 
-    return results.communities;
+    return results.memories;
   }
 
-  void _onCommunityPressed(Community pressedCommunity) {
-    if (pressedCommunity == _chosenCommunity) {
-      _clearChosenCommunity();
+  void _onMemoryPressed(Memory pressedMemory) {
+    if (pressedMemory == _chosenMemory) {
+      _clearChosenMemory();
     } else {
-      _setChosenCommunity(pressedCommunity);
+      _setChosenMemory(pressedMemory);
     }
   }
 
-  void _clearChosenCommunity() {
-    _setChosenCommunity(null);
+  void _clearChosenMemory() {
+    _setChosenMemory(null);
   }
 
-  void _setChosenCommunity(Community chosenCommunity) {
+  void _setChosenMemory(Memory chosenMemory) {
     setState(() {
-      _chosenCommunity = chosenCommunity;
+      _chosenMemory = chosenMemory;
     });
   }
 }

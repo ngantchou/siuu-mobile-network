@@ -16,15 +16,16 @@ import '../../../../../../provider.dart';
 
 class OBModeratedObject extends StatelessWidget {
   final ModeratedObject moderatedObject;
-  final Community community;
+  final Memory memory;
 
   const OBModeratedObject(
-      {Key key, @required this.moderatedObject, this.community})
+      {Key key, @required this.moderatedObject, this.memory})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
@@ -50,7 +51,8 @@ class OBModeratedObject extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   OBTileGroupTitle(
-                    title: _localizationService.moderation__moderated_object_status,
+                    title: _localizationService
+                        .moderation__moderated_object_status,
                   ),
                   OBModeratedObjectStatusTile(
                     moderatedObject: moderatedObject,
@@ -64,7 +66,8 @@ class OBModeratedObject extends StatelessWidget {
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
                   OBTileGroupTitle(
-                    title: _localizationService.moderation__moderated_object_reports_count,
+                    title: _localizationService
+                        .moderation__moderated_object_reports_count,
                   ),
                   ListTile(
                       title: OBText(moderatedObject.reportsCount.toString())),
@@ -74,7 +77,10 @@ class OBModeratedObject extends StatelessWidget {
           ],
         ),
         OBTileGroupTitle(
-          title: community != null ? _localizationService.moderation__moderated_object_verified_by_staff : _localizationService.moderation__moderated_object_verified,
+          title: memory != null
+              ? _localizationService
+                  .moderation__moderated_object_verified_by_staff
+              : _localizationService.moderation__moderated_object_verified,
         ),
         StreamBuilder(
           stream: moderatedObject.updateSubject,
@@ -95,7 +101,11 @@ class OBModeratedObject extends StatelessWidget {
                     width: 10,
                   ),
                   OBText(
-                    moderatedObject.verified ? _localizationService.moderation__moderated_object_true_text : _localizationService.moderation__moderated_object_false_text,
+                    moderatedObject.verified
+                        ? _localizationService
+                            .moderation__moderated_object_true_text
+                        : _localizationService
+                            .moderation__moderated_object_false_text,
                   )
                 ],
               ),
@@ -104,7 +114,7 @@ class OBModeratedObject extends StatelessWidget {
         ),
         OBModeratedObjectActions(
           moderatedObject: moderatedObject,
-          community: community,
+          memory: memory,
         ),
         const SizedBox(
           height: 10,

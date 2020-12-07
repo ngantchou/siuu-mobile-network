@@ -24,7 +24,8 @@ class OBRejectFollowRequestButton extends StatefulWidget {
   }
 }
 
-class OBRejectFollowRequestButtonState extends State<OBRejectFollowRequestButton> {
+class OBRejectFollowRequestButtonState
+    extends State<OBRejectFollowRequestButton> {
   ToastService _toastService;
   LocalizationService _localizationService;
   UserService _userService;
@@ -65,11 +66,10 @@ class OBRejectFollowRequestButtonState extends State<OBRejectFollowRequestButton
 
     try {
       _followRequestActionOperation = CancelableOperation.fromFuture(
-          _userService
-              .rejectFollowRequestFromUser(widget.user));
+          _userService.rejectFollowRequestFromUser(widget.user));
       await _followRequestActionOperation.value;
-      if(widget.onFollowRequestRejected != null) widget.onFollowRequestRejected();
-
+      if (widget.onFollowRequestRejected != null)
+        widget.onFollowRequestRejected();
     } catch (error) {
       _onError(error);
       rethrow;

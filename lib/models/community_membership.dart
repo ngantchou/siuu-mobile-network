@@ -1,22 +1,22 @@
-class CommunityMembership {
+class MemoryMembership {
   final int id;
   final int userId;
-  final int communityId;
+  final int memoryId;
   bool isAdministrator;
   bool isModerator;
 
-  CommunityMembership(
+  MemoryMembership(
       {this.id,
       this.userId,
-      this.communityId,
+      this.memoryId,
       this.isAdministrator,
       this.isModerator});
 
-  factory CommunityMembership.fromJSON(Map<String, dynamic> parsedJson) {
+  factory MemoryMembership.fromJSON(Map<String, dynamic> parsedJson) {
     if (parsedJson == null) return null;
-    return CommunityMembership(
+    return MemoryMembership(
         id: parsedJson['id'],
-        communityId: parsedJson['community_id'],
+        memoryId: parsedJson['community_id'],
         userId: parsedJson['user_id'],
         isAdministrator: parsedJson['is_administrator'],
         isModerator: parsedJson['is_moderator']);
@@ -24,11 +24,11 @@ class CommunityMembership {
 
   Map<String, dynamic> toJson() {
     return {
-    'id': id,
-    'user_id': userId,
-    'community_id': communityId,
-    'is_administrator': isAdministrator,
-    'is_moderator': isModerator
+      'id': id,
+      'user_id': userId,
+      'community_id': memoryId,
+      'is_administrator': isAdministrator,
+      'is_moderator': isModerator
     };
   }
 

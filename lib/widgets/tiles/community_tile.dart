@@ -12,44 +12,44 @@ import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tinycolor/tinycolor.dart';
 
-class OBCommunityTile extends StatelessWidget {
+class OBMemoryTile extends StatelessWidget {
   static const COVER_PLACEHOLDER = 'assets/images/fallbacks/cover-fallback.jpg';
 
   static const double smallSizeHeight = 60;
   static const double normalSizeHeight = 80;
 
-  final Community community;
-  final ValueChanged<Community> onCommunityTilePressed;
-  final ValueChanged<Community> onCommunityTileDeleted;
-  final OBCommunityTileSize size;
+  final Memory memory;
+  final ValueChanged<Memory> onMemoryTilePressed;
+  final ValueChanged<Memory> onMemoryTileDeleted;
+  final OBMemoryTileSize size;
   final Widget trailing;
 
-  const OBCommunityTile(this.community,
-      {this.onCommunityTilePressed,
-      this.onCommunityTileDeleted,
+  const OBMemoryTile(this.memory,
+      {this.onMemoryTilePressed,
+      this.onMemoryTileDeleted,
       Key key,
-      this.size = OBCommunityTileSize.normal, this.trailing})
+      this.size = OBMemoryTileSize.normal,
+      this.trailing})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    String communityHexColor = community.color;
-    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    String memoryHexColor = memory.color;
+    LocalizationService localizationService =
+        OpenbookProvider.of(context).localizationService;
     ThemeService themeService = OpenbookProvider.of(context).themeService;
     ThemeValueParserService themeValueParserService =
         OpenbookProvider.of(context).themeValueParserService;
-    Color communityColor =
-        themeValueParserService.parseColor(communityHexColor);
+    Color memoryColor = themeValueParserService.parseColor(memoryHexColor);
     OBTheme theme = themeService.getActiveTheme();
     Color textColor;
 
     BoxDecoration containerDecoration;
     BorderRadius containerBorderRadius = BorderRadius.circular(10);
-    bool isCommunityColorDark =
-        themeValueParserService.isDarkColor(communityColor);
-    bool communityHasCover = community.hasCover();
+    bool isMemoryColorDark = themeValueParserService.isDarkColor(memoryColor);
+    bool memoryHasCover = memory.hasCover();
 
-    if (communityHasCover) {
+    if (memoryHasCover) {
       textColor = Colors.white;
       containerDecoration = BoxDecoration(
           borderRadius: containerBorderRadius,
@@ -57,53 +57,55 @@ class OBCommunityTile extends StatelessWidget {
               fit: BoxFit.cover,
               colorFilter: new ColorFilter.mode(
                   Colors.black.withOpacity(0.60), BlendMode.darken),
-              image: AdvancedNetworkImage(community.cover,
+              image: AdvancedNetworkImage(memory.cover,
                   useDiskCache: true,
                   fallbackAssetImage: COVER_PLACEHOLDER,
                   retryLimit: 0)));
     } else {
-      textColor = isCommunityColorDark ? Colors.white : Colors.black;
-      bool communityColorIsNearWhite = communityColor.computeLuminance() > 0.9;
+      textColor = isMemoryColorDark ? Colors.white : Colors.black;
+      bool memoryColorIsNearWhite = memoryColor.computeLuminance() > 0.9;
 
       containerDecoration = BoxDecoration(
-        color: communityColorIsNearWhite
-            ? TinyColor(communityColor).darken(5).color
-            : TinyColor(communityColor).lighten(10).color,
+        color: memoryColorIsNearWhite
+            ? TinyColor(memoryColor).darken(5).color
+            : TinyColor(memoryColor).lighten(10).color,
         borderRadius: containerBorderRadius,
       );
     }
 
-    bool isNormalSize = size == OBCommunityTileSize.normal;
+    bool isNormalSize = size == OBMemoryTileSize.normal;
 
-    Widget communityAvatar;
-    if (community.hasAvatar()) {
-      communityAvatar = OBAvatar(
-        avatarUrl: community.avatar,
+    Widget memoryAvatar;
+    if (memory.hasAvatar()) {
+      memoryAvatar = OBAvatar(
+        avatarUrl: memory.avatar,
         size: isNormalSize ? OBAvatarSize.medium : OBAvatarSize.small,
       );
     } else {
-      Color avatarColor = communityHasCover
-          ? communityColor
-          : (isCommunityColorDark
-              ? TinyColor(communityColor).lighten(5).color
-              : communityColor);
-      communityAvatar = OBLetterAvatar(
-        letter: community.name[0],
+      Color avatarColor = memoryHasCover
+          ? memoryColor
+          : (isMemoryColorDark
+              ? TinyColor(memoryColor).lighten(5).color
+              : memoryColor);
+      memoryAvatar = OBLetterAvatar(
+        letter: memory.name[0],
         color: avatarColor,
         labelColor: textColor,
         size: isNormalSize ? OBAvatarSize.medium : OBAvatarSize.small,
       );
     }
 
-    String userAdjective = community.userAdjective ?? localizationService.community__member_capitalized;
-    String usersAdjective = community.usersAdjective ?? localizationService.community__members_capitalized;
-    String membersPrettyCount = community.membersCount != null
-        ? getPrettyCount(community.membersCount, localizationService)
+    String userAdjective = memory.userAdjective ??
+        localizationService.community__member_capitalized;
+    String usersAdjective = memory.usersAdjective ??
+        localizationService.community__members_capitalized;
+    String membersPrettyCount = memory.membersCount != null
+        ? getPrettyCount(memory.membersCount, localizationService)
         : null;
     String finalAdjective =
-        community.membersCount == 1 ? userAdjective : usersAdjective;
+        memory.membersCount == 1 ? userAdjective : usersAdjective;
 
-    Widget communityTile = Container(
+    Widget memoryTile = Container(
       height: isNormalSize ? normalSizeHeight : smallSizeHeight,
       decoration: containerDecoration,
       child: Row(
@@ -111,21 +113,21 @@ class OBCommunityTile extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: communityAvatar,
+            child: memoryAvatar,
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('c/' + community.name,
+                Text('c/' + memory.name,
                     style: TextStyle(
                       color: textColor,
                       fontSize: 16,
                     ),
                     overflow: TextOverflow.ellipsis),
                 Text(
-                  community.title,
+                  memory.title,
                   style: TextStyle(
                       color: textColor,
                       fontSize: 18,
@@ -142,48 +144,51 @@ class OBCommunityTile extends StatelessWidget {
               ],
             ),
           ),
-          trailing == null ? SizedBox(
-            width: 20,
-          ) : Padding(
-            child: trailing,
-            padding: const EdgeInsets.all(20),
-          )
+          trailing == null
+              ? SizedBox(
+                  width: 20,
+                )
+              : Padding(
+                  child: trailing,
+                  padding: const EdgeInsets.all(20),
+                )
         ],
       ),
     );
 
-    if (onCommunityTileDeleted != null && onCommunityTilePressed != null) {
-      communityTile = Slidable(
+    if (onMemoryTileDeleted != null && onMemoryTilePressed != null) {
+      memoryTile = Slidable(
         delegate: new SlidableDrawerDelegate(),
         actionExtentRatio: 0.25,
         child: GestureDetector(
           onTap: () {
-            onCommunityTilePressed(community);
+            onMemoryTilePressed(memory);
           },
-          child: communityTile,
+          child: memoryTile,
         ),
         secondaryActions: <Widget>[
           new IconSlideAction(
               caption: localizationService.community__tile_delete,
-              foregroundColor: themeValueParserService.parseColor(theme.primaryTextColor),
+              foregroundColor:
+                  themeValueParserService.parseColor(theme.primaryTextColor),
               color: Colors.transparent,
               icon: Icons.delete,
               onTap: () {
-                onCommunityTileDeleted(community);
+                onMemoryTileDeleted(memory);
               }),
         ],
       );
-    } else if (onCommunityTilePressed != null) {
-      communityTile = GestureDetector(
+    } else if (onMemoryTilePressed != null) {
+      memoryTile = GestureDetector(
         onTap: () {
-          onCommunityTilePressed(community);
+          onMemoryTilePressed(memory);
         },
-        child: communityTile,
+        child: memoryTile,
       );
     }
 
-    return communityTile;
+    return memoryTile;
   }
 }
 
-enum OBCommunityTileSize { normal, small }
+enum OBMemoryTileSize { normal, small }

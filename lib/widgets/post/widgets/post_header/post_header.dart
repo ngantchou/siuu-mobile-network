@@ -12,34 +12,34 @@ class OBPostHeader extends StatelessWidget {
   final ValueChanged<Post> onPostReported;
   final bool hasActions;
   final OBPostDisplayContext displayContext;
-  final Function onCommunityExcluded;
-  final Function onUndoCommunityExcluded;
-  final ValueChanged<Community> onPostCommunityExcludedFromProfilePosts;
+  final Function onMemoryExcluded;
+  final Function onUndoMemoryExcluded;
+  final ValueChanged<Memory> onPostMemoryExcludedFromProfilePosts;
 
   const OBPostHeader({
     Key key,
     this.onPostDeleted,
     this.post,
     this.onPostReported,
-    this.onCommunityExcluded,
-    this.onUndoCommunityExcluded,
+    this.onMemoryExcluded,
+    this.onUndoMemoryExcluded,
     this.hasActions = true,
     this.displayContext = OBPostDisplayContext.timelinePosts,
-    this.onPostCommunityExcludedFromProfilePosts,
+    this.onPostMemoryExcludedFromProfilePosts,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return post.isCommunityPost() &&
-            displayContext != OBPostDisplayContext.communityPosts
-        ? OBCommunityPostHeader(post,
+    return post.isMemoryPost() &&
+            displayContext != OBPostDisplayContext.memoryPosts
+        ? OBMemoryPostHeader(post,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,
             hasActions: hasActions,
-            onCommunityExcluded: onCommunityExcluded,
-            onUndoCommunityExcluded: onUndoCommunityExcluded,
-            onPostCommunityExcludedFromProfilePosts:
-                onPostCommunityExcludedFromProfilePosts,
+            onMemoryExcluded: onMemoryExcluded,
+            onUndoMemoryExcluded: onUndoMemoryExcluded,
+            onPostMemoryExcludedFromProfilePosts:
+                onPostMemoryExcludedFromProfilePosts,
             displayContext: displayContext)
         : OBUserPostHeader(post,
             onPostDeleted: onPostDeleted,

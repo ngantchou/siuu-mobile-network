@@ -86,14 +86,14 @@ class OBSharePostPageState extends State<OBSharePostPage> {
 
               if (latestUser.isMemberOfCommunities) {
                 shareToTiles.add(ListTile(
-                  leading: const OBIcon(OBIcons.communities),
+                  leading: const OBIcon(OBIcons.memories),
                   title: OBText(_localizationService
                       .trans('post__share_community_title')),
                   subtitle: OBText(
                     _localizationService.trans('post__share_community_desc'),
                     style: shareToTilesSubtitleStyle,
                   ),
-                  onTap: _onWantsToSharePostToCommunity,
+                  onTap: _onWantsToSharePostToMemory,
                 ));
               }
 
@@ -139,9 +139,9 @@ class OBSharePostPageState extends State<OBSharePostPage> {
     if (createPostData != null) Navigator.pop(context, createPostData);
   }
 
-  void _onWantsToSharePostToCommunity() async {
+  void _onWantsToSharePostToMemory() async {
     OBNewPostData createPostData =
-        await _navigationService.navigateToSharePostWithCommunity(
+        await _navigationService.navigateToSharePostWithMemory(
             context: context, createPostData: widget.createPostData);
     if (createPostData != null) Navigator.pop(context, createPostData);
   }

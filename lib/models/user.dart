@@ -50,8 +50,8 @@ class User extends UpdatableModel<User> {
   bool isMemberOfCommunities;
   CirclesList connectedCircles;
   FollowsListsList followLists;
-  CommunityMembershipList communitiesMemberships;
-  CommunityInviteList communitiesInvites;
+  MemoryMembershipList memoriesMemberships;
+  MemoryInviteList memoriesInvites;
 
   static final navigationUsersFactory = UserFactory(
       cache:
@@ -102,7 +102,7 @@ class User extends UpdatableModel<User> {
       'unread_notifications_count': unreadNotificationsCount,
       'posts_count': postsCount,
       'invite_count': inviteCount,
-      'pending_communities_moderated_objects_count':
+      'pending_memories_moderated_objects_count':
           pendingCommunitiesModeratedObjectsCount,
       'active_moderation_penalties_count': activeModerationPenaltiesCount,
       'are_guidelines_accepted': areGuidelinesAccepted,
@@ -117,18 +117,18 @@ class User extends UpdatableModel<User> {
       'is_fully_connected': isFullyConnected,
       'is_pending_connection_confirmation': isPendingConnectionConfirmation,
       'is_pending_follow_request_approval': isPendingFollowRequestApproval,
-      'is_member_of_communities': isMemberOfCommunities,
+      'is_member_of_memories': isMemberOfCommunities,
       'connected_circles': connectedCircles?.circles
           ?.map((Circle circle) => circle.toJson())
           ?.toList(),
       'follow_lists': followLists?.lists
           ?.map((FollowsList followList) => followList.toJson())
           ?.toList(),
-      'communities_memberships': communitiesMemberships?.communityMemberships
-          ?.map((CommunityMembership membership) => membership.toJson())
+      'memories_memberships': memoriesMemberships?.memoryMemberships
+          ?.map((MemoryMembership membership) => membership.toJson())
           ?.toList(),
-      'communities_invites': communitiesInvites?.communityInvites
-          ?.map((CommunityInvite invite) => invite.toJson())
+      'memories_invites': memoriesInvites?.memoryInvites
+          ?.map((MemoryInvite invite) => invite.toJson())
           ?.toList(),
     };
   }
@@ -175,8 +175,8 @@ class User extends UpdatableModel<User> {
       this.isPendingFollowRequestApproval,
       this.connectedCircles,
       this.followLists,
-      this.communitiesMemberships,
-      this.communitiesInvites,
+      this.memoriesMemberships,
+      this.memoriesInvites,
       this.activeModerationPenaltiesCount,
       this.pendingCommunitiesModeratedObjectsCount,
       this.areGuidelinesAccepted});
@@ -209,9 +209,9 @@ class User extends UpdatableModel<User> {
     }
     if (json.containsKey('followers_count'))
       followersCount = json['followers_count'];
-    if (json.containsKey('pending_communities_moderated_objects_count'))
+    if (json.containsKey('pending_memories_moderated_objects_count'))
       pendingCommunitiesModeratedObjectsCount =
-          json['pending_communities_moderated_objects_count'];
+          json['pending_memories_moderated_objects_count'];
     if (json.containsKey('active_moderation_penalties_count'))
       activeModerationPenaltiesCount =
           json['active_moderation_penalties_count'];
@@ -226,7 +226,8 @@ class User extends UpdatableModel<User> {
           json['are_new_post_notifications_enabled'];
     if (json.containsKey('is_following')) isFollowing = json['is_following'];
     if (json.containsKey('is_followed')) isFollowed = json['is_followed'];
-    if (json.containsKey('is_follow_requested')) isFollowRequested = json['is_follow_requested'];
+    if (json.containsKey('is_follow_requested'))
+      isFollowRequested = json['is_follow_requested'];
     if (json.containsKey('is_connected')) isConnected = json['is_connected'];
     if (json.containsKey('is_global_moderator'))
       isGlobalModerator = json['is_global_moderator'];
@@ -247,20 +248,20 @@ class User extends UpdatableModel<User> {
       connectedCircles =
           navigationUsersFactory.parseCircles(json['connected_circles']);
     }
-    if (json.containsKey('is_member_of_communities')) {
-      isMemberOfCommunities = json['is_member_of_communities'];
+    if (json.containsKey('is_member_of_memories')) {
+      isMemberOfCommunities = json['is_member_of_memories'];
     }
     if (json.containsKey('follow_lists')) {
       followLists =
           navigationUsersFactory.parseFollowsLists(json['follow_lists']);
     }
-    if (json.containsKey('communities_memberships')) {
-      communitiesMemberships = navigationUsersFactory
-          .parseMemberships(json['communities_memberships']);
+    if (json.containsKey('memories_memberships')) {
+      memoriesMemberships =
+          navigationUsersFactory.parseMemberships(json['memories_memberships']);
     }
-    if (json.containsKey('communities_invites')) {
-      communitiesInvites =
-          navigationUsersFactory.parseInvites(json['communities_invites']);
+    if (json.containsKey('memories_invites')) {
+      memoriesInvites =
+          navigationUsersFactory.parseInvites(json['memories_invites']);
     }
 
     if (json.containsKey('visibility')) {
@@ -312,8 +313,8 @@ class User extends UpdatableModel<User> {
     return this.profile.followersCountVisible;
   }
 
-  bool getProfileCommunityPostsVisible() {
-    return this.profile.communityPostsVisible;
+  bool getProfileMemoryPostsVisible() {
+    return this.profile.memoryPostsVisible;
   }
 
   String getProfileUrl() {
@@ -350,52 +351,52 @@ class User extends UpdatableModel<User> {
     return followLists != null && followLists.lists.length > 0;
   }
 
-  bool isAdministratorOfCommunity(Community community) {
-    CommunityMembership membership = getMembershipForCommunity(community);
+  bool isAdministratorOfMemory(Memory memory) {
+    MemoryMembership membership = getMembershipForMemory(memory);
     if (membership == null) return false;
     return membership.isAdministrator;
   }
 
-  bool isModeratorOfCommunity(Community community) {
-    CommunityMembership membership = getMembershipForCommunity(community);
+  bool isModeratorOfMemory(Memory memory) {
+    MemoryMembership membership = getMembershipForMemory(memory);
     if (membership == null) return false;
     return membership.isModerator;
   }
 
-  bool isMemberOfCommunity(Community community) {
-    return getMembershipForCommunity(community) != null;
+  bool isMemberOfMemory(Memory memory) {
+    return getMembershipForMemory(memory) != null;
   }
 
-  CommunityMembership getMembershipForCommunity(Community community) {
-    if (communitiesMemberships == null) return null;
+  MemoryMembership getMembershipForMemory(Memory memory) {
+    if (memoriesMemberships == null) return null;
 
-    int membershipIndex = communitiesMemberships.communityMemberships
-        .indexWhere((CommunityMembership communityMembership) {
-      return communityMembership.userId == this.id &&
-          communityMembership.communityId == community.id;
+    int membershipIndex = memoriesMemberships.memoryMemberships
+        .indexWhere((MemoryMembership memoryMembership) {
+      return memoryMembership.userId == this.id &&
+          memoryMembership.memoryId == memory.id;
     });
 
     if (membershipIndex < 0) return null;
 
-    return communitiesMemberships.communityMemberships[membershipIndex];
+    return memoriesMemberships.memoryMemberships[membershipIndex];
   }
 
-  bool isInvitedToCommunity(Community community) {
-    CommunityInvite invite = getInviteForCommunity(community);
+  bool isInvitedToMemory(Memory memory) {
+    MemoryInvite invite = getInviteForMemory(memory);
     return invite != null;
   }
 
-  CommunityInvite getInviteForCommunity(Community community) {
-    if (communitiesInvites == null) return null;
+  MemoryInvite getInviteForMemory(Memory memory) {
+    if (memoriesInvites == null) return null;
 
-    int inviteIndex = communitiesInvites.communityInvites
-        .indexWhere((CommunityInvite communityInvite) {
-      return communityInvite.communityId == community.id;
+    int inviteIndex =
+        memoriesInvites.memoryInvites.indexWhere((MemoryInvite memoryInvite) {
+      return memoryInvite.memoryId == memory.id;
     });
 
     if (inviteIndex < 0) return null;
 
-    return communitiesInvites.communityInvites[inviteIndex];
+    return memoriesInvites.memoryInvites[inviteIndex];
   }
 
   bool hasUnreadNotifications() {
@@ -467,11 +468,11 @@ class User extends UpdatableModel<User> {
     User loggedInUser = this;
     bool _canDisableOrEnableComments = false;
 
-    if (post.hasCommunity()) {
-      Community postCommunity = post.community;
+    if (post.hasMemory()) {
+      Memory postMemory = post.memory;
 
-      if (postCommunity.isAdministrator(loggedInUser) ||
-          postCommunity.isModerator(loggedInUser)) {
+      if (postMemory.isAdministrator(loggedInUser) ||
+          postMemory.isModerator(loggedInUser)) {
         _canDisableOrEnableComments = true;
       }
     }
@@ -482,112 +483,109 @@ class User extends UpdatableModel<User> {
     User loggedInUser = this;
     bool _canCloseOrOpenPost = false;
 
-    if (post.hasCommunity()) {
-      Community postCommunity = post.community;
+    if (post.hasMemory()) {
+      Memory postMemory = post.memory;
 
-      if (postCommunity.isAdministrator(loggedInUser) ||
-          postCommunity.isModerator(loggedInUser)) {
+      if (postMemory.isAdministrator(loggedInUser) ||
+          postMemory.isModerator(loggedInUser)) {
         _canCloseOrOpenPost = true;
       }
     }
     return _canCloseOrOpenPost;
   }
 
-  bool canCloseOrOpenPostsInCommunity(Community community) {
+  bool canCloseOrOpenPostsInMemory(Memory memory) {
     User loggedInUser = this;
     bool _canCloseOrOpenPost = false;
 
-    if (community.isAdministrator(loggedInUser) ||
-        community.isModerator(loggedInUser)) {
+    if (memory.isAdministrator(loggedInUser) ||
+        memory.isModerator(loggedInUser)) {
       _canCloseOrOpenPost = true;
     }
 
     return _canCloseOrOpenPost;
   }
 
-  bool canBanOrUnbanUsersInCommunity(Community community) {
+  bool canBanOrUnbanUsersInMemory(Memory memory) {
     User loggedInUser = this;
     bool _canBanOrUnban = false;
 
-    if (community.isAdministrator(loggedInUser) ||
-        community.isModerator(loggedInUser)) {
+    if (memory.isAdministrator(loggedInUser) ||
+        memory.isModerator(loggedInUser)) {
       _canBanOrUnban = true;
     }
 
     return _canBanOrUnban;
   }
 
-  bool isCreatorOfCommunity(Community community) {
-    return community.isCreator;
+  bool isCreatorOfMemory(Memory memory) {
+    return memory.isCreator;
   }
 
-  bool canChangeDetailsOfCommunity(Community community) {
+  bool canChangeDetailsOfMemory(Memory memory) {
     User loggedInUser = this;
     bool _canChangeDetails = false;
 
-    if (community.isAdministrator(loggedInUser)) {
+    if (memory.isAdministrator(loggedInUser)) {
       _canChangeDetails = true;
     }
 
     return _canChangeDetails;
   }
 
-  bool canAddOrRemoveModeratorsInCommunity(Community community) {
+  bool canAddOrRemoveModeratorsInMemory(Memory memory) {
     User loggedInUser = this;
     bool _canAddOrRemoveMods = false;
 
-    if (community.isAdministrator(loggedInUser)) {
+    if (memory.isAdministrator(loggedInUser)) {
       _canAddOrRemoveMods = true;
     }
 
     return _canAddOrRemoveMods;
   }
 
-  bool canAddOrRemoveAdministratorsInCommunity(Community community) {
-    return community.isCreator;
+  bool canAddOrRemoveAdministratorsInMemory(Memory memory) {
+    return memory.isCreator;
   }
 
   bool canCommentOnPostWithDisabledComments(Post post) {
     User loggedInUser = this;
     bool _canComment = false;
 
-    if (post.hasCommunity()) {
-      Community postCommunity = post.community;
+    if (post.hasMemory()) {
+      Memory postMemory = post.memory;
 
-      if (postCommunity.isAdministrator(loggedInUser) ||
-          postCommunity.isModerator(loggedInUser)) {
+      if (postMemory.isAdministrator(loggedInUser) ||
+          postMemory.isModerator(loggedInUser)) {
         _canComment = true;
       }
     }
     return _canComment;
   }
 
-  bool isStaffForCommunity(Community community) {
+  bool isStaffForMemory(Memory memory) {
     User loggedInUser = this;
-    bool loggedInUserIsCommunityAdministrator = false;
-    bool loggedInUserIsCommunityModerator = false;
+    bool loggedInUserIsMemoryAdministrator = false;
+    bool loggedInUserIsMemoryModerator = false;
 
-    loggedInUserIsCommunityAdministrator =
-        community.isAdministrator(loggedInUser);
+    loggedInUserIsMemoryAdministrator = memory.isAdministrator(loggedInUser);
 
-    loggedInUserIsCommunityModerator = community.isModerator(loggedInUser);
+    loggedInUserIsMemoryModerator = memory.isModerator(loggedInUser);
 
-    return loggedInUserIsCommunityModerator ||
-        loggedInUserIsCommunityAdministrator;
+    return loggedInUserIsMemoryModerator || loggedInUserIsMemoryAdministrator;
   }
 
   bool canDeletePost(Post post) {
     User loggedInUser = this;
     bool loggedInUserIsPostCreator = loggedInUser.id == post.getCreatorId();
     bool _canDelete = false;
-    bool loggedInUserIsStaffForCommunity = false;
+    bool loggedInUserIsStaffForMemory = false;
 
-    if (post.hasCommunity()) {
-      loggedInUserIsStaffForCommunity =
-          this.isStaffForCommunity(post.community);
+    if (post.hasMemory()) {
+      loggedInUserIsStaffForMemory = this.isStaffForMemory(post.memory);
     }
 
-    if (loggedInUserIsPostCreator || loggedInUserIsStaffForCommunity) {
+    if (loggedInUserIsPostCreator || loggedInUserIsStaffForMemory) {
       _canDelete = true;
     }
 
@@ -602,16 +600,16 @@ class User extends UpdatableModel<User> {
   }
 
   bool canTranslatePostComment(PostComment postComment, Post post) {
-    if ((!post.hasCommunity() && post.isEncircledPost()) ||
-        language?.code == null) return false;
+    if ((!post.hasMemory() && post.isEncircledPost()) || language?.code == null)
+      return false;
 
     return postComment.hasLanguage() &&
         postComment.getLanguage().code != language.code;
   }
 
   bool canTranslatePost(Post post) {
-    if ((!post.hasCommunity() && post.isEncircledPost()) ||
-        language?.code == null) return false;
+    if ((!post.hasMemory() && post.isEncircledPost()) || language?.code == null)
+      return false;
 
     return post.hasLanguage() && post.getLanguage().code != language.code;
   }
@@ -619,17 +617,17 @@ class User extends UpdatableModel<User> {
   bool canEditPostComment(PostComment postComment, Post post) {
     User loggedInUser = this;
     User postCommenter = postComment.commenter;
-    bool loggedInUserIsStaffForCommunity = false;
+    bool loggedInUserIsStaffForMemory = false;
     bool loggedInUserIsCommenter = loggedInUser.id == postCommenter.id;
     bool loggedInUserIsCommenterForOpenPost =
         loggedInUserIsCommenter && !post.isClosed && post.areCommentsEnabled;
 
-    if (post.hasCommunity()) {
-      loggedInUserIsStaffForCommunity = isStaffForCommunity(post.community);
+    if (post.hasMemory()) {
+      loggedInUserIsStaffForMemory = isStaffForMemory(post.memory);
     }
 
     return loggedInUserIsCommenterForOpenPost ||
-        (loggedInUserIsStaffForCommunity && loggedInUserIsCommenter);
+        (loggedInUserIsStaffForMemory && loggedInUserIsCommenter);
   }
 
   bool canReportPostComment(PostComment postComment) {
@@ -647,20 +645,19 @@ class User extends UpdatableModel<User> {
     User loggedInUser = this;
     User postCommenter = postComment.commenter;
     bool loggedInUserIsPostCreator = loggedInUser.id == post.getCreatorId();
-    bool userIsCreatorOfNonCommunityPost =
-        loggedInUserIsPostCreator && !post.hasCommunity();
-    bool loggedInUserIsStaffForCommunity = false;
+    bool userIsCreatorOfNonMemoryPost =
+        loggedInUserIsPostCreator && !post.hasMemory();
+    bool loggedInUserIsStaffForMemory = false;
     bool loggedInUserIsCommenterForOpenPost =
         (loggedInUser.id == postCommenter.id) && !post.isClosed;
 
-    if (post.hasCommunity()) {
-      loggedInUserIsStaffForCommunity =
-          this.isStaffForCommunity(post.community);
+    if (post.hasMemory()) {
+      loggedInUserIsStaffForMemory = this.isStaffForMemory(post.memory);
     }
 
     return (loggedInUserIsCommenterForOpenPost ||
-        loggedInUserIsStaffForCommunity ||
-        userIsCreatorOfNonCommunityPost);
+        loggedInUserIsStaffForMemory ||
+        userIsCreatorOfNonMemoryPost);
   }
 
   bool canBlockOrUnblockUser(User user) {
@@ -684,7 +681,7 @@ class UserFactory extends UpdatableModelFactory<User> {
         inviteCount: json['invite_count'],
         unreadNotificationsCount: json['unread_notifications_count'],
         pendingCommunitiesModeratedObjectsCount:
-            json['pending_communities_moderated_objects_count'],
+            json['pending_memories_moderated_objects_count'],
         activeModerationPenaltiesCount:
             json['active_moderation_penalties_count'],
         email: json['email'],
@@ -702,27 +699,26 @@ class UserFactory extends UpdatableModelFactory<User> {
         isBlocked: json['is_blocked'],
         isReported: json['is_reported'],
         isFullyConnected: json['is_fully_connected'],
-        isMemberOfCommunities: json['is_member_of_communities'],
+        isMemberOfCommunities: json['is_member_of_memories'],
         isPendingConnectionConfirmation:
             json['is_pending_connection_confirmation'],
         isPendingFollowRequestApproval:
             json['is_pending_follow_request_approval'],
         profile: parseUserProfile(json['profile']),
         connectedCircles: parseCircles(json['connected_circles']),
-        communitiesMemberships:
-            parseMemberships(json['communities_memberships']),
-        communitiesInvites: parseInvites(json['communities_invites']),
+        memoriesMemberships: parseMemberships(json['memories_memberships']),
+        memoriesInvites: parseInvites(json['memories_invites']),
         followLists: parseFollowsLists(json['follow_lists']));
   }
 
-  CommunityMembershipList parseMemberships(List membershipsData) {
+  MemoryMembershipList parseMemberships(List membershipsData) {
     if (membershipsData == null) return null;
-    return CommunityMembershipList.fromJson(membershipsData);
+    return MemoryMembershipList.fromJson(membershipsData);
   }
 
-  CommunityInviteList parseInvites(List invitesData) {
+  MemoryInviteList parseInvites(List invitesData) {
     if (invitesData == null) return null;
-    return CommunityInviteList.fromJson(invitesData);
+    return MemoryInviteList.fromJson(invitesData);
   }
 
   UserProfile parseUserProfile(Map profile) {

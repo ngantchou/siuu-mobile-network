@@ -3,19 +3,19 @@ import 'package:Siuu/widgets/theming/actionable_smart_text.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityDescription extends StatelessWidget {
-  final Community community;
+class OBMemoryDescription extends StatelessWidget {
+  final Memory memory;
 
-  const OBCommunityDescription(this.community);
+  const OBMemoryDescription(this.memory);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: community.updateSubject,
-      initialData: community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        var community = snapshot.data;
-        var description = community?.description;
+      stream: memory.updateSubject,
+      initialData: memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        var memory = snapshot.data;
+        var description = memory?.description;
 
         if (description == null) return const SizedBox();
 

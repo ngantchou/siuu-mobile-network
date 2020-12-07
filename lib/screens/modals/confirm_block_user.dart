@@ -14,7 +14,8 @@ import 'package:flutter/cupertino.dart';
 class OBConfirmBlockUserModal<T> extends StatefulWidget {
   final User user;
 
-  const OBConfirmBlockUserModal({Key key, @required this.user}) : super(key: key);
+  const OBConfirmBlockUserModal({Key key, @required this.user})
+      : super(key: key);
 
   @override
   OBConfirmBlockUserModalState createState() {
@@ -49,7 +50,8 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
     }
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: _localizationService.user__confirm_block_user_title),
+        navigationBar: OBThemedNavigationBar(
+            title: _localizationService.user__confirm_block_user_title),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
@@ -70,7 +72,8 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
                       height: 20,
                     ),
                     OBText(
-                      _localizationService.user__confirm_block_user_question(username),
+                      _localizationService
+                          .user__confirm_block_user_question(username),
                       textAlign: TextAlign.center,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
@@ -78,8 +81,7 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
                     const SizedBox(
                       height: 40,
                     ),
-                    OBText(
-                        _localizationService.user__confirm_block_user_info)
+                    OBText(_localizationService.user__confirm_block_user_info)
                   ],
                 ),
               ),
@@ -92,7 +94,8 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text(_localizationService.user__confirm_block_user_no),
+                      child: Text(
+                          _localizationService.user__confirm_block_user_no),
                       onPressed: _onCancel,
                     ),
                   ),
@@ -102,7 +105,8 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
                   Expanded(
                     child: OBButton(
                       size: OBButtonSize.large,
-                      child: Text(_localizationService.user__confirm_block_user_yes),
+                      child: Text(
+                          _localizationService.user__confirm_block_user_yes),
                       onPressed: _onConfirm,
                       isLoading: _confirmationInProgress,
                     ),
@@ -119,7 +123,9 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
     try {
       await _userService.blockUser(widget.user);
       Navigator.of(context).pop(true);
-      _toastService.success(message: _localizationService.user__confirm_block_user_blocked, context: context);
+      _toastService.success(
+          message: _localizationService.user__confirm_block_user_blocked,
+          context: context);
     } catch (error) {
       _onError(error);
     } finally {
@@ -135,7 +141,8 @@ class OBConfirmBlockUserModalState extends State<OBConfirmBlockUserModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

@@ -49,7 +49,7 @@ class OBModeratedObjectsFiltersModalState
     OBModeratedObjectsFilters currentFilters =
         widget.moderatedObjectsPageController.getFilters();
 
-    if (widget.moderatedObjectsPageController.hasCommunity()) {
+    if (widget.moderatedObjectsPageController.hasMemory()) {
       _types = [
         ModeratedObjectType.post,
         ModeratedObjectType.postComment,
@@ -58,7 +58,7 @@ class OBModeratedObjectsFiltersModalState
       _types = [
         ModeratedObjectType.post,
         ModeratedObjectType.postComment,
-        ModeratedObjectType.community,
+        ModeratedObjectType.memory,
         ModeratedObjectType.user,
         ModeratedObjectType.hashtag,
       ];
@@ -91,7 +91,8 @@ class OBModeratedObjectsFiltersModalState
                     child: OBButton(
                       size: OBButtonSize.large,
                       type: OBButtonType.highlight,
-                      child: Text(_localizationService.trans('moderation__filters_reset')),
+                      child: Text(_localizationService
+                          .trans('moderation__filters_reset')),
                       onPressed: _onWantsToResetFilters,
                     ),
                   ),
@@ -127,8 +128,7 @@ class OBModeratedObjectsFiltersModalState
     return ListView(
       children: <Widget>[
         OBTileGroupTitle(
-          title: _localizationService.trans('moderation__filters_type')
-        ),
+            title: _localizationService.trans('moderation__filters_type')),
         ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: _buildTypeListTile,
@@ -136,8 +136,7 @@ class OBModeratedObjectsFiltersModalState
           itemCount: _types.length,
         ),
         OBTileGroupTitle(
-          title: _localizationService.trans('moderation__filters_status')
-        ),
+            title: _localizationService.trans('moderation__filters_status')),
         ListView.builder(
           physics: const NeverScrollableScrollPhysics(),
           itemBuilder: _buildStatusListTile,
@@ -145,8 +144,7 @@ class OBModeratedObjectsFiltersModalState
           itemCount: _statuses.length,
         ),
         OBTileGroupTitle(
-          title: _localizationService.trans('moderation__filters_other')
-        ),
+            title: _localizationService.trans('moderation__filters_other')),
         _buildIsVerifiedListTile()
       ],
     );
@@ -242,7 +240,7 @@ class OBModeratedObjectsFiltersModalState
     OBModeratedObjectsFilters _defaultFilters =
         OBModeratedObjectsFilters.makeDefault(
             isGlobalModeration:
-                !widget.moderatedObjectsPageController.hasCommunity());
+                !widget.moderatedObjectsPageController.hasMemory());
     setState(() {
       _selectedTypes = _defaultFilters.types;
       _selectedStatuses = _defaultFilters.statuses;

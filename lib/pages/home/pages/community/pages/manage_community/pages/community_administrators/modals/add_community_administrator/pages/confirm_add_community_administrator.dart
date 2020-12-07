@@ -11,22 +11,22 @@ import 'package:Siuu/widgets/theming/primary_color_container.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 
-class OBConfirmAddCommunityAdministrator<T> extends StatefulWidget {
+class OBConfirmAddMemoryAdministrator<T> extends StatefulWidget {
   final User user;
-  final Community community;
+  final Memory memory;
 
-  const OBConfirmAddCommunityAdministrator(
-      {Key key, @required this.user, @required this.community})
+  const OBConfirmAddMemoryAdministrator(
+      {Key key, @required this.user, @required this.memory})
       : super(key: key);
 
   @override
-  OBConfirmAddCommunityAdministratorState createState() {
-    return OBConfirmAddCommunityAdministratorState();
+  OBConfirmAddMemoryAdministratorState createState() {
+    return OBConfirmAddMemoryAdministratorState();
   }
 }
 
-class OBConfirmAddCommunityAdministratorState
-    extends State<OBConfirmAddCommunityAdministrator> {
+class OBConfirmAddMemoryAdministratorState
+    extends State<OBConfirmAddMemoryAdministrator> {
   bool _confirmationInProgress;
   UserService _userService;
   LocalizationService _localizationService;
@@ -52,38 +52,46 @@ class OBConfirmAddCommunityAdministratorState
       _needsBootstrap = false;
     }
 
-    String adminDescriptionText = _localizationService.trans('community__admin_desc');
-    String adminConfirmationText = _localizationService.community__admin_add_confirmation(username);
+    String adminDescriptionText =
+        _localizationService.trans('community__admin_desc');
+    String adminConfirmationText =
+        _localizationService.community__admin_add_confirmation(username);
 
     return CupertinoPageScaffold(
-        navigationBar: OBThemedNavigationBar(title: _localizationService.trans('community__confirmation_title')),
+        navigationBar: OBThemedNavigationBar(
+            title: _localizationService.trans('community__confirmation_title')),
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
             Expanded(
               child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 40,
-                  vertical: 40
-                ),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 40, vertical: 40),
                 child: Column(
                   //crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
-                    OBIcon(OBIcons.communityAdministrators, themeColor: OBIconThemeColor.primaryAccent, size: OBIconSize.extraLarge,),
+                    OBIcon(
+                      OBIcons.memoryAdministrators,
+                      themeColor: OBIconThemeColor.primaryAccent,
+                      size: OBIconSize.extraLarge,
+                    ),
                     const SizedBox(
                       height: 20,
                     ),
                     OBText(
                       adminConfirmationText,
                       textAlign: TextAlign.center,
-                      style: TextStyle(
-                          fontSize: 18, fontWeight: FontWeight.bold),
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
                     const SizedBox(
                       height: 40,
                     ),
-                    OBText(adminDescriptionText, textAlign: TextAlign.center,)
+                    OBText(
+                      adminDescriptionText,
+                      textAlign: TextAlign.center,
+                    )
                   ],
                 ),
               ),
@@ -121,8 +129,8 @@ class OBConfirmAddCommunityAdministratorState
   void _onConfirm() async {
     _setConfirmationInProgress(true);
     try {
-      await _userService.addCommunityAdministrator(
-          community: widget.community, user: widget.user);
+      await _userService.addMemoryAdministrator(
+          memory: widget.memory, user: widget.user);
       Navigator.of(context).pop(true);
     } catch (error) {
       _onError(error);
@@ -139,7 +147,9 @@ class OBConfirmAddCommunityAdministratorState
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }

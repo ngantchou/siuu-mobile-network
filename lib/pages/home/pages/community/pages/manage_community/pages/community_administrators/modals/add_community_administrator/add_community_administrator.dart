@@ -15,20 +15,20 @@ import 'package:Siuu/widgets/tiles/user_tile.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class OBAddCommunityAdministratorModal extends StatefulWidget {
-  final Community community;
+class OBAddMemoryAdministratorModal extends StatefulWidget {
+  final Memory memory;
 
-  const OBAddCommunityAdministratorModal({Key key, @required this.community})
+  const OBAddMemoryAdministratorModal({Key key, @required this.memory})
       : super(key: key);
 
   @override
-  State<OBAddCommunityAdministratorModal> createState() {
-    return OBAddCommunityAdministratorModalState();
+  State<OBAddMemoryAdministratorModal> createState() {
+    return OBAddMemoryAdministratorModalState();
   }
 }
 
-class OBAddCommunityAdministratorModalState
-    extends State<OBAddCommunityAdministratorModal> {
+class OBAddMemoryAdministratorModalState
+    extends State<OBAddMemoryAdministratorModal> {
   UserService _userService;
   NavigationService _navigationService;
   LocalizationService _localizationService;
@@ -57,11 +57,11 @@ class OBAddCommunityAdministratorModalState
       ),
       child: OBPrimaryColorContainer(
         child: OBHttpList<User>(
-          listItemBuilder: _buildCommunityMemberListItem,
-          searchResultListItemBuilder: _buildCommunityMemberListItem,
-          listRefresher: _refreshCommunityMembers,
-          listOnScrollLoader: _loadMoreCommunityMembers,
-          listSearcher: _searchCommunityMembers,
+          listItemBuilder: _buildMemoryMemberListItem,
+          searchResultListItemBuilder: _buildMemoryMemberListItem,
+          listRefresher: _refreshMemoryMembers,
+          listOnScrollLoader: _loadMoreMemoryMembers,
+          listSearcher: _searchMemoryMembers,
           resourceSingularName: _localizationService.community__member,
           resourcePluralName: _localizationService.community__member_plural,
         ),
@@ -69,48 +69,48 @@ class OBAddCommunityAdministratorModalState
     );
   }
 
-  Widget _buildCommunityMemberListItem(BuildContext context, User user) {
+  Widget _buildMemoryMemberListItem(BuildContext context, User user) {
     return OBUserTile(
       user,
       onUserTilePressed: _onWantsToAddNewAdministrator,
     );
   }
 
-  Future<List<User>> _refreshCommunityMembers() async {
-    UsersList communityMembers = await _userService.getMembersForCommunity(
-        widget.community,
-        exclude: [CommunityMembersExclusion.administrators]);
-    return communityMembers.users;
+  Future<List<User>> _refreshMemoryMembers() async {
+    UsersList memoryMembers = await _userService.getMembersForMemory(
+        widget.memory,
+        exclude: [MemoryMembersExclusion.administrators]);
+    return memoryMembers.users;
   }
 
-  Future<List<User>> _loadMoreCommunityMembers(
-      List<User> communityMembersList) async {
-    var lastCommunityMember = communityMembersList.last;
-    var lastCommunityMemberId = lastCommunityMember.id;
-    var moreCommunityMembers = (await _userService.getMembersForCommunity(
-            widget.community,
-            maxId: lastCommunityMemberId,
+  Future<List<User>> _loadMoreMemoryMembers(
+      List<User> memoryMembersList) async {
+    var lastMemoryMember = memoryMembersList.last;
+    var lastMemoryMemberId = lastMemoryMember.id;
+    var moreMemoryMembers = (await _userService.getMembersForMemory(
+            widget.memory,
+            maxId: lastMemoryMemberId,
             count: 20,
-            exclude: [CommunityMembersExclusion.administrators]))
+            exclude: [MemoryMembersExclusion.administrators]))
         .users;
-    return moreCommunityMembers;
+    return moreMemoryMembers;
   }
 
-  Future<List<User>> _searchCommunityMembers(String query) async {
-    UsersList results = await _userService.searchCommunityMembers(
+  Future<List<User>> _searchMemoryMembers(String query) async {
+    UsersList results = await _userService.searchMemoryMembers(
         query: query,
-        community: widget.community,
-        exclude: [CommunityMembersExclusion.administrators]);
+        memory: widget.memory,
+        exclude: [MemoryMembersExclusion.administrators]);
 
     return results.users;
   }
 
   void _onWantsToAddNewAdministrator(User user) async {
-    var addedCommunityAdministrator =
-        await _navigationService.navigateToConfirmAddCommunityAdministrator(
-            context: context, community: widget.community, user: user);
+    var addedMemoryAdministrator =
+        await _navigationService.navigateToConfirmAddMemoryAdministrator(
+            context: context, memory: widget.memory, user: user);
 
-    if (addedCommunityAdministrator != null && addedCommunityAdministrator) {
+    if (addedMemoryAdministrator != null && addedMemoryAdministrator) {
       Navigator.of(context).pop(user);
     }
   }

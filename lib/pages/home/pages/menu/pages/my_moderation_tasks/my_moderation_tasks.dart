@@ -52,64 +52,65 @@ class OBMyModerationTasksPageState extends State<OBMyModerationTasksPage> {
         title: _localizationService.moderation__my_moderation_tasks_title,
       ),
       child: OBPrimaryColorContainer(
-        child: OBHttpList<Community>(
+        child: OBHttpList<Memory>(
           padding: EdgeInsets.all(15),
           controller: _httpListController,
-          listItemBuilder: _buildPendingModeratedObjectsCommunityListItem,
+          listItemBuilder: _buildPendingModeratedObjectsMemoryListItem,
           listRefresher: _refreshPendingModeratedObjectsCommunities,
           listOnScrollLoader: _loadMorePendingModeratedObjectsCommunities,
-          resourceSingularName: _localizationService.moderation__pending_moderation_tasks_singular,
-          resourcePluralName: _localizationService.moderation__pending_moderation_tasks_plural,
+          resourceSingularName: _localizationService
+              .moderation__pending_moderation_tasks_singular,
+          resourcePluralName:
+              _localizationService.moderation__pending_moderation_tasks_plural,
         ),
       ),
     );
   }
 
-  Widget _buildPendingModeratedObjectsCommunityListItem(
-      BuildContext context, Community community) {
+  Widget _buildPendingModeratedObjectsMemoryListItem(
+      BuildContext context, Memory memory) {
     return GestureDetector(
-      onTap: () =>
-          _onPendingModeratedObjectsCommunityListItemPressed(community),
+      onTap: () => _onPendingModeratedObjectsMemoryListItemPressed(memory),
       child: Row(
         children: <Widget>[
           Expanded(
-            child: OBCommunityTile(community),
+            child: OBMemoryTile(memory),
           ),
           SizedBox(
             width: 20,
           ),
           OBBadge(
             size: 25,
-            count: community.pendingModeratedObjectsCount,
+            count: memory.pendingModeratedObjectsCount,
           )
         ],
       ),
     );
   }
 
-  void _onPendingModeratedObjectsCommunityListItemPressed(Community community) {
-    _navigationService.navigateToCommunityModeratedObjects(
-        community: community, context: context);
+  void _onPendingModeratedObjectsMemoryListItemPressed(Memory memory) {
+    _navigationService.navigateToMemoryModeratedObjects(
+        memory: memory, context: context);
   }
 
-  Future<List<Community>> _refreshPendingModeratedObjectsCommunities() async {
+  Future<List<Memory>> _refreshPendingModeratedObjectsCommunities() async {
     CommunitiesList pendingModeratedObjectsCommunities =
         await _userService.getPendingModeratedObjectsCommunities();
-    return pendingModeratedObjectsCommunities.communities;
+    return pendingModeratedObjectsCommunities.memories;
   }
 
-  Future<List<Community>> _loadMorePendingModeratedObjectsCommunities(
-      List<Community> pendingModeratedObjectsCommunitiesList) async {
-    var lastPendingModeratedObjectsCommunity =
+  Future<List<Memory>> _loadMorePendingModeratedObjectsCommunities(
+      List<Memory> pendingModeratedObjectsCommunitiesList) async {
+    var lastPendingModeratedObjectsMemory =
         pendingModeratedObjectsCommunitiesList.last;
-    var lastPendingModeratedObjectsCommunityId =
-        lastPendingModeratedObjectsCommunity.id;
+    var lastPendingModeratedObjectsMemoryId =
+        lastPendingModeratedObjectsMemory.id;
     var morePendingModeratedObjectsCommunities =
         (await _userService.getPendingModeratedObjectsCommunities(
-      maxId: lastPendingModeratedObjectsCommunityId,
+      maxId: lastPendingModeratedObjectsMemoryId,
       count: 10,
     ))
-            .communities;
+            .memories;
     return morePendingModeratedObjectsCommunities;
   }
 }

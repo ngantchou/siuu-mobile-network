@@ -12,12 +12,12 @@ import 'package:flutter/material.dart';
 class OBProfileInlineActions extends StatelessWidget {
   final User user;
   final VoidCallback onUserProfileUpdated;
-  final ValueChanged<Community> onExcludedCommunityRemoved;
-  final ValueChanged<List<Community>> onExcludedCommunitiesAdded;
+  final ValueChanged<Memory> onExcludedMemoryRemoved;
+  final ValueChanged<List<Memory>> onExcludedCommunitiesAdded;
 
   const OBProfileInlineActions(this.user,
       {@required this.onUserProfileUpdated,
-      this.onExcludedCommunityRemoved,
+      this.onExcludedMemoryRemoved,
       this.onExcludedCommunitiesAdded});
 
   @override
@@ -82,7 +82,7 @@ class OBProfileInlineActions extends StatelessWidget {
               context: context,
               onUserProfileUpdated: onUserProfileUpdated,
               onExcludedCommunitiesAdded: onExcludedCommunitiesAdded,
-              onExcludedCommunityRemoved: onExcludedCommunityRemoved);
+              onExcludedMemoryRemoved: onExcludedMemoryRemoved);
         });
   }
 }

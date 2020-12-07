@@ -52,13 +52,13 @@ class OBNotificationsPageState extends State<OBNotificationsPage>
     NotificationType.connectionConfirmed,
     NotificationType.followRequestApproved,
     NotificationType.follow,
-    NotificationType.communityNewPost,
+    NotificationType.memoryNewPost,
     NotificationType.userNewPost
   ];
 
   static const List<NotificationType> _requestTypes = <NotificationType>[
     NotificationType.connectionRequest,
-    NotificationType.communityInvite,
+    NotificationType.memoryInvite,
     NotificationType.followRequest,
   ];
 

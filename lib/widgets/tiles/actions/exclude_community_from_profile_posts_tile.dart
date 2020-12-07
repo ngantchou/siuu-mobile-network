@@ -9,24 +9,24 @@ import 'package:Siuu/widgets/icon.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
-class OBExcludeCommunityFromProfilePostsTile extends StatefulWidget {
+class OBExcludeMemoryFromProfilePostsTile extends StatefulWidget {
   final Post post;
-  final ValueChanged<Community> onPostCommunityExcludedFromProfilePosts;
+  final ValueChanged<Memory> onPostMemoryExcludedFromProfilePosts;
 
-  const OBExcludeCommunityFromProfilePostsTile({
+  const OBExcludeMemoryFromProfilePostsTile({
     Key key,
     @required this.post,
-    @required this.onPostCommunityExcludedFromProfilePosts,
+    @required this.onPostMemoryExcludedFromProfilePosts,
   }) : super(key: key);
 
   @override
-  OBExcludeCommunityFromProfilePostsTileState createState() {
-    return OBExcludeCommunityFromProfilePostsTileState();
+  OBExcludeMemoryFromProfilePostsTileState createState() {
+    return OBExcludeMemoryFromProfilePostsTileState();
   }
 }
 
-class OBExcludeCommunityFromProfilePostsTileState
-    extends State<OBExcludeCommunityFromProfilePostsTile> {
+class OBExcludeMemoryFromProfilePostsTileState
+    extends State<OBExcludeMemoryFromProfilePostsTile> {
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
@@ -41,29 +41,30 @@ class OBExcludeCommunityFromProfilePostsTileState
     _bottomSheetService = openbookProvider.bottomSheetService;
 
     return ListTile(
-      leading: OBIcon(OBIcons.excludePostCommunity),
+      leading: OBIcon(OBIcons.excludePostMemory),
       title: OBText(
           _localizationService.post__exclude_community_from_profile_posts),
-      onTap: _onWantsToExcludeCommunity,
+      onTap: _onWantsToExcludeMemory,
     );
   }
 
-  void _onWantsToExcludeCommunity() {
+  void _onWantsToExcludeMemory() {
     _bottomSheetService.showConfirmAction(
         context: context,
         subtitle: _localizationService
             .post__exclude_community_from_profile_posts_confirmation,
         actionCompleter: (BuildContext context) async {
-          await _excludePostCommunity();
+          await _excludePostMemory();
 
-          widget.onPostCommunityExcludedFromProfilePosts(widget.post.community);
+          widget.onPostMemoryExcludedFromProfilePosts(widget.post.memory);
           _toastService.success(
-              message: _localizationService.post__exclude_community_from_profile_posts_success,
+              message: _localizationService
+                  .post__exclude_community_from_profile_posts_success,
               context: context);
         });
   }
 
-  Future _excludePostCommunity() async {
-    return _userService.excludeCommunityFromProfilePosts(widget.post.community);
+  Future _excludePostMemory() async {
+    return _userService.excludeMemoryFromProfilePosts(widget.post.memory);
   }
 }

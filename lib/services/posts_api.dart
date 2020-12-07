@@ -13,17 +13,17 @@ class PostsApiService {
   static const GET_POSTS_PATH = 'api/posts/';
   static const GET_TOP_POSTS_PATH = 'api/posts/top/';
   static const EXCLUDED_TOP_POSTS_COMMUNITIES_PATH =
-      'api/posts/top/excluded-communities/';
+      'api/posts/top/excluded-memories/';
   static const EXCLUDED_TOP_POSTS_COMMUNITY_PATH =
-      'api/posts/top/excluded-communities/{communityName}/';
+      'api/posts/top/excluded-memories/{memoryName}/';
   static const EXCLUDED_TOP_POSTS_COMMUNITIES_SEARCH_PATH =
-      'api/posts/top/excluded-communities/search/';
+      'api/posts/top/excluded-memories/search/';
   static const EXCLUDED_PROFILE_POSTS_COMMUNITIES_PATH =
-      'api/posts/profile/excluded-communities/';
+      'api/posts/profile/excluded-memories/';
   static const EXCLUDED_PROFILE_POSTS_COMMUNITY_PATH =
-      'api/posts/profile/excluded-communities/{communityName}/';
+      'api/posts/profile/excluded-memories/{memoryName}/';
   static const EXCLUDED_PROFILE_POSTS_COMMUNITIES_SEARCH_PATH =
-      'api/posts/profile/excluded-communities/search/';
+      'api/posts/profile/excluded-memories/search/';
   static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/new/';
   static const CREATE_POST_PATH = 'api/posts/';
   static const POST_MEDIA_PATH = 'api/posts/{postUuid}/media/';
@@ -111,7 +111,7 @@ class PostsApiService {
     if (minId != null) queryParams['min_id'] = minId;
 
     if (excludeJoinedCommunities != null)
-      queryParams['exclude_joined_communities'] = excludeJoinedCommunities;
+      queryParams['exclude_joined_memories'] = excludeJoinedCommunities;
 
     return _httpService.get('$apiURL$GET_TOP_POSTS_PATH',
         queryParameters: queryParams,
@@ -198,7 +198,6 @@ class PostsApiService {
 
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
-
 
   Future<HttpieResponse> getPostWithUuidStatus(String postUuid) {
     String path = _makeGetPostStatusPath(postUuid: postUuid);
@@ -564,23 +563,22 @@ class PostsApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> excludeCommunityFromTopPosts(
-      {@required String communityName}) {
+  Future<HttpieResponse> excludeMemoryFromTopPosts(
+      {@required String memoryName}) {
     return _httpService.putJSON('$apiURL$EXCLUDED_TOP_POSTS_COMMUNITIES_PATH',
-        body: {'community_name': communityName},
-        appendAuthorizationToken: true);
+        body: {'community_name': memoryName}, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> undoExcludeCommunityFromTopPosts(
-      {@required String communityName}) {
-    String path = _makeExcludedCommunityFromTopPostsPath(communityName);
+  Future<HttpieResponse> undoExcludeMemoryFromTopPosts(
+      {@required String memoryName}) {
+    String path = _makeExcludedMemoryFromTopPostsPath(memoryName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  String _makeExcludedCommunityFromTopPostsPath(String communityName) {
-    return _stringTemplateService.parse(
-        EXCLUDED_TOP_POSTS_COMMUNITY_PATH, {'communityName': communityName});
+  String _makeExcludedMemoryFromTopPostsPath(String memoryName) {
+    return _stringTemplateService
+        .parse(EXCLUDED_TOP_POSTS_COMMUNITY_PATH, {'memoryName': memoryName});
   }
 
   Future<HttpieResponse> getProfilePostsExcludedCommunities(
@@ -600,40 +598,38 @@ class PostsApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> excludeCommunityFromProfilePosts(
-      {@required String communityName}) {
+  Future<HttpieResponse> excludeMemoryFromProfilePosts(
+      {@required String memoryName}) {
     return _httpService.putJSON(
         '$apiURL$EXCLUDED_PROFILE_POSTS_COMMUNITIES_PATH',
-        body: {'community_name': communityName},
+        body: {'community_name': memoryName},
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> undoExcludeCommunityFromProfilePosts(
-      {@required String communityName}) {
-    String path = _makeExcludedCommunityFromProfilePostsPath(communityName);
+  Future<HttpieResponse> undoExcludeMemoryFromProfilePosts(
+      {@required String memoryName}) {
+    String path = _makeExcludedMemoryFromProfilePostsPath(memoryName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> previewLink(
-      {@required String link}) {
+  Future<HttpieResponse> previewLink({@required String link}) {
     Map<String, dynamic> body = {'link': link};
 
     return _httpService.postJSON(_makeApiUrl(PREVIEW_LINK_PATH),
         body: body, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> linkIsPreviewable(
-      {@required String link}) {
+  Future<HttpieResponse> linkIsPreviewable({@required String link}) {
     Map<String, dynamic> body = {'link': link};
 
     return _httpService.postJSON(_makeApiUrl(LINK_IS_PREVIEWABLE_PATH),
         body: body, appendAuthorizationToken: true);
   }
 
-  String _makeExcludedCommunityFromProfilePostsPath(String communityName) {
-    return _stringTemplateService.parse(EXCLUDED_PROFILE_POSTS_COMMUNITY_PATH,
-        {'communityName': communityName});
+  String _makeExcludedMemoryFromProfilePostsPath(String memoryName) {
+    return _stringTemplateService.parse(
+        EXCLUDED_PROFILE_POSTS_COMMUNITY_PATH, {'memoryName': memoryName});
   }
 
   String _makePostPath(String postUuid) {

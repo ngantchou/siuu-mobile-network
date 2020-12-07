@@ -1,5 +1,4 @@
 import 'dart:math';
-
 import 'package:Siuu/models/circle.dart';
 import 'package:Siuu/models/community.dart';
 import 'package:Siuu/models/emoji.dart';
@@ -56,6 +55,7 @@ import 'package:Siuu/pages/home/pages/menu/pages/terms_of_use.dart';
 import 'package:Siuu/pages/home/pages/profile/pages/edit_profile/manage_profile.dart';
 import 'package:Siuu/pages/home/pages/profile/pages/edit_profile/pages/profile_posts_excluded_communities/profile_posts_excluded_communities.dart';
 import 'package:Siuu/pages/home/pages/profile/pages/follow_requests.dart';
+import 'package:Siuu/pages/home/pages/search/search.dart';
 import 'package:Siuu/pages/home/pages/search/widgets/top_posts/pages/top_posts_settings/pages/top_posts_excluded_communities.dart';
 import 'package:Siuu/pages/home/pages/search/widgets/top_posts/pages/top_posts_settings/top_posts_settings.dart';
 import 'package:Siuu/pages/home/pages/menu/pages/settings/settings.dart';
@@ -98,60 +98,60 @@ class NavigationService {
     );
   }
 
-  Future navigateToCommunity(
-      {@required Community community, @required BuildContext context}) async {
+  Future navigateToMemory(
+      {@required Memory memory, @required BuildContext context}) async {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('communityRoute'),
+          slidableKey: _getKeyRandomisedWithWord('memoryRoute'),
           builder: (BuildContext context) {
-            return OBCommunityPage(
-              community,
+            return OBMemoryPage(
+              memory,
             );
           }),
     );
   }
 
-  Future navigateToCommunityStaffPage(
-      {@required BuildContext context, @required Community community}) {
+  Future navigateToMemoryStaffPage(
+      {@required BuildContext context, @required Memory memory}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('CommunityStaffPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('MemoryStaffPageRoute'),
           builder: (BuildContext context) {
-            return OBCommunityStaffPage(
-              community: community,
+            return OBMemoryStaffPage(
+              memory: memory,
             );
           }),
     );
   }
 
-  Future navigateToCommunityRulesPage(
-      {@required BuildContext context, @required Community community}) {
+  Future navigateToMemoryRulesPage(
+      {@required BuildContext context, @required Memory memory}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('communityRulesPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('memoryRulesPageRoute'),
           builder: (BuildContext context) {
-            return OBCommunityRulesPage(
-              community: community,
+            return OBMemoryRulesPage(
+              memory: memory,
             );
           }),
     );
   }
 
-  Future<bool> navigateToConfirmAddCommunityAdministrator(
-      {@required Community community,
+  Future<bool> navigateToConfirmAddMemoryAdministrator(
+      {@required Memory memory,
       @required User user,
       @required BuildContext context}) async {
     return Navigator.push(
       context,
       OBSlideRightRoute(
-          slidableKey: _getKeyRandomisedWithWord(
-              'confirmAddCommunityAdministratorRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('confirmAddMemoryAdministratorRoute'),
           builder: (BuildContext context) {
-            return OBConfirmAddCommunityAdministrator(
-              community: community,
+            return OBConfirmAddMemoryAdministrator(
+              memory: memory,
               user: user,
             );
           }),
@@ -183,154 +183,166 @@ class NavigationService {
     );
   }
 
-  Future<bool> navigateToConfirmAddCommunityModerator(
-      {@required Community community,
-      @required User user,
-      @required BuildContext context}) async {
-    return Navigator.push(
-      context,
-      OBSlideRightRoute<bool>(
-          slidableKey: _getKeyRandomisedWithWord(
-              'confirmAddCommunityModeratorPageRoute'),
-          builder: (BuildContext context) {
-            return OBConfirmAddCommunityModerator(
-              community: community,
-              user: user,
-            );
-          }),
-    );
-  }
-
-  Future<bool> navigateToConfirmBanCommunityUser(
-      {@required Community community,
+  Future<bool> navigateToConfirmAddMemoryModerator(
+      {@required Memory memory,
       @required User user,
       @required BuildContext context}) async {
     return Navigator.push(
       context,
       OBSlideRightRoute<bool>(
           slidableKey:
-              _getKeyRandomisedWithWord('confirmBanCommunityUserPageRoute'),
+              _getKeyRandomisedWithWord('confirmAddMemoryModeratorPageRoute'),
           builder: (BuildContext context) {
-            return OBConfirmBanCommunityUser(
-              community: community,
+            return OBConfirmAddMemoryModerator(
+              memory: memory,
               user: user,
             );
           }),
     );
   }
 
-  Future<void> navigateToManageCommunity(
-      {@required Community community, @required BuildContext context}) {
+  Future<bool> navigateToConfirmBanMemoryUser(
+      {@required Memory memory,
+      @required User user,
+      @required BuildContext context}) async {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<bool>(
+          slidableKey:
+              _getKeyRandomisedWithWord('confirmBanMemoryUserPageRoute'),
+          builder: (BuildContext context) {
+            return OBConfirmBanMemoryUser(
+              memory: memory,
+              user: user,
+            );
+          }),
+    );
+  }
+
+  Future<void> navigateToManageMemory(
+      {@required Memory memory, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
           slidableKey:
-              _getKeyRandomisedWithWord('navigateToManageCommunityPageRoute'),
+              _getKeyRandomisedWithWord('navigateToManageMemoryPageRoute'),
           builder: (BuildContext context) {
-            return OBManageCommunityPage(
-              community: community,
+            return OBManageMemoryPage(
+              memory: memory,
             );
           }),
     );
   }
 
-  Future<void> navigateToLeaveCommunity(
-      {@required Community community, @required BuildContext context}) {
+  Future<void> navigateToLeaveMemory(
+      {@required Memory memory, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('leaveCommunityPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('leaveMemoryPageRoute'),
           builder: (BuildContext context) {
-            return OBLeaveCommunityPage(
-              community: community,
+            return OBLeaveMemoryPage(
+              memory: memory,
             );
           }),
     );
   }
 
-  Future<void> navigateToDeleteCommunity(
-      {@required Community community, @required BuildContext context}) {
+  Future<void> navigateToDeleteMemory(
+      {@required Memory memory, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('deleteCommunityPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('deleteMemoryPageRoute'),
           builder: (BuildContext context) {
-            return OBDeleteCommunityPage(
-              community: community,
+            return OBDeleteMemoryPage(
+              memory: memory,
             );
           }),
     );
   }
 
-  Future<void> navigateToCommunityAdministrators(
-      {@required Community community, @required BuildContext context}) {
-    return Navigator.push(
-      context,
-      OBSlideRightRoute<dynamic>(
-          slidableKey:
-              _getKeyRandomisedWithWord('communityAdministratorsPageRoute'),
-          builder: (BuildContext context) {
-            return OBCommunityAdministratorsPage(
-              community: community,
-            );
-          }),
-    );
-  }
-
-  Future<void> navigateToCommunityMembers(
-      {@required Community community, @required BuildContext context}) {
-    return Navigator.push(
-      context,
-      OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('communityMembersPageRoute'),
-          builder: (BuildContext context) {
-            return OBCommunityMembersPage(
-              community: community,
-            );
-          }),
-    );
-  }
-
-  Future<void> navigateToCommunityModerators(
-      {@required Community community, @required BuildContext context}) {
+  Future<void> navigateToMemoryAdministrators(
+      {@required Memory memory, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
           slidableKey:
-              _getKeyRandomisedWithWord('communityModeratorsPageRoute'),
+              _getKeyRandomisedWithWord('memoryAdministratorsPageRoute'),
           builder: (BuildContext context) {
-            return OBCommunityModeratorsPage(
-              community: community,
+            return OBMemoryAdministratorsPage(
+              memory: memory,
             );
           }),
     );
   }
 
-  Future<void> navigateToCommunityBannedUsers(
-      {@required Community community, @required BuildContext context}) {
+  Future<void> navigateToMemoryMembers(
+      {@required Memory memory, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey:
-              _getKeyRandomisedWithWord('communityBannedUsersPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('memoryMembersPageRoute'),
           builder: (BuildContext context) {
-            return OBCommunityBannedUsersPage(
-              community: community,
+            return OBMemoryMembersPage(
+              memory: memory,
             );
           }),
     );
   }
 
-  Future<void> navigateToCommunityClosedPosts(
-      {@required Community community, @required BuildContext context}) {
+  Future<void> navigateToSearch(
+      {@required OBMainSearchPageController searchPageController,
+      @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey:
-              _getKeyRandomisedWithWord('communityClosedPostsPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('memoryMembersPageRoute'),
           builder: (BuildContext context) {
-            return OBCommunityClosedPostsPage(
-              community,
+            return OBMainSearchPage(
+              controller: searchPageController,
+            );
+          }),
+    );
+  }
+
+  Future<void> navigateToMemoryModerators(
+      {@required Memory memory, @required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('memoryModeratorsPageRoute'),
+          builder: (BuildContext context) {
+            return OBMemoryModeratorsPage(
+              memory: memory,
+            );
+          }),
+    );
+  }
+
+  Future<void> navigateToMemoryBannedUsers(
+      {@required Memory memory, @required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('memoryBannedUsersPageRoute'),
+          builder: (BuildContext context) {
+            return OBMemoryBannedUsersPage(
+              memory: memory,
+            );
+          }),
+    );
+  }
+
+  Future<void> navigateToMemoryClosedPosts(
+      {@required Memory memory, @required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('memoryClosedPostsPageRoute'),
+          builder: (BuildContext context) {
+            return OBMemoryClosedPostsPage(
+              memory,
             );
           }),
     );
@@ -539,13 +551,13 @@ class NavigationService {
     );
   }
 
-  Future navigateToCommunityGuidelinesPage({@required BuildContext context}) {
+  Future navigateToMemoryGuidelinesPage({@required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('communityGuidelinesPage'),
+          slidableKey: _getKeyRandomisedWithWord('memoryGuidelinesPage'),
           builder: (BuildContext context) {
-            return OBCommunityGuidelinesPage();
+            return OBMemoryGuidelinesPage();
           }),
     );
   }
@@ -616,16 +628,16 @@ class NavigationService {
     );
   }
 
-  Future<OBNewPostData> navigateToSharePostWithCommunity(
+  Future<OBNewPostData> navigateToSharePostWithMemory(
       {@required BuildContext context,
       @required OBNewPostData createPostData}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<OBNewPostData>(
           slidableKey:
-              _getKeyRandomisedWithWord('sharePostWithCommunityPageRoute'),
+              _getKeyRandomisedWithWord('sharePostWithMemoryPageRoute'),
           builder: (BuildContext context) {
-            return OBSharePostWithCommunityPage(
+            return OBSharePostWithMemoryPage(
               createPostData: createPostData,
             );
           }),
@@ -878,16 +890,16 @@ class NavigationService {
     );
   }
 
-  Future<void> navigateToCommunityModeratedObjects(
-      {@required BuildContext context, @required Community community}) async {
+  Future<void> navigateToMemoryModeratedObjects(
+      {@required BuildContext context, @required Memory memory}) async {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
           slidableKey:
-              _getKeyRandomisedWithWord('communityModeratedObjectsPageRoute'),
+              _getKeyRandomisedWithWord('memoryModeratedObjectsPageRoute'),
           builder: (BuildContext context) {
             return OBModeratedObjectsPage(
-              community: community,
+              memory: memory,
             );
           }),
     );
@@ -937,18 +949,18 @@ class NavigationService {
     );
   }
 
-  Future<void> navigateToModeratedObjectCommunityReview(
+  Future<void> navigateToModeratedObjectMemoryReview(
       {@required BuildContext context,
-      @required Community community,
+      @required Memory memory,
       @required ModeratedObject moderatedObject}) async {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord(
-              'moderatedObjectCommunityReviewPageRoute'),
+          slidableKey:
+              _getKeyRandomisedWithWord('moderatedObjectMemoryReviewPageRoute'),
           builder: (BuildContext context) {
-            return OBModeratedObjectCommunityReviewPage(
-              community: community,
+            return OBModeratedObjectMemoryReviewPage(
+              memory: memory,
               moderatedObject: moderatedObject,
             );
           }),
@@ -1020,8 +1032,8 @@ class NavigationService {
 
   Future<void> navigateToProfilePostsExcludedCommunities(
       {@required BuildContext context,
-      ValueChanged<Community> onExcludedCommunityRemoved,
-      ValueChanged<List<Community>> onExcludedCommunitiesAdded}) {
+      ValueChanged<Memory> onExcludedMemoryRemoved,
+      ValueChanged<List<Memory>> onExcludedCommunitiesAdded}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
@@ -1029,7 +1041,7 @@ class NavigationService {
           builder: (BuildContext context) {
             return OBProfilePostsExcludedCommunitiesPage(
               onExcludedCommunitiesAdded: onExcludedCommunitiesAdded,
-              onExcludedCommunityRemoved: onExcludedCommunityRemoved,
+              onExcludedMemoryRemoved: onExcludedMemoryRemoved,
             );
           }),
     );
@@ -1039,8 +1051,8 @@ class NavigationService {
     @required User user,
     @required BuildContext context,
     VoidCallback onUserProfileUpdated,
-    ValueChanged<Community> onExcludedCommunityRemoved,
-    ValueChanged<List<Community>> onExcludedCommunitiesAdded,
+    ValueChanged<Memory> onExcludedMemoryRemoved,
+    ValueChanged<List<Memory>> onExcludedCommunitiesAdded,
   }) async {
     return Navigator.push(
       context,
@@ -1051,7 +1063,7 @@ class NavigationService {
               user,
               onUserProfileUpdated: onUserProfileUpdated,
               onExcludedCommunitiesAdded: onExcludedCommunitiesAdded,
-              onExcludedCommunityRemoved: onExcludedCommunityRemoved,
+              onExcludedMemoryRemoved: onExcludedMemoryRemoved,
             );
           }),
     );

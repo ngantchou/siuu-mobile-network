@@ -12,8 +12,7 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
     extends State<T> {
   TextAutocompletionService _textAutocompletionService;
   OBContextualAccountSearchBoxController _contextualAccountSearchBoxController;
-  OBContextualCommunitySearchBoxController
-      _contextualCommunitySearchBoxController;
+  OBContextualMemorySearchBoxController _contextualMemorySearchBoxController;
   OBContextualHashtagSearchBoxController _contextualHashtagSearchBoxController;
 
   TextAutocompletionType _autocompletionType;
@@ -27,8 +26,8 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
     super.initState();
     _contextualAccountSearchBoxController =
         OBContextualAccountSearchBoxController();
-    _contextualCommunitySearchBoxController =
-        OBContextualCommunitySearchBoxController();
+    _contextualMemorySearchBoxController =
+        OBContextualMemorySearchBoxController();
     _contextualHashtagSearchBoxController =
         OBContextualHashtagSearchBoxController();
     isAutocompleting = false;
@@ -59,8 +58,8 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
     switch (_autocompletionType) {
       case TextAutocompletionType.account:
         return _buildAccountSearchBox();
-      case TextAutocompletionType.community:
-        return _buildCommunitySearchBox();
+      case TextAutocompletionType.memory:
+        return _buildMemorySearchBox();
       case TextAutocompletionType.hashtag:
         return _buildHashtagSearchBox();
       default:
@@ -77,14 +76,14 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
     );
   }
 
-  Widget _buildCommunitySearchBox() {
+  Widget _buildMemorySearchBox() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: OBContextualCommunitySearchBox(
-        controller: _contextualCommunitySearchBoxController,
-        onCommunityPressed: _onCommunitySearchBoxUserPressed,
+      child: OBContextualMemorySearchBox(
+        controller: _contextualMemorySearchBoxController,
+        onMemoryPressed: _onMemorySearchBoxUserPressed,
         initialSearchQuery:
-            _contextualCommunitySearchBoxController.getLastSearchQuery(),
+            _contextualMemorySearchBoxController.getLastSearchQuery(),
       ),
     );
   }
@@ -94,7 +93,7 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
       controller: _contextualHashtagSearchBoxController,
       onHashtagPressed: _onHashtagSearchBoxUserPressed,
       initialSearchQuery:
-      _contextualHashtagSearchBoxController.getLastSearchQuery(),
+          _contextualHashtagSearchBoxController.getLastSearchQuery(),
     );
   }
 
@@ -102,8 +101,8 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
     autocompleteFoundAccountUsername(user.username);
   }
 
-  void _onCommunitySearchBoxUserPressed(Community community) {
-    autocompleteFoundCommunityName(community.name);
+  void _onMemorySearchBoxUserPressed(Memory memory) {
+    autocompleteFoundMemoryName(memory.name);
   }
 
   void _onHashtagSearchBoxUserPressed(Hashtag hashtag) {
@@ -128,9 +127,8 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
           _contextualAccountSearchBoxController
               .search(result.autocompleteQuery);
           break;
-        case TextAutocompletionType.community:
-          _contextualCommunitySearchBoxController
-              .search(result.autocompleteQuery);
+        case TextAutocompletionType.memory:
+          _contextualMemorySearchBoxController.search(result.autocompleteQuery);
           break;
       }
     } else if (isAutocompleting) {
@@ -153,17 +151,17 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
     });
   }
 
-  void autocompleteFoundCommunityName(String foundCommunityName) {
+  void autocompleteFoundMemoryName(String foundMemoryName) {
     if (!isAutocompleting) {
       debugLog(
-          'Tried to autocomplete found community name but was not searching community');
+          'Tried to autocomplete found memory name but was not searching memory');
       return;
     }
 
-    debugLog('Autocompleting with name:$foundCommunityName');
+    debugLog('Autocompleting with name:$foundMemoryName');
     setState(() {
-      _textAutocompletionService.autocompleteTextWithCommunityName(
-          _autocompleteTextController, foundCommunityName);
+      _textAutocompletionService.autocompleteTextWithMemoryName(
+          _autocompleteTextController, foundMemoryName);
     });
   }
 

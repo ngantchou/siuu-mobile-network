@@ -25,20 +25,20 @@ class OBPostActionsBottomSheet extends StatefulWidget {
   final Post post;
   final ValueChanged<Post> onPostReported;
   final OnPostDeleted onPostDeleted;
-  final Function onCommunityExcluded;
-  final Function onUndoCommunityExcluded;
+  final Function onMemoryExcluded;
+  final Function onUndoMemoryExcluded;
   final OBPostDisplayContext displayContext;
-  final ValueChanged<Community> onPostCommunityExcludedFromProfilePosts;
+  final ValueChanged<Memory> onPostMemoryExcludedFromProfilePosts;
 
   const OBPostActionsBottomSheet(
       {Key key,
       @required this.post,
       @required this.onPostReported,
       @required this.onPostDeleted,
-      this.onCommunityExcluded,
-      this.onUndoCommunityExcluded,
+      this.onMemoryExcluded,
+      this.onUndoMemoryExcluded,
       this.displayContext = OBPostDisplayContext.timelinePosts,
-      this.onPostCommunityExcludedFromProfilePosts})
+      this.onPostMemoryExcludedFromProfilePosts})
       : super(key: key);
 
   @override
@@ -73,27 +73,27 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
           List<Widget> postActions = [];
 
           if (widget.displayContext == OBPostDisplayContext.topPosts) {
-            postActions.add(OBExcludeCommunityFromTopPostsTile(
+            postActions.add(OBExcludeMemoryFromTopPostsTile(
               post: post,
-              onExcludedPostCommunity: () {
-                if (widget.onCommunityExcluded != null) {
-                  widget.onCommunityExcluded(post.community);
+              onExcludedPostMemory: () {
+                if (widget.onMemoryExcluded != null) {
+                  widget.onMemoryExcluded(post.memory);
                 }
                 _dismiss();
               },
-              onUndoExcludedPostCommunity: () {
-                if (widget.onUndoCommunityExcluded != null) {
-                  widget.onUndoCommunityExcluded(post.community);
+              onUndoExcludedPostMemory: () {
+                if (widget.onUndoMemoryExcluded != null) {
+                  widget.onUndoMemoryExcluded(post.memory);
                 }
                 _dismiss();
               },
             ));
           } else if (widget.displayContext ==
               OBPostDisplayContext.ownProfilePosts) {
-            postActions.add(OBExcludeCommunityFromProfilePostsTile(
+            postActions.add(OBExcludeMemoryFromProfilePostsTile(
                 post: post,
-                onPostCommunityExcludedFromProfilePosts:
-                    widget.onPostCommunityExcludedFromProfilePosts));
+                onPostMemoryExcludedFromProfilePosts:
+                    widget.onPostMemoryExcludedFromProfilePosts));
           }
 
           postActions.add(OBMutePostTile(

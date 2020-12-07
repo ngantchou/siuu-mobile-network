@@ -26,7 +26,7 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
   UserService _userService;
   ToastService _toastService;
   LocalizationService _localizationService;
-  List<Community> _suggestedCommunities;
+  List<Memory> _suggestedCommunities;
   bool _requestInProgress;
 
   @override
@@ -49,7 +49,9 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
     }
 
     return _suggestedCommunities.isEmpty
-        ? _requestInProgress ? _buildProgressIndicator() : const SizedBox()
+        ? _requestInProgress
+            ? _buildProgressIndicator()
+            : const SizedBox()
         : _buildSuggestedCommunities();
   }
 
@@ -67,28 +69,31 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
       children: <Widget>[
         ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
-            separatorBuilder: _buildCommunitySeparator,
+            separatorBuilder: _buildMemorySeparator,
             padding: const EdgeInsets.only(bottom: 20),
             shrinkWrap: true,
             itemCount: _suggestedCommunities.length,
-            itemBuilder: _buildCommunity)
+            itemBuilder: _buildMemory)
       ],
     );
   }
 
-  Widget _buildCommunity(BuildContext context, index) {
-    Community community = _suggestedCommunities[index];
+  Widget _buildMemory(BuildContext context, index) {
+    Memory memory = _suggestedCommunities[index];
 
-    //bool communityIsJoined = _selectedCommunities?.contains(community);
+    //bool memoryIsJoined = _selectedCommunities?.contains(memory);
 
-    return OBCommunityTile(
-      community,
-      size: OBCommunityTileSize.normal,
-      trailing: OBJoinCommunityButton(community, communityThemed: false,),
+    return OBMemoryTile(
+      memory,
+      size: OBMemoryTileSize.normal,
+      trailing: OBJoinMemoryButton(
+        memory,
+        memoryThemed: false,
+      ),
     );
   }
 
-  Widget _buildCommunitySeparator(BuildContext context, int index) {
+  Widget _buildMemorySeparator(BuildContext context, int index) {
     return const SizedBox(
       height: 10,
     );
@@ -99,14 +104,14 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
   }
 
   Future<void> _fetchSuggestedCommunities() async {
-    debugPrint('Fetching suggested communities');
+    debugPrint('Fetching suggested memories');
     _setRequestInProgress(true);
     try {
       CommunitiesList suggestedCommunitiesList =
-      await _userService.getSuggestedCommunities();
-      _setSuggestedCommunities(suggestedCommunitiesList.communities);
+          await _userService.getSuggestedCommunities();
+      _setSuggestedCommunities(suggestedCommunitiesList.memories);
       if (widget.onNoSuggestions != null &&
-          suggestedCommunitiesList.communities.isEmpty) widget.onNoSuggestions();
+          suggestedCommunitiesList.memories.isEmpty) widget.onNoSuggestions();
     } catch (error) {
       _onError(error);
     } finally {
@@ -128,9 +133,9 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
     }
   }
 
-  void _setSuggestedCommunities(List<Community> communities) {
+  void _setSuggestedCommunities(List<Memory> memories) {
     setState(() {
-      _suggestedCommunities = communities;
+      _suggestedCommunities = memories;
     });
   }
 

@@ -64,17 +64,18 @@ class OBLegalStepPageState extends State<OBLegalStepPage> {
                         Text(
                           _localizationService.auth__create_acc__legal_desc,
                           style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                              color: Colors.white, fontWeight: FontWeight.bold),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(
                           height: 5,
                         ),
                         Text(
-                          _localizationService.auth__create_acc__legal_desc_extra,
+                          _localizationService
+                              .auth__create_acc__legal_desc_extra,
                           style: TextStyle(
-                              color: Colors.white,),
+                            color: Colors.white,
+                          ),
                           textAlign: TextAlign.center,
                         ),
                         const SizedBox(
@@ -116,25 +117,26 @@ class OBLegalStepPageState extends State<OBLegalStepPage> {
       children: [
         _buildDocument(
             icon: '🏡',
-            title: _localizationService.drawer__useful_links_community_guidelines,
-            onPressed: () => _navigationService
-                .navigateToCommunityGuidelinesPage(context: context)),
+            title:
+                _localizationService.drawer__useful_links_community_guidelines,
+            onPressed: () => _navigationService.navigateToMemoryGuidelinesPage(
+                context: context)),
         const SizedBox(
           height: 10,
         ),
         _buildDocument(
             icon: '⚖️',
             title: _localizationService.drawer__useful_links_terms_of_use,
-            onPressed: () => _navigationService
-                .navigateToTermsOfUsePage(context: context)),
+            onPressed: () =>
+                _navigationService.navigateToTermsOfUsePage(context: context)),
         const SizedBox(
           height: 10,
         ),
         _buildDocument(
             icon: '🔒',
             title: _localizationService.drawer__useful_links_privacy_policy,
-            onPressed: () => _navigationService
-                .navigateToPrivacyPolicyPage(context: context))
+            onPressed: () => _navigationService.navigateToPrivacyPolicyPage(
+                context: context))
       ],
     );
   }
@@ -144,39 +146,41 @@ class OBLegalStepPageState extends State<OBLegalStepPage> {
       @required String title,
       @required VoidCallback onPressed}) {
     return GestureDetector(
-      onTap: onPressed,
-      child: Container(
-        decoration: BoxDecoration(
-          color: Color.fromARGB(30, 255, 255, 255),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10),
-          child: Row(
-            children: [
-              Text(icon, style: TextStyle(fontSize: 18),),
-              const SizedBox(
-                width: 20,
-              ),
-              Expanded(
-                child: Text(
-                  title,
-                  style:
-                  TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(
-                width: 20,
-              ),
-              OBIcon(
-                OBIcons.chevronRight,
-                color: Colors.white,
-              )
-            ],
+        onTap: onPressed,
+        child: Container(
+          decoration: BoxDecoration(
+            color: Color.fromARGB(30, 255, 255, 255),
+            borderRadius: BorderRadius.circular(10),
           ),
-        ),
-      )
-    );
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              children: [
+                Text(
+                  icon,
+                  style: TextStyle(fontSize: 18),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                Expanded(
+                  child: Text(
+                    title,
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                  ),
+                ),
+                const SizedBox(
+                  width: 20,
+                ),
+                OBIcon(
+                  OBIcons.chevronRight,
+                  color: Colors.white,
+                )
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget _buildNextButton() {

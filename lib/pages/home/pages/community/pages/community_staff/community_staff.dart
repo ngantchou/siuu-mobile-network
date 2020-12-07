@@ -9,11 +9,10 @@ import 'package:flutter/material.dart';
 
 import '../../../../../../provider.dart';
 
-class OBCommunityStaffPage extends StatelessWidget {
-  final Community community;
+class OBMemoryStaffPage extends StatelessWidget {
+  final Memory memory;
 
-  const OBCommunityStaffPage({Key key, @required this.community})
-      : super(key: key);
+  const OBMemoryStaffPage({Key key, @required this.memory}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,16 +25,16 @@ class OBCommunityStaffPage extends StatelessWidget {
       ),
       child: OBPrimaryColorContainer(
         child: StreamBuilder(
-          stream: community.updateSubject,
-          initialData: community,
-          builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
+          stream: memory.updateSubject,
+          initialData: memory,
+          builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
             return SingleChildScrollView(
               physics: const ClampingScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: <Widget>[
-                  OBCommunityAdministrators(community),
-                  OBCommunityModerators(community),
+                  OBMemoryAdministrators(memory),
+                  OBMemoryModerators(memory),
                 ],
               ),
             );

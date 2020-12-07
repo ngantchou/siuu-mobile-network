@@ -7,22 +7,22 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:Siuu/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
-class OBCommunityAdministrators extends StatelessWidget {
-  final Community community;
+class OBMemoryAdministrators extends StatelessWidget {
+  final Memory memory;
 
-  OBCommunityAdministrators(this.community);
+  OBMemoryAdministrators(this.memory);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: community.updateSubject,
-      initialData: community,
-      builder: (BuildContext context, AsyncSnapshot<Community> snapshot) {
-        var community = snapshot.data;
+      stream: memory.updateSubject,
+      initialData: memory,
+      builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
+        var memory = snapshot.data;
 
-        List<User> communityAdministrators = community?.administrators?.users;
+        List<User> memoryAdministrators = memory?.administrators?.users;
 
-        if (communityAdministrators == null || communityAdministrators.isEmpty)
+        if (memoryAdministrators == null || memoryAdministrators.isEmpty)
           return const SizedBox();
 
         return Row(
@@ -36,7 +36,7 @@ class OBCommunityAdministrators extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                     child: Row(children: [
                       OBIcon(
-                        OBIcons.communityAdministrators,
+                        OBIcons.memoryAdministrators,
                         size: OBIconSize.medium,
                       ),
                       const SizedBox(
@@ -57,14 +57,14 @@ class OBCommunityAdministrators extends StatelessWidget {
                     padding: EdgeInsets.all(0),
                     shrinkWrap: true,
                     children:
-                        communityAdministrators.map((User communityAdministrator) {
+                        memoryAdministrators.map((User memoryAdministrator) {
                       return OBUserTile(
-                        communityAdministrator,
+                        memoryAdministrator,
                         onUserTilePressed: (User user) {
                           NavigationService navigationService =
                               OpenbookProvider.of(context).navigationService;
                           navigationService.navigateToUserProfile(
-                              user: communityAdministrator, context: context);
+                              user: memoryAdministrator, context: context);
                         },
                       );
                     }).toList(),

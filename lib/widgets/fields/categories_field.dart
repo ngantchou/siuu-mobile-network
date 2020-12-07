@@ -92,7 +92,8 @@ class OBCategoriesFieldState extends State<OBCategoriesField> {
     if (min == 1) {
       errorMsg = _localizationService.community__pick_atleast_min_category(min);
     } else {
-      errorMsg = _localizationService.community__pick_atleast_min_categories(min);
+      errorMsg =
+          _localizationService.community__pick_atleast_min_categories(min);
     }
 
     return Padding(
