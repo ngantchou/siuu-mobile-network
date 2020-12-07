@@ -213,6 +213,7 @@ class _OtpScreenState extends State<OtpScreen> {
       return;
     }
     try {
+      Navigator.pushReplacementNamed(context, '/auth/name_step');
       final AuthCredential credential = PhoneAuthProvider.getCredential(
         verificationId: verificationId,
         smsCode: smsOTP,

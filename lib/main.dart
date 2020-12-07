@@ -37,6 +37,12 @@ import 'dart:async';
 import 'delegates/es_es_localizations_delegate.dart';
 import 'delegates/pt_br_localizations_delegate.dart';
 import 'delegates/sv_se_localizations_delegate.dart';
+import 'pages/home/pages/FriendStory.dart';
+import 'pages/home/pages/memories/TextMemory.dart';
+import 'pages/home/pages/memories/VoiceMemory.dart';
+import 'pages/home/pages/memories/videoMemory.dart';
+import 'pages/home/pages/myMemory.dart';
+import 'pages/home/pages/profile/wallet.dart';
 
 final RouteObserver<PageRoute> routeObserver = RouteObserver<PageRoute>();
 
@@ -233,6 +239,30 @@ class _MyAppState extends State<MyApp> {
                 WaitlistSubscribeArguments args =
                     ModalRoute.of(context).settings.arguments;
                 return OBWaitlistSubscribeDoneStep(count: args.count);
+              },
+              '/FriendStory': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return FriendStory();
+              },
+              '/TextMemory': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return TextMemory();
+              },
+              '/VoiceMemory': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return VoiceMemory();
+              },
+              '/MyMemory': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return MyMemory();
+              },
+              '/VideoMemory': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return VideoMemory();
+              },
+              '/Wallet': (BuildContext context) {
+                bootstrapOpenbookProviderInContext(context);
+                return Wallet();
               }
             }),
       ),

@@ -20,8 +20,8 @@ class WaitlistApiService {
     if (email != null && email != '') {
       body['email'] = email;
     }
-    return this
-        ._httpService
-        .postJSON('$openbookSocialApiURL$MAILCHIMP_SUBSCRIBE_PATH', body: body);
+    return this._httpService.postJSON(
+        'http://161.35.161.138/$MAILCHIMP_SUBSCRIBE_PATH',
+        body: body);
   }
 }

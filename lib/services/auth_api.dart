@@ -159,7 +159,8 @@ class AuthApiService {
       File avatar}) {
     Map<String, dynamic> body = {
       'email': email,
-      'token': token,
+      'token':
+          "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NX0.cneyeP8S0sciBfmncuZWCt6q0dv0FFM4jD6IBNEPSv8",
       'name': name,
       'username': username,
       'phone': phone,
