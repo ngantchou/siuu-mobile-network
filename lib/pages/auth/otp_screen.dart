@@ -214,14 +214,14 @@ class _OtpScreenState extends State<OtpScreen> {
     }
     try {
       Navigator.pushReplacementNamed(context, '/auth/name_step');
-      final AuthCredential credential = PhoneAuthProvider.getCredential(
+      /*final AuthCredential credential = PhoneAuthProvider.getCredential(
         verificationId: verificationId,
         smsCode: smsOTP,
       );
       final UserCredential user = await _auth.signInWithCredential(credential);
       final User currentUser = await _auth.currentUser;
       assert(user.user.uid == currentUser.uid);
-      Navigator.pushReplacementNamed(context, '/auth/name_step');
+      Navigator.pushReplacementNamed(context, '/auth/name_step');*/
     } catch (e) {
       print(e);
     }
