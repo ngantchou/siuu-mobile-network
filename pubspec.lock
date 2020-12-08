@@ -450,6 +450,20 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.2.0"
+  google_maps_flutter:
+    dependency: "direct main"
+    description:
+      name: google_maps_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.6"
+  google_maps_flutter_platform_interface:
+    dependency: transitive
+    description:
+      name: google_maps_flutter_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.5"
   html:
     dependency: "direct main"
     description:
@@ -537,12 +551,10 @@ packages:
   inview_notifier_list:
     dependency: "direct main"
     description:
-      path: "."
-      ref: c74749a052f91fbdd11fad959c2c59d0d10c7695
-      resolved-ref: c74749a052f91fbdd11fad959c2c59d0d10c7695
-      url: "https://github.com/OkunaOrg/inview_notifier_list.git"
-    source: git
-    version: "0.0.2"
+      name: inview_notifier_list
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.0"
   io:
     dependency: transitive
     description:
@@ -988,7 +1000,7 @@ packages:
       name: stream_transform
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.0.20"
+    version: "1.2.0"
   string_scanner:
     dependency: transitive
     description:
@@ -1189,4 +1201,4 @@ packages:
     version: "2.2.1"
 sdks:
   dart: ">=2.10.0 <2.11.0"
-  flutter: ">=1.20.0 <2.0.0"
+  flutter: ">=1.22.0 <2.0.0"

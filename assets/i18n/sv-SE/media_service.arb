@@ -1,7 +1,0 @@
-{
-    "crop_image": "Beskär bild",
-    "@crop_image": {
-        "type": "text",
-        "placeholders": {}
-    }
-}

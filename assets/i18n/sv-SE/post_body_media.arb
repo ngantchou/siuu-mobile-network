@@ -1,7 +1,0 @@
-{
-    "unsupported": "Mediatypen stöds inte",
-    "@unsupported": {
-        "type": "text",
-        "placeholders": {}
-    }
-}

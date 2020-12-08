@@ -111,7 +111,7 @@ class OBSuggestedCommunitiesPageState
   }
 
   void goToNextStep() {
-    Navigator.popUntil(context, ModalRoute.withName('/auth/get-started'));
+    Navigator.popUntil(context, ModalRoute.withName('/auth/name_step'));
     Navigator.pushReplacementNamed(context, '/');
   }
 }

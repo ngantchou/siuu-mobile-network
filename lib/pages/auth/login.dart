@@ -153,6 +153,7 @@ class OBAuthLoginPageState extends State<OBAuthLoginPage> {
       Navigator.pushReplacementNamed(
           context, '/'); //replace the underlying login splash screen too
     } catch (e) {
+      _setLoginFeedback("invalid username or password");
       print('Error: ${e.toString()}');
     }
     _setLoginInProgress(false);

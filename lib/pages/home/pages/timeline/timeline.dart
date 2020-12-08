@@ -165,7 +165,7 @@ class OBTimelinePageState extends State<OBTimelinePage>
           child: Column(children: <Widget>[
             OBThemedNavigationBar(
                 title: 'Home', trailing: _buildFiltersButton()),
-            Memories(),
+            Memories(_userService.getLoggedInUser()?.profile?.avatar),
             Container(
               height: height / 1.5,
               child: _loggedInUserBootstrapped

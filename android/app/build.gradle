@@ -49,6 +49,7 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
+        checkReleaseBuilds false 
     }
     ndkVersion '22.0.6917172-rc1'
     compileOptions {
@@ -77,6 +78,18 @@ android {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
             signingConfig signingConfigs.debug
+        }
+    }
+
+    flavorDimensions "flavor-type"
+
+    productFlavors {
+        development {
+            dimension "flavor-type"
+        }
+
+        production {
+            dimension "flavor-type"
         }
     }
 }

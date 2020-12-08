@@ -1,7 +1,0 @@
-{
-    "crop_image": "Afbeelding bijsnijden",
-    "@crop_image": {
-        "type": "text",
-        "placeholders": {}
-    }
-}

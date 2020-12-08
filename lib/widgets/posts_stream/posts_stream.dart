@@ -197,7 +197,10 @@ class OBPostsStreamState extends State<OBPostsStream>
       padding: const EdgeInsets.all(0),
       controller: _streamScrollController,
       isInViewPortCondition: _checkTimelineItemIsInViewport,
-      children: streamItems,
+      itemCount: streamItems.length,
+      builder: (BuildContext context, int index) {
+        return streamItems[index];
+      },
     ));
 
     if (!_shouldHideStackedLoadingScreen) {

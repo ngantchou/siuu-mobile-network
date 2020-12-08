@@ -34,6 +34,7 @@ import 'package:Siuu/pages/home/pages/community/pages/manage_community/pages/com
 import 'package:Siuu/pages/home/pages/community/pages/manage_community/pages/delete_community.dart';
 import 'package:Siuu/pages/home/pages/community/pages/manage_community/pages/leave_community.dart';
 import 'package:Siuu/pages/home/pages/hashtag/hashtag.dart';
+import 'package:Siuu/pages/home/pages/memories/myMemory.dart';
 import 'package:Siuu/pages/home/pages/menu/pages/privacy_policy.dart';
 import 'package:Siuu/pages/home/pages/menu/pages/settings/about.dart';
 import 'package:Siuu/pages/home/pages/menu/pages/community_guidelines.dart';
@@ -753,9 +754,20 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('postReactionsPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('storyCreatePageRoute'),
           builder: (BuildContext context) {
             return Categories();
+          }),
+    );
+  }
+
+  Future<void> navigateToViewStory({@required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('storyViewPageRoute'),
+          builder: (BuildContext context) {
+            return MyMemory();
           }),
     );
   }

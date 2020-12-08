@@ -1,7 +1,0 @@
-{
-    "unsupported": "Type de media non pris en charge",
-    "@unsupported": {
-        "type": "text",
-        "placeholders": {}
-    }
-}

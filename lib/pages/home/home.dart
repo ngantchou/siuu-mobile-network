@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 import 'package:Siuu/pages/home/pages/Messages/Message.dart';
+import 'package:Siuu/pages/home/pages/place/place.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Siuu/models/push_notification.dart';
 import 'package:Siuu/pages/home/lib/poppable_page_controller.dart';
@@ -161,9 +162,9 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         page = OBOwnProfilePage(controller: _ownProfilePageController);
         break;*/
       case OBHomePageTabs.menu:
-        page = OBMainMenuPage(
-          controller: _mainMenuPageController,
-        );
+        page = PlacesPage(
+            //controller: _mainMenuPageController,
+            );
         break;
       default:
         throw 'Unhandled index';
@@ -357,18 +358,14 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
               index: 3,
               title: 'Notifications'),
         ),
-        /* BottomNavigationBarItem(
+        BottomNavigationBarItem(
           title: const SizedBox(),
           icon: buildBottomNavigationBarItem(
-              iconPath: "assets/svg/notification.svg",
-              index: 3,
-              title: 'Notifications'),
+              iconPath: "assets/svg/memories.svg", index: 3, title: 'Places'),
           activeIcon: buildBottomNavigationBarItem(
-              iconPath: "assets/svg/notification.svg",
-              index: 3,
-              title: 'Notifications'),
-        ),*/
-        BottomNavigationBarItem(
+              iconPath: "assets/svg/memories.svg", index: 3, title: 'Places'),
+        ),
+        /* BottomNavigationBarItem(
           title: const SizedBox(),
           icon: const OBIcon(
             OBIcons.menu,
@@ -378,7 +375,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
             OBIcons.menu,
             themeColor: OBIconThemeColor.primaryAccent,
           ),
-        ),
+        ),*/
       ],
     );
   }

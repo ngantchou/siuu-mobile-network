@@ -1,7 +1,0 @@
-{
-    "unsupported": "Nem támogatott médiaformátum",
-    "@unsupported": {
-        "type": "text",
-        "placeholders": {}
-    }
-}
