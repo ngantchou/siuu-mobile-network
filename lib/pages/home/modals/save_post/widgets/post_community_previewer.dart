@@ -12,9 +12,9 @@ import 'package:flutter/material.dart';
 import '../../../../../provider.dart';
 
 class OBPostMemoryPreviewer extends StatelessWidget {
-  final Memory memory;
+  final Memory community;
 
-  const OBPostMemoryPreviewer({Key key, @required this.memory})
+  const OBPostMemoryPreviewer({Key key, @required this.community})
       : super(key: key);
 
   @override
@@ -30,7 +30,7 @@ class OBPostMemoryPreviewer extends StatelessWidget {
           height: 10,
         ),
         OBMemoryTile(
-          memory,
+          community,
           size: OBMemoryTileSize.small,
         )
       ],

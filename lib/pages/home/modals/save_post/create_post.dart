@@ -1,7 +1,7 @@
 import 'dart:io';
 
-import 'package:Siuu/custom/customAppBars/appBar2.dart';
 import 'package:Siuu/models/community.dart';
+import 'package:Siuu/models/memory.dart';
 import 'package:Siuu/models/link_preview/link_preview.dart';
 import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/post_image.dart';
@@ -165,7 +165,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
     if (!_isEditingPost && widget.memory != null)
       _postItemsWidgets.add(OBPostMemoryPreviewer(
-        memory: widget.memory,
+        community: widget.memory,
       ));
 
     _textController.addListener(_onPostTextChanged);
@@ -204,36 +204,13 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       bootstrap();
       _needsBootstrap = false;
     }
-    final double width = MediaQuery.of(context).size.width;
-    final double height = MediaQuery.of(context).size.height;
 
-    bool isPrimaryActionButtonIsEnabled =
-        (_isPostTextAllowedLength && _charactersCount > 0) ||
-            _hasImage ||
-            _hasVideo;
-    return Scaffold(
-        appBar: PreferredSize(
-          preferredSize: Size(width, height * 0.1755),
-          child: Appbar2(
-            close: () {
-              if (this._postImageFile != null) this._postImageFile.delete();
-              if (this._postVideoFile != null)
-                _mediaService.clearThumbnailForFile(this._postVideoFile);
-              if (this._postVideoFile != null) this._postVideoFile.delete();
-              Navigator.pop(context);
-            },
-            title: _isEditingPost
-                ? _localizationService.post__edit_title
-                : _localizationService.trans('post__create_new'),
-            trailing: _buildPrimaryActionButton(
-                isEnabled: isPrimaryActionButtonIsEnabled),
-          ),
-        ),
+    return CupertinoPageScaffold(
         backgroundColor: Colors.transparent,
-        body: OBPrimaryColorContainer(
+        navigationBar: _buildNavigationBar(_localizationService),
+        child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
-            // _buildNavigationBar(_localizationService),
             Expanded(
                 flex: isAutocompleting ? 3 : 1,
                 child: Padding(
@@ -308,26 +285,12 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       if (isEnabled) {
         nextButton = GestureDetector(
           onTap: _onWantsToGoNext,
-          child: Text(
-            _localizationService.trans('post__create_next'),
-            style: TextStyle(
-              fontFamily: "Segoe UI",
-              fontSize: 19,
-              color: Color(0xffffffff),
-            ),
-          ),
+          child: OBText(_localizationService.trans('post__create_next')),
         );
       } else {
         nextButton = Opacity(
           opacity: 0.5,
-          child: Text(
-            _localizationService.trans('post__create_next'),
-            style: TextStyle(
-              fontFamily: "Segoe UI",
-              fontSize: 19,
-              color: Color(0xffffffff),
-            ),
-          ),
+          child: OBText(_localizationService.trans('post__create_next')),
         );
       }
     }
@@ -370,39 +333,23 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   Widget _buildNewPostContent() {
-    final double width = MediaQuery.of(context).size.width;
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.all(50.0),
-          child: Column(
-            children: [
-              Row(
-                children: [
-                  OBLoggedInUserAvatar(
-                    size: OBAvatarSize.medium,
-                  ),
-                  SizedBox(width: width * 0.024),
-                  Text(
-                    _userService.getLoggedInUser().username,
-                    style: TextStyle(
-                      fontFamily: "Segoe UI",
-                      fontSize: 17,
-                      color: Color(0xff454F63),
-                    ),
-                  )
-                ],
-              ),
-              Container(
-                child: OBRemainingPostCharacters(
-                  maxCharacters: ValidationService.POST_MAX_LENGTH,
-                  currentCharacters: _charactersCount,
-                ),
-              ),
-            ],
-          ),
+        Column(
+          children: <Widget>[
+            OBLoggedInUserAvatar(
+              size: OBAvatarSize.medium,
+            ),
+            const SizedBox(
+              height: 12.0,
+            ),
+            OBRemainingPostCharacters(
+              maxCharacters: ValidationService.POST_MAX_LENGTH,
+              currentCharacters: _charactersCount,
+            ),
+          ],
         ),
         Expanded(
           child: SingleChildScrollView(

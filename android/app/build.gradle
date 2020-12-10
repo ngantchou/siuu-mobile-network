@@ -83,15 +83,6 @@ android {
 
     flavorDimensions "flavor-type"
 
-    productFlavors {
-        development {
-            dimension "flavor-type"
-        }
-
-        production {
-            dimension "flavor-type"
-        }
-    }
 }
 
 flutter {

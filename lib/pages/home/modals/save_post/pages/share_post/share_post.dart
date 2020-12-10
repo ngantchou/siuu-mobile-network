@@ -120,10 +120,10 @@ class OBSharePostPageState extends State<OBSharePostPage> {
 
   Future<void> _refreshLoggedInUser() async {
     User refreshedUser = await _userService.refreshUser();
-    if (!refreshedUser.isMemberOfCommunities) {
+    /* if (refreshedUser.isMemberOfCommunities) {
       // Only possibility
       _onWantsToSharePostToCircles();
-    }
+    }*/
   }
 
   void _onWantsToSharePostToCircles() async {

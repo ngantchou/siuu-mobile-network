@@ -64,8 +64,11 @@ class OBSharePostWithCirclesPageState
 
     if (_needsBootstrap) {
       _bootstrap();
-      _fakeWorldCircle =
-          Circle(id: 1, name: _localizationService.trans('post__world_circle_name'), color: '#023ca7', usersCount: 7700000000);
+      _fakeWorldCircle = Circle(
+          id: 1,
+          name: _localizationService.trans('post__world_circle_name'),
+          color: '#023ca7',
+          usersCount: 7700000000);
       _needsBootstrap = false;
     }
 
@@ -158,7 +161,7 @@ class OBSharePostWithCirclesPageState
     if (_fakeWorldCircleSelected) {
       selectedCircles = [];
     } else if (_selectedCircles.contains(_connectionsCircle)) {
-      selectedCircles = [ _connectionsCircle ];
+      selectedCircles = [_connectionsCircle];
     } else {
       selectedCircles = _selectedCircles;
     }

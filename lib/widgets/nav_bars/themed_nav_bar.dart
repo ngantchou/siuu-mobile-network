@@ -47,7 +47,7 @@ class OBThemedNavigationBar extends StatelessWidget
             height: height * 0.058,
           ),*/
           Container(
-            height: height * 0.107,
+            height: height * 0.078,
             child: Padding(
               padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
               child: Row(
