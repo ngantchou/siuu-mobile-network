@@ -43,7 +43,7 @@ class _VideoMemoryState extends State<VideoMemory> {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           SizedBox(
-            height: height,
+            height: height / 3,
             width: width,
             child: Stack(
               children: [
