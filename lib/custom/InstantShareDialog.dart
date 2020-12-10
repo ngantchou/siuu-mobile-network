@@ -1,8 +1,11 @@
 import 'package:Siuu/res/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:Siuu/models/post.dart';
 
 class InstantShareDialog extends StatelessWidget {
+  final Post _post;
+  InstantShareDialog(this._post);
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
@@ -32,7 +35,7 @@ class InstantShareDialog extends StatelessWidget {
                 buildRow(
                     height: height,
                     width: width,
-                    text: 'Instant Share',
+                    text: 'Share',
                     image: 'share'),
                 Spacer(),
                 Divider(
@@ -42,13 +45,12 @@ class InstantShareDialog extends StatelessWidget {
                 Spacer(),
                 InkWell(
                     onTap: () {
-                      Navigator.pop(context);
-                      Navigator.pushNamed(context, "/expressYourself");
+                      // Share.shareFiles([_post.], text: _post.title);
                     },
                     child: buildRow(
                         height: height,
                         width: width,
-                        text: 'Express yourself',
+                        text: 'Share on other network',
                         image: 'expressIcon')),
                 Spacer(
                   flex: 2,

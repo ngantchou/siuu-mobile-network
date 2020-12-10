@@ -74,13 +74,13 @@ class OBPostActionReactState extends State<OBPostActionReact> {
             const SizedBox(
               width: 10.0,
             ),
-            OBText(
+            /* OBText(
               hasReaction ? reaction.getEmojiKeyword() : _localizationService.post__action_react,
               style: TextStyle(
                 color: hasReaction ? Colors.white : null,
                 fontWeight: hasReaction ? FontWeight.bold : FontWeight.normal,
               ),
-            ),
+            ),*/
           ],
         );
 
@@ -142,7 +142,8 @@ class OBPostActionReactState extends State<OBPostActionReact> {
       String errorMessage = await error.toHumanReadableMessage();
       toastService.error(message: errorMessage, context: context);
     } else {
-      toastService.error(message: _localizationService.error__unknown_error, context: context);
+      toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

@@ -2,6 +2,7 @@ import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/post_comment.dart';
 import 'package:Siuu/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
 import 'package:Siuu/pages/home/lib/draft_editing_controller.dart';
+import 'package:Siuu/pages/home/widgets/lottiePersonaStickers.dart';
 import 'package:Siuu/provider.dart';
 import 'package:Siuu/services/localization.dart';
 import 'package:Siuu/services/toast.dart';
@@ -15,6 +16,7 @@ import 'package:Siuu/widgets/fields/text_form_field.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:Siuu/services/httpie.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OBPostCommenter extends StatefulWidget {
   final Post post;
@@ -43,7 +45,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   bool _commentInProgress;
   bool _formWasSubmitted;
   bool _needsBootstrap;
-
+  bool viewStickers;
   int _charactersCount;
   bool _isMultiline;
 
@@ -64,6 +66,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     _needsBootstrap = true;
     _charactersCount = 0;
     _isMultiline = false;
+    viewStickers = false;
   }
 
   @override
@@ -83,7 +86,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       widget.textController.addListener(_onPostCommentChanged);
       _needsBootstrap = false;
     }
-
+    final keyboardVisible = MediaQuery.of(context).viewInsets.bottom;
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0),
       child: Row(
@@ -121,8 +126,8 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                   child: LayoutBuilder(builder: (context, size) {
                     TextStyle style = TextStyle(
                         fontSize: 14.0, fontFamilyFallback: ['NunitoSans']);
-                    TextSpan text =
-                        new TextSpan(text: widget.textController.text, style: style);
+                    TextSpan text = new TextSpan(
+                        text: widget.textController.text, style: style);
 
                     TextPainter tp = new TextPainter(
                       text: text,
@@ -152,7 +157,27 @@ class OBPostCommenterState extends State<OBPostCommenter> {
               child:
                   Text(_localizationService.trans('post__commenter_post_text')),
             ),
-          )
+          ),
+          Positioned(
+            bottom: 0,
+            child: keyboardVisible == 0
+                ? Column(
+                    children: [
+                      //buildContainer(width),
+                      viewStickers
+                          ? LottiePersonaStickers(width: width)
+                          : Container(),
+                    ],
+                  )
+                : Column(
+                    children: [
+                      //buildContainer(width),
+                      viewStickers
+                          ? LottiePersonaStickers(width: width)
+                          : Container(),
+                    ],
+                  ),
+          ),
         ],
       ),
     );
@@ -164,8 +189,78 @@ class OBPostCommenterState extends State<OBPostCommenter> {
 
     bool autofocus = widget.autofocus;
     FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
 
-    return OBTextFormField(
+    return Container(
+      width: width,
+      decoration: BoxDecoration(
+        color: Color(0xffffffff),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0.00, 4.00),
+            color: Color(0xff455b63).withOpacity(0.08),
+            blurRadius: 16,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(12.00),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+        child: Row(
+          children: [
+            Image.asset('assets/images/boy.png'),
+            SizedBox(width: width * 0.024),
+            Expanded(
+              child: Container(
+                child: OBTextFormField(
+                  controller: widget.textController,
+                  focusNode: focusNode,
+                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  maxLines: maxLines,
+                  style: style,
+                  decoration: InputDecoration(
+                    hintText: _localizationService
+                        .trans('post__commenter_write_something'),
+                    contentPadding: inputContentPadding,
+                  ),
+                  hasBorder: false,
+                  autofocus: autofocus,
+                  autocorrect: true,
+                  validator: (String comment) {
+                    if (!_formWasSubmitted) return null;
+                    return _validationService
+                        .validatePostComment(widget.textController.text);
+                  },
+                ),
+              ),
+            ),
+            Row(
+              children: [
+                SizedBox(width: width * 0.024),
+                InkWell(
+                    onTap: () {
+                      setState(() {
+                        viewStickers = !viewStickers;
+                        FocusScope.of(context).unfocus();
+                      });
+                    },
+                    child: viewStickers
+                        ? Icon(Icons.close)
+                        : SvgPicture.asset('assets/svg/emoji.svg')),
+                SizedBox(width: width * 0.024),
+                SvgPicture.asset('assets/svg/micIcon.svg'),
+                SizedBox(width: width * 0.024),
+                SvgPicture.asset('assets/svg/postIcon.svg'),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+    /* return OBTextFormField(
       controller: widget.textController,
       focusNode: focusNode,
       textCapitalization: TextCapitalization.sentences,
@@ -184,7 +279,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
         if (!_formWasSubmitted) return null;
         return _validationService.validatePostComment(widget.textController.text);
       },
-    );
+    );*/
   }
 
   void _submitForm() async {
@@ -231,6 +326,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   }
 
   void _onPostCommentChanged() {
+    viewStickers = false;
     int charactersCount = widget.textController.text.length;
     _setCharactersCount(charactersCount);
     if (charactersCount == 0) _setFormWasSubmitted(false);

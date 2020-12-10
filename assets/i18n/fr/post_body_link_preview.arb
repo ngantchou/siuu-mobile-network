@@ -1,0 +1,14 @@
+{
+    "empty": "Ce lien n'a pas pu être prévisualisé",
+    "@empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_with_description": "Impossible de prévisualiser le lien avec l'erreur du site web : {description}",
+    "@error_with_description": {
+        "type": "text",
+        "placeholders": {
+            "description": {}
+        }
+    }
+}

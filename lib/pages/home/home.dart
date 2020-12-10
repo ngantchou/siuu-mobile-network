@@ -258,6 +258,11 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
           _resetLoggedInUserUnreadNotificationsCount();
         }
 
+        if (tappedTab == OBHomePageTabs.menu &&
+            currentTab == OBHomePageTabs.menu) {
+          _mainMenuPageController.popUntilFirstRoute();
+        }
+
         if (tappedTab == OBHomePageTabs.notifications) {
           _notificationsPageController.setIsActivePage(true);
           if (currentTab == OBHomePageTabs.notifications) {
@@ -269,11 +274,6 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
           }
         } else {
           _notificationsPageController.setIsActivePage(false);
-        }
-
-        if (tappedTab == OBHomePageTabs.menu &&
-            currentTab == OBHomePageTabs.menu) {
-          _mainMenuPageController.popUntilFirstRoute();
         }
 
         _lastIndex = index;

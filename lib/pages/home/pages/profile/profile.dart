@@ -161,22 +161,7 @@ class OBProfilePageState extends State<OBProfilePage>
 
   CustomPostContainer buildCustomPostContainer() {
     final double height = MediaQuery.of(context).size.height;
-    return CustomPostContainer(
-      image: 'avatar',
-      commentsNumber: '256',
-      heartNumber: '428',
-      height: height * 0.357,
-      personName: 'Jerome Gaveau',
-      widget: Text(
-        "When one door of happiness closes, another opens, but often we look so long at the closed door that we do not see the one that has been opened for us. ",
-        style: TextStyle(
-          height: height * 0.002,
-          fontFamily: "Segoe UI",
-          fontSize: 14,
-          color: Color(0xff78849e),
-        ),
-      ),
-    );
+    return CustomPostContainer();
   }
 
   Text buildText(

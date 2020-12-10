@@ -114,7 +114,7 @@ class _CustomPostContainerState extends State<CustomPostContainer> {
                         showDialog(
                           context: context,
                           builder: (context) {
-                            return InstantShareDialog();
+                            // return InstantShareDialog();
                           },
                         );
                       },

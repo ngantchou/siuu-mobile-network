@@ -54,6 +54,7 @@ import 'package:Siuu/pages/home/pages/menu/pages/settings/pages/account_settings
 import 'package:Siuu/pages/home/pages/menu/pages/settings/pages/application_settings.dart';
 import 'package:Siuu/pages/home/pages/menu/pages/settings/pages/developer_settings.dart';
 import 'package:Siuu/pages/home/pages/menu/pages/terms_of_use.dart';
+import 'package:Siuu/pages/home/pages/post_comments/comments.dart';
 import 'package:Siuu/pages/home/pages/profile/pages/edit_profile/manage_profile.dart';
 import 'package:Siuu/pages/home/pages/profile/pages/edit_profile/pages/profile_posts_excluded_communities/profile_posts_excluded_communities.dart';
 import 'package:Siuu/pages/home/pages/profile/pages/follow_requests.dart';
@@ -350,20 +351,22 @@ class NavigationService {
     );
   }
 
-  Future navigateToCommentPost(
+  /* Future navigateToCommentPost(
       {@required Post post, @required BuildContext context}) {
+    print("route test");
     return Navigator.push(
         context,
         OBSlideRightRoute<dynamic>(
             slidableKey: _getKeyRandomisedWithWord('commentPostPageRoute'),
             builder: (BuildContext context) {
-              return OBPostCommentsPage(
+              /* return OBPostCommentsPage(
                   pageType: PostCommentsPageType.comments,
                   post: post,
                   showPostPreview: true,
-                  autofocusCommentInput: true);
+                  autofocusCommentInput: true);*/
+              return Comments();
             }));
-  }
+  }*/
 
   Future<void> navigateToPostComments(
       {@required Post post, @required BuildContext context}) {

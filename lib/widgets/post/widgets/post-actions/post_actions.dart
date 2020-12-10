@@ -1,8 +1,12 @@
+import 'package:Siuu/custom/InstantShareDialog.dart';
+import 'package:Siuu/custom/customPostContainer.dart';
+import 'package:Siuu/custom/reactionPostContainer.dart';
 import 'package:Siuu/models/post.dart';
 import 'package:Siuu/provider.dart';
 import 'package:Siuu/widgets/post/widgets/post-actions/widgets/post_action_comment.dart';
 import 'package:Siuu/widgets/post/widgets/post-actions/widgets/post_action_react.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OBPostActions extends StatelessWidget {
   final Post _post;
@@ -13,7 +17,7 @@ class OBPostActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> postActions = [
-      Expanded(child: OBPostActionReact(_post)),
+      // Expanded(child: OBPostActionReact(_post)),
     ];
 
     bool commentsEnabled = _post.areCommentsEnabled ?? true;
@@ -29,26 +33,36 @@ class OBPostActions extends StatelessWidget {
 
     if (commentsEnabled || canDisableOrEnableCommentsForPost) {
       postActions.addAll([
+        ReactinPostContainer(_post),
         const SizedBox(
           width: 20.0,
         ),
-        Expanded(
-          child: OBPostActionComment(
-            _post,
-            onWantsToCommentPost: onWantsToCommentPost,
-          ),
+        OBPostActionComment(
+          _post,
+          onWantsToCommentPost: onWantsToCommentPost,
+        ),
+        GestureDetector(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return InstantShareDialog(_post);
+              },
+            );
+          },
+          child: SvgPicture.asset('assets/svg/share.svg'),
         ),
       ]);
     }
-
     return Padding(
         padding: EdgeInsets.only(left: 20.0, top: 10.0, right: 20.0),
         child: Column(
           children: <Widget>[
             Row(
-              mainAxisSize: MainAxisSize.max,
+              //mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: postActions,
-            )
+            ),
           ],
         ));
   }
