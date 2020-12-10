@@ -1,0 +1,14 @@
+{
+    "empty": "Este link não está disponível para pré-visualização",
+    "@empty": {
+        "type": "text",
+        "placeholders": {}
+    },
+    "error_with_description": "Falha ao pré-visualizar o link com erro no site: {description}",
+    "@error_with_description": {
+        "type": "text",
+        "placeholders": {
+            "description": {}
+        }
+    }
+}

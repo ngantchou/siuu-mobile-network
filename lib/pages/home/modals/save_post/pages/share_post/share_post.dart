@@ -48,8 +48,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
       _bootstrap();
       _needsBootstrap = false;
     }
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
+
     User loggedInUser = _userService.getLoggedInUser();
 
     return OBCupertinoPageScaffold(
@@ -93,20 +92,15 @@ class OBSharePostPageState extends State<OBSharePostPage> {
                     _localizationService.trans('post__share_community_desc'),
                     style: shareToTilesSubtitleStyle,
                   ),
-                  onTap: _onWantsToSharePostToMemory,
+                  onTap: _onWantsToSharePostToCommunity,
                 ));
               }
 
               return Column(
                 children: <Widget>[
-                  Container(
-                    height: height * 0.058,
-                  ),
                   Expanded(
                       child: ListView(
-                          physics: const ClampingScrollPhysics(),
-                          padding: EdgeInsets.zero,
-                          children: shareToTiles)),
+                          padding: EdgeInsets.zero, children: shareToTiles)),
                 ],
               );
             },
@@ -139,7 +133,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
     if (createPostData != null) Navigator.pop(context, createPostData);
   }
 
-  void _onWantsToSharePostToMemory() async {
+  void _onWantsToSharePostToCommunity() async {
     OBNewPostData createPostData =
         await _navigationService.navigateToSharePostWithMemory(
             context: context, createPostData: widget.createPostData);
