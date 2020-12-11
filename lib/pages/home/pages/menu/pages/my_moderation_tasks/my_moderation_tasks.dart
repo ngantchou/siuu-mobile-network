@@ -73,6 +73,7 @@ class OBMyModerationTasksPageState extends State<OBMyModerationTasksPage> {
       onTap: () => _onPendingModeratedObjectsMemoryListItemPressed(memory),
       child: Row(
         children: <Widget>[
+          SizedBox(height: 50),
           Expanded(
             child: OBMemoryTile(memory),
           ),

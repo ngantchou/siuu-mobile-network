@@ -62,7 +62,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
     _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
     _localizationService = openbookProvider.localizationService;
-    
+
     String currentUserEmail = _userService.getLoggedInUser().getEmail();
     _currentEmailController = TextEditingController(text: currentUserEmail);
 
@@ -76,13 +76,15 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    SizedBox(height: 50),
                     OBTextFormField(
                       size: OBTextFormFieldSize.large,
                       autofocus: false,
                       readOnly: true,
                       controller: _currentEmailController,
                       decoration: InputDecoration(
-                        labelText:_localizationService.user__change_email_current_email_text,
+                        labelText: _localizationService
+                            .user__change_email_current_email_text,
                       ),
                     ),
                     OBTextFormField(
@@ -90,8 +92,10 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
                       autofocus: true,
                       controller: _emailController,
                       decoration: InputDecoration(
-                        labelText:_localizationService.user__change_email_email_text,
-                        hintText:_localizationService.user__change_email_hint_text,
+                        labelText:
+                            _localizationService.user__change_email_email_text,
+                        hintText:
+                            _localizationService.user__change_email_hint_text,
                       ),
                       validator: (String email) {
                         if (!_formWasSubmitted) return null;
@@ -150,8 +154,7 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
           CancelableOperation.fromFuture(_userService.updateUserEmail(email));
       await _requestOperation.value;
       _toastService.success(
-          message:
-              _localizationService.user__change_email_success_info,
+          message: _localizationService.user__change_email_success_info,
           context: context);
       Navigator.of(context).pop();
     } catch (error) {
@@ -170,7 +173,8 @@ class OBChangeEmailModalState extends State<OBChangeEmailModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

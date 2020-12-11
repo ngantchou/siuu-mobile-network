@@ -91,6 +91,7 @@ class OBUserLanguageSettingsPageState
         ignoring: _requestInProgress,
         child: Column(
           children: <Widget>[
+            SizedBox(height: 50),
             ListView.builder(
                 physics: const ClampingScrollPhysics(),
                 itemCount: _allLanguages.length,
@@ -130,8 +131,10 @@ class OBUserLanguageSettingsPageState
   }
 
   void _setLanguagesList(LanguagesList list) {
-    List<Language> supportedList = list.languages.where((Language language) =>
-        supportedLanguages.contains(language.code)).toList();
+    List<Language> supportedList = list.languages
+        .where(
+            (Language language) => supportedLanguages.contains(language.code))
+        .toList();
     setState(() {
       _allLanguages = supportedList;
     });
@@ -145,8 +148,8 @@ class OBUserLanguageSettingsPageState
   }
 
   void _setSelectedLocaleFromLanguage(Language language) {
-    Locale supportedMatchedLocale = supportedLocales.firstWhere((
-        Locale locale) => locale.languageCode == language.code);
+    Locale supportedMatchedLocale = supportedLocales
+        .firstWhere((Locale locale) => locale.languageCode == language.code);
     setState(() {
       _selectedLocale = supportedMatchedLocale;
     });
@@ -165,9 +168,7 @@ class OBUserLanguageSettingsPageState
   }
 
   void _bootstrap() async {
-    Language userLanguage = _userService
-        .getLoggedInUser()
-        .language;
+    Language userLanguage = _userService.getLoggedInUser().language;
     _setSelectedLanguageInWidget(userLanguage);
     _setCurrentUserLanguage(userLanguage);
     await _refreshLanguages();
@@ -203,4 +204,3 @@ class OBUserLanguageSettingsPageState
     });
   }
 }
-

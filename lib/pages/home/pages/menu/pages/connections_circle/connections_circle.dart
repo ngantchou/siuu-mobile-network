@@ -70,6 +70,7 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    SizedBox(height: 50),
                     OBConnectionsCircleHeader(widget.connectionsCircle,
                         isConnectionsCircle: _isConnectionsCircle),
                     Expanded(
@@ -91,7 +92,8 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
         _modalService.openEditConnectionsCircle(
             connectionsCircle: widget.connectionsCircle, context: context);
       },
-      child: OBPrimaryAccentText(_localizationService.trans('user__connection_circle_edit')),
+      child: OBPrimaryAccentText(
+          _localizationService.trans('user__connection_circle_edit')),
     );
   }
 
@@ -120,7 +122,9 @@ class OBConnectionsCirclePageState extends State<OBConnectionsCirclePage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.trans('error__unknown_error'), context: context);
+      _toastService.error(
+          message: _localizationService.trans('error__unknown_error'),
+          context: context);
       throw error;
     }
   }

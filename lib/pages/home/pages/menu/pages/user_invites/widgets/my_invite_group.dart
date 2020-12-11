@@ -17,7 +17,8 @@ import 'package:flutter/material.dart';
 class OBMyInvitesGroup extends StatefulWidget {
   final OBHttpListRefresher<UserInvite> inviteGroupListRefresher;
   final OBHttpListSearcher<UserInvite> inviteListSearcher;
-  final void Function(BuildContext, UserInvite) inviteGroupListItemDeleteCallback;
+  final void Function(BuildContext, UserInvite)
+      inviteGroupListItemDeleteCallback;
   final OBHttpListOnScrollLoader<UserInvite> inviteGroupListOnScrollLoader;
   final OBMyInvitesGroupFallbackBuilder noGroupItemsFallbackBuilder;
   final OBMyInvitesGroupController controller;
@@ -76,19 +77,19 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
     }
 
     int listItemCount =
-    _inviteGroupList.length < widget.maxGroupListPreviewItems
-        ? _inviteGroupList.length
-        : widget.maxGroupListPreviewItems;
+        _inviteGroupList.length < widget.maxGroupListPreviewItems
+            ? _inviteGroupList.length
+            : widget.maxGroupListPreviewItems;
 
     if (listItemCount == 0) {
       if (widget.noGroupItemsFallbackBuilder != null && !_refreshInProgress) {
-        return widget.noGroupItemsFallbackBuilder(
-            context, _refreshInvites);
+        return widget.noGroupItemsFallbackBuilder(context, _refreshInvites);
       }
       return const SizedBox();
     }
 
     List<Widget> columnItems = [
+      SizedBox(height: 50),
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
         child: OBText(
@@ -132,7 +133,8 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            OBSecondaryText(_localizationService.user__groups_see_all(widget.groupName),
+            OBSecondaryText(
+              _localizationService.user__groups_see_all(widget.groupName),
               style: TextStyle(fontSize: 16),
             ),
             const SizedBox(
@@ -203,7 +205,8 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -220,17 +223,16 @@ class OBMyInvitesGroupState extends State<OBMyInvitesGroup> {
     return Column(
       children: <Widget>[
         Expanded(
-            child: OBHttpList<UserInvite>(
-                  separatorBuilder: _buildInviteSeparator,
-                  listSearcher: widget.inviteListSearcher,
-                  searchResultListItemBuilder: _buildInviteTile,
-                  listItemBuilder: _buildInviteTile,
-                  listRefresher: widget.inviteGroupListRefresher,
-                  listOnScrollLoader: widget.inviteGroupListOnScrollLoader,
-                  resourcePluralName: widget.groupName,
-                  resourceSingularName: widget.groupItemName
-              ),
-            ),
+          child: OBHttpList<UserInvite>(
+              separatorBuilder: _buildInviteSeparator,
+              listSearcher: widget.inviteListSearcher,
+              searchResultListItemBuilder: _buildInviteTile,
+              listItemBuilder: _buildInviteTile,
+              listRefresher: widget.inviteGroupListRefresher,
+              listOnScrollLoader: widget.inviteGroupListOnScrollLoader,
+              resourcePluralName: widget.groupName,
+              resourceSingularName: widget.groupItemName),
+        ),
       ],
     );
   }

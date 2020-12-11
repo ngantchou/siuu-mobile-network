@@ -23,6 +23,7 @@ class OBSettingsPage extends StatelessWidget {
           // Important: Remove any padding from the ListView.
           padding: EdgeInsets.zero,
           children: <Widget>[
+            SizedBox(height: 50),
             ListTile(
               leading: const OBIcon(OBIcons.account),
               title:
@@ -41,20 +42,19 @@ class OBSettingsPage extends StatelessWidget {
                     context: context);
               },
             ),
-            ListTile(
+            /* ListTile(
               leading: const OBIcon(OBIcons.bug),
               title: OBText(localizationService.drawer__developer_settings),
               onTap: () {
                 navigationService.navigateToDeveloperSettingsPage(
                     context: context);
               },
-            ),
+            ),*/
             ListTile(
               leading: const OBIcon(OBIcons.nativeInfo),
               title: OBText(localizationService.drawer__about),
               onTap: () {
-                navigationService.navigateToAboutPage(
-                    context: context);
+                navigationService.navigateToAboutPage(context: context);
               },
             ),
           ],

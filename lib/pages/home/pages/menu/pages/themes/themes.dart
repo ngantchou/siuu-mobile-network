@@ -14,7 +14,8 @@ import 'package:flutter/material.dart';
 class OBThemesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
     return CupertinoPageScaffold(
       navigationBar: OBThemedNavigationBar(
         title: _localizationService.drawer__themes,
@@ -22,14 +23,13 @@ class OBThemesPage extends StatelessWidget {
       child: OBPrimaryColorContainer(
         child: Column(
           children: <Widget>[
+            SizedBox(height: 50),
             Expanded(
                 child: ListView(
               physics: const ClampingScrollPhysics(),
               // Important: Remove any padding from the ListView.
               padding: EdgeInsets.zero,
-              children: <Widget>[
-                OBCuratedThemes()
-              ],
+              children: <Widget>[OBCuratedThemes()],
             )),
           ],
         ),

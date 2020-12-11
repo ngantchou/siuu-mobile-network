@@ -14,7 +14,8 @@ class OBUserInviteDetailHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LocalizationService localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     return StreamBuilder(
         stream: this.userInvite.updateSubject,
@@ -22,9 +23,10 @@ class OBUserInviteDetailHeader extends StatelessWidget {
         builder: (BuildContext context, AsyncSnapshot<UserInvite> snapshot) {
           var userInvite = snapshot.data;
 
-          List<Widget> columnItems = [_buildUserInviteNickname(userInvite)];
-
-          columnItems.add(_buildUserDescription(userInvite, localizationService));
+          List<Widget> columnItems = [SizedBox(height: 50)];
+          columnItems = [_buildUserInviteNickname(userInvite)];
+          columnItems
+              .add(_buildUserDescription(userInvite, localizationService));
 
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -34,7 +36,6 @@ class OBUserInviteDetailHeader extends StatelessWidget {
   }
 
   Widget _buildUserInviteNickname(UserInvite userInvite) {
-
     return Padding(
       padding: EdgeInsets.only(left: 20.0, right: 20, top: 20.0),
       child: Row(
@@ -48,12 +49,16 @@ class OBUserInviteDetailHeader extends StatelessWidget {
     );
   }
 
-  Widget _buildUserDescription(UserInvite userInvite, LocalizationService localizationService) {
+  Widget _buildUserDescription(
+      UserInvite userInvite, LocalizationService localizationService) {
     Widget _description;
     if (userInvite.createdUser != null) {
-      _description = OBActionableSmartText(text:localizationService.user__invites_joined_with(userInvite.createdUser.username));
+      _description = OBActionableSmartText(
+          text: localizationService
+              .user__invites_joined_with(userInvite.createdUser.username));
     } else if (userInvite.isInviteEmailSent) {
-      _description = OBText(localizationService.user__invites_pending_email(userInvite.email));
+      _description = OBText(
+          localizationService.user__invites_pending_email(userInvite.email));
     } else {
       _description = OBText(localizationService.user__invites_pending);
     }

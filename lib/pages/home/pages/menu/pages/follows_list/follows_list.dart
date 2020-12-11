@@ -60,7 +60,8 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
               modalService.openEditFollowsList(
                   followsList: widget.followsList, context: context);
             },
-            child: OBPrimaryAccentText(_localizationService.user__follows_list_edit),
+            child: OBPrimaryAccentText(
+                _localizationService.user__follows_list_edit),
           ),
         ),
         child: RefreshIndicator(
@@ -70,6 +71,7 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    SizedBox(height: 50),
                     OBFollowsListHeader(widget.followsList),
                     Expanded(
                       child: OBFollowsListUsers(widget.followsList),
@@ -101,7 +103,8 @@ class OBFollowsListPageState extends State<OBFollowsListPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

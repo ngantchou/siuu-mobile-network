@@ -57,14 +57,17 @@ class OBDeleteAccountPageState extends State<OBDeleteAccountPage> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    SizedBox(height: 50),
                     OBTextFormField(
                       size: OBTextFormFieldSize.large,
                       autofocus: true,
                       obscureText: true,
                       controller: _currentPasswordController,
                       decoration: InputDecoration(
-                        labelText: _localizationService.user__delete_account_current_pwd,
-                        hintText: _localizationService.user__delete_account_current_pwd_hint,
+                        labelText: _localizationService
+                            .user__delete_account_current_pwd,
+                        hintText: _localizationService
+                            .user__delete_account_current_pwd_hint,
                       ),
                       validator: (String password) {
                         if (!_formWasSubmitted) return null;

@@ -116,6 +116,7 @@ class OBNotificationsSettingsPageState
     );
 
     List<Widget> toggles = [
+      SizedBox(height: 50),
       OBToggleField(
         key: Key('All'),
         value: _pushNotifications,

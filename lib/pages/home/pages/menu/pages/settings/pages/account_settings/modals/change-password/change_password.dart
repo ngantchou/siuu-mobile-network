@@ -65,6 +65,7 @@ class OBChangePasswordModalState extends State<OBChangePasswordModal> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
+                    SizedBox(height: 50),
                     OBTextFormField(
                       size: OBTextFormFieldSize.large,
                       autofocus: true,

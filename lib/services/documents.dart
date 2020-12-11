@@ -3,12 +3,9 @@ import 'package:Siuu/services/httpie.dart';
 class DocumentsService {
   HttpieService _httpService;
 
-  static const guidelinesUrl =
-      'https://about.siuu.io/docs/COMMUNITY_GUIDELINES.md';
-  static const privacyPolicyUrl =
-      'https://about.siuu.io/docs/PRIVACY_POLICY.md';
-  static const termsOfUsePolicyUrl =
-      'https://about.siuu.io/docs/TERMS_OF_USE.md';
+  static const guidelinesUrl = 'https://siuu.fun/faq-foire-aux-questions/';
+  static const privacyPolicyUrl = 'https://siuu.fun/privacy/';
+  static const termsOfUsePolicyUrl = 'https://siuu.fun/legal-notices/';
 
   // Cache
   String _memoryGuidelines = '';

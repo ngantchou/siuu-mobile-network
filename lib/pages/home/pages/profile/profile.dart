@@ -101,8 +101,6 @@ class OBProfilePageState extends State<OBProfilePage>
       _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
     return Scaffold(
       body: StreamBuilder(
           initialData: widget.user,

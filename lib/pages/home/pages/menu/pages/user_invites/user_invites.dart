@@ -79,41 +79,41 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     }
 
     return OBCupertinoPageScaffold(
-        backgroundColor: Color.fromARGB(0, 0, 0, 0),
-        navigationBar: OBThemedNavigationBar(
-          title: _localizationService.user__invites_title,
-          trailing: Opacity(
-            opacity: _user.inviteCount == 0 ? 0.5 : 1.0,
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                OBUserInviteCount(
-                  count: _user.inviteCount,
-                ),
-                const SizedBox(
-                  width: 10,
-                ),
-                OBIconButton(
-                  OBIcons.add,
-                  themeColor: OBIconThemeColor.primaryAccent,
-                  onPressed: _onWantsToCreateInvite,
-                ),
-              ],
-            ),
+      backgroundColor: Color.fromARGB(0, 0, 0, 0),
+      navigationBar: OBThemedNavigationBar(
+        title: _localizationService.user__invites_title,
+        trailing: Opacity(
+          opacity: _user.inviteCount == 0 ? 0.5 : 1.0,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              SizedBox(height: 50),
+              OBUserInviteCount(
+                count: _user.inviteCount,
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              OBIconButton(
+                OBIcons.add,
+                themeColor: OBIconThemeColor.primaryAccent,
+                onPressed: _onWantsToCreateInvite,
+              ),
+            ],
           ),
         ),
-        child: Stack(
-          children: <Widget>[
-            OBPrimaryColorContainer(
-                child: Column(
-              children: <Widget>[
-               _hasAcceptedInvites || _hasPendingInvites
-                            ? _buildInvitesList()
-                            : _buildNoInvitesFallback()
-                ],
-              )
-            ),
-          ],
+      ),
+      child: Stack(
+        children: <Widget>[
+          OBPrimaryColorContainer(
+              child: Column(
+            children: <Widget>[
+              _hasAcceptedInvites || _hasPendingInvites
+                  ? _buildInvitesList()
+                  : _buildNoInvitesFallback()
+            ],
+          )),
+        ],
       ),
     );
   }
@@ -121,49 +121,51 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   Widget _buildInvitesList() {
     return Expanded(
         child: RefreshIndicator(
-        key: _refreshIndicatorKey,
-        onRefresh: _refreshInvites,
-        child: ListView(
-            key: Key('myUserInvites'),
-            controller: _userInvitesScrollController,
-            // Need always scrollable for pull to refresh to work
-            physics: const AlwaysScrollableScrollPhysics(),
-            padding: EdgeInsets.all(0),
-            children: <Widget>[
-              Column(
-                children: <Widget>[
-                  OBMyInvitesGroup(
-                    key: Key('AcceptedInvitesGroup'),
-                    controller: _acceptedInvitesGroupController,
-                    title: _localizationService.user__invites_accepted_title,
-                    groupName: _localizationService.user__invites_accepted_group_name,
-                    groupItemName: _localizationService.user__invites_accepted_group_item_name,
-                    maxGroupListPreviewItems: 5,
-                    inviteListSearcher: _searchAcceptedUserInvites,
-                    inviteGroupListItemDeleteCallback:
-                        _onUserInviteDeletedCallback,
-                    inviteGroupListRefresher: _refreshAcceptedInvites,
-                    inviteGroupListOnScrollLoader: _loadMoreAcceptedInvites,
-                  ),
-                  OBMyInvitesGroup(
-                    key: Key('PendingInvitesGroup'),
-                    controller: _pendingInvitesGroupController,
-                    title: _localizationService.user__invites_pending,
-                    groupName: _localizationService.user__invites_pending_group_name,
-                    groupItemName: _localizationService.user__invites_pending_group_item_name,
-                    maxGroupListPreviewItems: 5,
-                    inviteListSearcher: _searchPendingUserInvites,
-                    inviteGroupListItemDeleteCallback:
-                        _onUserInviteDeletedCallback,
-                    inviteGroupListRefresher: _refreshPendingInvites,
-                    inviteGroupListOnScrollLoader: _loadMorePendingInvites,
-                  ),
-                ],
-              )
-            ]
-          ),
-        )
-    );
+      key: _refreshIndicatorKey,
+      onRefresh: _refreshInvites,
+      child: ListView(
+          key: Key('myUserInvites'),
+          controller: _userInvitesScrollController,
+          // Need always scrollable for pull to refresh to work
+          physics: const AlwaysScrollableScrollPhysics(),
+          padding: EdgeInsets.all(0),
+          children: <Widget>[
+            Column(
+              children: <Widget>[
+                OBMyInvitesGroup(
+                  key: Key('AcceptedInvitesGroup'),
+                  controller: _acceptedInvitesGroupController,
+                  title: _localizationService.user__invites_accepted_title,
+                  groupName:
+                      _localizationService.user__invites_accepted_group_name,
+                  groupItemName: _localizationService
+                      .user__invites_accepted_group_item_name,
+                  maxGroupListPreviewItems: 5,
+                  inviteListSearcher: _searchAcceptedUserInvites,
+                  inviteGroupListItemDeleteCallback:
+                      _onUserInviteDeletedCallback,
+                  inviteGroupListRefresher: _refreshAcceptedInvites,
+                  inviteGroupListOnScrollLoader: _loadMoreAcceptedInvites,
+                ),
+                OBMyInvitesGroup(
+                  key: Key('PendingInvitesGroup'),
+                  controller: _pendingInvitesGroupController,
+                  title: _localizationService.user__invites_pending,
+                  groupName:
+                      _localizationService.user__invites_pending_group_name,
+                  groupItemName: _localizationService
+                      .user__invites_pending_group_item_name,
+                  maxGroupListPreviewItems: 5,
+                  inviteListSearcher: _searchPendingUserInvites,
+                  inviteGroupListItemDeleteCallback:
+                      _onUserInviteDeletedCallback,
+                  inviteGroupListRefresher: _refreshPendingInvites,
+                  inviteGroupListOnScrollLoader: _loadMorePendingInvites,
+                ),
+              ],
+            )
+          ]),
+    ));
   }
 
   Widget _buildNoInvitesFallback() {
@@ -177,9 +179,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
         ? 'assets/images/stickers/perplexed-owl.png'
         : 'assets/images/stickers/owl-instructor.png';
 
-    Function _onPressed = hasInvites
-        ? _onWantsToCreateInvite
-        : _refreshInvites;
+    Function _onPressed = hasInvites ? _onWantsToCreateInvite : _refreshInvites;
 
     String buttonText = hasInvites
         ? _localizationService.user__invites_invite_a_friend
@@ -211,8 +211,12 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
     try {
       await Future.wait([
         _refreshUser(),
-        _hasAcceptedInvites ?_acceptedInvitesGroupController.refresh() : _refreshAcceptedInvites(),
-        _hasPendingInvites ? _pendingInvitesGroupController.refresh() : _refreshPendingInvites(),
+        _hasAcceptedInvites
+            ? _acceptedInvitesGroupController.refresh()
+            : _refreshAcceptedInvites(),
+        _hasPendingInvites
+            ? _pendingInvitesGroupController.refresh()
+            : _refreshPendingInvites(),
       ]);
       _scrollToTop();
     } catch (error) {
@@ -285,7 +289,8 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -303,7 +308,9 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
   }
 
   void _showNoInvitesLeft() {
-    _toastService.error(message: _localizationService.user__invites_none_left, context: context);
+    _toastService.error(
+        message: _localizationService.user__invites_none_left,
+        context: context);
   }
 
   void _onUserInviteCreated(UserInvite createdUserInvite) {

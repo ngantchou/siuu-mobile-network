@@ -845,8 +845,7 @@ class LocalizationService {
   }
 
   String get drawer__useful_links_guidelines_handbook_desc {
-    return Intl.message(
-        "A book with everything there is to know about using the platform",
+    return Intl.message("Know everything about using Siuu Coin",
         name: 'drawer__useful_links_guidelines_handbook_desc');
   }
 

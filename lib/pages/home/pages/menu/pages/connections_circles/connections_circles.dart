@@ -75,6 +75,7 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
             OBPrimaryColorContainer(
               child: Column(
                 children: <Widget>[
+                  SizedBox(height: 50),
                   SizedBox(
                       child: OBSearchBar(
                     onSearch: _onSearch,
@@ -94,16 +95,15 @@ class OBConnectionsCirclesPageState extends State<OBConnectionsCirclesPage> {
                                   _connectionsCirclesSearchResults.length) {
                                 if (_connectionsCirclesSearchResults.isEmpty) {
                                   // Results were empty
-                                  if(_searchQuery != null){
+                                  if (_searchQuery != null) {
                                     return ListTile(
                                         leading: OBIcon(OBIcons.sad),
                                         title: OBText(
                                             'No circles found for "$_searchQuery"'));
-                                  }else{
+                                  } else {
                                     return ListTile(
                                         leading: OBIcon(OBIcons.sad),
-                                        title: OBText(
-                                            'No circles found.'));
+                                        title: OBText('No circles found.'));
                                   }
                                 } else {
                                   return const SizedBox();

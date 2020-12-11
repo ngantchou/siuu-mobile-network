@@ -21,6 +21,7 @@ class OBUsefulLinksPage extends StatelessWidget {
       child: OBPrimaryColorContainer(
         child: Column(
           children: <Widget>[
+            SizedBox(height: 50),
             Expanded(
                 child: ListView(
               physics: const ClampingScrollPhysics(),
@@ -66,7 +67,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                         .navigateToTermsOfUsePage(context: context);
                   },
                 ),
-                ListTile(
+                /*ListTile(
                   leading: const OBIcon(OBIcons.dashboard),
                   title: OBText(_localizationService
                       .drawer__useful_links_guidelines_github),
@@ -76,8 +77,8 @@ class OBUsefulLinksPage extends StatelessWidget {
                     urlLauncherService.launchUrl(
                         'https://github.com/orgs/SiuuOrg/projects/3');
                   },
-                ),
-                ListTile(
+                ),*/
+                /*ListTile(
                   leading: const OBIcon(OBIcons.roadmap),
                   title: OBText(_localizationService
                       .drawer__useful_links_guidelines_roadmap),
@@ -86,8 +87,8 @@ class OBUsefulLinksPage extends StatelessWidget {
                   onTap: () {
                     urlLauncherService.launchUrl('https://siuu.io/roadmap');
                   },
-                ),
-                ListTile(
+                ),*/
+                /* ListTile(
                   leading: const OBIcon(OBIcons.featureRequest),
                   title: OBText(_localizationService
                       .drawer__useful_links_guidelines_feature_requests),
@@ -95,19 +96,19 @@ class OBUsefulLinksPage extends StatelessWidget {
                       .drawer__useful_links_guidelines_feature_requests_desc),
                   onTap: () {
                     urlLauncherService
-                        .launchUrl('https://Siuu.canny.io/feature-requests');
+                        .launchUrl('https://siuu.fun/feature-requests');
                   },
-                ),
-                ListTile(
+                ),*/
+                /* ListTile(
                   leading: const OBIcon(OBIcons.bug),
                   title: OBText(_localizationService
                       .drawer__useful_links_guidelines_bug_tracker),
                   subtitle: OBSecondaryText(_localizationService
                       .drawer__useful_links_guidelines_bug_tracker_desc),
                   onTap: () {
-                    urlLauncherService.launchUrl('https://Siuu.canny.io/bugs');
+                    urlLauncherService.launchUrl('https://siuu.fun/bugs');
                   },
-                ),
+                ),*/
                 ListTile(
                   leading: const OBIcon(OBIcons.guide),
                   title: OBText(_localizationService
@@ -115,10 +116,11 @@ class OBUsefulLinksPage extends StatelessWidget {
                   subtitle: OBSecondaryText(_localizationService
                       .drawer__useful_links_guidelines_handbook_desc),
                   onTap: () {
-                    urlLauncherService.launchUrl('https://Siuu.support/');
+                    urlLauncherService.launchUrl(
+                        'https://siuu.fun/livre-blanc-white-paper-siuucoin/');
                   },
                 ),
-                ListTile(
+                /*ListTile(
                   leading: const OBIcon(OBIcons.slackChannel),
                   title: OBText(
                       _localizationService.drawer__useful_links_slack_channel),
@@ -128,7 +130,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                     urlLauncherService.launchUrl(
                         'https://join.slack.com/t/Siuu/shared_invite/zt-5fzmpygy-V5nbMzmNJnEg5Hiwx4LO~w');
                   },
-                ),
+                ),*/
                 ListTile(
                   leading: const OBIcon(OBIcons.support),
                   title:
@@ -136,7 +138,8 @@ class OBUsefulLinksPage extends StatelessWidget {
                   subtitle: OBSecondaryText(
                       _localizationService.drawer__useful_links_support_desc),
                   onTap: () {
-                    urlLauncherService.launchUrl('https://www.siuu.io/en/faq');
+                    urlLauncherService
+                        .launchUrl('https://siuu.fun/faq-foire-aux-questions/');
                   },
                 )
               ],

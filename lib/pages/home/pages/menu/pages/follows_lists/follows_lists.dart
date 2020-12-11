@@ -75,6 +75,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
             OBPrimaryColorContainer(
                 child: Column(
               children: <Widget>[
+                SizedBox(height: 50),
                 SizedBox(
                     child: OBSearchBar(
                   onSearch: _onSearch,
@@ -92,15 +93,17 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
                             if (index == _followsListsSearchResults.length) {
                               if (_followsListsSearchResults.isEmpty) {
                                 // Results were empty
-                                if(_searchQuery != null){
+                                if (_searchQuery != null) {
                                   return ListTile(
                                       leading: OBIcon(OBIcons.sad),
-                                      title: OBText(_localizationService.user__follow_lists_no_list_found_for(_searchQuery)));
-                                }else{
+                                      title: OBText(_localizationService
+                                          .user__follow_lists_no_list_found_for(
+                                              _searchQuery)));
+                                } else {
                                   return ListTile(
                                       leading: OBIcon(OBIcons.sad),
-                                      title: OBText(
-                                         _localizationService.user__follow_lists_no_list_found));
+                                      title: OBText(_localizationService
+                                          .user__follow_lists_no_list_found));
                                 }
                               } else {
                                 return const SizedBox();
@@ -149,7 +152,8 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }

@@ -163,11 +163,12 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     List<Widget> columnItems = [];
 
     if (widget.listSearcher != null && widget.hasSearchBar) {
+      columnItems.add(SizedBox(height: 50));
       columnItems.add(SizedBox(
           child: OBSearchBar(
         onSearch: _onSearch,
-        hintText: _localizationService
-            .user_search__list_search_text(widget.resourcePluralName.toLowerCase()),
+        hintText: _localizationService.user_search__list_search_text(
+            widget.resourcePluralName.toLowerCase()),
       )));
     }
 
@@ -328,8 +329,8 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
         OBButtonAlert(
-          text: _localizationService
-              .user_search__list_no_results_found(widget.resourcePluralName.toLowerCase()),
+          text: _localizationService.user_search__list_no_results_found(
+              widget.resourcePluralName.toLowerCase()),
           onPressed: _refreshList,
           buttonText:
               _localizationService.trans('user_search__list_refresh_text'),
@@ -439,7 +440,7 @@ class OBHttpListState<T> extends State<OBHttpList<T>> {
     }
   }
 
-  void _refreshWithRefreshIndicator(){
+  void _refreshWithRefreshIndicator() {
     // Deactivate if active
     _listRefreshIndicatorKey.currentState.deactivate();
 

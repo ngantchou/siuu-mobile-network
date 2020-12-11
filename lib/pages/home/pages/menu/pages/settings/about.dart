@@ -18,7 +18,6 @@ class OBAboutPage extends StatefulWidget {
 // TODO The get_version plugin does not work for iOS.
 
 class OBAboutPageState extends State<OBAboutPage> {
-
   @override
   void initState() {
     super.initState();
@@ -29,27 +28,26 @@ class OBAboutPageState extends State<OBAboutPage> {
     var pi = await PackageInfo.fromPlatform();
 
     if (!mounted) return;
-    setState(() {
-    });
+    setState(() {});
   }
 
   Widget build(BuildContext context) {
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     return CupertinoPageScaffold(
       backgroundColor: Color.fromARGB(0, 0, 0, 0),
-      navigationBar: OBThemedNavigationBar(title: _localizationService.drawer__about),
+      navigationBar:
+          OBThemedNavigationBar(title: _localizationService.drawer__about),
       child: OBPrimaryColorContainer(
         child: ListView(
           physics: const ClampingScrollPhysics(),
           // Important: Remove any padding from the ListView.
-          padding: EdgeInsets.zero,
+          padding: EdgeInsets.only(top: 50),
           children: <Widget>[
             ListTile(
               leading: OBIcon(OBIcons.nativeInfo),
-              title: OBText(
-                'Siuu v0.0.67'
-              ),
+              title: OBText('Siuu version 1.0.0'),
             ),
           ],
         ),
