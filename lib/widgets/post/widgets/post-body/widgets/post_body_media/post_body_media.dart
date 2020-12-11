@@ -45,12 +45,14 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
   @override
   void initState() {
     super.initState();
-    _needsBootstrap = true;
+    _needsBootstrap = false;
     _retrievePostMediaInProgress = true;
     _errorMessage = '';
     _mediaIsConstrained = false;
   }
 
+  @mustCallSuper
+  @protected
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
     _retrievePostMediaInProgress = true;
@@ -206,7 +208,8 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
     _setRetrievePostMediaInProgress(true);
     try {
       _retrievePostMediaOperation = CancelableOperation.fromFuture(
-          _userService.getMediaForPost(post: widget.post), onCancel: _onRetrievePostMediaOperationCancelled);
+          _userService.getMediaForPost(post: widget.post),
+          onCancel: _onRetrievePostMediaOperationCancelled);
       PostMediaList mediaList = await _retrievePostMediaOperation.value;
       widget.post.setMedia(mediaList);
     } catch (error) {

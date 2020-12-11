@@ -31,8 +31,8 @@ class OBPostImagePreviewer extends StatelessWidget {
     bool isFileImage = postImageFile != null;
 
     var imagePreview = SizedBox(
-        height: 200.0,
-        width: 200,
+        height: MediaQuery.of(context).size.width / 2,
+        width: MediaQuery.of(context).size.width * 0.8,
         child: ClipRRect(
             borderRadius: new BorderRadius.circular(avatarBorderRadius),
             child: isFileImage

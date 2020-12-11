@@ -1,3 +1,4 @@
+import 'package:Siuu/custom/customAppBars/appBar1.dart';
 import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/post_comment.dart';
 import 'package:Siuu/pages/home/lib/draft_editing_controller.dart';
@@ -168,14 +169,36 @@ class OBPostCommentsPageState
       bootstrap();
       _needsBootstrap = false;
     }
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    final keyboardVisible = MediaQuery.of(context).viewInsets.bottom;
 
     if (widget.pageType == PostCommentsPageType.comments) {
       _pageTextMap = this.getPageCommentsMap(_localizationService);
     } else {
       _pageTextMap = this.getPageRepliesMap(_localizationService);
     }
-
-    return OBCupertinoPageScaffold(
+    return Scaffold(
+      backgroundColor: Color.fromARGB(0, 0, 0, 0),
+      appBar: OBThemedNavigationBar(
+        title: _pageTextMap['TITLE'],
+      ),
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            color: CupertinoColors.white,
+          ),
+          height: height - 50,
+          //padding: const EdgeInsets.all(20.0),
+          child: Stack(
+            children:
+                //widget.postContainer,
+                _getStackChildren(),
+          ),
+        ),
+      ),
+    );
+    /* return OBCupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBThemedNavigationBar(
           title: _pageTextMap['TITLE'],
@@ -184,7 +207,7 @@ class OBPostCommentsPageState
           child: Stack(
             children: _getStackChildren(),
           ),
-        ));
+        ));*/
   }
 
   Future _setPostCommentsSortTypeFromPreferences() async {

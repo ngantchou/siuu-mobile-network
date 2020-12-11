@@ -69,7 +69,8 @@ class OBCupertinoPageScaffold extends StatelessWidget {
 
       // TODO(xster): Use real size after partial layout instead of preferred size.
       // https://github.com/flutter/flutter/issues/12912
-      final double topPadding = 0;
+      final double topPadding =
+          navigationBar.preferredSize.height + existingMediaQuery.padding.top;
 
       // Propagate bottom padding and include viewInsets if appropriate
 
@@ -120,7 +121,7 @@ class OBCupertinoPageScaffold extends StatelessWidget {
 
     return DecoratedBox(
       decoration: BoxDecoration(color: backgroundColor),
-      child: Column(
+      child: Stack(
         children: stacked,
       ),
     );

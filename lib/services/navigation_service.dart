@@ -300,7 +300,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('memoryMembersPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('siuuSearchMembersPageRoute'),
           builder: (BuildContext context) {
             return OBMainSearchPage(
               controller: searchPageController,
@@ -376,10 +376,11 @@ class NavigationService {
           slidableKey: _getKeyRandomisedWithWord('postCommentsPageRoute'),
           builder: (BuildContext context) {
             return OBPostCommentsPage(
+                pageType: PostCommentsPageType.comments,
                 post: post,
                 showPostPreview: true,
-                pageType: PostCommentsPageType.comments,
-                autofocusCommentInput: false);
+                autofocusCommentInput: true);
+            //return Comments();
           }),
     );
   }

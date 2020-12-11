@@ -13,11 +13,12 @@ class PoppablePageController {
 
   bool isFirstRoute() {
     Route currentRoute;
-    Navigator.popUntil(_context, (route) {
+    /*  Navigator.popUntil(_context, (route) {
       currentRoute = route;
       return true;
     });
-    return currentRoute.isFirst;
+    return currentRoute.isFirst;*/
+    return true;
   }
 
   bool canPop() {

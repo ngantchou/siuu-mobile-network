@@ -37,15 +37,15 @@ class OBThemedNavigationBar extends StatelessWidget
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
 
-    return Container(
+    /* return Container(
       decoration: BoxDecoration(
         gradient: linearGradient,
       ),
       child: Column(
         children: [
-          /* Container(
+          Container(
             height: height * 0.058,
-          ),*/
+          ),
           Container(
             height: height * 0.078,
             child: Padding(
@@ -114,8 +114,8 @@ class OBThemedNavigationBar extends StatelessWidget
           ),
         ],
       ),
-    );
-    /* return StreamBuilder(
+    );*/
+    return StreamBuilder(
       stream: themeService.themeChange,
       initialData: themeService.getActiveTheme(),
       builder: (BuildContext context, AsyncSnapshot<OBTheme> snapshot) {
@@ -142,7 +142,7 @@ class OBThemedNavigationBar extends StatelessWidget
           leading: leading,
         );
       },
-    );*/
+    );
   }
 
   /// True if the navigation bar's background color has no transparency.

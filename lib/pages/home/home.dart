@@ -306,7 +306,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 15),
                       child: Container(
-                        height: height * 0.102,
+                        height: height * 0.152,
                         width: width * 0.170,
                         decoration: BoxDecoration(
                             gradient: linearGradient, shape: BoxShape.circle),

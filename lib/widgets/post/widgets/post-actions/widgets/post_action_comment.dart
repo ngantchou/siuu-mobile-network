@@ -25,8 +25,10 @@ class OBPostActionComment extends StatelessWidget {
         InkWell(
           onTap: () {
             if (onWantsToCommentPost != null) {
+              print("test");
               onWantsToCommentPost();
             } else {
+              print("test");
               navigationService.navigateToPostComments(
                   post: post, context: context);
             }

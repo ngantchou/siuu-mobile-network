@@ -41,9 +41,9 @@ class OBPrimaryColorContainer extends StatelessWidget {
           return Column(
             mainAxisSize: mainAxisSize,
             children: <Widget>[
-              SizedBox(
+              /*SizedBox(
                 height: height * 0.087,
-              ),
+              ),*/
               Expanded(child: container)
             ],
           );

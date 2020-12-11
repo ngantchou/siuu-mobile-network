@@ -210,7 +210,9 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         navigationBar: _buildNavigationBar(_localizationService),
         child: OBPrimaryColorContainer(
             child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(height: 40),
             Expanded(
                 flex: isAutocompleting ? 3 : 1,
                 child: Padding(

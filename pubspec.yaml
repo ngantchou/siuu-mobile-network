@@ -187,6 +187,7 @@ flutter:
     - .env.json
     - assets/images/
     - assets/svg/
+    - assets/lottie/
     - assets/map_style.json
     - assets/countrycodes.json
   # An image asset can refer to one or more resolution-specific "variants", see

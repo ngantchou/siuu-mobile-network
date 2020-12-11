@@ -90,34 +90,42 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 10.0),
+      padding: !viewStickers
+          ? EdgeInsets.symmetric(vertical: 0.0)
+          : EdgeInsets.symmetric(vertical: 0.0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          const SizedBox(
-            width: 20.0,
-          ),
-          Column(
-            children: <Widget>[
-              OBLoggedInUserAvatar(
-                size: OBAvatarSize.medium,
-              ),
-              _isMultiline
-                  ? Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 10),
-                      child: OBRemainingPostCharacters(
-                        maxCharacters:
-                            ValidationService.POST_COMMENT_MAX_LENGTH,
-                        currentCharacters: _charactersCount,
-                      ),
-                    )
-                  : const SizedBox()
-            ],
-          ),
-          const SizedBox(
-            width: 10.0,
-          ),
+          !viewStickers
+              ? const SizedBox(
+                  width: 20.0,
+                )
+              : Container(),
+          !viewStickers
+              ? Column(
+                  children: <Widget>[
+                    OBLoggedInUserAvatar(
+                      size: OBAvatarSize.medium,
+                    ),
+                    _isMultiline
+                        ? Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: OBRemainingPostCharacters(
+                              maxCharacters:
+                                  ValidationService.POST_COMMENT_MAX_LENGTH,
+                              currentCharacters: _charactersCount,
+                            ),
+                          )
+                        : const SizedBox()
+                  ],
+                )
+              : Container(),
+          !viewStickers
+              ? const SizedBox(
+                  width: 10.0,
+                )
+              : Container(),
           Expanded(
             child: OBAlert(
               padding: const EdgeInsets.all(0),
@@ -148,16 +156,18 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                   })),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.only(right: 20.0, left: 10.0),
-            child: OBButton(
-              isLoading: _commentInProgress,
-              size: OBButtonSize.small,
-              onPressed: _submitForm,
-              child:
-                  Text(_localizationService.trans('post__commenter_post_text')),
-            ),
-          ),
+          !viewStickers
+              ? Padding(
+                  padding: EdgeInsets.only(right: 20.0, left: 10.0),
+                  child: OBButton(
+                    isLoading: _commentInProgress,
+                    size: OBButtonSize.small,
+                    onPressed: _submitForm,
+                    child: Text(_localizationService
+                        .trans('post__commenter_post_text')),
+                  ),
+                )
+              : Container(),
           Positioned(
             bottom: 0,
             child: keyboardVisible == 0
@@ -209,24 +219,62 @@ class OBPostCommenterState extends State<OBPostCommenter> {
         padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
         child: Row(
           children: [
-            Image.asset('assets/images/boy.png'),
+            InkWell(
+                onTap: () {
+                  setState(() {
+                    viewStickers = !viewStickers;
+                    FocusScope.of(context).unfocus();
+                  });
+                },
+                child: viewStickers
+                    ? Icon(Icons.close)
+                    : SvgPicture.asset('assets/svg/emoji.svg')),
             SizedBox(width: width * 0.024),
             Expanded(
               child: Container(
-                child: OBTextFormField(
+                child: TextFormField(
+                  focusNode: focusNode,
+                  controller: widget.textController,
+                  autofocus: autofocus,
+                  autocorrect: true,
+                  textCapitalization: TextCapitalization.sentences,
+                  keyboardType: TextInputType.multiline,
+                  textInputAction: TextInputAction.newline,
+                  maxLines: maxLines,
+                  style: TextStyle(color: Colors.black),
+                  validator: (String comment) {
+                    if (!_formWasSubmitted) return null;
+                    return _validationService
+                        .validatePostComment(widget.textController.text);
+                  },
+                  decoration: InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Write a comment..',
+                    hintStyle: TextStyle(
+                      fontFamily: "Segoe UI",
+                      fontSize: 13,
+                      color: Color(0xff727272),
+                    ),
+                  ),
+                ),
+                /*OBTextFormField(
                   controller: widget.textController,
                   focusNode: focusNode,
                   textCapitalization: TextCapitalization.sentences,
                   keyboardType: TextInputType.multiline,
                   textInputAction: TextInputAction.newline,
                   maxLines: maxLines,
-                  style: style,
+                  style: TextStyle(color: Colors.black),
                   decoration: InputDecoration(
-                    hintText: _localizationService
-                        .trans('post__commenter_write_something'),
-                    contentPadding: inputContentPadding,
+                    border: InputBorder.none,
+                    hintText: 'Write a comment..',
+                    hintStyle: TextStyle(
+                      fontFamily: "Segoe UI",
+                      fontSize: 13,
+                      color: Colors.black,
+                    ),
                   ),
-                  hasBorder: false,
+                  hasBorder: true,
                   autofocus: autofocus,
                   autocorrect: true,
                   validator: (String comment) {
@@ -234,26 +282,12 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                     return _validationService
                         .validatePostComment(widget.textController.text);
                   },
-                ),
+                ),*/
               ),
             ),
             Row(
               children: [
-                SizedBox(width: width * 0.024),
-                InkWell(
-                    onTap: () {
-                      setState(() {
-                        viewStickers = !viewStickers;
-                        FocusScope.of(context).unfocus();
-                      });
-                    },
-                    child: viewStickers
-                        ? Icon(Icons.close)
-                        : SvgPicture.asset('assets/svg/emoji.svg')),
-                SizedBox(width: width * 0.024),
                 SvgPicture.asset('assets/svg/micIcon.svg'),
-                SizedBox(width: width * 0.024),
-                SvgPicture.asset('assets/svg/postIcon.svg'),
               ],
             )
           ],

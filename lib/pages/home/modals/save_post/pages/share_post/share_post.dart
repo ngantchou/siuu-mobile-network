@@ -45,15 +45,18 @@ class OBSharePostPageState extends State<OBSharePostPage> {
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
       _navigationService = openbookProvider.navigationService;
-      _bootstrap();
+      //_bootstrap();
       _needsBootstrap = false;
     }
 
     User loggedInUser = _userService.getLoggedInUser();
 
-    return OBCupertinoPageScaffold(
-        navigationBar: _buildNavigationBar(),
-        child: OBPrimaryColorContainer(
+    return Scaffold(
+        appBar: _buildNavigationBar(),
+        //backgroundColor: Colors.black,
+        body: SingleChildScrollView(
+            child: Container(
+          height: MediaQuery.of(context).size.height - 20,
           child: StreamBuilder(
             initialData: loggedInUser,
             stream: loggedInUser.updateSubject,
@@ -69,12 +72,15 @@ class OBSharePostPageState extends State<OBSharePostPage> {
                 );
 
               const TextStyle shareToTilesSubtitleStyle =
-                  TextStyle(fontSize: 14);
+                  TextStyle(fontSize: 14, color: Colors.black);
 
               List<Widget> shareToTiles = [
                 ListTile(
-                  leading: const OBIcon(OBIcons.circles),
-                  title: OBText(_localizationService.trans('post__my_circles')),
+                  leading: const OBIcon(OBIcons.circles, color: Colors.black),
+                  title: OBText(
+                    _localizationService.trans('post__my_circles'),
+                    style: TextStyle(fontSize: 14, color: Colors.black),
+                  ),
                   subtitle: OBText(
                     _localizationService.trans('post__my_circles_desc'),
                     style: shareToTilesSubtitleStyle,
@@ -83,7 +89,8 @@ class OBSharePostPageState extends State<OBSharePostPage> {
                 )
               ];
 
-              if (latestUser.isMemberOfCommunities) {
+              if (latestUser.isMemberOfCommunities != null &&
+                  latestUser.isMemberOfCommunities) {
                 shareToTiles.add(ListTile(
                   leading: const OBIcon(OBIcons.memories),
                   title: OBText(_localizationService
@@ -105,7 +112,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
               );
             },
           ),
-        ));
+        )));
   }
 
   Widget _buildNavigationBar() {
@@ -120,10 +127,10 @@ class OBSharePostPageState extends State<OBSharePostPage> {
 
   Future<void> _refreshLoggedInUser() async {
     User refreshedUser = await _userService.refreshUser();
-    /* if (refreshedUser.isMemberOfCommunities) {
+    if (refreshedUser.isMemberOfCommunities) {
       // Only possibility
       _onWantsToSharePostToCircles();
-    }*/
+    }
   }
 
   void _onWantsToSharePostToCircles() async {

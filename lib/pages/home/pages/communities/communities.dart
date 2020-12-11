@@ -108,7 +108,12 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
   Widget _buildNoCommunities() {
     return Column(
       mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
+        SizedBox(
+          height: 50,
+        ),
         OBButtonAlert(
           text: _localizationService.community__memories_no_category_found,
           onPressed: _refreshCategories,
@@ -123,7 +128,13 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
 
   Widget _buildCommunities() {
     return Column(
+      mainAxisSize: MainAxisSize.min,
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: <Widget>[
+        SizedBox(
+          height: 50,
+        ),
         _buildTabBar(),
         Expanded(
           child: TabBarView(

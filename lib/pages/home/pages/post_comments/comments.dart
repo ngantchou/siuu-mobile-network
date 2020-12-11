@@ -66,7 +66,7 @@ class _CommentsState extends State<Comments> {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-                    widget.postContainer,
+                    //widget.postContainer,
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(

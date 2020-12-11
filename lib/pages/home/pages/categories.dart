@@ -141,7 +141,7 @@ class _CategoriesState extends State<Categories> {
                       ]),
                 ),
                 SizedBox(
-                  width: width * 0.024,
+                  width: width * 0.004,
                 ),
                 InkWell(
                   onTap: () async {
