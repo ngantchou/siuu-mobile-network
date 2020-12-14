@@ -42,161 +42,8 @@ class OBProfileCard extends StatelessWidget {
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
     var toastService = openbookProvider.toastService;
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
 
-    return Column(
-      children: [
-        Container(
-          height: height * 0.512,
-          child: Stack(
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  gradient: linearGradient,
-                ),
-                height: height * 0.336,
-                child: Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-                  child: Column(
-                    children: [
-                      Spacer(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                              icon: Icon(
-                                Icons.arrow_back_ios,
-                                color: Colors.white,
-                              ),
-                              onPressed: null),
-                          SvgPicture.asset('assets/svg/menu.svg'),
-                        ],
-                      ),
-                      Spacer(
-                        flex: 3,
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: SizedBox(
-                  height: height * 0.365,
-                  width: width * 0.607,
-                  child: Stack(
-                    children: [
-                      Positioned.fill(
-                        child: StreamBuilder(
-                            stream: user.updateSubject,
-                            initialData: user,
-                            builder: (BuildContext context,
-                                AsyncSnapshot<User> snapshot) {
-                              var user = snapshot.data;
-
-                              return OBAvatar(
-                                borderWidth: 3,
-                                avatarUrl: user?.getProfileAvatar(),
-                                size: OBAvatarSize.extraLarge,
-                                isZoomable: true,
-                              );
-                            }),
-                      ),
-                      Positioned(
-                        left: 20,
-                        top: 20,
-                        child: SvgPicture.asset('assets/svg/DM.svg'),
-                      ),
-                      Positioned(
-                          bottom: 20,
-                          right: 20,
-                          child: OBProfileInlineActions(user,
-                              onUserProfileUpdated: onUserProfileUpdated,
-                              onExcludedMemoryRemoved: onExcludedMemoryRemoved,
-                              onExcludedCommunitiesAdded:
-                                  onExcludedCommunitiesAdded)),
-                      Positioned(
-                        left: 40,
-                        bottom: 40,
-                        child: SvgPicture.asset('assets/svg/active.svg'),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        ),
-        SizedBox(height: height * 0.014),
-        _buildNameRow(user: user, context: context, toastService: toastService),
-        OBProfileUsername(user),
-        OBProfileBio(user),
-        // OBProfileDetails(user),
-        OBProfileConnectedIn(user),
-        OBProfileConnectionRequest(user),
-        OBProfileFollowRequest(user),
-        OBProfileInLists(user),
-        SizedBox(height: height * 0.029),
-        OBProfileCounts(user),
-        SizedBox(height: height * 0.029),
-        SizedBox(
-          height: height * 0.321,
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: ListView(
-                  scrollDirection: Axis.horizontal,
-                  children: [
-                    Image.asset(
-                      'assets/images/girl1.png',
-                    ),
-                    Image.asset('assets/images/girl2.png'),
-                    Image.asset('assets/images/girl3.png'),
-                  ],
-                ),
-              ),
-              Positioned(
-                top: 50,
-                bottom: 50,
-                left: 50,
-                child: Container(
-                  height: height * 0.157,
-                  width: width * 0.261,
-                  decoration: BoxDecoration(
-                    color: Color(0xff52575d),
-                    boxShadow: [
-                      BoxShadow(
-                        offset: Offset(0.00, 10.00),
-                        color: Color(0xff000000).withOpacity(0.38),
-                        blurRadius: 20,
-                      ),
-                    ],
-                    borderRadius: BorderRadius.circular(12.00),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      buildText(
-                          color: 0xffDFD8C8,
-                          fontSize: 16,
-                          fontWeight: FontWeight.w500,
-                          label: '5'),
-                      buildText(
-                          color: 0xffAEB5BC,
-                          fontSize: 11,
-                          fontWeight: FontWeight.bold,
-                          label: 'PICS')
-                    ],
-                  ),
-                ),
-              )
-            ],
-          ),
-        ),
-      ],
-    );
-    /* return Stack(
+    return Stack(
       overflow: Overflow.visible,
       children: <Widget>[
         Padding(
@@ -213,8 +60,7 @@ class OBProfileCard extends StatelessWidget {
                   Expanded(
                       child: OBProfileInlineActions(user,
                           onUserProfileUpdated: onUserProfileUpdated,
-                          onExcludedMemoryRemoved:
-                              onExcludedMemoryRemoved,
+                          onExcludedMemoryRemoved: onExcludedMemoryRemoved,
                           onExcludedCommunitiesAdded:
                               onExcludedCommunitiesAdded)),
                 ],
@@ -278,27 +124,6 @@ class OBProfileCard extends StatelessWidget {
               }),
         ),
       ],
-    );*/
-  }
-
-  Text buildText(
-      {String label, double fontSize, int color, FontWeight fontWeight}) {
-    return Text(
-      label,
-      style: TextStyle(
-        fontFamily: "Segoe UI",
-        fontWeight: fontWeight != null ? fontWeight : null,
-        fontSize: fontSize,
-        color: Color(color),
-      ),
-    );
-  }
-
-  Container buildLineContainer(double width, double height) {
-    return Container(
-      height: height * 0.036,
-      width: width * 0.004,
-      color: Color(0xff3b3b3b),
     );
   }
 
@@ -307,13 +132,10 @@ class OBProfileCard extends StatelessWidget {
       @required BuildContext context,
       @required ToastService toastService}) {
     if (user.hasProfileBadges() && user.getProfileBadges().length > 0) {
-      return Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            OBProfileName(user),
-            _getUserBadge(
-                user: user, toastService: toastService, context: context)
-          ]);
+      return Row(children: <Widget>[
+        OBProfileName(user),
+        _getUserBadge(user: user, toastService: toastService, context: context)
+      ]);
     }
     return OBProfileName(user);
   }
