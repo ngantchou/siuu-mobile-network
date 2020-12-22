@@ -51,7 +51,7 @@ class OBProfileCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              Row(
+              /*Row(
                 children: <Widget>[
                   const SizedBox(
                     height: (OBAvatar.AVATAR_SIZE_EXTRA_LARGE * 0.2),
@@ -64,9 +64,10 @@ class OBProfileCard extends StatelessWidget {
                           onExcludedCommunitiesAdded:
                               onExcludedCommunitiesAdded)),
                 ],
-              ),
+              ),*/
               Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   const SizedBox(
                     height: 20,
@@ -75,7 +76,7 @@ class OBProfileCard extends StatelessWidget {
                       user: user, context: context, toastService: toastService),
                   OBProfileUsername(user),
                   OBProfileBio(user),
-                  OBProfileDetails(user),
+                  //OBProfileDetails(user),
                   OBProfileCounts(user),
                   OBProfileConnectedIn(user),
                   OBProfileConnectionRequest(user),
@@ -108,7 +109,10 @@ class OBProfileCard extends StatelessWidget {
         ),
         Positioned(
           top: -((OBAvatar.AVATAR_SIZE_EXTRA_LARGE / 2)) - 10,
-          left: 18,
+          //left: (MediaQuery.of(context).size.width / 2) - 10,
+          //      bottom: 0.0,
+          right: 0.0,
+          left: 0.0,
           child: StreamBuilder(
               stream: user.updateSubject,
               initialData: user,
@@ -117,8 +121,10 @@ class OBProfileCard extends StatelessWidget {
 
                 return OBAvatar(
                   borderWidth: 3,
+                  borderRadius: 100,
                   avatarUrl: user?.getProfileAvatar(),
                   size: OBAvatarSize.extraLarge,
+                  customSize: 50,
                   isZoomable: true,
                 );
               }),
@@ -131,12 +137,12 @@ class OBProfileCard extends StatelessWidget {
       {@required User user,
       @required BuildContext context,
       @required ToastService toastService}) {
-    if (user.hasProfileBadges() && user.getProfileBadges().length > 0) {
+    /* if (user.hasProfileBadges() && user.getProfileBadges().length > 0) {
       return Row(children: <Widget>[
         OBProfileName(user),
         _getUserBadge(user: user, toastService: toastService, context: context)
       ]);
-    }
+    }*/
     return OBProfileName(user);
   }
 

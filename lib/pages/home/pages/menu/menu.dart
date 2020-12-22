@@ -56,7 +56,7 @@ class OBMainMenuPage extends StatelessWidget {
                         OBTileGroupTitle(
                           title: localizationService.drawer__main_title,
                         ),
-                        ListTile(
+                        /*ListTile(
                           leading: const OBIcon(OBIcons.circles),
                           title: OBText(localizationService.drawer__my_circles),
                           onTap: () {
@@ -71,7 +71,7 @@ class OBMainMenuPage extends StatelessWidget {
                             navigationService.navigateToFollowsLists(
                                 context: context);
                           },
-                        ),
+                        ),*/
                         ListTile(
                           leading: const OBIcon(OBIcons.followers),
                           title:
@@ -98,7 +98,7 @@ class OBMainMenuPage extends StatelessWidget {
                                 context: context);
                           },
                         ),
-                        ListTile(
+                        /*ListTile(
                           leading: const OBIcon(OBIcons.memoryModerators),
                           title: OBText(
                               localizationService.drawer__my_pending_mod_tasks),
@@ -127,7 +127,7 @@ class OBMainMenuPage extends StatelessWidget {
                             size: 25,
                             count: user.activeModerationPenaltiesCount,
                           ),
-                        ),
+                        ),*/
                         OBTileGroupTitle(
                           title: localizationService.drawer__app_account_text,
                         ),
@@ -147,7 +147,7 @@ class OBMainMenuPage extends StatelessWidget {
                                 context: context);
                           },
                         ),
-                        StreamBuilder(
+                        /*StreamBuilder(
                           stream: userService.loggedInUserChange,
                           initialData: userService.getLoggedInUser(),
                           builder: (BuildContext context,
@@ -197,7 +197,7 @@ class OBMainMenuPage extends StatelessWidget {
                             navigationService.navigateToUsefulLinksPage(
                                 context: context);
                           },
-                        ),
+                        ),*/
                         ListTile(
                           leading: const OBIcon(OBIcons.logout),
                           title: OBText(

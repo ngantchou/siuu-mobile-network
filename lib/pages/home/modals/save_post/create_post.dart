@@ -13,6 +13,10 @@ import 'package:Siuu/pages/home/modals/save_post/widgets/post_community_previewe
 import 'package:Siuu/pages/home/modals/save_post/widgets/post_image_previewer.dart';
 import 'package:Siuu/pages/home/modals/save_post/widgets/post_video_previewer.dart';
 import 'package:Siuu/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
+import 'package:Siuu/pages/home/pages/memories/TextMemory.dart';
+import 'package:Siuu/pages/home/pages/memories/VoiceMemory.dart';
+import 'package:Siuu/pages/home/pages/memories/categories.dart';
+import 'package:Siuu/pages/home/pages/memories/videoMemory.dart';
 import 'package:Siuu/provider.dart';
 import 'package:Siuu/services/draft.dart';
 import 'package:Siuu/services/httpie.dart';
@@ -41,6 +45,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
+import 'package:video_player/video_player.dart';
 
 class OBSavePostModal extends StatefulWidget {
   final Memory memory;
@@ -74,7 +79,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   FocusNode _focusNode;
   int _charactersCount;
   LinkPreview _linkPreview;
-
+  PostType type = PostType.Text;
   bool _isPostTextAllowedLength;
   bool _isPostTextContainingValidHashtags;
 
@@ -100,7 +105,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   bool _isCreateMemoryPostInProgress;
 
   bool _isEditingPost;
-
+  VideoPlayerController _videoPlayerController;
   bool _saveInProgress;
   CancelableOperation _saveOperation;
   CancelableOperation<LinkPreview> _linkPreviewCheckOperation;
@@ -204,7 +209,24 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       bootstrap();
       _needsBootstrap = false;
     }
-
+    Widget widgetType;
+    switch (type) {
+      case PostType.Text:
+        widgetType = TextMemory();
+        break;
+      case PostType.Picture:
+        widgetType = imageMemory();
+        break;
+      case PostType.Voice:
+        widgetType = VoiceMemory();
+        break;
+      case PostType.Video:
+        widgetType = videoMemory();
+        break;
+      default:
+    }
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return CupertinoPageScaffold(
         backgroundColor: Colors.transparent,
         navigationBar: _buildNavigationBar(_localizationService),
@@ -212,12 +234,95 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 40),
+            SizedBox(
+              height: height * 0.192,
+              child: ListView(
+                scrollDirection: Axis.horizontal,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        type = PostType.Text;
+                      });
+                    },
+                    child: buildSizedBox(
+                      text: 'Text',
+                      icon: Icons.format_color_text,
+                      color: [
+                        Color(0xff1a2a6c),
+                        Color(0xffb21f1f),
+                        Color(0xfffdbb2d),
+                        // Color(0xff03001e),
+                        // Color(0xff7303c0),
+                        // Color(0xffec38bc),
+                        // Color(0xfffdeff9),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * 0.024,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        type = PostType.Picture;
+                      });
+                    },
+                    child: buildSizedBox(
+                      text: 'Pictures',
+                      icon: Icons.image,
+                      color: [
+                        Color(0xffc0392b),
+                        Color(0xff8e44ad),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    width: width * 0.024,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {
+                        type = PostType.Voice;
+                      });
+                    },
+                    child: buildSizedBox(
+                        text: 'VoiceClips',
+                        icon: Icons.record_voice_over,
+                        color: [
+                          Color(0xff7F00FF),
+                          Color(0xffE100FF),
+                        ]),
+                  ),
+                  SizedBox(
+                    width: width * 0.004,
+                  ),
+                  InkWell(
+                    onTap: () async {
+                      setState(() {
+                        type = PostType.Video;
+                      });
+                    },
+                    child: buildSizedBox(
+                      text: 'Videos',
+                      icon: Icons.videocam_sharp,
+                      color: [
+                        Color(0xffFDC830),
+                        Color(0xffF37335),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(
+              height: height * 0.024,
+            ),
             Expanded(
                 flex: isAutocompleting ? 3 : 1,
                 child: Padding(
                   padding: EdgeInsets.only(left: 20.0, top: 20.0),
-                  child: _buildNewPostContent(),
+                  child: widgetType ?? _buildNewPostContent(),
                 )),
             isAutocompleting
                 ? Expanded(
@@ -236,6 +341,41 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
                   ),
           ],
         )));
+  }
+
+  SizedBox buildSizedBox({String text, List<Color> color, IconData icon}) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    return SizedBox(
+      height: height * 0.292,
+      width: width * 0.364,
+      child: Container(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: color),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 40, color: Colors.white),
+            SizedBox(
+              height: height * 0.014,
+            ),
+            Text(
+              text,
+              style: TextStyle(
+                  fontFamily: "Segoe UI",
+                  fontWeight: FontWeight.w600,
+                  fontSize: 18,
+                  color: Colors.white),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget _buildNavigationBar(LocalizationService _localizationService) {
@@ -741,4 +881,75 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   void debugLog(String log) {
     debugPrint('CreatePostModal:$log');
   }
+
+  Widget imageMemory() {
+    File _image = null;
+    return InkWell(
+      onTap: () async {
+        // await _pickImage();
+      },
+      child: _image == null
+          ? Column(
+              children: [
+                Text(
+                  'Take a picture',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: "Segoe UI",
+                      fontSize: 18,
+                      color: Colors.blueGrey),
+                ),
+                IconButton(
+                    icon: Icon(
+                      Icons.camera_alt,
+                      size: 40,
+                    ),
+                    onPressed: null)
+              ],
+            )
+          : Container(
+              child: Image.asset(_image.path),
+            ),
+    );
+  }
+
+  Widget videoMemory() {
+    File _video = null;
+    return InkWell(
+      onTap: () async {
+        //await _pickVideo();
+      },
+      child: _video == null
+          ? Column(
+              children: [
+                Text(
+                  'Record live story with\ncamera here',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: "Segoe UI",
+                      fontSize: 18,
+                      color: Colors.blueGrey),
+                ),
+                IconButton(
+                    icon: Icon(
+                      Icons.camera_alt,
+                      size: 40,
+                    ),
+                    onPressed: null)
+              ],
+            )
+          : VideoMemory(
+              video: _video != null
+                  ? _videoPlayerController.value.initialized
+                      ? AspectRatio(
+                          aspectRatio: _videoPlayerController.value.aspectRatio,
+                          child: VideoPlayer(_videoPlayerController),
+                        )
+                      : Container()
+                  : Container(),
+            ),
+    );
+  }
 }
+
+enum PostType { Text, Picture, Voice, Video }

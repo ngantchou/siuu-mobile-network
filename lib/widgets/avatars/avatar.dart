@@ -76,11 +76,9 @@ class OBAvatar extends StatelessWidget {
         image: FileImage(avatarFile),
       );
     } else if (avatarUrl != null) {
-      finalAvatarImage = Image(
-          height: avatarSize,
-          width: avatarSize,
-          fit: BoxFit.cover,
-          image: AdvancedNetworkImage(avatarUrl,
+      finalAvatarImage = CircleAvatar(
+          radius: 30.0,
+          backgroundImage: AdvancedNetworkImage(avatarUrl,
               useDiskCache: true,
               fallbackAssetImage: DEFAULT_AVATAR_ASSET,
               retryLimit: 0));
@@ -108,7 +106,7 @@ class OBAvatar extends StatelessWidget {
     if (onPressed == null) return avatar;
 
     return GestureDetector(
-      child: avatar,
+      child: finalAvatarImage,
       onTap: onPressed,
     );
   }
