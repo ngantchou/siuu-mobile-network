@@ -29,7 +29,7 @@ class ValidationService {
   static const int HASHTAG_MAX_LENGTH = 32;
   static const int POST_COMMENT_MAX_HASHTAGS = 3;
   static const int POST_COMMENT_MAX_LENGTH = 1500;
-  static const int PASSWORD_MIN_LENGTH = 10;
+  static const int PASSWORD_MIN_LENGTH = 5;
   static const int PASSWORD_MAX_LENGTH = 100;
   static const int CIRCLE_MAX_LENGTH = 100;
   static const int COLOR_ATTR_MAX_LENGTH = 7;

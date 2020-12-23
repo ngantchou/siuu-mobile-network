@@ -40,10 +40,10 @@ class _VideoMemoryState extends State<VideoMemory> {
     return Scaffold(
       backgroundColor: Colors.white70,
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(
-            height: height / 3,
+            height: height / 2,
             width: width,
             child: Stack(
               children: [

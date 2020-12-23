@@ -109,6 +109,9 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   bool _saveInProgress;
   CancelableOperation _saveOperation;
   CancelableOperation<LinkPreview> _linkPreviewCheckOperation;
+  File _video;
+  File _image;
+  final picker = ImagePicker();
 
   @override
   void initState() {
@@ -212,7 +215,12 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     Widget widgetType;
     switch (type) {
       case PostType.Text:
-        widgetType = TextMemory();
+        widgetType = TextMemory(onWrited: (value) {
+          print(value);
+          setState(() {
+            _onPostTextChanged(onWrited: value);
+          });
+        });
         break;
       case PostType.Picture:
         widgetType = imageMemory();
@@ -321,7 +329,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
             Expanded(
                 flex: isAutocompleting ? 3 : 1,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 20.0, top: 20.0),
+                  padding: EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
                   child: widgetType ?? _buildNewPostContent(),
                 )),
             isAutocompleting
@@ -337,8 +345,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
                     padding: EdgeInsets.only(
                         top: 8.0, bottom: _hasFocus == true ? 8 : 24),
                     color: Color.fromARGB(5, 0, 0, 0),
-                    child: _buildPostActions(),
-                  ),
+                    child: Container() //_buildPostActions(),
+                    ),
           ],
         )));
   }
@@ -593,8 +601,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     ];
   }
 
-  void _onPostTextChanged() {
-    String text = _textController.text;
+  void _onPostTextChanged({String onWrited}) {
+    String text = onWrited ?? _textController.text;
     _checkForLinkPreview();
     setState(() {
       _charactersCount = text.length;
@@ -883,41 +891,113 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   Widget imageMemory() {
-    File _image = null;
-    return InkWell(
-      onTap: () async {
-        // await _pickImage();
-      },
-      child: _image == null
-          ? Column(
-              children: [
-                Text(
-                  'Take a picture',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: "Segoe UI",
-                      fontSize: 18,
-                      color: Colors.blueGrey),
-                ),
-                IconButton(
-                    icon: Icon(
-                      Icons.camera_alt,
-                      size: 40,
-                    ),
-                    onPressed: null)
-              ],
-            )
-          : Container(
-              child: Image.asset(_image.path),
-            ),
+    return Container(
+        child: isAutocompleting || (_hasImage || _hasVideo)
+            ? Column(
+                children: [
+                  Text(
+                    'Take a picture',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                        fontFamily: "Segoe UI",
+                        fontSize: 18,
+                        color: Colors.blueGrey),
+                  ),
+                  Row(
+                    children: [
+                      OBPillButton(
+                        text: _localizationService.post__create_media,
+                        color: Pigment.fromString('#FCC14B'),
+                        icon: const OBIcon(OBIcons.photo),
+                        onPressed: () async {
+                          _unfocusTextField();
+                          try {
+                            var pickedMedia = await _mediaService.pickMedia(
+                              context: context,
+                              source: ImageSource.gallery,
+                              flattenGifs: false,
+                            );
+                            if (pickedMedia != null) {
+                              if (pickedMedia.type == FileType.image) {
+                                _setPostImageFile(pickedMedia.file);
+                              } else {
+                                _setPostVideoFile(pickedMedia.file);
+                              }
+                            }
+                          } catch (error) {
+                            _onError(error);
+                          }
+                        },
+                      ),
+                      OBPillButton(
+                        text: _localizationService.post__create_camera,
+                        color: Pigment.fromString('#50b1f2'),
+                        icon: const OBIcon(OBIcons.cameraCartoon),
+                        onPressed: () async {
+                          _unfocusTextField();
+                          try {
+                            var pickedMedia = await _mediaService.pickMedia(
+                                context: context, source: ImageSource.camera);
+                            if (pickedMedia != null) {
+                              if (pickedMedia.type == FileType.image) {
+                                _setPostImageFile(pickedMedia.file);
+                              } else {
+                                _setPostVideoFile(pickedMedia.file);
+                              }
+                            }
+                          } catch (error) {
+                            _onError(error);
+                          }
+                        },
+                      ),
+                    ],
+                  )
+                ],
+              )
+            : _buildNewPostContent());
+  }
+
+  _pickVideo() async {
+    PickedFile pickedFile = await picker.getVideo(
+      source: ImageSource.gallery,
+      maxDuration: Duration(seconds: 30),
     );
+    _video = File(pickedFile.path);
+    _videoPlayerController = VideoPlayerController.file(_video)
+      ..initialize().then((_) {
+        setState(() {});
+        _videoPlayerController.play();
+      });
   }
 
   Widget videoMemory() {
-    File _video = null;
+    //File _video = null;
     return InkWell(
       onTap: () async {
+        _unfocusTextField();
+
+        try {
+          PickedFile pickedFile = await picker.getVideo(
+            source: ImageSource.gallery,
+            maxDuration: Duration(seconds: 30),
+          );
+          _video = File(pickedFile.path);
+          _videoPlayerController = VideoPlayerController.file(_video)
+            ..initialize().then((_) {
+              setState(() {});
+              _videoPlayerController.play();
+            });
+          /*var pickedMedia = await _mediaService.pickMedia(
+              context: context, source: ImageSource.camera);*/
+          if (pickedFile != null) {
+            _setPostVideoFile(_video);
+          }
+        } catch (error) {
+          _onError(error);
+        }
         //await _pickVideo();
+        print("video :$_video");
+        setState(() {});
       },
       child: _video == null
           ? Column(
