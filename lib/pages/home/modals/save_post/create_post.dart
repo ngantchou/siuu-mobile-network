@@ -892,7 +892,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
   Widget imageMemory() {
     return Container(
-        child: isAutocompleting || (_hasImage || _hasVideo)
+        child: !_hasImage
             ? Column(
                 children: [
                   Text(

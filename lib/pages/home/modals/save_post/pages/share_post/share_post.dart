@@ -75,6 +75,9 @@ class OBSharePostPageState extends State<OBSharePostPage> {
                   TextStyle(fontSize: 14, color: Colors.black);
 
               List<Widget> shareToTiles = [
+                SizedBox(
+                  height: 50,
+                ),
                 ListTile(
                   leading: const OBIcon(OBIcons.circles, color: Colors.black),
                   title: OBText(

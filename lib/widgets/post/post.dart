@@ -41,36 +41,58 @@ class OBPost extends StatelessWidget {
       postInViewId = inViewId + '_' + post.id.toString();
 
     _bootstrap(context, postInViewId);
-
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
-        OBPostHeader(
-          post: post,
-          onPostDeleted: onPostDeleted,
-          onPostReported: onPostDeleted,
-          displayContext: displayContext,
-          onMemoryExcluded: onMemoryExcluded,
-          onUndoMemoryExcluded: onUndoMemoryExcluded,
-          onPostMemoryExcludedFromProfilePosts:
-              onPostMemoryExcludedFromProfilePosts,
+        Container(
+          // height: height * 0.357,
+          // height: 126,
+          decoration: BoxDecoration(
+            color: Color(0xffffffff),
+            boxShadow: [
+              BoxShadow(
+                offset: Offset(0.00, 4.00),
+                color: Color(0xff455b63).withOpacity(0.08),
+                blurRadius: 16,
+              ),
+            ],
+            borderRadius: BorderRadius.circular(12.00),
+          ),
+          child: Column(
+            children: [
+              OBPostHeader(
+                post: post,
+                onPostDeleted: onPostDeleted,
+                onPostReported: onPostDeleted,
+                displayContext: displayContext,
+                onMemoryExcluded: onMemoryExcluded,
+                onUndoMemoryExcluded: onUndoMemoryExcluded,
+                onPostMemoryExcludedFromProfilePosts:
+                    onPostMemoryExcludedFromProfilePosts,
+              ),
+              OBPostBody(post,
+                  onTextExpandedChange: onTextExpandedChange,
+                  inViewId: inViewId),
+              OBPostReactions(post),
+              OBPostCircles(post),
+              OBPostComments(
+                post,
+              ),
+              OBPostActions(
+                post,
+              ),
+              const SizedBox(
+                height: 16,
+              ),
+              OBPostDivider(),
+            ],
+          ),
         ),
-        OBPostBody(post,
-            onTextExpandedChange: onTextExpandedChange, inViewId: inViewId),
-        OBPostReactions(post),
-        OBPostCircles(post),
-        OBPostComments(
-          post,
-        ),
-        OBPostActions(
-          post,
-        ),
-        const SizedBox(
-          height: 16,
-        ),
-        OBPostDivider(),
+        SizedBox(height: height * 0.014)
       ],
     );
   }
