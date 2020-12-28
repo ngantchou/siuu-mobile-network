@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Siuu/custom/customCameraWidget.dart';
 import 'package:Siuu/models/circle.dart';
 import 'package:Siuu/models/community.dart';
 import 'package:Siuu/models/follows_list.dart';
@@ -241,6 +242,19 @@ class ModalService {
             }));
 
     return createdMemory;
+  }
+
+  Future<File> openCameraWidget({@required BuildContext context}) async {
+    File file = await Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<File>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: CameraWidget(),
+              );
+            }));
+
+    return file;
   }
 
   Future<User> openAddMemoryAdministrator(

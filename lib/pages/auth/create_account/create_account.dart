@@ -11,10 +11,12 @@ import 'package:Siuu/widgets/buttons/success_button.dart';
 import 'package:Siuu/widgets/buttons/secondary_button.dart';
 import 'package:Siuu/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:Siuu/widgets/country_picker.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:flutter/services.dart';
+import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 
 class OBAuthCreateAccountPage extends StatefulWidget {
   @override
@@ -31,12 +33,15 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
   ValidationService _validationService;
   ToastService _toastService;
   AuthApiService _authApiService;
-
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
   TextEditingController _linkController = TextEditingController();
-
+  //final SmsAutoFill _autoFill = SmsAutoFill();
   bool _tokenIsInvalid;
   bool _tokenValidationInProgress;
-
+  User firebaseUser;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String actualCode;
+  String verificationId;
   CancelableOperation _tokenValidationOperation;
 
   @override
@@ -64,6 +69,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
     _authApiService = openbookProvider.authApiService;
 
     return Scaffold(
+      key: _scaffoldKey,
       body: Center(
         child: SingleChildScrollView(
             child: Padding(
@@ -78,7 +84,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
                     ),
                     _buildLinkForm(),*/
                     const SizedBox(height: 20.0),
-                    _buildRequestInvite(context: context)
+                    // _buildRequestInvite(context: context)
                   ],
                 ))),
       ),
@@ -120,11 +126,149 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
         _createAccountBloc
             .setPhone('$_dialCode${_contactEditingController.text}');
       });
-      print('$_dialCode${_contactEditingController.text}');
-      await _authApiService
-          .sendVerificationCode('$_dialCode${_contactEditingController.text}');
-      Navigator.pushNamed(context, '/auth/phone-verification');
     }
+  }
+
+  void otpVerify() async {
+    double screenWidth = MediaQuery.of(context).size.width;
+    double screenHeight = MediaQuery.of(context).size.height;
+    await _auth.verifyPhoneNumber(
+      phoneNumber: '+44 7123 123 456',
+      verificationCompleted: (PhoneAuthCredential credential) async {
+        // ANDROID ONLY!
+
+        // Sign the user in (or link) with the auto-generated credential
+        await _auth.signInWithCredential(credential);
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        if (e.code == 'invalid-phone-number') {
+          print('The provided phone number is not valid.');
+        }
+
+        // Handle other errors
+      },
+      codeSent: (String verificationId, int resendToken) async {
+        // Update the UI - wait for the user to enter the SMS code
+        String smsCode = 'xxxx';
+        Future<void> _showMyDialog() async {
+          return showDialog<void>(
+            context: context,
+            barrierDismissible: false, // user must tap button!
+            builder: (BuildContext context) {
+              return AlertDialog(
+                title: Text('AlertDialog Title'),
+                content: SingleChildScrollView(
+                  child: Container(
+                    padding: const EdgeInsets.all(16.0),
+                    width: double.infinity,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Verification',
+                          style: TextStyle(fontSize: 28, color: Colors.black),
+                        ),
+                        SizedBox(
+                          height: screenHeight * 0.02,
+                        ),
+                        Text(
+                          'Enter A 6 digit number that was sent to ${_createAccountBloc.getPhone()}',
+                          textAlign: TextAlign.center,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                        SizedBox(
+                          height: screenHeight * 0.04,
+                        ),
+                        Container(
+                          margin: EdgeInsets.symmetric(
+                              horizontal:
+                                  screenWidth > 600 ? screenWidth * 0.2 : 16),
+                          padding: const EdgeInsets.all(16.0),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              // ignore: prefer_const_literals_to_create_immutables
+                              boxShadow: [
+                                const BoxShadow(
+                                  color: Colors.grey,
+                                  offset: Offset(0.0, 1.0), //(x,y)
+                                  blurRadius: 6.0,
+                                ),
+                              ],
+                              borderRadius: BorderRadius.circular(16.0)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                margin:
+                                    EdgeInsets.only(left: screenWidth * 0.025),
+                                child: PinEntryTextField(
+                                  fields: 6,
+                                  onSubmit: (text) {
+                                    smsCode = text as String;
+                                  },
+                                ),
+                              ),
+                              SizedBox(
+                                height: screenHeight * 0.04,
+                              ),
+                              GestureDetector(
+                                onTap: () {
+                                  //verifyOtp();
+                                },
+                                child: Container(
+                                  margin: const EdgeInsets.all(8),
+                                  height: 45,
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color:
+                                        const Color.fromARGB(255, 253, 188, 51),
+                                    borderRadius: BorderRadius.circular(36),
+                                  ),
+                                  alignment: Alignment.center,
+                                  child: const Text(
+                                    'Verify',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 16.0),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                actions: <Widget>[
+                  TextButton(
+                    child: Text('Approve'),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                    },
+                  ),
+                ],
+              );
+            },
+          );
+        }
+
+        // Create a PhoneAuthCredential with the code
+        PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
+            verificationId: verificationId, smsCode: smsCode);
+
+        // Sign the user in (or link) with the credential
+        await _auth.signInWithCredential(phoneAuthCredential);
+      },
+      timeout: const Duration(seconds: 60),
+      codeAutoRetrievalTimeout: (String verificationId) {
+        // Auto-resolution timed out...
+      },
+    );
   }
 
   String _getTokenFromLink(String link) {
@@ -280,7 +424,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
                                   ),
                                   validator: (String phone) {
                                     String validatephone = _validationService
-                                        .validateUserProfileName(phone);
+                                        .validateUserProfilePhone(phone);
                                     if (validatephone != null)
                                       return validatephone;
                                   },
