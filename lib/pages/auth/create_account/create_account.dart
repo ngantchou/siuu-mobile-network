@@ -11,10 +11,13 @@ import 'package:Siuu/widgets/buttons/success_button.dart';
 import 'package:Siuu/widgets/buttons/secondary_button.dart';
 import 'package:Siuu/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:Siuu/widgets/country_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:async/async.dart';
 import 'package:flutter/services.dart';
+import 'package:pin_entry_text_field/pin_entry_text_field.dart';
 
 class OBAuthCreateAccountPage extends StatefulWidget {
   @override
@@ -31,7 +34,9 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
   ValidationService _validationService;
   ToastService _toastService;
   AuthApiService _authApiService;
-
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String verificationId;
+  String smsOTP;
   TextEditingController _linkController = TextEditingController();
 
   bool _tokenIsInvalid;
@@ -113,7 +118,17 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
 
   void onPressedNextStep(BuildContext context) async {
     bool isFormValid = await _validateForm();
-
+    FirebaseFirestore.instance
+        .collection('users')
+        .where("phone",
+            isEqualTo: '$_dialCode${_contactEditingController.text}')
+        .get()
+        .then((QuerySnapshot documentSnapshot) async {
+      if (documentSnapshot.size > 0) {
+        print('Document exists on the database');
+        isFormValid = false;
+      }
+    });
     if (isFormValid) {
       setState(() {
         //var token = _getTokenFromLink(_linkController.text.trim());
@@ -121,10 +136,85 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
             .setPhone('$_dialCode${_contactEditingController.text}');
       });
       print('$_dialCode${_contactEditingController.text}');
-      await _authApiService
-          .sendVerificationCode('$_dialCode${_contactEditingController.text}');
-      Navigator.pushNamed(context, '/auth/phone-verification');
+
+      await sendVerificationCode('$_dialCode${_contactEditingController.text}');
+      // Navigator.pushNamed(context, '/auth/phone-verification');
     }
+  }
+
+  Future<void> sendVerificationCode(String phone) async {
+    //print("phone to verify is $phone");
+    //showAlertDialog(context);
+
+    try {
+      await _auth.verifyPhoneNumber(
+          phoneNumber: phone,
+          codeAutoRetrievalTimeout: (String verId) {
+            verificationId = verId;
+          },
+          codeSent: (String verificationId, [int forceCodeResend]) async {
+            // Update the UI - wait for the user to enter the SMS code
+            showAlertDialog(context);
+
+            // Create a PhoneAuthCredential with the code
+            PhoneAuthCredential phoneAuthCredential =
+                PhoneAuthProvider.credential(
+                    verificationId: verificationId, smsCode: smsOTP);
+
+            // Sign the user in (or link) with the credential
+            await _auth.signInWithCredential(phoneAuthCredential);
+            Navigator.pushReplacementNamed(context, '/auth/name_step');
+          },
+          timeout: const Duration(seconds: 60),
+          verificationCompleted: (AuthCredential phoneAuthCredential) async {
+            print("phone to verify is succes");
+            // Sign the user in (or link) with the auto-generated credential
+            await _auth.signInWithCredential(phoneAuthCredential);
+            Navigator.pushReplacementNamed(context, '/auth/name_step');
+          },
+          verificationFailed: (FirebaseAuthException exception) {
+            if (exception.code == 'invalid-phone-number') {
+              print('The provided phone number is not valid.');
+            }
+          });
+    } catch (e) {
+      //handleError(e as PlatformException);
+      print("erreur de génération du code $e");
+    }
+  }
+
+  //Basic alert dialogue for alert errors and confirmations
+  void showAlertDialog(BuildContext context) {
+    // set up the AlertDialog
+    final AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12.0))),
+      contentPadding: EdgeInsets.only(top: 10.0),
+      title: const Text('code'),
+      content: Container(
+        child: PinEntryTextField(
+          fields: 6,
+          onSubmit: (text) {
+            smsOTP = text as String;
+          },
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('Verify'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        )
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 
   String _getTokenFromLink(String link) {
