@@ -68,7 +68,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   OBMainMenuPageController _mainMenuPageController;
   OBCommunitiesPageController _memoriesPageController;
   OBNotificationsPageController _notificationsPageController;
-
+  DateTime currentBackPressTime;
   int _loggedInUserUnreadNotifications;
   String _loggedInUserAvatarUrl;
 
@@ -122,17 +122,44 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     }
 
     return Material(
-      child: OBCupertinoTabScaffold(
-        tabBuilder: (BuildContext context, int index) {
-          return CupertinoTabView(
-            builder: (BuildContext context) {
-              return _getPageForTabIndex(index);
+      child: WillPopScope(
+          child: OBCupertinoTabScaffold(
+            tabBuilder: (BuildContext context, int index) {
+              return CupertinoTabView(
+                builder: (BuildContext context) {
+                  return _getPageForTabIndex(index);
+                },
+              );
             },
-          );
-        },
-        tabBar: _createTabBar(),
-      ),
+            tabBar: _createTabBar(),
+          ),
+          onWillPop: onWillPop),
     );
+  }
+
+  Future<bool> onWillPop() {
+    DateTime now = DateTime.now();
+    Future<bool> confirm = Future.value(true);
+    if (currentBackPressTime == null ||
+        now.difference(currentBackPressTime) > Duration(seconds: 2)) {
+      currentBackPressTime = now;
+      AlertDialog(
+        actions: [
+          FlatButton(
+              onPressed: () {
+                confirm = Future.value(false);
+              },
+              child: Text('No')),
+          FlatButton(
+              onPressed: () {
+                confirm = Future.value(true);
+              },
+              child: Text('Yes'))
+        ],
+        content: Text("will you want to quit Siuu ?"),
+      );
+    }
+    return confirm;
   }
 
   Widget _getPageForTabIndex(int index) {
