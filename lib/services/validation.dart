@@ -404,6 +404,19 @@ class ValidationService {
     return errorMsg;
   }
 
+  String validateUserProfilePhone(String phone) {
+    assert(phone != null);
+
+    String errorMsg;
+
+    if (phone.isEmpty) {
+      errorMsg = "Please enter your phone";
+    } else if (phone.length < 9) {
+      errorMsg = "Phone number is incorrect";
+    }
+    return errorMsg;
+  }
+
   String validateModeratedObjectDescription(String description) {
     assert(description != null);
 

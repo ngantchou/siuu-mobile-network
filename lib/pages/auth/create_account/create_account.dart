@@ -11,7 +11,10 @@ import 'package:Siuu/widgets/buttons/success_button.dart';
 import 'package:Siuu/widgets/buttons/secondary_button.dart';
 import 'package:Siuu/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:Siuu/widgets/country_picker.dart';
+<<<<<<< HEAD
 import 'package:cloud_firestore/cloud_firestore.dart';
+=======
+>>>>>>> 48346f3958a9f27d30cbd05fe82b54d2351478f3
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -34,14 +37,21 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
   ValidationService _validationService;
   ToastService _toastService;
   AuthApiService _authApiService;
+<<<<<<< HEAD
   final FirebaseAuth _auth = FirebaseAuth.instance;
   String verificationId;
   String smsOTP;
+=======
+  final _scaffoldKey = GlobalKey<ScaffoldState>();
+>>>>>>> 48346f3958a9f27d30cbd05fe82b54d2351478f3
   TextEditingController _linkController = TextEditingController();
-
+  //final SmsAutoFill _autoFill = SmsAutoFill();
   bool _tokenIsInvalid;
   bool _tokenValidationInProgress;
-
+  User firebaseUser;
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String actualCode;
+  String verificationId;
   CancelableOperation _tokenValidationOperation;
 
   @override
@@ -69,6 +79,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
     _authApiService = openbookProvider.authApiService;
 
     return Scaffold(
+      key: _scaffoldKey,
       body: Center(
         child: SingleChildScrollView(
             child: Padding(
@@ -83,7 +94,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
                     ),
                     _buildLinkForm(),*/
                     const SizedBox(height: 20.0),
-                    _buildRequestInvite(context: context)
+                    // _buildRequestInvite(context: context)
                   ],
                 ))),
       ),
@@ -370,7 +381,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
                                   ),
                                   validator: (String phone) {
                                     String validatephone = _validationService
-                                        .validateUserProfileName(phone);
+                                        .validateUserProfilePhone(phone);
                                     if (validatephone != null)
                                       return validatephone;
                                   },

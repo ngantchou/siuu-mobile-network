@@ -291,6 +291,7 @@ class _MyAppState extends State<MyApp> {
 Future<Null> main() async {
   MyApp app = MyApp();
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp();
 // Run the whole app in a zone to capture all uncaught errors.
   runZonedGuarded(() => runApp(app), (Object error, StackTrace stackTrace) {
