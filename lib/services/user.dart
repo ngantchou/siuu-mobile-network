@@ -574,7 +574,8 @@ class UserService {
       {String text, List<Circle> circles = const [], bool isDraft}) async {
     HttpieStreamedResponse response = await _postsApiService.createPost(
         text: text,
-        circleIds: circles.map((circle) => circle.id).toList(),
+        // circleIds: circles.map((circle) => circle.id).toList(),
+        circleIds: null,
         isDraft: isDraft);
 
     _checkResponseIsCreated(response);

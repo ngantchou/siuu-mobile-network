@@ -50,12 +50,10 @@ class _CameraWidgetState extends State<CameraWidget>
   void initState() {
     availableCameras().then((value) => cameras = value);
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
     super.dispose();
   }
 
@@ -74,6 +72,24 @@ class _CameraWidgetState extends State<CameraWidget>
     }
   }
 
+  Widget cameraPreview() {
+    if (controller == null || !controller.value.isInitialized) {
+      return Align(
+        alignment: Alignment.center,
+        child: Text(
+          'Loading',
+          style: TextStyle(
+              color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
+        ),
+      );
+    }
+
+    return AspectRatio(
+      aspectRatio: controller.value.aspectRatio,
+      child: CameraPreview(controller),
+    );
+  }
+
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -81,16 +97,13 @@ class _CameraWidgetState extends State<CameraWidget>
     final double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.black,
         body: SizedBox(
           height: height,
           width: width,
           child: Stack(
             children: [
-              Positioned.fill(
-                child: Container(
-                  color: Colors.black54,
-                ),
-              ),
+              Positioned.fill(child: cameraPreview()),
               Positioned.fill(
                 child: Column(
                   children: [

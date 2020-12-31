@@ -78,6 +78,9 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
         child: OBPrimaryColorContainer(
             child: Column(
           children: <Widget>[
+            SizedBox(
+              height: 50,
+            ),
             Expanded(
                 child: SingleChildScrollView(
               child: Padding(
