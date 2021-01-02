@@ -61,7 +61,7 @@ class OBReportObjectPageState extends State<OBReportObjectPage> {
             children: <Widget>[
               Padding(
                 padding:
-                    EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 20),
+                    EdgeInsets.only(left: 20, right: 20, bottom: 20, top: 50),
                 child: OBText(
                   'Why are you reporting this ' +
                       modelTypeToString(widget.object) +

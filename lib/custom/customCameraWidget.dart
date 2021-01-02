@@ -1,0 +1,625 @@
+import 'dart:async';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:camera/camera.dart';
+import 'package:camerawesome/camerawesome_plugin.dart';
+import 'package:camerawesome/models/orientations.dart';
+import 'package:camerawesome/picture_controller.dart';
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:video_player/video_player.dart';
+import 'package:path_provider/path_provider.dart';
+import 'cameraWidget/bottom_bar.dart';
+import 'cameraWidget/camera_preview.dart';
+import 'cameraWidget/preview_card.dart';
+import 'cameraWidget/top_bar.dart';
+import 'package:image/image.dart' as imgUtils;
+
+class CameraWidget extends StatefulWidget {
+  @override
+  _CameraWidgetState createState() {
+    return _CameraWidgetState();
+  }
+}
+
+/// Returns a suitable camera icon for [direction].
+IconData getCameraLensIcon(CameraLensDirection direction) {
+  switch (direction) {
+    case CameraLensDirection.back:
+      return Icons.camera_rear;
+    case CameraLensDirection.front:
+      return Icons.camera_front;
+    case CameraLensDirection.external:
+      return Icons.camera;
+  }
+  throw ArgumentError('Unknown lens direction');
+}
+
+void logError(String code, String message) =>
+    print('Error: $code\nError Message: $message');
+
+class _CameraWidgetState extends State<CameraWidget>
+    with WidgetsBindingObserver, TickerProviderStateMixin {
+  String _lastPhotoPath, _lastVideoPath;
+  bool _focus = false, _fullscreen = true, _isRecordingVideo = false;
+
+  ValueNotifier<CameraFlashes> _switchFlash = ValueNotifier(CameraFlashes.NONE);
+  ValueNotifier<double> _zoomNotifier = ValueNotifier(0);
+  ValueNotifier<Size> _photoSize = ValueNotifier(null);
+  ValueNotifier<Sensors> _sensor = ValueNotifier(Sensors.BACK);
+  ValueNotifier<CaptureModes> _captureMode = ValueNotifier(CaptureModes.PHOTO);
+  ValueNotifier<bool> _enableAudio = ValueNotifier(true);
+  ValueNotifier<CameraOrientations> _orientation =
+      ValueNotifier(CameraOrientations.PORTRAIT_UP);
+
+  /// use this to call a take picture
+  PictureController _pictureController = new PictureController();
+
+  /// use this to record a video
+  VideoController _videoController = new VideoController();
+
+  /// list of available sizes
+  List<Size> _availableSizes;
+
+  AnimationController _iconsAnimationController, _previewAnimationController;
+  Animation<Offset> _previewAnimation;
+  Timer _previewDismissTimer;
+  // StreamSubscription<Uint8List> previewStreamSub;
+  Stream<Uint8List> previewStream;
+
+  @override
+  void initState() {
+    super.initState();
+<<<<<<< HEAD
+    _iconsAnimationController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 300),
+    );
+
+    _previewAnimationController = AnimationController(
+      duration: const Duration(milliseconds: 1300),
+      vsync: this,
+    );
+    _previewAnimation = Tween<Offset>(
+      begin: const Offset(-2.0, 0.0),
+      end: Offset.zero,
+    ).animate(
+      CurvedAnimation(
+        parent: _previewAnimationController,
+        curve: Curves.elasticOut,
+        reverseCurve: Curves.elasticIn,
+      ),
+    );
+=======
+>>>>>>> 1751480f647ac2ac67160b13751c11ed2c84e9c8
+  }
+
+  @override
+  void dispose() {
+<<<<<<< HEAD
+    _iconsAnimationController.dispose();
+    _previewAnimationController.dispose();
+    // previewStreamSub.cancel();
+    _photoSize.dispose();
+    _captureMode.dispose();
+=======
+>>>>>>> 1751480f647ac2ac67160b13751c11ed2c84e9c8
+    super.dispose();
+  }
+
+  @override
+<<<<<<< HEAD
+=======
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // App state changed before we got the chance to initialize.
+    if (controller == null || !controller.value.isInitialized) {
+      return;
+    }
+    if (state == AppLifecycleState.inactive) {
+      controller?.dispose();
+    } else if (state == AppLifecycleState.resumed) {
+      if (controller != null) {
+        onNewCameraSelected(controller.description);
+      }
+    }
+  }
+
+  Widget cameraPreview() {
+    if (controller == null || !controller.value.isInitialized) {
+      return Align(
+        alignment: Alignment.center,
+        child: Text(
+          'Loading',
+          style: TextStyle(
+              color: Colors.white, fontSize: 20.0, fontWeight: FontWeight.bold),
+        ),
+      );
+    }
+
+    return AspectRatio(
+      aspectRatio: controller.value.aspectRatio,
+      child: CameraPreview(controller),
+    );
+  }
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  @override
+  Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: SizedBox(
+          height: height,
+          width: width,
+          child: Stack(
+            children: [
+              Positioned.fill(child: cameraPreview()),
+              Positioned.fill(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SvgPicture.asset('assets/svg/flash.svg'),
+                          SvgPicture.asset('assets/svg/HDR.svg'),
+                          Row(
+                            children: [
+                              SvgPicture.asset('assets/svg/timer.svg'),
+                              SizedBox(width: width * 0.012),
+                              Text(
+                                "3s",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontFamily: "Segoe UI",
+                                  fontSize: 14,
+                                  color: Color(0xff4d0cbb),
+                                ),
+                              )
+                            ],
+                          ),
+                          SvgPicture.asset('assets/svg/filters.svg'),
+                        ],
+                      ),
+                    ),
+                    Spacer(),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: height * 0.024,
+                          width: width * 0.8,
+                          child: Stack(
+                            children: [
+                              Container(
+                                height: height * 0.024,
+                                width: width * 0.160,
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                      begin: Alignment.centerLeft,
+                                      colors: [Colors.black, Colors.white],
+                                      end: Alignment.centerRight),
+                                ),
+                              ),
+                              CarouselSlider(
+                                options: CarouselOptions(
+                                  viewportFraction: 0.3,
+                                  scrollDirection: Axis.horizontal,
+                                  height: height * 0.024,
+                                ),
+                                items: [
+                                  'PHOTO',
+                                  'SQUARE',
+                                  'VIDEO',
+                                  'PANO',
+                                ].map((i) {
+                                  return Builder(
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        child: buildText(
+                                          '$i',
+                                        ),
+                                      );
+                                    },
+                                  );
+                                }).toList(),
+                              ),
+                              // ListView(
+                              //   scrollDirection: Axis.horizontal,
+                              //   children: [
+                              //     buildText('PHOTO'),
+                              //     buildText('SQUARE'),
+                              //     buildText('VIDEO'),
+                              //     buildText('PANO'),
+                              //   ],
+                              // ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(20, 30, 20, 20),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Image.asset('assets/images/photoCaptured.png'),
+                              Container(
+                                height: height * 0.096,
+                                width: width * 0.160,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  border: Border.all(
+                                    width: width * 0.014,
+                                    color: Color(0xffffffff),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Container(
+                                    height: height * 0.073,
+                                    width: width * 0.121,
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xffffffff),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SvgPicture.asset('assets/svg/swap.svg'),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Row buildText(String name) {
+    final double width = MediaQuery.of(context).size.width;
+    return Row(
+      children: [
+        SizedBox(
+          width: width * 0.072,
+        ),
+        Text(
+          name,
+          style: TextStyle(
+            fontFamily: "Segoe UI",
+            fontSize: 15,
+            color: Color(0xffffffff),
+          ),
+        ),
+      ],
+    );
+  }
+  /* @override
+>>>>>>> 1751480f647ac2ac67160b13751c11ed2c84e9c8
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Stack(
+        fit: StackFit.expand,
+        children: <Widget>[
+          this._fullscreen ? buildFullscreenCamera() : buildSizedScreenCamera(),
+          _buildInterface(),
+          (!_isRecordingVideo)
+              ? PreviewCardWidget(
+                  lastPhotoPath: _lastPhotoPath,
+                  orientation: _orientation,
+                  previewAnimation: _previewAnimation,
+                )
+              : Container(),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildInterface() {
+    return Stack(
+      children: <Widget>[
+        SafeArea(
+          bottom: false,
+          child: TopBarWidget(
+              isFullscreen: _fullscreen,
+              isRecording: _isRecordingVideo,
+              enableAudio: _enableAudio,
+              photoSize: _photoSize,
+              captureMode: _captureMode,
+              switchFlash: _switchFlash,
+              orientation: _orientation,
+              rotationController: _iconsAnimationController,
+              onFlashTap: () {
+                switch (_switchFlash.value) {
+                  case CameraFlashes.NONE:
+                    _switchFlash.value = CameraFlashes.ON;
+                    break;
+                  case CameraFlashes.ON:
+                    _switchFlash.value = CameraFlashes.AUTO;
+                    break;
+                  case CameraFlashes.AUTO:
+                    _switchFlash.value = CameraFlashes.ALWAYS;
+                    break;
+                  case CameraFlashes.ALWAYS:
+                    _switchFlash.value = CameraFlashes.NONE;
+                    break;
+                }
+                setState(() {});
+              },
+              onAudioChange: () {
+                this._enableAudio.value = !this._enableAudio.value;
+                setState(() {});
+              },
+              onChangeSensorTap: () {
+                this._focus = !_focus;
+                if (_sensor.value == Sensors.FRONT) {
+                  _sensor.value = Sensors.BACK;
+                } else {
+                  _sensor.value = Sensors.FRONT;
+                }
+              },
+              onResolutionTap: () => _buildChangeResolutionDialog(),
+              onFullscreenTap: () {
+                this._fullscreen = !this._fullscreen;
+                setState(() {});
+              }),
+        ),
+        BottomBarWidget(
+          onZoomInTap: () {
+            if (_zoomNotifier.value <= 0.9) {
+              _zoomNotifier.value += 0.1;
+            }
+            setState(() {});
+          },
+          onZoomOutTap: () {
+            if (_zoomNotifier.value >= 0.1) {
+              _zoomNotifier.value -= 0.1;
+            }
+            setState(() {});
+          },
+          onCaptureModeSwitchChange: () {
+            if (_captureMode.value == CaptureModes.PHOTO) {
+              _captureMode.value = CaptureModes.VIDEO;
+            } else {
+              _captureMode.value = CaptureModes.PHOTO;
+            }
+            setState(() {});
+          },
+          onCaptureTap: (_captureMode.value == CaptureModes.PHOTO)
+              ? _takePhoto
+              : _recordVideo,
+          rotationController: _iconsAnimationController,
+          orientation: _orientation,
+          isRecording: _isRecordingVideo,
+          captureMode: _captureMode,
+        ),
+      ],
+    );
+  }
+
+  _takePhoto() async {
+    final Directory extDir = await getTemporaryDirectory();
+    final testDir =
+        await Directory('${extDir.path}/test').create(recursive: true);
+    final String filePath =
+        '${testDir.path}/${DateTime.now().millisecondsSinceEpoch}.jpg';
+    await _pictureController.takePicture(filePath);
+    // lets just make our phone vibrate
+    HapticFeedback.mediumImpact();
+    _lastPhotoPath = filePath;
+    setState(() {});
+    if (_previewAnimationController.status == AnimationStatus.completed) {
+      _previewAnimationController.reset();
+    }
+    _previewAnimationController.forward();
+    print("----------------------------------");
+    print("TAKE PHOTO CALLED");
+    final file = File(filePath);
+    print("==> hastakePhoto : ${file.exists()} | path : $filePath");
+    final img = imgUtils.decodeImage(file.readAsBytesSync());
+    print("==> img.width : ${img.width} | img.height : ${img.height}");
+    print("----------------------------------");
+  }
+
+  _recordVideo() async {
+    // lets just make our phone vibrate
+    HapticFeedback.mediumImpact();
+
+    if (this._isRecordingVideo) {
+      await _videoController.stopRecordingVideo();
+
+      _isRecordingVideo = false;
+      setState(() {});
+
+      final file = File(_lastVideoPath);
+      print("----------------------------------");
+      print("VIDEO RECORDED");
+      print(
+          "==> has been recorded : ${file.exists()} | path : $_lastVideoPath");
+      print("----------------------------------");
+
+      await Future.delayed(Duration(milliseconds: 300));
+      await Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => CameraPreviewWidget(
+            videoPath: _lastVideoPath,
+          ),
+        ),
+      );
+    } else {
+      final Directory extDir = await getTemporaryDirectory();
+      final testDir =
+          await Directory('${extDir.path}/test').create(recursive: true);
+      final String filePath =
+          '${testDir.path}/${DateTime.now().millisecondsSinceEpoch}.mp4';
+      await _videoController.recordVideo(filePath);
+      _isRecordingVideo = true;
+      _lastVideoPath = filePath;
+      setState(() {});
+    }
+  }
+
+  _buildChangeResolutionDialog() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => ListView.separated(
+        itemBuilder: (context, index) => ListTile(
+          key: ValueKey("resOption"),
+          onTap: () {
+            this._photoSize.value = _availableSizes[index];
+            setState(() {});
+            Navigator.of(context).pop();
+          },
+          leading: Icon(Icons.aspect_ratio),
+          title: Text(
+              "${_availableSizes[index].width}/${_availableSizes[index].height}"),
+        ),
+        separatorBuilder: (context, index) => Divider(),
+        itemCount: _availableSizes.length,
+      ),
+    );
+  }
+
+  _onOrientationChange(CameraOrientations newOrientation) {
+    _orientation.value = newOrientation;
+    if (_previewDismissTimer != null) {
+      _previewDismissTimer.cancel();
+    }
+  }
+
+  _onPermissionsResult(bool granted) {
+    if (!granted) {
+      AlertDialog alert = AlertDialog(
+        title: Text('Error'),
+        content: Text(
+            'It seems you doesn\'t authorized some permissions. Please check on your settings and try again.'),
+        actions: [
+          FlatButton(
+            child: Text('OK'),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+        ],
+      );
+
+      // show the dialog
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+        },
+      );
+    } else {
+      setState(() {});
+      print("granted");
+    }
+  }
+
+  // /// this is just to preview images from stream
+  // /// This use a bufferTime to take an image each 1500 ms
+  // /// you cannot show every frame as flutter cannot draw them fast enough
+  // /// [THIS IS JUST FOR DEMO PURPOSE]
+  // Widget _buildPreviewStream() {
+  //   if (previewStream == null) return Container();
+  //   return Positioned(
+  //     left: 32,
+  //     bottom: 120,
+  //     child: StreamBuilder(
+  //       stream: previewStream.bufferTime(Duration(milliseconds: 1500)),
+  //       builder: (context, snapshot) {
+  //         print(snapshot);
+  //         if (!snapshot.hasData || snapshot.data == null) return Container();
+  //         List<Uint8List> data = snapshot.data;
+  //         print(
+  //             "...${DateTime.now()} new image received... ${data.last.lengthInBytes} bytes");
+  //         return Image.memory(
+  //           data.last,
+  //           width: 120,
+  //         );
+  //       },
+  //     ),
+  //   );
+  // }
+
+  Widget buildFullscreenCamera() {
+    return Positioned(
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      child: Center(
+        child: CameraAwesome(
+          onPermissionsResult: _onPermissionsResult,
+          selectDefaultSize: (availableSizes) {
+            this._availableSizes = availableSizes;
+            return availableSizes[0];
+          },
+          captureMode: _captureMode,
+          photoSize: _photoSize,
+          sensor: _sensor,
+          enableAudio: _enableAudio,
+          switchFlashMode: _switchFlash,
+          zoom: _zoomNotifier,
+          onOrientationChanged: _onOrientationChange,
+          // imagesStreamBuilder: (imageStream) {
+          //   /// listen for images preview stream
+          //   /// you can use it to process AI recognition or anything else...
+          //   print("-- init CamerAwesome images stream");
+          //   setState(() {
+          //     previewStream = imageStream;
+          //   });
+
+          //   imageStream.listen((Uint8List imageData) {
+          //     print(
+          //         "...${DateTime.now()} new image received... ${imageData.lengthInBytes} bytes");
+          //   });
+          // },
+          onCameraStarted: () {
+            // camera started here -- do your after start stuff
+          },
+        ),
+      ),
+    );
+  }
+
+  Widget buildSizedScreenCamera() {
+    return Positioned(
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+      child: Container(
+        color: Colors.black,
+        child: Center(
+          child: Container(
+            height: 300,
+            width: MediaQuery.of(context).size.width,
+            child: CameraAwesome(
+              onPermissionsResult: _onPermissionsResult,
+              selectDefaultSize: (availableSizes) {
+                this._availableSizes = availableSizes;
+                return availableSizes[0];
+              },
+              captureMode: _captureMode,
+              photoSize: _photoSize,
+              sensor: _sensor,
+              fitted: true,
+              switchFlashMode: _switchFlash,
+              zoom: _zoomNotifier,
+              onOrientationChanged: _onOrientationChange,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

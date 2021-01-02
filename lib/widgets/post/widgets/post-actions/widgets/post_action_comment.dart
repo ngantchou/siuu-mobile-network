@@ -18,10 +18,12 @@ class OBPostActionComment extends StatelessWidget {
     var openbookProvider = OpenbookProvider.of(context);
     var navigationService = openbookProvider.navigationService;
     var localizationService = openbookProvider.localizationService;
+    final double width = MediaQuery.of(context).size.width;
 
     return Row(
       children: [
         buildNumberText(post.commentsCount.toString()),
+        SizedBox(width: width * 0.024),
         InkWell(
           onTap: () {
             if (onWantsToCommentPost != null) {

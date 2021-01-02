@@ -76,8 +76,8 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
       _needsBootstrap = false;
     }
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 10),
+    return Center(
+      //padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
       child: SizedBox(
           width: _mediaWidth,
           height: _mediaHeight,
@@ -192,7 +192,9 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
 
     double imageAspectRatio = widget.post.mediaWidth / widget.post.mediaHeight;
     double imageHeight = (screenWidth / imageAspectRatio);
-    _mediaHeight = min(imageHeight, maxBoxHeight);
+    //_mediaHeight = min(imageHeight, maxBoxHeight);
+    _mediaHeight = screenHeight * 0.43;
+    imageHeight = _mediaHeight;
     if (_mediaHeight == maxBoxHeight) _mediaIsConstrained = true;
     _mediaWidth = screenWidth;
 

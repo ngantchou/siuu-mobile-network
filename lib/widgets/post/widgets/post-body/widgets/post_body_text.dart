@@ -92,7 +92,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     if (widget.post.isEdited != null && widget.post.isEdited) {
       return OBCollapsibleSmartText(
         text: _translatedText != null ? _translatedText : widget.post.text,
-        trailingSmartTextElement: SecondaryTextElement(' (edited)'),
+        trailingSmartTextElement: SecondaryTextElement(''),
         maxlength: MAX_LENGTH_LIMIT,
         getChild: _buildTranslationButton,
         hashtagsMap: widget.post.hashtagsMap,
@@ -108,7 +108,8 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   }
 
   Widget _buildTranslationButton() {
-    if (_userService.getLoggedInUser() != null &&
+    return SizedBox();
+    /* if (_userService.getLoggedInUser() != null &&
         !_userService.getLoggedInUser().canTranslatePost(widget.post)) {
       return SizedBox();
     }
@@ -142,7 +143,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
                 _localizationService.trans('user__translate_see_translation'),
                 size: OBTextSize.large),
       ),
-    );
+    );*/
   }
 
   void _copyText() {

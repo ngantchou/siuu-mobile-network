@@ -46,16 +46,18 @@ class OBPostBodyImage extends StatelessWidget {
   }
 
   Widget _buildImageWidget({String imageUrl, double height, double width}) {
-    return Image(
-      height: height,
-      width: width,
-      fit: BoxFit.cover,
-      image: AdvancedNetworkImage(imageUrl,
-          useDiskCache: true,
-          fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
-          retryLimit: 3,
-          timeoutDuration: const Duration(minutes: 1)),
-    );
+    return ClipRRect(
+        borderRadius: BorderRadius.circular(8.0),
+        child: Image(
+          height: height,
+          width: width,
+          fit: BoxFit.fill,
+          image: AdvancedNetworkImage(imageUrl,
+              useDiskCache: true,
+              fallbackAssetImage: 'assets/images/fallbacks/post-fallback.png',
+              retryLimit: 3,
+              timeoutDuration: const Duration(minutes: 1)),
+        ));
   }
 
   Widget _buildExpandIcon() {

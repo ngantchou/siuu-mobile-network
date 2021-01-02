@@ -1,4 +1,3 @@
-import 'package:Siuu/custom/customPostContainer.dart';
 import 'package:Siuu/models/community.dart';
 import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/user.dart';
@@ -18,8 +17,6 @@ import 'package:Siuu/widgets/theming/secondary_text.dart';
 import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:Siuu/res/colors.dart';
 
 class OBProfilePage extends StatefulWidget {
   final OBProfilePageController controller;
@@ -36,8 +33,7 @@ class OBProfilePage extends StatefulWidget {
   }
 }
 
-class OBProfilePageState extends State<OBProfilePage>
-    with SingleTickerProviderStateMixin {
+class OBProfilePageState extends State<OBProfilePage> {
   User _user;
   bool _needsBootstrap;
   UserService _userService;
@@ -50,10 +46,7 @@ class OBProfilePageState extends State<OBProfilePage>
   GlobalKey<RefreshIndicatorState> _protectedProfileRefreshIndicatorKey =
       GlobalKey();
   bool _needsProtectedProfileBootstrap;
-  bool isInformationPressed = true;
-  bool isPublicationsPressed = false;
 
-  TabController _tabController;
   @override
   void initState() {
     super.initState();
@@ -64,29 +57,6 @@ class OBProfilePageState extends State<OBProfilePage>
     if (widget.controller != null) widget.controller.attach(this);
     _profileMemoryPostsVisible = widget.user.getProfileMemoryPostsVisible();
     _recentlyExcludedCommunities = [];
-    _tabController = TabController(vsync: this, length: 2);
-    _tabController.addListener(_handleTabSelection);
-  }
-
-  void _handleTabSelection() {
-    if (_tabController.indexIsChanging) {
-      switch (_tabController.index) {
-        case 0:
-          setState(() {
-            isInformationPressed = true;
-            isPublicationsPressed = false;
-          });
-
-          break;
-        case 1:
-          setState(() {
-            isInformationPressed = false;
-            isPublicationsPressed = true;
-          });
-
-          break;
-      }
-    }
   }
 
   @override
@@ -101,88 +71,29 @@ class OBProfilePageState extends State<OBProfilePage>
       _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
-    return Scaffold(
-      body: StreamBuilder(
-          initialData: widget.user,
-          stream: widget.user.updateSubject,
-          builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-            User user = snapshot.data;
-            if (user == null) return const SizedBox();
 
-            if (_postsDisplayContext == OBPostDisplayContext.ownProfilePosts ||
-                user.visibility != UserVisibility.private ||
-                (user.isFollowing != null && user.isFollowing)) {
-              return _buildVisibleProfileContent();
-            }
+    return CupertinoPageScaffold(
+        backgroundColor: Color.fromARGB(0, 0, 0, 0),
+        navigationBar: OBProfileNavBar(_user),
+        child: OBPrimaryColorContainer(
+          child: StreamBuilder(
+              initialData: widget.user,
+              stream: widget.user.updateSubject,
+              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                User user = snapshot.data;
+                if (user == null) return const SizedBox();
 
-            // User is private and its not us
-            return _buildProtectedProfileContent();
-          }),
-    );
-  }
+                if (_postsDisplayContext ==
+                        OBPostDisplayContext.ownProfilePosts ||
+                    user.visibility != UserVisibility.private ||
+                    (user.isFollowing != null && user.isFollowing)) {
+                  return _buildVisibleProfileContent();
+                }
 
-  Column buildColumn({String title, String trailing}) {
-    final double height = MediaQuery.of(context).size.height;
-    return Column(
-      children: [
-        SizedBox(height: height * 0.014),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(
-              title,
-              style: TextStyle(
-                fontFamily: "Segoe UI",
-                fontWeight: FontWeight.w300,
-                fontSize: 13,
-                color: Color(0xffbbbbbb),
-              ),
-            ),
-            Text(
-              trailing,
-              style: TextStyle(
-                fontFamily: "Segoe UI",
-                fontWeight: FontWeight.w300,
-                fontSize: 16,
-                color: Color(0xff4d0cbb),
-              ),
-            )
-          ],
-        ),
-        Divider(
-          color: Color(0xff707070),
-          thickness: 1,
-        )
-      ],
-    );
-  }
-
-  CustomPostContainer buildCustomPostContainer() {
-    final double height = MediaQuery.of(context).size.height;
-    return CustomPostContainer();
-  }
-
-  Text buildText(
-      {String label, double fontSize, int color, FontWeight fontWeight}) {
-    return Text(
-      label,
-      style: TextStyle(
-        fontFamily: "Segoe UI",
-        fontWeight: fontWeight != null ? fontWeight : null,
-        fontSize: fontSize,
-        color: Color(color),
-      ),
-    );
-  }
-
-  Container buildLineContainer() {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
-    return Container(
-      height: height * 0.036,
-      width: width * 0.004,
-      color: Color(0xff3b3b3b),
-    );
+                // User is private and its not us
+                return _buildProtectedProfileContent();
+              }),
+        ));
   }
 
   Widget _buildVisibleProfileContent() {
@@ -289,7 +200,7 @@ class OBProfilePageState extends State<OBProfilePage>
 
   List<Widget> _buildProfileContentDetails() {
     return [
-      //OBProfileCover(_user),
+      OBProfileCover(_user),
       OBProfileCard(
         _user,
         onUserProfileUpdated: _onUserProfileUpdated,
@@ -337,8 +248,8 @@ class OBProfilePageState extends State<OBProfilePage>
         : _localizationService.user__follow_button_follow_text;
   }
 
-  void _onPostMemoryExcludedFromProfilePosts(Memory memory) {
-    _addRecentlyExcludedMemory(memory);
+  void _onPostMemoryExcludedFromProfilePosts(Memory community) {
+    _addRecentlyExcludedMemory(community);
   }
 
   void _onUserProfileUpdated() {
@@ -395,9 +306,9 @@ class OBProfilePageState extends State<OBProfilePage>
     });
   }
 
-  void _addRecentlyExcludedMemory(Memory memory) {
+  void _addRecentlyExcludedMemory(Memory community) {
     setState(() {
-      _recentlyExcludedCommunities.add(memory);
+      _recentlyExcludedCommunities.add(community);
     });
   }
 }

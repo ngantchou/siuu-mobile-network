@@ -17,9 +17,10 @@ class OBPostActions extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Widget> postActions = [
-      // Expanded(child: OBPostActionReact(_post)),
+      //Expanded(child: OBPostActionReact(_post)),
     ];
-
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     bool commentsEnabled = _post.areCommentsEnabled ?? true;
 
     bool canDisableOrEnableCommentsForPost = false;
@@ -33,14 +34,6 @@ class OBPostActions extends StatelessWidget {
 
     if (commentsEnabled || canDisableOrEnableCommentsForPost) {
       postActions.addAll([
-        ReactinPostContainer(_post),
-        const SizedBox(
-          width: 20.0,
-        ),
-        OBPostActionComment(
-          _post,
-          onWantsToCommentPost: onWantsToCommentPost,
-        ),
         GestureDetector(
           onTap: () {
             showDialog(
@@ -52,6 +45,43 @@ class OBPostActions extends StatelessWidget {
           },
           child: SvgPicture.asset('assets/svg/share.svg'),
         ),
+        Row(
+          children: [
+            Row(
+              children: [
+                OBPostActionComment(
+                  _post,
+                  onWantsToCommentPost: onWantsToCommentPost,
+                ),
+              ],
+            ),
+            SizedBox(
+              width: width * 0.072,
+            ),
+            Row(
+              children: [ReactinPostContainer(_post)],
+            ),
+          ],
+        )
+        /* GestureDetector(
+          onTap: () {
+            showDialog(
+              context: context,
+              builder: (context) {
+                return InstantShareDialog(_post);
+              },
+            );
+          },
+          child: SvgPicture.asset('assets/svg/share.svg'),
+        ),
+        const SizedBox(
+          width: 20.0,
+        ),
+        OBPostActionComment(
+          _post,
+          onWantsToCommentPost: onWantsToCommentPost,
+        ),
+        ReactinPostContainer(_post),*/
       ]);
     }
     return Padding(

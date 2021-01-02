@@ -29,7 +29,7 @@ class ValidationService {
   static const int HASHTAG_MAX_LENGTH = 32;
   static const int POST_COMMENT_MAX_HASHTAGS = 3;
   static const int POST_COMMENT_MAX_LENGTH = 1500;
-  static const int PASSWORD_MIN_LENGTH = 10;
+  static const int PASSWORD_MIN_LENGTH = 5;
   static const int PASSWORD_MAX_LENGTH = 100;
   static const int CIRCLE_MAX_LENGTH = 100;
   static const int COLOR_ATTR_MAX_LENGTH = 7;
@@ -400,6 +400,19 @@ class ValidationService {
     } else if (!isNameAllowedLength(name)) {
       errorMsg = _localizationService.auth__name_range_error(
           PROFILE_NAME_MIN_LENGTH, PROFILE_NAME_MAX_LENGTH);
+    }
+    return errorMsg;
+  }
+
+  String validateUserProfilePhone(String phone) {
+    assert(phone != null);
+
+    String errorMsg;
+
+    if (phone.isEmpty) {
+      errorMsg = "Please enter your phone";
+    } else if (phone.length < 9) {
+      errorMsg = "Phone number is incorrect";
     }
     return errorMsg;
   }

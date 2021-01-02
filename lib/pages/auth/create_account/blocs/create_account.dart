@@ -326,6 +326,13 @@ class CreateAccountBloc {
           jsonDecode(await response.readAsString());
       setUsername(responseData['username']);
       _userService.loginWithAuthToken(responseData['token']);
+      HttpieResponse siuuCoin = await _authApiService.createSiuuCoinUser();
+      var userData = json.decode(siuuCoin.body);
+      _authApiService.createFirebaseUser(
+          phone: userRegistrationData.phone,
+          username: responseData['username'],
+          siuuId: responseData['id'],
+          siuuCoinId: userData['data']['wallet']['public']);
     } catch (error) {
       if (error is HttpieConnectionRefusedError) {
         _onCreateAccountValidationError(error.toHumanReadableMessage());

@@ -7,6 +7,7 @@ import 'package:Siuu/models/user.dart';
 import 'package:Siuu/pages/home/lib/poppable_page_controller.dart';
 import 'package:Siuu/pages/home/pages/memories/memories.dart';
 import 'package:Siuu/pages/home/pages/menu/menu.dart';
+import 'package:Siuu/pages/home/pages/profile/wallet.dart';
 import 'package:Siuu/pages/home/pages/search/search.dart';
 import 'package:Siuu/provider.dart';
 import 'package:Siuu/res/colors.dart';
@@ -219,13 +220,43 @@ class OBTimelinePageState extends State<OBTimelinePage>
                               SizedBox(width: width * 0.024),
                               InkWell(
                                 onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => OBMainMenuPage(
-                                                controller:
-                                                    _mainMenuPageController,
-                                              )));
+                                  showMenu(
+                                    context: context,
+                                    position:
+                                        RelativeRect.fromLTRB(100, 100, 0, 100),
+                                    items: [
+                                      PopupMenuItem(
+                                        child: InkWell(
+                                          onTap: () {
+                                            Navigator.pop(context);
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (BuildContext
+                                                            context) =>
+                                                        OBMainMenuPage(
+                                                          controller:
+                                                              _mainMenuPageController,
+                                                        )));
+                                          },
+                                          child: Text('Settings'),
+                                        ),
+                                      ),
+                                      PopupMenuItem(
+                                        child: InkWell(
+                                            onTap: () {
+                                              Navigator.pop(context);
+                                              Navigator.push(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                      builder: (BuildContext
+                                                              context) =>
+                                                          Wallet()));
+                                            },
+                                            child: Text('Siucoins parameters')),
+                                      ),
+                                    ],
+                                  );
                                 },
                                 child: SvgPicture.asset('assets/svg/menu.svg'),
                               ),

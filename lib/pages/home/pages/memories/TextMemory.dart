@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+typedef IntCallback = Function(String text);
+
 class TextMemory extends StatefulWidget {
+  IntCallback onWrited;
+  TextMemory({this.onWrited});
   @override
   _TextMemoryState createState() => _TextMemoryState();
 }
@@ -69,13 +73,16 @@ class _TextMemoryState extends State<TextMemory> {
             child: Container(
               child: TextFormField(
                 keyboardType: TextInputType.multiline,
+                onChanged: (value) {
+                  widget.onWrited(value);
+                },
                 maxLines: null,
                 style: TextStyle(
                     color: isfontColorWhite ? Colors.white : Colors.black),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: 'Write your memory here',
+                  hintText: 'Express your seft here',
                   hintStyle: TextStyle(
                       fontFamily: "Segoe UI",
                       fontWeight: FontWeight.w300,
@@ -85,194 +92,187 @@ class _TextMemoryState extends State<TextMemory> {
               ),
             ),
           ),
-          MediaQuery.of(context).viewInsets.bottom == 0
-              ? Container()
-              : Positioned(
-                  // bottom: MediaQuery.of(context).viewInsets.bottom,
-                  bottom: 10,
-                  left: 0,
-                  right: 0,
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: SizedBox(
+          Positioned(
+            //bottom: MediaQuery.of(context).viewInsets.bottom,
+            bottom: 10,
+            left: 0,
+            right: 0,
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+              child: SizedBox(
+                height: height * 0.043,
+                child: Row(
+                  children: [
+                    Container(
                       height: height * 0.043,
-                      child: Row(
+                      width: width * 0.0729,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        border: Border.all(width: 0.5, color: Colors.blueGrey),
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: Icon(
+                        Icons.arrow_back_ios_outlined,
+                        color: Colors.blueGrey,
+                      ),
+                    ),
+                    SizedBox(
+                      width: width * 0.012,
+                    ),
+                    Expanded(
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
                         children: [
                           Container(
-                            height: height * 0.043,
-                            width: width * 0.0729,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              border: Border.all(
-                                  width: 0.5, color: Colors.blueGrey),
                               borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                color: Colors.black54,
+                              ),
                             ),
-                            child: Icon(
-                              Icons.arrow_back_ios_outlined,
-                              color: Colors.blueGrey,
+                            child: coloredBox(
+                                boxColor: 0xffffffff, fontColor: 'black'),
+                          ),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          coloredBox(boxColor: 0xff293DA8, fontColor: 'white'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                isfontColorWhite = true;
+                                isColor = false;
+                                isSvg = false;
+                                isPng = true;
+                                imagePath =
+                                    'assets/images/abstractBackground.png';
+                              });
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Container(
+                                height: height * 0.0365,
+                                width: width * 0.083,
+                                child: Image.asset(
+                                  "assets/images/abstractBackground.png",
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
                             ),
                           ),
                           SizedBox(
-                            width: width * 0.012,
+                            width: width * 0.024,
                           ),
-                          Expanded(
-                            child: ListView(
-                              scrollDirection: Axis.horizontal,
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5),
-                                    border: Border.all(
-                                      color: Colors.black54,
-                                    ),
-                                  ),
-                                  child: coloredBox(
-                                      boxColor: 0xffffffff, fontColor: 'black'),
+                          coloredBox(boxColor: 0xffA32775, fontColor: 'white'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          imageBox(
+                              fontColor: 'white',
+                              boxImagePath: 'assets/svg/abstraction.svg'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          coloredBox(boxColor: 0xffDD15B5, fontColor: 'white'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          imageBox(
+                              fontColor: 'white',
+                              boxImagePath: 'assets/svg/giraffe.svg'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          coloredBox(fontColor: 'white', boxColor: 0xff1549DD),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          imageBox(
+                              fontColor: 'white',
+                              boxImagePath: 'assets/svg/heart3.svg'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          imageBox(
+                              fontColor: 'white',
+                              boxImagePath: 'assets/svg/hearts2.svg'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          imageBox(
+                              fontColor: 'white',
+                              boxImagePath: 'assets/svg/lines.svg'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          imageBox(
+                              fontColor: 'white',
+                              boxImagePath: 'assets/svg/lines2.svg'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          imageBox(
+                              fontColor: 'white',
+                              boxImagePath: 'assets/svg/love.svg'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          imageBox(
+                              fontColor: 'black',
+                              boxImagePath:
+                                  'assets/svg/oldSchoolMusicBackground.svg'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          imageBox(
+                              fontColor: 'white',
+                              boxImagePath: 'assets/svg/planets.svg'),
+                          SizedBox(
+                            width: width * 0.024,
+                          ),
+                          InkWell(
+                            onTap: () {
+                              setState(() {
+                                isfontColorWhite = true;
+                                isColor = false;
+                                isSvg = false;
+                                isPng = true;
+                                imagePath = 'assets/images/triangles.png';
+                              });
+                            },
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(5),
+                              child: Container(
+                                height: height * 0.0365,
+                                width: width * 0.083,
+                                child: Image.asset(
+                                  "assets/images/triangles.png",
+                                  fit: BoxFit.cover,
                                 ),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                coloredBox(
-                                    boxColor: 0xff293DA8, fontColor: 'white'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      isfontColorWhite = true;
-                                      isColor = false;
-                                      isSvg = false;
-                                      isPng = true;
-                                      imagePath =
-                                          'assets/images/abstractBackground.png';
-                                    });
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(5),
-                                    child: Container(
-                                      height: height * 0.0365,
-                                      width: width * 0.083,
-                                      child: Image.asset(
-                                        "assets/images/abstractBackground.png",
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                coloredBox(
-                                    boxColor: 0xffA32775, fontColor: 'white'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                imageBox(
-                                    fontColor: 'white',
-                                    boxImagePath: 'assets/svg/abstraction.svg'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                coloredBox(
-                                    boxColor: 0xffDD15B5, fontColor: 'white'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                imageBox(
-                                    fontColor: 'white',
-                                    boxImagePath: 'assets/svg/giraffe.svg'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                coloredBox(
-                                    fontColor: 'white', boxColor: 0xff1549DD),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                imageBox(
-                                    fontColor: 'white',
-                                    boxImagePath: 'assets/svg/heart3.svg'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                imageBox(
-                                    fontColor: 'white',
-                                    boxImagePath: 'assets/svg/hearts2.svg'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                imageBox(
-                                    fontColor: 'white',
-                                    boxImagePath: 'assets/svg/lines.svg'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                imageBox(
-                                    fontColor: 'white',
-                                    boxImagePath: 'assets/svg/lines2.svg'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                imageBox(
-                                    fontColor: 'white',
-                                    boxImagePath: 'assets/svg/love.svg'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                imageBox(
-                                    fontColor: 'black',
-                                    boxImagePath:
-                                        'assets/svg/oldSchoolMusicBackground.svg'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                imageBox(
-                                    fontColor: 'white',
-                                    boxImagePath: 'assets/svg/planets.svg'),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                InkWell(
-                                  onTap: () {
-                                    setState(() {
-                                      isfontColorWhite = true;
-                                      isColor = false;
-                                      isSvg = false;
-                                      isPng = true;
-                                      imagePath = 'assets/images/triangles.png';
-                                    });
-                                  },
-                                  child: ClipRRect(
-                                    borderRadius: BorderRadius.circular(5),
-                                    child: Container(
-                                      height: height * 0.0365,
-                                      width: width * 0.083,
-                                      child: Image.asset(
-                                        "assets/images/triangles.png",
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                                SizedBox(
-                                  width: width * 0.024,
-                                ),
-                              ],
+                              ),
                             ),
                           ),
                           SizedBox(
-                            width: width * 0.012,
+                            width: width * 0.024,
+                          ),
+                          SizedBox(
+                            width: width * 0.024,
                           ),
                         ],
                       ),
                     ),
-                  ),
+                    SizedBox(
+                      width: width * 0.012,
+                    ),
+                  ],
                 ),
-          Positioned(
+              ),
+            ),
+          ),
+          /*Positioned(
             right: 20,
             top: 30,
             child: InkWell(
@@ -286,7 +286,7 @@ class _TextMemoryState extends State<TextMemory> {
                     color: isfontColorWhite ? Colors.white : Colors.black),
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );

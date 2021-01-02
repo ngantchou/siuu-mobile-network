@@ -26,15 +26,14 @@ class OBCover extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Widget image;
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
+
     double coverHeight;
 
     switch (size) {
       case OBCoverSize.large:
         coverHeight = largeSizeHeight;
         break;
-        case OBCoverSize.medium:
+      case OBCoverSize.medium:
         coverHeight = mediumSizedHeight;
         break;
       case OBCoverSize.small:
@@ -49,6 +48,8 @@ class OBCover extends StatelessWidget {
         placeholder: AssetImage(COVER_PLACEHOLDER),
         image: FileImage(coverFile),
         fit: BoxFit.cover,
+        height: double.infinity,
+        width: double.infinity,
         alignment: Alignment.center,
       );
     } else if (coverUrl == null) {
@@ -62,31 +63,15 @@ class OBCover extends StatelessWidget {
             child: const CircularProgressIndicator(),
           );
         },
-          imageBuilder: (context, imageProvider) => Container(
-          alignment: Alignment.center,
-            child:ClipOval(
-            child: Image.network(
-              coverUrl,
-              fit: BoxFit.cover,
-              height:coverHeight,
-              width:coverHeight,
-            ),
-          ),
-          ),
         errorWidget: (BuildContext context, String url, Object error) {
-          return  SizedBox(
-            child:  Center(
-              child:  ClipOval(
-                child:  Image.network(
-                  'https://via.placeholder.com/150',
-                  width: coverHeight,
-                  height: coverHeight,
-                  fit: BoxFit.cover,
-                ),
-              ),
+          return const SizedBox(
+            child: const Center(
+              child: const OBText('Could not load cover'),
             ),
           );
         },
+        height: double.infinity,
+        width: double.infinity,
         alignment: Alignment.center,
       );
 
@@ -102,14 +87,29 @@ class OBCover extends StatelessWidget {
         );
       }
     }
-    return image;
+
+    return SizedBox(
+      height: coverHeight,
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        children: <Widget>[
+          Expanded(
+            child: SizedBox(
+              child: image,
+            ),
+          )
+        ],
+      ),
+    );
   }
 
   Widget _getCoverPlaceholder(double coverHeight) {
-    return CircleAvatar(
-      backgroundImage: AssetImage(COVER_PLACEHOLDER),
+    return Image.asset(
+      COVER_PLACEHOLDER,
+      height: coverHeight,
+      fit: BoxFit.cover,
     );
   }
 }
 
-enum OBCoverSize { large, small , medium}
+enum OBCoverSize { large, small, medium }

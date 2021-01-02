@@ -93,8 +93,8 @@ class MemoriesState extends State<Memories> {
                                                   ),
                                               child: Center(
                                                 child: Container(
-                                                  height: height * 0.083,
-                                                  width: width * 0.1385,
+                                                  height: height * 0.053,
+                                                  width: width * 0.1085,
                                                   decoration: BoxDecoration(
                                                     shape: BoxShape.circle,
                                                     image: DecorationImage(

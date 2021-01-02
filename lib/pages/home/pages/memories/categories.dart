@@ -8,7 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:video_player/video_player.dart';
 
-import 'memories/videoMemory.dart';
+import 'videoMemory.dart';
 
 class Categories extends StatefulWidget {
   @override

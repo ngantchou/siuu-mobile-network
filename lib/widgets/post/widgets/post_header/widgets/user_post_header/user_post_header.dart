@@ -33,21 +33,89 @@ class OBUserPostHeader extends StatelessWidget {
     var bottomSheetService = openbookProvider.bottomSheetService;
     var utilsService = openbookProvider.utilsService;
     var localizationService = openbookProvider.localizationService;
-
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     if (_post.creator == null) return const SizedBox();
 
-    String subtitle = '@${_post.creator.username}';
-
+    String username = '@${_post.creator.username}';
+    String timeAgo = '';
     if (_post.created != null)
-      subtitle =
-          '$subtitle · ${utilsService.timeAgo(_post.created, localizationService)}';
+      timeAgo =
+          '${utilsService.timeAgo(_post.created, localizationService)} agos';
 
     Function navigateToUserProfile = () {
       navigationService.navigateToUserProfile(
           user: _post.creator, context: context);
     };
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              InkWell(
+                  onTap: () {
+                    navigateToUserProfile();
+                  },
+                  child: StreamBuilder(
+                      stream: _post.creator.updateSubject,
+                      initialData: _post.creator,
+                      builder:
+                          (BuildContext context, AsyncSnapshot<User> snapshot) {
+                        User postCreator = snapshot.data;
 
-    return ListTile(
+                        if (!postCreator.hasProfileAvatar())
+                          return const SizedBox();
+
+                        return OBAvatar(
+                          size: OBAvatarSize.medium,
+                          avatarUrl: postCreator.getProfileAvatar(),
+                        );
+                      })),
+              SizedBox(width: width * 0.024),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    _post.creator.getProfileName(),
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      fontFamily: "Segoe UI",
+                      fontSize: 17,
+                      color: Color(0xff78849e),
+                    ),
+                  ),
+                  Text(
+                    timeAgo,
+                    style: TextStyle(
+                      fontFamily: "Segoe UI",
+                      fontWeight: FontWeight.w700,
+                      fontSize: 12,
+                      color: Color(0xff78849e).withOpacity(0.56),
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+          hasActions
+              ? InkWell(
+                  child: Image.asset('assets/images/arrowDownIcon.png'),
+                  onTap: () {
+                    bottomSheetService.showPostActions(
+                        context: context,
+                        post: _post,
+                        onPostDeleted: onPostDeleted,
+                        displayContext: displayContext,
+                        onPostReported: onPostReported);
+                  })
+              : null,
+        ],
+      ),
+    );
+    /* return ListTile(
         onTap: navigateToUserProfile,
         leading: StreamBuilder(
             stream: _post.creator.updateSubject,
@@ -92,7 +160,7 @@ class OBUserPostHeader extends StatelessWidget {
         subtitle: OBSecondaryText(
           subtitle,
           style: TextStyle(fontSize: 12.0),
-        ));
+        ));*/
   }
 
   Widget _buildBadge() {

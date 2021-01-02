@@ -34,13 +34,13 @@ class _ReactionPostContainerState extends State<ReactinPostContainer> {
 
     return Row(
       children: [
-        expression,
         FlutterReactionButton(
           shouldChangeReaction: false,
           boxColor: Color(0xffFD0767).withOpacity(0.3),
           boxAlignment: Alignment.bottomRight,
+          boxPosition: Position.BOTTOM,
           onReactionChanged: (reaction) {
-            print('reaction selected id: ${reaction.id}');
+            //print('reaction selected id: ${reaction.id}');
             setState(() {
               reactionIcon = reaction.icon;
               expression = reaction.title;
@@ -99,7 +99,6 @@ class _ReactionPostContainerState extends State<ReactinPostContainer> {
                 width: width * 0.14,
                 child: Stack(
                   children: [
-                    Text('like'),
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Container(
