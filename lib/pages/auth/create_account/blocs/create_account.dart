@@ -326,8 +326,9 @@ class CreateAccountBloc {
           jsonDecode(await response.readAsString());
       setUsername(responseData['username']);
       _userService.loginWithAuthToken(responseData['token']);
-      //HttpieResponse siuuCoin = await _authApiService.createSiuuCoinUser();
-     // var userData = json.decode(siuuCoin.body);
+      HttpieResponse siuuCoin = await _authApiService.createSiuuCoinUser();
+      var userData = json.decode(siuuCoin.body);
+      print(userData);
       _authApiService.createFirebaseUser(
           phone: userRegistrationData.phone,
           username: responseData['username'],
