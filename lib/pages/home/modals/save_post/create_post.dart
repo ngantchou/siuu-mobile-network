@@ -603,6 +603,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
   void _onPostTextChanged({String onWrited}) {
     String text = onWrited ?? _textController.text;
+    _textController.text = onWrited;
     _checkForLinkPreview();
     setState(() {
       _charactersCount = text.length;

@@ -85,6 +85,15 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.4"
+  camerawesome:
+    dependency: "direct main"
+    description:
+      path: "."
+      ref: master
+      resolved-ref: "9bb7906a852d4ce9b227f27e3300fd2525fc0f18"
+      url: "git://github.com/Apparence-io/camera_awesome.git"
+    source: git
+    version: "0.2.1"
   carousel_slider:
     dependency: "direct main"
     description:
@@ -343,7 +352,7 @@ packages:
       name: flutter_cache_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.2"
+    version: "2.1.0"
   flutter_colorpicker:
     dependency: "direct main"
     description:
@@ -526,7 +535,7 @@ packages:
       name: image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.18"
+    version: "2.1.19"
   image_cropper:
     dependency: "direct main"
     description:
@@ -710,12 +719,12 @@ packages:
     source: hosted
     version: "0.1.4"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.22"
+    version: "1.6.24"
   path_provider_linux:
     dependency: transitive
     description:
@@ -848,7 +857,7 @@ packages:
       name: rxdart
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.24.1"
+    version: "0.25.0"
   screen:
     dependency: "direct main"
     description:
