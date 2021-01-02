@@ -11,6 +11,7 @@ import 'package:Siuu/widgets/buttons/success_button.dart';
 import 'package:Siuu/widgets/buttons/secondary_button.dart';
 import 'package:Siuu/pages/auth/create_account/widgets/auth_text_field.dart';
 import 'package:Siuu/widgets/country_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,15 +34,15 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
   ValidationService _validationService;
   ToastService _toastService;
   AuthApiService _authApiService;
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  String verificationId;
+  String smsOTP;
   TextEditingController _linkController = TextEditingController();
   //final SmsAutoFill _autoFill = SmsAutoFill();
   bool _tokenIsInvalid;
   bool _tokenValidationInProgress;
   User firebaseUser;
-  final FirebaseAuth _auth = FirebaseAuth.instance;
   String actualCode;
-  String verificationId;
   CancelableOperation _tokenValidationOperation;
 
   @override
@@ -69,7 +70,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
     _authApiService = openbookProvider.authApiService;
 
     return Scaffold(
-      key: _scaffoldKey,
+      //  key: _scaffoldKey,
       body: Center(
         child: SingleChildScrollView(
             child: Padding(
@@ -119,154 +120,101 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
 
   void onPressedNextStep(BuildContext context) async {
     bool isFormValid = await _validateForm();
-
+    FirebaseFirestore.instance
+        .collection('users')
+        .where("phone",
+            isEqualTo: '$_dialCode${_contactEditingController.text}')
+        .get()
+        .then((QuerySnapshot documentSnapshot) async {
+      if (documentSnapshot.size > 0) {
+        print('Document exists on the database');
+        isFormValid = false;
+      }
+    });
     if (isFormValid) {
       setState(() {
         //var token = _getTokenFromLink(_linkController.text.trim());
         _createAccountBloc
             .setPhone('$_dialCode${_contactEditingController.text}');
       });
+      print('$_dialCode${_contactEditingController.text}');
+
+      await sendVerificationCode('$_dialCode${_contactEditingController.text}');
+      // Navigator.pushNamed(context, '/auth/phone-verification');
     }
   }
 
-  void otpVerify() async {
-    double screenWidth = MediaQuery.of(context).size.width;
-    double screenHeight = MediaQuery.of(context).size.height;
-    await _auth.verifyPhoneNumber(
-      phoneNumber: '+44 7123 123 456',
-      verificationCompleted: (PhoneAuthCredential credential) async {
-        // ANDROID ONLY!
+  Future<void> sendVerificationCode(String phone) async {
+    //print("phone to verify is $phone");
+    //showAlertDialog(context);
 
-        // Sign the user in (or link) with the auto-generated credential
-        await _auth.signInWithCredential(credential);
-      },
-      verificationFailed: (FirebaseAuthException e) {
-        if (e.code == 'invalid-phone-number') {
-          print('The provided phone number is not valid.');
-        }
+    try {
+      await _auth.verifyPhoneNumber(
+          phoneNumber: phone,
+          codeAutoRetrievalTimeout: (String verId) {
+            verificationId = verId;
+          },
+          codeSent: (String verificationId, [int forceCodeResend]) async {
+            // Update the UI - wait for the user to enter the SMS code
+            showAlertDialog(context);
 
-        // Handle other errors
-      },
-      codeSent: (String verificationId, int resendToken) async {
-        // Update the UI - wait for the user to enter the SMS code
-        String smsCode = 'xxxx';
-        Future<void> _showMyDialog() async {
-          return showDialog<void>(
-            context: context,
-            barrierDismissible: false, // user must tap button!
-            builder: (BuildContext context) {
-              return AlertDialog(
-                title: Text('AlertDialog Title'),
-                content: SingleChildScrollView(
-                  child: Container(
-                    padding: const EdgeInsets.all(16.0),
-                    width: double.infinity,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        const Text(
-                          'Verification',
-                          style: TextStyle(fontSize: 28, color: Colors.black),
-                        ),
-                        SizedBox(
-                          height: screenHeight * 0.02,
-                        ),
-                        Text(
-                          'Enter A 6 digit number that was sent to ${_createAccountBloc.getPhone()}',
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.black,
-                          ),
-                        ),
-                        SizedBox(
-                          height: screenHeight * 0.04,
-                        ),
-                        Container(
-                          margin: EdgeInsets.symmetric(
-                              horizontal:
-                                  screenWidth > 600 ? screenWidth * 0.2 : 16),
-                          padding: const EdgeInsets.all(16.0),
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              // ignore: prefer_const_literals_to_create_immutables
-                              boxShadow: [
-                                const BoxShadow(
-                                  color: Colors.grey,
-                                  offset: Offset(0.0, 1.0), //(x,y)
-                                  blurRadius: 6.0,
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(16.0)),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Container(
-                                margin:
-                                    EdgeInsets.only(left: screenWidth * 0.025),
-                                child: PinEntryTextField(
-                                  fields: 6,
-                                  onSubmit: (text) {
-                                    smsCode = text as String;
-                                  },
-                                ),
-                              ),
-                              SizedBox(
-                                height: screenHeight * 0.04,
-                              ),
-                              GestureDetector(
-                                onTap: () {
-                                  //verifyOtp();
-                                },
-                                child: Container(
-                                  margin: const EdgeInsets.all(8),
-                                  height: 45,
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        const Color.fromARGB(255, 253, 188, 51),
-                                    borderRadius: BorderRadius.circular(36),
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: const Text(
-                                    'Verify',
-                                    style: TextStyle(
-                                        color: Colors.black, fontSize: 16.0),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                actions: <Widget>[
-                  TextButton(
-                    child: Text('Approve'),
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                    },
-                  ),
-                ],
-              );
-            },
-          );
-        }
+            // Create a PhoneAuthCredential with the code
+            PhoneAuthCredential phoneAuthCredential =
+                PhoneAuthProvider.credential(
+                    verificationId: verificationId, smsCode: smsOTP);
 
-        // Create a PhoneAuthCredential with the code
-        PhoneAuthCredential phoneAuthCredential = PhoneAuthProvider.credential(
-            verificationId: verificationId, smsCode: smsCode);
+            // Sign the user in (or link) with the credential
+            await _auth.signInWithCredential(phoneAuthCredential);
+            Navigator.pushReplacementNamed(context, '/auth/name_step');
+          },
+          timeout: const Duration(seconds: 60),
+          verificationCompleted: (AuthCredential phoneAuthCredential) async {
+            print("phone to verify is succes");
+            // Sign the user in (or link) with the auto-generated credential
+            await _auth.signInWithCredential(phoneAuthCredential);
+            Navigator.pushReplacementNamed(context, '/auth/name_step');
+          },
+          verificationFailed: (FirebaseAuthException exception) {
+            if (exception.code == 'invalid-phone-number') {
+              print('The provided phone number is not valid.');
+            }
+          });
+    } catch (e) {
+      //handleError(e as PlatformException);
+      print("erreur de génération du code $e");
+    }
+  }
 
-        // Sign the user in (or link) with the credential
-        await _auth.signInWithCredential(phoneAuthCredential);
-      },
-      timeout: const Duration(seconds: 60),
-      codeAutoRetrievalTimeout: (String verificationId) {
-        // Auto-resolution timed out...
+  //Basic alert dialogue for alert errors and confirmations
+  void showAlertDialog(BuildContext context) {
+    // set up the AlertDialog
+    final AlertDialog alert = AlertDialog(
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(12.0))),
+      contentPadding: EdgeInsets.only(top: 10.0),
+      title: const Text('code'),
+      content: Container(
+        child: PinEntryTextField(
+          fields: 6,
+          onSubmit: (text) {
+            smsOTP = text as String;
+          },
+        ),
+      ),
+      actions: <Widget>[
+        FlatButton(
+          child: const Text('Verify'),
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+        )
+      ],
+    );
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
       },
     );
   }

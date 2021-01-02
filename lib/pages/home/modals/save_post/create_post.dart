@@ -217,9 +217,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       case PostType.Text:
         widgetType = TextMemory(onWrited: (value) {
           print(value);
-          setState(() {
-            _onPostTextChanged(onWrited: value);
-          });
+
+          _onPostTextChanged(onWrited: value);
         });
         break;
       case PostType.Picture:
@@ -470,8 +469,11 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       return;
     }
 
-    OBNewPostData createPostData = await _navigationService.navigateToSharePost(
-        context: context, createPostData: _makeNewPostData());
+    /*  OBNewPostData createPostData = await _navigationService.navigateToSharePost(
+        context: context, createPostData: _makeNewPostData());*/
+
+    OBNewPostData createPostData = _makeNewPostData();
+    createPostData.circles = [];
 
     if (createPostData != null) {
       // Remove modal

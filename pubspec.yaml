@@ -83,6 +83,7 @@ dependencies:
   pin_entry_text_field: ^0.1.4
   firebase_core: ^0.5.1
   firebase_auth: ^0.18.2
+  cloud_firestore: ^0.14.4
   flutter_reaction_button: ^1.0.6+1
   swipe_up: ^1.0.0
   lottie: ^0.7.0+1

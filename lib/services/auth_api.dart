@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:Siuu/models/language.dart';
 import 'package:Siuu/services/httpie.dart';
 import 'package:Siuu/services/string_template.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
@@ -176,36 +177,29 @@ class AuthApiService {
         body: body);
   }
 
+  Future<void> createFirebaseUser(
+      {String username, String siuuId, String phone, String siuuCoinId}) async {
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    return users
+        .add({
+          'username': username, // John Doe
+          'siuu_id': siuuId, // Stokes and Sons
+          'phone': phone,
+          'siuu_coin_id': siuuCoinId, // 42
+        })
+        .then((value) => print("User Added"))
+        .catchError((error) => print("Failed to add user: $error"));
+  }
+
+  Future<HttpieResponse> createSiuuCoinUser() async {
+    return _httpService
+        .get('http://161.35.161.138:5000/api/ether/mainnet/create_wallet');
+  }
+
   Future<HttpieResponse> verifyRegisterToken({@required String token}) {
     Map<String, dynamic> body = {'token': token};
 
     return _httpService.post('$apiURL$VERIFY_REGISTER_TOKEN', body: body);
-  }
-
-  Future<void> sendVerificationCode(String phone) async {
-    final PhoneCodeSent smsOTPSent = (String verId, [int forceCodeResend]) {
-      verificationId = verId;
-    };
-    //print("phone to verify is $phone");
-    try {
-      await _auth.verifyPhoneNumber(
-          phoneNumber: phone,
-          codeAutoRetrievalTimeout: (String verId) {
-            verificationId = verId;
-          },
-          codeSent: smsOTPSent,
-          timeout: const Duration(seconds: 60),
-          verificationCompleted: (AuthCredential phoneAuthCredential) {
-            print("phone to verify is succes");
-          },
-          verificationFailed: (FirebaseAuthException exception) {
-            // Navigator.pop(context, exception.message);
-            print("phone to verify error");
-          });
-    } catch (e) {
-      //handleError(e as PlatformException);
-      print("erreur de génération du code $e");
-    }
   }
 
   Future<HttpieResponse> getUserWithAuthToken(String authToken) {
