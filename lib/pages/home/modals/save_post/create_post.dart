@@ -302,7 +302,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
                           Color(0xffE100FF),
                         ]),
                   ),
-                  SizedBox(
+                  /*SizedBox(
                     width: width * 0.004,
                   ),
                   InkWell(
@@ -319,7 +319,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
                         Color(0xffF37335),
                       ],
                     ),
-                  ),
+                  ),*/
                 ],
               ),
             ),
