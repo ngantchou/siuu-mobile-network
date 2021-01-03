@@ -69,6 +69,7 @@ class _CameraWidgetState extends State<CameraWidget>
   Timer _previewDismissTimer;
   // StreamSubscription<Uint8List> previewStreamSub;
   Stream<Uint8List> previewStream;
+  Stream<SensorData> brightnessStream;
 
   @override
   void initState() {
@@ -368,6 +369,7 @@ class _CameraWidgetState extends State<CameraWidget>
           sensor: _sensor,
           enableAudio: _enableAudio,
           switchFlashMode: _switchFlash,
+          luminosityLevelStreamBuilder: (s) => brightnessStream = s,
           zoom: _zoomNotifier,
           onOrientationChanged: _onOrientationChange,
           // imagesStreamBuilder: (imageStream) {
@@ -413,6 +415,7 @@ class _CameraWidgetState extends State<CameraWidget>
               photoSize: _photoSize,
               sensor: _sensor,
               fitted: true,
+              luminosityLevelStreamBuilder: (s) => brightnessStream = s,
               switchFlashMode: _switchFlash,
               zoom: _zoomNotifier,
               onOrientationChanged: _onOrientationChange,
