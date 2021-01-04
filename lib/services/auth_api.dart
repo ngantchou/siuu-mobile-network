@@ -178,14 +178,19 @@ class AuthApiService {
   }
 
   Future<void> createFirebaseUser(
-      {String username, String siuuId, String phone, String siuuCoinId}) async {
+      {String username,
+      String siuuId,
+      String phone,
+      String privatekey,
+      String publicKey}) async {
     CollectionReference users = FirebaseFirestore.instance.collection('users');
     return users
         .add({
           'username': username, // John Doe
           'siuu_id': siuuId, // Stokes and Sons
           'phone': phone,
-          'siuu_coin_id': siuuCoinId, // 42
+          'private_key': privatekey,
+          'public_key': publicKey, // 42
         })
         .then((value) => print("User Added"))
         .catchError((error) => print("Failed to add user: $error"));

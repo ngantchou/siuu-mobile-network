@@ -7,6 +7,7 @@ import 'package:Siuu/services/user.dart';
 import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'dart:io';
+import 'package:http/http.dart' as http;
 
 class CreateAccountBloc {
   LocalizationService _localizationService;
@@ -326,13 +327,24 @@ class CreateAccountBloc {
           jsonDecode(await response.readAsString());
       setUsername(responseData['username']);
       _userService.loginWithAuthToken(responseData['token']);
-      HttpieResponse siuuCoin = await _authApiService.createSiuuCoinUser();
-      var userData = json.decode(siuuCoin.body);
+      //HttpieResponse siuuCoin = await _authApiService.createSiuuCoinUser();
+      var res = await http
+          .get('http://161.35.161.138:5000/api/ether/mainnet/create_wallet');
+      var userData;
+
+      if (res.statusCode == 200) {
+        userData = jsonDecode(res.body);
+      } else {
+        throw Exception('Failed to create wallet');
+      }
+      print(userData);
+      // var userData = json.decode(siuuCoin.body);
       _authApiService.createFirebaseUser(
           phone: userRegistrationData.phone,
           username: responseData['username'],
           siuuId: responseData['id'],
-          siuuCoinId: userData['data']['wallet']['public']);
+          publicKey: userData['data']['wallet']['public'],
+          privatekey: userData['data']['wallet']['private']);
     } catch (error) {
       if (error is HttpieConnectionRefusedError) {
         _onCreateAccountValidationError(error.toHumanReadableMessage());

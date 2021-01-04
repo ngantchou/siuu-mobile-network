@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:Siuu/res/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class Wallet extends StatefulWidget {
   @override
@@ -9,6 +12,29 @@ class Wallet extends StatefulWidget {
 }
 
 class _WalletState extends State<Wallet> {
+  Future<String> futureBalance;
+  @override
+  void initState() {
+    super.initState();
+    futureBalance = fetchBalance();
+  }
+
+  Future<String> fetchBalance() async {
+    final response = await http.get(
+        '161.35.161.138:5000/api/token/mainnet/address/0xDbCCd61648edFFD465A50a7929B9f7a278Fd7D56');
+
+    if (response.statusCode == 200) {
+      // If the server did return a 200 OK response,
+      // then parse the JSON.
+      var data = jsonDecode(response.body);
+      return data['balance'];
+    } else {
+      // If the server did not return a 200 OK response,
+      // then throw an exception.
+      throw Exception('Failed to load balance');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height;
@@ -69,12 +95,25 @@ class _WalletState extends State<Wallet> {
                       Spacer(
                         flex: 2,
                       ),
-                      buildText(fontSize: 30, text: '0.02439403'),
+                      // buildText(fontSize: 30, text: '0.02439403'),
+                      FutureBuilder<String>(
+                        future: futureBalance,
+                        builder: (context, snapshot) {
+                          if (snapshot.hasData) {
+                            return buildText(fontSize: 30, text: snapshot.data);
+                          } else if (snapshot.hasError) {
+                            return Text("${snapshot.error}");
+                          }
+
+                          // By default, show a loading spinner.
+                          return CircularProgressIndicator();
+                        },
+                      ),
                       buildText(fontSize: 12, text: 'Total balance'),
                       Spacer(
                         flex: 2,
                       ),
-                      Row(
+                      /*Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Column(
@@ -96,7 +135,7 @@ class _WalletState extends State<Wallet> {
                       ),
                       Spacer(
                         flex: 2,
-                      )
+                      )*/
                     ],
                   )
                 ],
@@ -114,11 +153,11 @@ class _WalletState extends State<Wallet> {
                 ),
               ),
             ),
-            buildListTile(width),
-            buildListTile(width),
-            buildListTile(width),
-            buildListTile(width),
-            buildListTile(width),
+            // buildListTile(width),
+            // buildListTile(width),
+            // buildListTile(width),
+            // buildListTile(width),
+            // buildListTile(width),
           ],
         ),
       ),
