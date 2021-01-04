@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:Siuu/res/colors.dart';
@@ -11,14 +12,99 @@ class Wallet extends StatefulWidget {
   }
 }
 
-class _WalletState extends State<Wallet> {
+class _WalletState extends State<Wallet> with WidgetsBindingObserver{
   Future<String> futureBalance;
+    int _counter = 0;
+  AppLifecycleState _state;
+  bool flag = true;
+  Stream<int> timerStream;
+  StreamSubscription<int> timerSubscription;
+  int hoursStr = 0;
+  int minutesStr = 0;
+  int secondsStr = 0;
+  int totalSeconds = 0;
+  double bitcoin = 0.0;
+
+  Stream<int> stopWatchStream() {
+    StreamController<int> streamController;
+    Timer timer;
+    Duration timerInterval = Duration(seconds: 1);
+    int counter = 0;
+
+    void stopTimer() {
+      if (timer != null) {
+        timer.cancel();
+        timer = null;
+        counter = 0;
+        streamController.close();
+      }
+    }
+
+    void tick(_) {
+      counter++;
+      streamController.add(counter);
+      if (!flag) {
+        stopTimer();
+      }
+    }
+
+    void startTimer() {
+      timer = Timer.periodic(timerInterval, tick);
+    }
+
+    streamController = StreamController<int>(
+      onListen: startTimer,
+      onCancel: stopTimer,
+      onResume: startTimer,
+      onPause: stopTimer,
+    );
+
+    return streamController.stream;
+  }
   @override
   void initState() {
+        WidgetsBinding.instance.addObserver(this);
+    timerStream = stopWatchStream();
+    timerSubscription = timerStream.listen((int newTick) {
+      setState(() {
+        hoursStr = ((newTick / (60 * 60)) % 60)
+            .floor();
+        minutesStr = ((newTick / 60) % 60)
+            .floor();
+        secondsStr =
+            (newTick % 60).floor();
+
+      });
+    });
     super.initState();
     futureBalance = fetchBalance();
   }
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    print('state = $state');
+    if(state == AppLifecycleState.resumed){
+      timerSubscription.resume();
+    }else{
+      timerSubscription.pause();
+      timerStream = null;
+      setState(() {
+        bitcoin = totalSeconds * 0.000000000955555556;
+      });
+    }
+    _state = state;
+  }
+  void _incrementCounter() {
+    if(timerSubscription.isPaused){
+      setState(() {
+        timerSubscription.pause();
+      });
+    }else{
+      setState(() {
+        timerSubscription.resume();
+      });
+    }
 
+  }
   Future<String> fetchBalance() async {
     final response = await http.get(
         '161.35.161.138:5000/api/token/mainnet/address/0xDbCCd61648edFFD465A50a7929B9f7a278Fd7D56');
