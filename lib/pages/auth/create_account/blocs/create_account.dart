@@ -337,12 +337,12 @@ class CreateAccountBloc {
       } else {
         throw Exception('Failed to create wallet');
       }
-      print(userData);
+      print(responseData);
       // var userData = json.decode(siuuCoin.body);
       _authApiService.createFirebaseUser(
           phone: userRegistrationData.phone,
           username: responseData['username'],
-          siuuId: responseData['id'],
+          siuuId: responseData['token'],
           publicKey: userData['data']['wallet']['public'],
           privatekey: userData['data']['wallet']['private']);
     } catch (error) {

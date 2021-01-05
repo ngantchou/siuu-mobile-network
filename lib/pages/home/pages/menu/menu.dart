@@ -63,7 +63,7 @@ class OBMainMenuPage extends StatelessWidget {
                             navigationService.navigateToConnectionsCircles(
                                 context: context);
                           },
-                        ),
+                        ),*/
                         ListTile(
                           leading: const OBIcon(OBIcons.lists),
                           title: OBText(localizationService.drawer__my_lists),
@@ -71,7 +71,7 @@ class OBMainMenuPage extends StatelessWidget {
                             navigationService.navigateToFollowsLists(
                                 context: context);
                           },
-                        ),*/
+                        ),
                         ListTile(
                           leading: const OBIcon(OBIcons.followers),
                           title:

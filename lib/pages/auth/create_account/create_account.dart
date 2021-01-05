@@ -42,7 +42,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
   bool _tokenIsInvalid;
   bool _tokenValidationInProgress;
   User firebaseUser;
-  String actualCode;
+  String actualCode, message = '';
   CancelableOperation _tokenValidationOperation;
 
   @override
@@ -120,7 +120,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
 
   void onPressedNextStep(BuildContext context) async {
     bool isFormValid = await _validateForm();
-    FirebaseFirestore.instance
+    await FirebaseFirestore.instance
         .collection('users')
         .where("phone",
             isEqualTo: '$_dialCode${_contactEditingController.text}')
@@ -128,6 +128,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
         .then((QuerySnapshot documentSnapshot) async {
       if (documentSnapshot.size > 0) {
         print('Document exists on the database');
+        showErrorDialog(context, 'Number already exist.');
         isFormValid = false;
       }
     });
@@ -261,7 +262,7 @@ class OBAuthCreateAccountPageState extends State<OBAuthCreateAccountPage> {
       actions: <Widget>[
         CupertinoDialogAction(
           isDefaultAction: true,
-          child: const Text('Yes'),
+          child: const Text('OK'),
           onPressed: () {
             Navigator.of(context).pop();
           },

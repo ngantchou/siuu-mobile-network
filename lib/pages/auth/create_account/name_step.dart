@@ -208,7 +208,9 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
         _createAccountBloc.setEmail(_emailController.text.trim());
         _createAccountBloc.setToken(createdUserInvite.token);
         //Navigator.pushNamed(context, '/auth/legal_step');
-        Navigator.pushNamed(context, '/auth/accept_step');
+        // Navigator.pushNamed(context, '/auth/accept_step');
+        _createAccountBloc.setLegalAgeConfirmation(true);
+        Navigator.pushNamed(context, '/auth/submit_step');
       });
     }
   }

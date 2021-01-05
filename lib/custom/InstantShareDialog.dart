@@ -50,7 +50,7 @@ class InstantShareDialog extends StatelessWidget {
                     child: buildRow(
                         height: height,
                         width: width,
-                        text: 'Share on other network',
+                        text: 'Repost',
                         image: 'expressIcon')),
                 Spacer(
                   flex: 2,
