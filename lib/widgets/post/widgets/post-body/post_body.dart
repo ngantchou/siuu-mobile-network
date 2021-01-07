@@ -18,6 +18,8 @@ class OBPostBody extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> bodyItems = [];
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+    final double height = MediaQuery.of(context).size.height;
+    bodyItems.add(SizedBox(height: height * 0.009));
     if (post.hasText()) {
       if (!post.hasMediaThumbnail() && post.hasLinkToPreview()) {
         bodyItems.add(
@@ -37,15 +39,11 @@ class OBPostBody extends StatelessWidget {
       bodyItems.add(OBPostBodyMedia(post: post, inViewId: inViewId));
     }
 
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      children: <Widget>[
-        Expanded(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+    return Padding(
+        padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: Column(
+          // crossAxisAlignment: CrossAxisAlignment.start,
           children: bodyItems,
-        ))
-      ],
-    );
+        ));
   }
 }

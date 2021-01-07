@@ -87,8 +87,8 @@ class OBCover extends StatelessWidget {
         );
       }
     }
-
-    return SizedBox(
+    final double height = MediaQuery.of(context).size.height;
+    /*return SizedBox(
       height: coverHeight,
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -100,7 +100,36 @@ class OBCover extends StatelessWidget {
           )
         ],
       ),
-    );
+    );*/
+    return GestureDetector(
+        onTap: () {
+          OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
+          openbookProvider.dialogService
+              .showZoomablePhotoBoxView(imageUrl: coverUrl, context: context);
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            gradient: coverUrl == null ? linearGradient : null,
+            image: coverUrl != null
+                ? new DecorationImage(
+                    image: new NetworkImage(coverUrl),
+                    fit: BoxFit.cover,
+                  )
+                : null,
+          ),
+          height: height * 0.336,
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+            child: Column(
+              children: [
+                Spacer(),
+                Spacer(
+                  flex: 3,
+                ),
+              ],
+            ),
+          ),
+        ));
   }
 
   Widget _getCoverPlaceholder(double coverHeight) {

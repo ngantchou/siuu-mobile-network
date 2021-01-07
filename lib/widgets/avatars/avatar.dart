@@ -77,7 +77,7 @@ class OBAvatar extends StatelessWidget {
       );
     } else if (avatarUrl != null) {
       finalAvatarImage = CircleAvatar(
-          radius: 30.0,
+          radius: avatarSize,
           backgroundImage: AdvancedNetworkImage(avatarUrl,
               useDiskCache: true,
               fallbackAssetImage: DEFAULT_AVATAR_ASSET,

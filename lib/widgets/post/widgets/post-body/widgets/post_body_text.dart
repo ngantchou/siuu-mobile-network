@@ -49,16 +49,16 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     _translatedText = null;
     _needsBootstrap = true;
 
-    imagePath = '';
+    imagePath = 'assets/images/abstractBackground.png';
     isfontColorWhite = false;
     gradient = LinearGradient(
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       colors: [Colors.white, Colors.white],
     );
-    isPng = false;
+    isPng = true;
     isSvg = false;
-    isColor = true;
+    isColor = false;
     color = 0xffffffff;
     isExpanded = false;
   }
@@ -77,10 +77,23 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
     }
-
-    return GestureDetector(
-        onLongPress: _copyText,
-        child: Stack(children: <Widget>[
+    final double height = MediaQuery.of(context).size.height;
+    if (widget.post.hasMediaThumbnail() || widget.post.hasLinkToPreview()) {
+      return Text(
+        widget.post.text,
+        style: TextStyle(
+          height: height * 0.002,
+          fontFamily: "Segoe UI",
+          fontSize: 14,
+          color: Color(0xff78849e),
+        ),
+      );
+    }
+    return SizedBox(
+      height: height * 0.292,
+      width: double.infinity,
+      child: Stack(
+        children: <Widget>[
           Positioned.fill(
             child: new Container(
                 decoration: new BoxDecoration(
@@ -100,11 +113,11 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
           ),
           Align(
             alignment: Alignment.center,
-            child: Container(
-              child: _buildFullPostText(),
-            ),
-          )
-        ]));
+            child: Container(child: Text(widget.post.text)),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _buildFullPostText() {
@@ -117,9 +130,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   }
 
   Widget _buildPostText() {
-    return Padding(
-        padding: EdgeInsets.only(top: 10, left: 20, right: 20),
-        child: _buildActionablePostText());
+    return _buildActionablePostText();
   }
 
   Future<String> _translatePostText() async {

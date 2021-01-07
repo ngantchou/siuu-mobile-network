@@ -17,6 +17,7 @@ import 'package:Siuu/services/toast.dart';
 import 'package:Siuu/widgets/avatars/avatar.dart';
 import 'package:Siuu/widgets/user_badge.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_advanced_networkimage/provider.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:Siuu/custom/customPostContainer.dart';
 import 'package:Siuu/res/colors.dart';
@@ -42,7 +43,8 @@ class OBProfileCard extends StatelessWidget {
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
     var toastService = openbookProvider.toastService;
-
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     return Stack(
       overflow: Overflow.visible,
       children: <Widget>[
@@ -51,7 +53,7 @@ class OBProfileCard extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
-              /*Row(
+              Row(
                 children: <Widget>[
                   const SizedBox(
                     height: (OBAvatar.AVATAR_SIZE_EXTRA_LARGE * 0.2),
@@ -64,7 +66,7 @@ class OBProfileCard extends StatelessWidget {
                           onExcludedCommunitiesAdded:
                               onExcludedCommunitiesAdded)),
                 ],
-              ),*/
+              ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -108,28 +110,73 @@ class OBProfileCard extends StatelessWidget {
           top: -19,
         ),
         Positioned(
-          top: -((OBAvatar.AVATAR_SIZE_EXTRA_LARGE / 2)) - 10,
+          top: -(height * 0.106),
           //left: (MediaQuery.of(context).size.width / 2) - 10,
           //      bottom: 0.0,
           right: 0.0,
           left: 0.0,
-          child: StreamBuilder(
-              stream: user.updateSubject,
-              initialData: user,
-              builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
-                var user = snapshot.data;
+          child: Container(
+            alignment: Alignment.center,
+            height: height * 0.165,
+            width: width * 0.607,
+            child: StreamBuilder(
+                stream: user.updateSubject,
+                initialData: user,
+                builder: (BuildContext context, AsyncSnapshot<User> snapshot) {
+                  var user = snapshot.data;
 
-                return OBAvatar(
+                  /* return OBAvatar(
                   borderWidth: 3,
                   borderRadius: 100,
                   avatarUrl: user?.getProfileAvatar(),
-                  size: OBAvatarSize.extraLarge,
-                  customSize: 50,
+                  size: OBAvatarSize.small,
+                  customSize: 100,
                   isZoomable: true,
-                );
-              }),
-        ),
+                );*/
+                  Widget finalAvatarImage;
+
+                  if (user?.getProfileAvatar() != null) {
+                    finalAvatarImage = CircleAvatar(
+                        radius: 50,
+                        foregroundColor: Colors.red,
+                        backgroundImage: AdvancedNetworkImage(
+                            user?.getProfileAvatar(),
+                            useDiskCache: true,
+                            fallbackAssetImage:
+                                'assets/images/fallbacks/avatar-fallback.jpg',
+                            retryLimit: 0));
+
+                    finalAvatarImage = GestureDetector(
+                      child: finalAvatarImage,
+                      onTap: () {
+                        OpenbookProviderState openbookProvider =
+                            OpenbookProvider.of(context);
+                        openbookProvider.dialogService.showZoomablePhotoBoxView(
+                            imageUrl: user?.getProfileAvatar(),
+                            context: context);
+                      },
+                    );
+                  } else {
+                    finalAvatarImage = CircleAvatar(
+                        radius: 50,
+                        foregroundColor: Colors.red,
+                        backgroundImage: AssetImage(
+                          'assets/images/fallbacks/avatar-fallback.jpg',
+                        ));
+                  }
+                  return finalAvatarImage;
+                }),
+          ),
+        )
       ],
+    );
+  }
+
+  Widget _getAvatarPlaceholder(double avatarSize) {
+    return Image.asset(
+      'assets/images/fallbacks/avatar-fallback.jpg',
+      height: avatarSize,
+      width: avatarSize,
     );
   }
 
@@ -137,12 +184,12 @@ class OBProfileCard extends StatelessWidget {
       {@required User user,
       @required BuildContext context,
       @required ToastService toastService}) {
-    /* if (user.hasProfileBadges() && user.getProfileBadges().length > 0) {
+    if (user.hasProfileBadges() && user.getProfileBadges().length > 0) {
       return Row(children: <Widget>[
         OBProfileName(user),
         _getUserBadge(user: user, toastService: toastService, context: context)
       ]);
-    }*/
+    }
     return OBProfileName(user);
   }
 

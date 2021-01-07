@@ -76,11 +76,14 @@ class OBPost extends StatelessWidget {
                     onPostMemoryExcludedFromProfilePosts:
                         onPostMemoryExcludedFromProfilePosts,
                   ),
+                  Divider(
+                    thickness: 1,
+                  ),
                   OBPostBody(post,
                       onTextExpandedChange: onTextExpandedChange,
                       inViewId: inViewId),
                   OBPostReactions(post),
-                  OBPostCircles(post),
+                  // OBPostCircles(post),
                   OBPostComments(
                     post,
                   ),

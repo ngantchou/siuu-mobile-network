@@ -23,7 +23,7 @@ class OBPostsStreamDrHoo extends StatelessWidget {
   Widget build(BuildContext context) {
     String drHooTitle;
     String drHooSubtitle;
-    String drHooImage = 'assets/images/stickers/owl-instructor.png';
+    String drHooImage = 'assets/images/404.png';
     bool hasRefreshButton = false;
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
@@ -41,7 +41,7 @@ class OBPostsStreamDrHoo extends StatelessWidget {
         drHooSubtitle = localizationService.posts_stream__empty_drhoo_subtitle;
         break;
       case OBPostsStreamStatus.loadingMoreFailed:
-        drHooImage = 'assets/images/stickers/perplexed-owl.png';
+        drHooImage = 'assets/images/404.png';
         drHooTitle =
             localizationService.post__timeline_posts_failed_drhoo_title;
         drHooSubtitle =
@@ -49,7 +49,7 @@ class OBPostsStreamDrHoo extends StatelessWidget {
         hasRefreshButton = true;
         break;
       case OBPostsStreamStatus.empty:
-        drHooImage = 'assets/images/stickers/perplexed-owl.png';
+        drHooImage = 'assets/images/404.png';
         drHooTitle = localizationService.posts_stream__empty_drhoo_title;
         drHooSubtitle = localizationService.posts_stream__empty_drhoo_subtitle;
         hasRefreshButton = true;
