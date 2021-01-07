@@ -215,8 +215,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     Widget widgetType;
     switch (type) {
       case PostType.Text:
-        widgetType = TextMemory(onWrited: (value) {
-          print(value);
+        widgetType = TextMemory(onWrited: (value, background) {
+          //print(value);
           setState(() {
             _onPostTextChanged(onWrited: value);
           });
@@ -226,7 +226,12 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         widgetType = imageMemory();
         break;
       case PostType.Voice:
-        widgetType = VoiceMemory();
+        widgetType = VoiceMemory(onRecorded: (value) {
+          print(value);
+          setState(() {
+            _onPostTextChanged(onWrited: value);
+          });
+        });
         break;
       case PostType.Video:
         widgetType = videoMemory();

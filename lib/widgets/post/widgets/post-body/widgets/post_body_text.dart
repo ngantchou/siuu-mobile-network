@@ -8,6 +8,7 @@ import 'package:Siuu/widgets/theming/collapsible_smart_text.dart';
 import 'package:Siuu/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class OBPostBodyText extends StatefulWidget {
   final Post post;
@@ -30,13 +31,36 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   String _translatedText;
   bool _translationInProgress;
   bool _needsBootstrap;
+  bool isPng;
+  bool isSvg;
+  bool isColor;
+  int color;
 
+  bool isfontColorWhite;
+
+  LinearGradient gradient;
+
+  bool isExpanded;
+  String imagePath;
   @override
   void initState() {
     super.initState();
     _translationInProgress = false;
     _translatedText = null;
     _needsBootstrap = true;
+
+    imagePath = '';
+    isfontColorWhite = false;
+    gradient = LinearGradient(
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+      colors: [Colors.white, Colors.white],
+    );
+    isPng = false;
+    isSvg = false;
+    isColor = true;
+    color = 0xffffffff;
+    isExpanded = false;
   }
 
   @override
@@ -55,9 +79,32 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     }
 
     return GestureDetector(
-      onLongPress: _copyText,
-      child: _buildFullPostText(),
-    );
+        onLongPress: _copyText,
+        child: Stack(children: <Widget>[
+          Positioned.fill(
+            child: new Container(
+                decoration: new BoxDecoration(
+                  gradient: isColor ? gradient : null,
+                ),
+                child: isSvg
+                    ? SvgPicture.asset(
+                        imagePath,
+                        fit: BoxFit.cover,
+                      )
+                    : isPng
+                        ? Image.asset(
+                            imagePath,
+                            fit: BoxFit.cover,
+                          )
+                        : null),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Container(
+              child: _buildFullPostText(),
+            ),
+          )
+        ]));
   }
 
   Widget _buildFullPostText() {

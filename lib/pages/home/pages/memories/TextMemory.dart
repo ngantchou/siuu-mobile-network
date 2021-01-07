@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-typedef IntCallback = Function(String text);
+typedef IntCallback = Function(String text, String background);
 
 class TextMemory extends StatefulWidget {
   IntCallback onWrited;
@@ -15,7 +15,7 @@ class _TextMemoryState extends State<TextMemory> {
   bool isSvg;
   bool isColor;
   int color;
-
+  TextEditingController _textController = TextEditingController();
   bool isfontColorWhite;
 
   LinearGradient gradient;
@@ -72,9 +72,10 @@ class _TextMemoryState extends State<TextMemory> {
             alignment: Alignment.center,
             child: Container(
               child: TextFormField(
+                controller: _textController,
                 keyboardType: TextInputType.multiline,
                 onChanged: (value) {
-                  widget.onWrited(value);
+                  widget.onWrited(value, "white");
                 },
                 maxLines: null,
                 style: TextStyle(
@@ -142,6 +143,8 @@ class _TextMemoryState extends State<TextMemory> {
                           ),
                           InkWell(
                             onTap: () {
+                              widget.onWrited(_textController.text,
+                                  "abstractBackground.png");
                               setState(() {
                                 isfontColorWhite = true;
                                 isColor = false;
