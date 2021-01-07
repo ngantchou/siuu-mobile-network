@@ -192,11 +192,11 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
 
     double imageAspectRatio = widget.post.mediaWidth / widget.post.mediaHeight;
     double imageHeight = (screenWidth / imageAspectRatio);
-    //_mediaHeight = min(imageHeight, maxBoxHeight);
-    _mediaHeight = screenHeight * 0.43;
-    imageHeight = _mediaHeight;
-    if (_mediaHeight == maxBoxHeight) _mediaIsConstrained = true;
-    _mediaWidth = screenWidth;
+    _mediaHeight = min(imageHeight, maxBoxHeight);
+    //_mediaHeight = screenHeight * 0.43;
+    //imageHeight = _mediaHeight;
+    //if (_mediaHeight == maxBoxHeight) _mediaIsConstrained = true;
+    //_mediaWidth = screenWidth;
 
     if (widget.post.media != null) {
       _retrievePostMediaInProgress = false;

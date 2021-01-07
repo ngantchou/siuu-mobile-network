@@ -98,28 +98,31 @@ class OBEditProfileModalState extends State<OBEditProfileModal> {
             child: Form(
                 key: _formKey,
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
-                    Stack(
-                      overflow: Overflow.visible,
-                      children: <Widget>[
-                        _buildUserProfileCover(),
-                        Positioned(
-                          left: 20,
-                          child: Column(
-                            children: <Widget>[
-                              const SizedBox(
-                                height: (OBCover.largeSizeHeight) -
-                                    (OBAvatar.AVATAR_SIZE_LARGE / 2),
-                              ),
-                              _buildUserAvatar()
-                            ],
+                    Container(
+                      width: double.infinity,
+                      child: Stack(
+                        overflow: Overflow.visible,
+                        children: <Widget>[
+                          _buildUserProfileCover(),
+                          Positioned(
+                            left: 20,
+                            child: Column(
+                              children: <Widget>[
+                                const SizedBox(
+                                  height: (OBCover.largeSizeHeight) -
+                                      (OBAvatar.AVATAR_SIZE_LARGE / 2),
+                                ),
+                                _buildUserAvatar()
+                              ],
+                            ),
                           ),
-                        ),
-                        const SizedBox(
-                            height: OBCover.largeSizeHeight +
-                                OBAvatar.AVATAR_SIZE_LARGE / 2)
-                      ],
+                          const SizedBox(
+                              height: OBCover.largeSizeHeight +
+                                  OBAvatar.AVATAR_SIZE_LARGE / 2)
+                        ],
+                      ),
                     ),
                     const SizedBox(
                       height: 20,

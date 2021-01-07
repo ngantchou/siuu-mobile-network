@@ -50,7 +50,7 @@ class OBPostBodyImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(8.0),
         child: Image(
           height: height,
-          width: width,
+          //width: width,
           fit: BoxFit.fill,
           image: AdvancedNetworkImage(imageUrl,
               useDiskCache: true,
