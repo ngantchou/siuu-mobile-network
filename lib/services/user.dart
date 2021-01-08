@@ -676,9 +676,9 @@ class UserService {
   }
 
   Future<PostReaction> reactToPost(
-      {@required Post post, @required Emoji emoji}) async {
-    HttpieResponse response = await _postsApiService.reactToPost(
-        postUuid: post.uuid, emojiId: emoji.id);
+      {@required Post post, @required int emoji}) async {
+    HttpieResponse response =
+        await _postsApiService.reactToPost(postUuid: post.uuid, emojiId: emoji);
     _checkResponseIsCreated(response);
     return PostReaction.fromJson(json.decode(response.body));
   }

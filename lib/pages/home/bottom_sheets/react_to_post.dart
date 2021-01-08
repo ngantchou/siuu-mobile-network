@@ -78,8 +78,8 @@ class OBReactToPostBottomSheetState extends State<OBReactToPostBottomSheet> {
     _setReactToPostInProgress(true);
 
     try {
-      _reactOperation = CancelableOperation.fromFuture(_userService.reactToPost(
-          post: widget.post, emoji: emoji));
+      _reactOperation = CancelableOperation.fromFuture(
+          _userService.reactToPost(post: widget.post, emoji: emoji.id));
 
       PostReaction postReaction = await _reactOperation.value;
       widget.post.setReaction(postReaction);

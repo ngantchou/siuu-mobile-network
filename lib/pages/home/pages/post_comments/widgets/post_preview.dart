@@ -26,6 +26,9 @@ class OBPostPreview extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: <Widget>[
+        SizedBox(
+          height: 50,
+        ),
         OBPostHeader(
           post: this.post,
           onPostDeleted: this.onPostDeleted,
@@ -34,7 +37,7 @@ class OBPostPreview extends StatelessWidget {
         const SizedBox(
           height: 20,
         ),
-        OBPostReactions(this.post),
+        //OBPostReactions(this.post),
         const SizedBox(
           height: 10,
         ),

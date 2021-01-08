@@ -32,7 +32,7 @@ class OBPostComment extends StatefulWidget {
     Key key,
     this.showReplies = true,
     this.showActions = true,
-    this.showReactions = true,
+    this.showReactions = false,
     this.showReplyAction = true,
     this.padding = const EdgeInsets.only(left: 15, right: 15, top: 10),
   }) : super(key: key);

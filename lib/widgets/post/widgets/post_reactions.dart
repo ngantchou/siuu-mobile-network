@@ -117,7 +117,7 @@ class OBPostReactionsState extends State<OBPostReactions> {
     PostReaction postReaction;
     try {
       _requestOperation = CancelableOperation.fromFuture(
-          _userService.reactToPost(post: widget.post, emoji: emoji));
+          _userService.reactToPost(post: widget.post, emoji: emoji.id));
       postReaction = await _requestOperation.value;
     } catch (error) {
       _onError(error);

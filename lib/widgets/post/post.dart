@@ -82,7 +82,7 @@ class OBPost extends StatelessWidget {
                   OBPostBody(post,
                       onTextExpandedChange: onTextExpandedChange,
                       inViewId: inViewId),
-                  OBPostReactions(post),
+
                   // OBPostCircles(post),
                   OBPostComments(
                     post,
@@ -90,6 +90,7 @@ class OBPost extends StatelessWidget {
                   OBPostActions(
                     post,
                   ),
+                  //OBPostReactions(post),
                   const SizedBox(
                     height: 16,
                   ),

@@ -249,6 +249,10 @@ class Post extends UpdatableModel<Post> {
     return hasReaction() && reaction.getEmojiId() == emoji.id;
   }
 
+  bool isReactionSVG(int id) {
+    return hasReaction() && reaction.getEmojiId() == id;
+  }
+
   bool hasPublicInteractions() {
     return publicReactions && areCommentsEnabled;
   }
