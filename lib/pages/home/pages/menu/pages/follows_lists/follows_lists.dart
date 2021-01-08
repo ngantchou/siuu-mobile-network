@@ -75,7 +75,7 @@ class OBFollowsListsPageState extends State<OBFollowsListsPage> {
             OBPrimaryColorContainer(
                 child: Column(
               children: <Widget>[
-                SizedBox(height: 50),
+                SizedBox(height: 10),
                 SizedBox(
                     child: OBSearchBar(
                   onSearch: _onSearch,

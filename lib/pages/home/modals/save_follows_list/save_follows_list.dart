@@ -103,15 +103,19 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                                 autofocus: widget.autofocusNameTextField,
                                 controller: _nameController,
                                 decoration: InputDecoration(
-                                    labelText: _localizationService.user__save_follows_list_name,
-                                    hintText: _localizationService.user__save_follows_list_hint_text),
+                                    labelText: _localizationService
+                                        .user__save_follows_list_name,
+                                    hintText: _localizationService
+                                        .user__save_follows_list_hint_text),
                                 validator: (String followsListName) {
                                   if (!_formWasSubmitted) return null;
 
                                   if (_takenFollowsListName != null &&
                                       _takenFollowsListName ==
                                           followsListName) {
-                                    return _localizationService.user__save_follows_list_name_taken(_takenFollowsListName);
+                                    return _localizationService
+                                        .user__save_follows_list_name_taken(
+                                            _takenFollowsListName);
                                   }
 
                                   return _validationService
@@ -121,9 +125,11 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                                 emoji: _emoji,
                                 onEmojiFieldTapped: (Emoji emoji) =>
                                     _onWantsToPickEmoji(),
-                                labelText: _localizationService.user__save_follows_list_emoji,
+                                labelText: _localizationService
+                                    .user__save_follows_list_emoji,
                                 errorText: _formWasSubmitted && _emoji == null
-                                    ? _localizationService.user__save_follows_list_emoji_required_error
+                                    ? _localizationService
+                                        .user__save_follows_list_emoji_required_error
                                     : null),
                           ],
                         )),
@@ -132,7 +138,8 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
                             padding: EdgeInsets.only(
                                 left: 20, top: 20, bottom: 20.0),
                             child: OBText(
-                              _localizationService.user__save_follows_list_users,
+                              _localizationService
+                                  .user__save_follows_list_users,
                               style: TextStyle(fontWeight: FontWeight.bold),
                               size: OBTextSize.large,
                             ),
@@ -164,8 +171,9 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
             Navigator.pop(context);
           },
         ),
-        title: _hasExistingList ? _localizationService.user__save_follows_list_edit :
-        _localizationService.user__save_follows_list_create,
+        title: _hasExistingList
+            ? _localizationService.user__save_follows_list_edit
+            : _localizationService.user__save_follows_list_create,
         trailing: OBButton(
           isDisabled: !_formValid,
           isLoading: _requestInProgress,
@@ -230,7 +238,8 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
       String errorMessage = await error.toHumanReadableMessage();
       _toastService.error(message: errorMessage, context: context);
     } else {
-      _toastService.error(message: _localizationService.error__unknown_error, context: context);
+      _toastService.error(
+          message: _localizationService.error__unknown_error, context: context);
       throw error;
     }
   }
@@ -244,10 +253,12 @@ class OBSaveFollowsListModalState extends State<OBSaveFollowsListModal> {
 
   void _onWantsToPickEmoji() async {
     Emoji pickedEmoji = await Navigator.push(
-        context,
-        OBSlideRightRoute<Emoji>(builder: (BuildContext context) {
-          return OBPickFollowsListEmojiPage();
-        }, slidableKey: Key('obPickEmojiFollowsList')),
+      context,
+      OBSlideRightRoute<Emoji>(
+          builder: (BuildContext context) {
+            return OBPickFollowsListEmojiPage();
+          },
+          slidableKey: Key('obPickEmojiFollowsList')),
     );
 
     if (pickedEmoji != null) _onPickedEmoji(pickedEmoji);

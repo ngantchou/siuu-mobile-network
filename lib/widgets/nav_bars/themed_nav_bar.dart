@@ -16,8 +16,6 @@ class OBThemedNavigationBar extends StatelessWidget
   final Widget trailing;
   final String previousPageTitle;
   final Widget middle;
-  OBMainMenuPageController _mainMenuPageController;
-  OBMainSearchPageController _searchPageController;
 
   OBThemedNavigationBar({
     this.leading,
@@ -32,89 +30,7 @@ class OBThemedNavigationBar extends StatelessWidget
     var openbookProvider = OpenbookProvider.of(context);
     var themeService = openbookProvider.themeService;
     var themeValueParserService = openbookProvider.themeValueParserService;
-    _mainMenuPageController = OBMainMenuPageController();
-    _searchPageController = OBMainSearchPageController();
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
 
-    /* return Container(
-      decoration: BoxDecoration(
-        gradient: linearGradient,
-      ),
-      child: Column(
-        children: [
-          Container(
-            height: height * 0.058,
-          ),
-          Container(
-            height: height * 0.078,
-            child: Padding(
-              padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  InkWell(
-                      onTap: () {
-                        Navigator.of(context).pushNamed('/camera');
-                      },
-                      child: SvgPicture.asset('assets/svg/Camera.svg')),
-                  Text(
-                    title == null ? 'Siuu' : title,
-                    style: TextStyle(
-                      fontFamily: "Segoe UI",
-                      fontSize: 15,
-                      color: Color(0xffffffff),
-                    ),
-                  ),
-                  trailing == null
-                      ? Row(
-                          children: [
-                            InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              OBMainSearchPage(
-                                                controller:
-                                                    _searchPageController,
-                                              )));
-                                },
-                                child: SizedBox(
-                                  height: height * 0.029,
-                                  width: width * 0.048,
-                                  child: SvgPicture.asset(
-                                      'assets/svg/search.svg',
-                                      fit: BoxFit.contain,
-                                      color: Colors.white),
-                                )),
-                            SizedBox(width: width * 0.024),
-                            InkWell(
-                              onTap: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => OBMainMenuPage(
-                                              controller:
-                                                  _mainMenuPageController,
-                                            )));
-                              },
-                              child: SvgPicture.asset('assets/svg/menu.svg'),
-                            ),
-                          ],
-                        )
-                      : Row(children: [
-                          Container(child: trailing),
-                          Container(child: leading)
-                        ]),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );*/
     return StreamBuilder(
       stream: themeService.themeChange,
       initialData: themeService.getActiveTheme(),
@@ -124,6 +40,7 @@ class OBThemedNavigationBar extends StatelessWidget
         Color actionsForegroundColor = themeValueParserService
             .parseGradient(theme.primaryAccentColor)
             .colors[1];
+
         return CupertinoNavigationBar(
           border: null,
           actionsForegroundColor: actionsForegroundColor != null
@@ -151,7 +68,7 @@ class OBThemedNavigationBar extends StatelessWidget
 
   @override
   Size get preferredSize {
-    return const Size.fromHeight(0);
+    return const Size.fromHeight(44);
   }
 
   @override

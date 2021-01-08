@@ -218,7 +218,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         widgetType = TextMemory(onWrited: (value, background) {
           //print(value);
           setState(() {
-            _onPostTextChanged(onWrited: value);
+            _onPostTextChanged(onWrited: value+"_bgtext_"+background);
           });
         });
         break;

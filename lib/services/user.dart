@@ -2217,7 +2217,7 @@ class UserService {
         await _moderationApiService.getModerationCategories();
 
     _checkResponseIsOk(response);
-
+    print(response.body);
     return ModerationCategoriesList.fromJson(json.decode(response.body));
   }
 

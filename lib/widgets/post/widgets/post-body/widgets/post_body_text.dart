@@ -56,9 +56,9 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       end: Alignment.bottomRight,
       colors: [Colors.white, Colors.white],
     );
-    isPng = true;
+    isPng = false;
     isSvg = false;
-    isColor = false;
+    isColor = true;
     color = 0xffffffff;
     isExpanded = false;
   }
@@ -113,7 +113,11 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
           ),
           Align(
             alignment: Alignment.center,
-            child: Container(child: Text(widget.post.text)),
+            child: Container(
+                child: GestureDetector(
+              child: Text(widget.post.text),
+              onLongPress: _copyText,
+            )),
           ),
         ],
       ),

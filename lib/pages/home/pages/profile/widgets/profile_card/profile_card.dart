@@ -55,10 +55,10 @@ class OBProfileCard extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  const SizedBox(
+                  /*const SizedBox(
                     height: (OBAvatar.AVATAR_SIZE_EXTRA_LARGE * 0.2),
                     width: OBAvatar.AVATAR_SIZE_EXTRA_LARGE,
-                  ),
+                  ),*/
                   Expanded(
                       child: OBProfileInlineActions(user,
                           onUserProfileUpdated: onUserProfileUpdated,

@@ -1,4 +1,5 @@
 import 'package:Siuu/provider.dart';
+import 'package:Siuu/res/colors.dart';
 import 'package:Siuu/services/theme_value_parser.dart';
 import 'package:Siuu/widgets/avatars/avatar.dart';
 import 'package:flutter/material.dart';
@@ -47,6 +48,7 @@ class OBLetterAvatar extends StatelessWidget {
       width: avatarSize,
       decoration: BoxDecoration(
           color: color,
+          gradient: linearGradient,
           borderRadius: BorderRadius.circular(
               borderRadius ?? OBAvatar.avatarBorderRadius)),
       child: Center(
