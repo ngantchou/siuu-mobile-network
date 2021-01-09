@@ -11,6 +11,7 @@ import 'package:Siuu/models/post_links_list.dart';
 import 'package:Siuu/models/post_media.dart';
 import 'package:Siuu/models/post_media_list.dart';
 import 'package:Siuu/models/post_reaction.dart';
+import 'package:Siuu/models/post_text.dart';
 import 'package:Siuu/models/reactions_emoji_count.dart';
 import 'package:Siuu/models/reactions_emoji_count_list.dart';
 import 'package:Siuu/models/updatable_model.dart';
@@ -55,7 +56,7 @@ class Post extends UpdatableModel<Post> {
   bool isEdited;
   bool isClosed;
   bool isReported;
-
+  PostText postText;
   // stored only in the app
   bool isExcludedFromTopPosts = false;
   bool isExcludedFromProfilePosts = false;
@@ -343,6 +344,10 @@ class Post extends UpdatableModel<Post> {
     return media.postMedia.first;
   }
 
+  PostText getPostText() {
+    return postText;
+  }
+
   Language getLanguage() {
     return language;
   }
@@ -363,6 +368,11 @@ class Post extends UpdatableModel<Post> {
 
   void setMedia(PostMediaList media) {
     this.media = media;
+    this.notifyUpdate();
+  }
+
+  void setPostText(PostText meta) {
+    this.postText = meta;
     this.notifyUpdate();
   }
 

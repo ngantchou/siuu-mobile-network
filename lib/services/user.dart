@@ -40,6 +40,7 @@ import 'package:Siuu/models/post_comment_reaction_list.dart';
 import 'package:Siuu/models/post_media_list.dart';
 import 'package:Siuu/models/post_reaction.dart';
 import 'package:Siuu/models/post_reaction_list.dart';
+import 'package:Siuu/models/post_text.dart';
 import 'package:Siuu/models/reactions_emoji_count_list.dart';
 import 'package:Siuu/models/posts_list.dart';
 import 'package:Siuu/models/top_post.dart';
@@ -71,6 +72,7 @@ import 'package:Siuu/services/push_notifications/push_notifications.dart';
 import 'package:Siuu/services/storage.dart';
 import 'package:Siuu/services/user_invites_api.dart';
 import 'package:Siuu/services/waitlist_service.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:crypto/crypto.dart';
 import 'package:device_info/device_info.dart';
 import 'package:flutter/cupertino.dart';
@@ -571,7 +573,10 @@ class UserService {
   }
 
   Future<Post> createPost(
-      {String text, List<Circle> circles = const [], bool isDraft}) async {
+      {String text,
+      List<Circle> circles = const [],
+      bool isDraft,
+      PostText metaText}) async {
     HttpieStreamedResponse response = await _postsApiService.createPost(
         text: text,
         circleIds: circles.map((circle) => circle.id).toList(),
@@ -583,6 +588,18 @@ class UserService {
     refreshUser();
 
     String responseBody = await response.readAsString();
+
+    // Create a CollectionReference called users that references the firestore collection
+    CollectionReference postMetas =
+        FirebaseFirestore.instance.collection('postMetas');
+    // Call the user's CollectionReference to add a new user
+
+    postMetas
+        .doc(json.decode(responseBody)['uuid'])
+        .set(metaText.toJson())
+        .then((value) => print("Post meta Added"))
+        .catchError((error) => print("Failed to add post meta: $error"));
+
     return Post.fromJson(json.decode(responseBody));
   }
 

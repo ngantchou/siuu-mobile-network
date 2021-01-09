@@ -6,6 +6,7 @@ import 'package:Siuu/models/link_preview/link_preview.dart';
 import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/post_image.dart';
 import 'package:Siuu/models/post_media.dart';
+import 'package:Siuu/models/post_text.dart';
 import 'package:Siuu/models/post_video.dart';
 import 'package:Siuu/pages/home/lib/draft_editing_controller.dart';
 import 'package:Siuu/pages/home/modals/save_post/widgets/create_post_text.dart';
@@ -53,9 +54,16 @@ class OBSavePostModal extends StatefulWidget {
   final File image;
   final File video;
   final Post post;
+  final PostText textMeta;
 
   const OBSavePostModal(
-      {Key key, this.memory, this.text, this.image, this.video, this.post})
+      {Key key,
+      this.memory,
+      this.text,
+      this.image,
+      this.video,
+      this.post,
+      this.textMeta})
       : super(key: key);
 
   @override
@@ -111,6 +119,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   CancelableOperation<LinkPreview> _linkPreviewCheckOperation;
   File _video;
   File _image;
+  PostText meta;
   final picker = ImagePicker();
 
   @override
@@ -215,10 +224,11 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     Widget widgetType;
     switch (type) {
       case PostType.Text:
-        widgetType = TextMemory(onWrited: (value, background) {
-          //print(value);
+        widgetType = TextMemory(onWrited: (textMeta) {
+          print(textMeta.isfontColorWhite);
+          meta = textMeta;
           setState(() {
-            _onPostTextChanged(onWrited: value+"_bgtext_"+background);
+            _onPostTextChanged(onWrited: textMeta.text);
           });
         });
         break;
@@ -247,6 +257,9 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
             child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
+            SizedBox(
+              height: height * 0.024,
+            ),
             SizedBox(
               height: height * 0.192,
               child: ListView(
@@ -608,6 +621,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
 
   void _onPostTextChanged({String onWrited}) {
     String text = onWrited ?? _textController.text;
+    _textController.text = text;
     _checkForLinkPreview();
     setState(() {
       _charactersCount = text.length;
@@ -697,6 +711,11 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     );
 
     _addPostItemWidget(postImageWidget);
+  }
+
+  void _setPostText(PostText postText) {
+    // To be called on init only, therefore no setState
+    meta = postText;
   }
 
   Future<dynamic> _onShare({String text, File image, File video}) async {
@@ -853,7 +872,10 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     if (_postVideoFile != null) media.add(_postVideoFile);
 
     return OBNewPostData(
-        text: _textController.text, media: media, memory: widget.memory);
+        text: _textController.text,
+        media: media,
+        memory: widget.memory,
+        textMeta: meta);
   }
 
   VoidCallback _addPostItemWidget(Widget postItemWidget) {

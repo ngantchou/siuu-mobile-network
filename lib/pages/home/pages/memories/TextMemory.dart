@@ -1,7 +1,8 @@
+import 'package:Siuu/models/post_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-typedef IntCallback = Function(String text, String background);
+typedef IntCallback = Function(PostText textMeta);
 
 class TextMemory extends StatefulWidget {
   IntCallback onWrited;
@@ -17,7 +18,7 @@ class _TextMemoryState extends State<TextMemory> {
   int color;
   TextEditingController _textController = TextEditingController();
   bool isfontColorWhite;
-
+  PostText textMeta;
   LinearGradient gradient;
 
   bool isExpanded;
@@ -42,6 +43,16 @@ class _TextMemoryState extends State<TextMemory> {
     isColor = true;
     color = 0xffffffff;
     isExpanded = false;
+    textMeta = new PostText(
+        color: color,
+        gradient: [Colors.white, Colors.white],
+        imagePath: '',
+        isExpanded: false,
+        isColor: true,
+        isPng: false,
+        isSvg: false,
+        isfontColorWhite: false,
+        text: '');
   }
 
   @override
@@ -54,16 +65,22 @@ class _TextMemoryState extends State<TextMemory> {
           Positioned.fill(
             child: new Container(
                 decoration: new BoxDecoration(
-                  gradient: isColor ? gradient : null,
+                  gradient: textMeta.isColor
+                      ? LinearGradient(
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                          colors: textMeta.gradient,
+                        )
+                      : null,
                 ),
-                child: isSvg
+                child: textMeta.isSvg
                     ? SvgPicture.asset(
-                        imagePath,
+                        textMeta.imagePath,
                         fit: BoxFit.cover,
                       )
-                    : isPng
+                    : textMeta.isPng
                         ? Image.asset(
-                            imagePath,
+                            textMeta.imagePath,
                             fit: BoxFit.cover,
                           )
                         : null),
@@ -75,11 +92,15 @@ class _TextMemoryState extends State<TextMemory> {
                 controller: _textController,
                 keyboardType: TextInputType.multiline,
                 onChanged: (value) {
-                  widget.onWrited(value, "white");
+                  textMeta.text = value;
+                  widget.onWrited(textMeta);
                 },
+                maxLength: 200,
                 maxLines: null,
                 style: TextStyle(
-                    color: isfontColorWhite ? Colors.white : Colors.black),
+                    color: textMeta.isfontColorWhite
+                        ? Colors.white
+                        : Colors.black),
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   border: InputBorder.none,
@@ -88,7 +109,9 @@ class _TextMemoryState extends State<TextMemory> {
                       fontFamily: "Segoe UI",
                       fontWeight: FontWeight.w300,
                       fontSize: 25,
-                      color: isfontColorWhite ? Colors.white : Colors.black),
+                      color: textMeta.isfontColorWhite
+                          ? Colors.white
+                          : Colors.black),
                 ),
               ),
             ),
@@ -143,16 +166,17 @@ class _TextMemoryState extends State<TextMemory> {
                           ),
                           InkWell(
                             onTap: () {
-                              widget.onWrited(_textController.text,
-                                  "abstractBackground.png");
+                              /*widget.onWrited(_textController.text,
+                                  "abstractBackground.png");*/
                               setState(() {
-                                isfontColorWhite = true;
-                                isColor = false;
-                                isSvg = false;
-                                isPng = true;
-                                imagePath =
+                                textMeta.isfontColorWhite = true;
+                                textMeta.isColor = false;
+                                textMeta.isSvg = false;
+                                textMeta.isPng = true;
+                                textMeta.imagePath =
                                     'assets/images/abstractBackground.png';
                               });
+                              widget.onWrited(textMeta);
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(5),
@@ -239,12 +263,14 @@ class _TextMemoryState extends State<TextMemory> {
                           InkWell(
                             onTap: () {
                               setState(() {
-                                isfontColorWhite = true;
-                                isColor = false;
-                                isSvg = false;
-                                isPng = true;
-                                imagePath = 'assets/images/triangles.png';
+                                textMeta.isfontColorWhite = true;
+                                textMeta.isColor = false;
+                                textMeta.isSvg = false;
+                                textMeta.isPng = true;
+                                textMeta.imagePath =
+                                    'assets/images/triangles.png';
                               });
+                              widget.onWrited(textMeta);
                             },
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(5),
@@ -275,7 +301,7 @@ class _TextMemoryState extends State<TextMemory> {
               ),
             ),
           ),
-          /*Positioned(
+          Positioned(
             right: 20,
             top: 30,
             child: InkWell(
@@ -286,10 +312,12 @@ class _TextMemoryState extends State<TextMemory> {
                     fontFamily: "Segoe UI",
                     fontWeight: FontWeight.w300,
                     fontSize: 18,
-                    color: isfontColorWhite ? Colors.white : Colors.black),
+                    color: textMeta.isfontColorWhite
+                        ? Colors.white
+                        : Colors.black),
               ),
             ),
-          ),*/
+          ),
         ],
       ),
     );
@@ -301,14 +329,15 @@ class _TextMemoryState extends State<TextMemory> {
     return InkWell(
       onTap: () {
         setState(() {
-          isSvg = true;
-          isPng = false;
-          isColor = false;
+          textMeta.isSvg = true;
+          textMeta.isPng = false;
+          textMeta.isColor = false;
           fontColor == 'white'
-              ? isfontColorWhite = true
-              : isfontColorWhite = false;
-          imagePath = boxImagePath;
+              ? textMeta.isfontColorWhite = true
+              : textMeta.isfontColorWhite = false;
+          textMeta.imagePath = boxImagePath;
         });
+        widget.onWrited(textMeta);
       },
       child: ClipRRect(
         borderRadius: BorderRadius.circular(5),
@@ -336,13 +365,14 @@ class _TextMemoryState extends State<TextMemory> {
               end: Alignment.bottomRight,
               colors: [Color(boxColor), Colors.white],
             );
+            textMeta.gradient = [Color(boxColor), Colors.white];
             fontColor == 'white'
-                ? isfontColorWhite = true
-                : isfontColorWhite = false;
-            isColor = true;
-            isSvg = false;
-            isPng = false;
-            color = boxColor;
+                ? textMeta.isfontColorWhite = true
+                : textMeta.isfontColorWhite = false;
+            textMeta.isColor = true;
+            textMeta.isSvg = false;
+            textMeta.isPng = false;
+            textMeta.color = boxColor;
           },
         );
       },

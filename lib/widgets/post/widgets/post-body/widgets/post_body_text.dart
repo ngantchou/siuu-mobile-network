@@ -1,3 +1,4 @@
+import 'package:Siuu/models/post_text.dart';
 import 'package:Siuu/provider.dart';
 import 'package:Siuu/services/localization.dart';
 import 'package:Siuu/services/toast.dart';
@@ -6,6 +7,7 @@ import 'package:Siuu/services/user.dart';
 import 'package:Siuu/widgets/theming/actionable_smart_text.dart';
 import 'package:Siuu/widgets/theming/collapsible_smart_text.dart';
 import 'package:Siuu/widgets/theming/secondary_text.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -78,6 +80,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       _needsBootstrap = false;
     }
     final double height = MediaQuery.of(context).size.height;
+
     if (widget.post.hasMediaThumbnail() || widget.post.hasLinkToPreview()) {
       return Text(
         widget.post.text,
@@ -89,46 +92,71 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         ),
       );
     }
-    return SizedBox(
-      height: height * 0.292,
-      width: double.infinity,
-      child: Stack(
-        children: <Widget>[
-          Positioned.fill(
-            child: new Container(
-                decoration: new BoxDecoration(
-                  gradient: isColor ? gradient : null,
+    CollectionReference users =
+        FirebaseFirestore.instance.collection('postMetas');
+    return FutureBuilder<DocumentSnapshot>(
+      future: users.doc(widget.post.uuid).get(),
+      builder:
+          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+        if (snapshot.hasError) {
+          return Text("Something went wrong");
+        }
+
+        if (snapshot.connectionState == ConnectionState.done) {
+          Map<String, dynamic> data = snapshot.data.data();
+          PostText meta = PostText.fromJSON(data);
+          print(meta.gradient.toString());
+          return SizedBox(
+            height: height * 0.292,
+            width: double.infinity,
+            child: Stack(
+              children: <Widget>[
+                Positioned.fill(
+                  child: new Container(
+                      decoration: new BoxDecoration(
+                        gradient: meta.isColor
+                            ? LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: [meta.gradient[0], meta.gradient[1]],
+                              )
+                            : null,
+                      ),
+                      child: meta.isSvg
+                          ? SvgPicture.asset(
+                              meta.imagePath,
+                              fit: BoxFit.cover,
+                            )
+                          : meta.isPng
+                              ? Image.asset(
+                                  meta.imagePath,
+                                  fit: BoxFit.cover,
+                                )
+                              : null),
                 ),
-                child: isSvg
-                    ? SvgPicture.asset(
-                        imagePath,
-                        fit: BoxFit.cover,
-                      )
-                    : isPng
-                        ? Image.asset(
-                            imagePath,
-                            fit: BoxFit.cover,
-                          )
-                        : null),
-          ),
-          Align(
-            alignment: Alignment.center,
-            child: Container(
-                child: GestureDetector(
-              child: Text(
-                widget.post.text,
-                style: TextStyle(
-                  height: height * 0.002,
-                  fontFamily: "Segoe UI",
-                  fontSize: 20,
-                  color: Color(0xff78849e),
+                Align(
+                  alignment: Alignment.center,
+                  child: Container(
+                      child: GestureDetector(
+                    child: Text(
+                      widget.post.text,
+                      style: TextStyle(
+                        height: height * 0.002,
+                        fontFamily: "Segoe UI",
+                        fontSize: 20,
+                        color: Color(meta.color),
+                      ),
+                    ),
+                    onLongPress: _copyText,
+                  )),
                 ),
-              ),
-              onLongPress: _copyText,
-            )),
-          ),
-        ],
-      ),
+              ],
+            ),
+          );
+        }
+
+        return Text("loading");
+      },
     );
   }
 

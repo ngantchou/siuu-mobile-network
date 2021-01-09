@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:Siuu/models/circle.dart';
 import 'package:Siuu/models/community.dart';
 import 'package:Siuu/models/post.dart';
+import 'package:Siuu/models/post_text.dart';
 import 'package:Siuu/provider.dart';
 import 'package:Siuu/services/localization.dart';
 import 'package:Siuu/services/media/media.dart';
@@ -217,9 +218,11 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
           text: _data.text, isDraft: true);
     } else {
       debugLog('Creating circles post');
-
       draftPost = await _userService.createPost(
-          text: _data.text, circles: _data.getCircles(), isDraft: true);
+          text: _data.text,
+          circles: _data.getCircles(),
+          isDraft: true,
+          metaText: _data.textMeta);
     }
 
     debugLog('Post created successfully');
@@ -478,10 +481,11 @@ class OBNewPostData {
   List<File> remainingCompressedMediaToUpload = [];
   bool postPublishRequested = false;
   File mediaThumbnail;
-
+  PostText textMeta;
   String _cachedKey;
 
-  OBNewPostData({this.text, this.media, this.memory, this.circles}) {
+  OBNewPostData(
+      {this.text, this.media, this.memory, this.circles, this.textMeta}) {
     remainingMediaToCompress = media.toList();
   }
 
@@ -499,6 +503,10 @@ class OBNewPostData {
 
   void setMemory(Memory memory) {
     this.memory = memory;
+  }
+
+  void setPostMeta(PostText meta) {
+    this.textMeta = meta;
   }
 
   List<Circle> getCircles() {

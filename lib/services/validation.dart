@@ -24,7 +24,7 @@ class ValidationService {
   static const int COMMUNITY_DESCRIPTION_MAX_LENGTH = 500;
   static const int COMMUNITY_USER_ADJECTIVE_MAX_LENGTH = 16;
   static const int COMMUNITY_RULES_MAX_LENGTH = 1500;
-  static const int POST_MAX_LENGTH = 5000;
+  static const int POST_MAX_LENGTH = 200;
   static const int POST_MAX_HASHTAGS = 3;
   static const int HASHTAG_MAX_LENGTH = 32;
   static const int POST_COMMENT_MAX_HASHTAGS = 3;
