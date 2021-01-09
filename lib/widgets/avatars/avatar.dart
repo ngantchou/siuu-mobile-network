@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:Siuu/provider.dart';
+import 'package:Siuu/res/colors.dart';
+import 'package:Siuu/widgets/avatars/letter_avatar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_networkimage/provider.dart';
 
@@ -9,6 +11,7 @@ enum OBAvatarType { user, memory }
 
 class OBAvatar extends StatelessWidget {
   final String avatarUrl;
+  final String username;
   final File avatarFile;
   final OBAvatarSize size;
   final VoidCallback onPressed;
@@ -52,6 +55,7 @@ class OBAvatar extends StatelessWidget {
 
   const OBAvatar(
       {this.avatarUrl,
+      this.username,
       this.size = OBAvatarSize.small,
       this.onPressed,
       this.avatarFile,
@@ -77,7 +81,7 @@ class OBAvatar extends StatelessWidget {
       );
     } else if (avatarUrl != null) {
       finalAvatarImage = CircleAvatar(
-          radius: 30.0,
+          radius: avatarSize,
           backgroundImage: AdvancedNetworkImage(avatarUrl,
               useDiskCache: true,
               fallbackAssetImage: DEFAULT_AVATAR_ASSET,
@@ -98,10 +102,7 @@ class OBAvatar extends StatelessWidget {
       finalAvatarImage = _getAvatarPlaceholder(avatarSize);
     }
 
-    Widget avatar = ClipRRect(
-      borderRadius: BorderRadius.circular(borderRadius ?? avatarBorderRadius),
-      child: finalAvatarImage,
-    );
+    Widget avatar = finalAvatarImage;
 
     if (onPressed == null) return avatar;
 
@@ -112,10 +113,13 @@ class OBAvatar extends StatelessWidget {
   }
 
   Widget _getAvatarPlaceholder(double avatarSize) {
-    return Image.asset(
-      DEFAULT_AVATAR_ASSET,
-      height: avatarSize,
-      width: avatarSize,
+    return OBLetterAvatar(
+      color: Color(pinkColor),
+      letter: username != null ? username[0] : "",
+      borderRadius: 30,
+      customSize: OBLetterAvatar.fontSizeLarge,
+      labelColor: Colors.white,
+      size: OBAvatarSize.extraSmall,
     );
   }
 }

@@ -138,6 +138,18 @@ class _ReactionPostContainerState extends State<ReactinPostContainer> {
                           : reactionIcon,
                     ),
                   );
+                if (emojiCounts != null || emojiCounts.length == 1)
+                  return Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        border: Border.all(color: Colors.white, width: 3),
+                      ),
+                      child: getEmoji(
+                          emojiCounts[0].emoji.id, emojiCounts[0].count),
+                    ),
+                  );
                 emojiCounts.sort((a, b) => a.count.compareTo(b.count));
                 return Align(
                   alignment: Alignment.center,
@@ -154,8 +166,8 @@ class _ReactionPostContainerState extends State<ReactinPostContainer> {
                               border: Border.all(color: Colors.white, width: 3),
                             ),
                             child: emojiCounts.length >= 2
-                                ? getEmoji(emojiCounts[0].emoji.id,
-                                    emojiCounts[0].count)
+                                ? getEmoji(emojiCounts[1].emoji.id,
+                                    emojiCounts[1].count)
                                 : getEmoji(1, 0),
                           ),
                         ),
@@ -288,36 +300,9 @@ class _ReactionPostContainerState extends State<ReactinPostContainer> {
       default:
         emoji = "like";
     }
-    return Stack(
-      children: <Widget>[
-        SvgPicture.asset(
-          'assets/svg/$emoji.svg',
-          height: height * 0.043,
-        ),
-        new Positioned(
-          top: 1.0,
-          right: 4.0,
-          child: new Container(
-            padding: EdgeInsets.all(1),
-            decoration: new BoxDecoration(
-              color: Colors.red,
-              borderRadius: BorderRadius.circular(6),
-            ),
-            constraints: BoxConstraints(
-              minWidth: 12,
-              minHeight: 12,
-            ),
-            child: new Text(
-              '$count',
-              style: new TextStyle(
-                color: Colors.white,
-                fontSize: 8,
-              ),
-              textAlign: TextAlign.center,
-            ),
-          ),
-        ),
-      ],
+    return SvgPicture.asset(
+      'assets/svg/$emoji.svg',
+      height: height * 0.043,
     );
   }
 

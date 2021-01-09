@@ -50,19 +50,20 @@ class OBProfileInlineActions extends StatelessWidget {
             actions.add(OBBlockButton(user));
           } else {
             actions.add(
-              OBFollowButton(user),
+              OBFollowButton(
+                user,
+                unfollowButtonType: OBButtonType.success,
+              ),
             );
           }
 
           actions.addAll([
-            const SizedBox(
-              width: 10,
-            ),
+            Expanded(child: Container()),
             OBProfileInlineActionsMoreButton(user)
           ]);
         }
         return Row(
-          mainAxisAlignment: MainAxisAlignment.end,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: actions,
         );
       },

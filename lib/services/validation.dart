@@ -222,6 +222,7 @@ class ValidationService {
   Future<bool> isMemoryNameTaken(String name) async {
     HttpieResponse response =
         await _memoriesApiService.checkNameIsAvailable(name: name);
+
     if (response.isAccepted()) {
       return false;
     } else if (response.isBadRequest()) {

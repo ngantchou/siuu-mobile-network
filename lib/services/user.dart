@@ -1416,7 +1416,7 @@ class UserService {
         rules: rules,
         cover: cover,
         avatar: avatar);
-
+    print(response.statusCode);
     _checkResponseIsCreated(response);
 
     String responseBody = await response.readAsString();
@@ -1539,7 +1539,7 @@ class UserService {
       @required String query,
       List<MemoryMembersExclusion> exclude}) async {
     HttpieResponse response = await _memoriesApiService.searchMembers(
-      memoryName: memory.name,
+      communityName: memory.name,
       query: query,
       exclude: exclude != null
           ? exclude
@@ -1556,7 +1556,7 @@ class UserService {
   Future<void> inviteUserToMemory(
       {@required Memory memory, @required User user}) async {
     HttpieResponse response = await _memoriesApiService.inviteUserToMemory(
-        memoryName: memory.name, username: user.username);
+        communityName: memory.name, username: user.username);
     _checkResponseIsCreated(response);
     return User.fromJson(json.decode(response.body),
         storeInMaxSessionCache: true);
@@ -1565,7 +1565,7 @@ class UserService {
   Future<void> uninviteUserFromMemory(
       {@required Memory memory, @required User user}) async {
     HttpieResponse response = await _memoriesApiService.uninviteUserFromMemory(
-        memoryName: memory.name, username: user.username);
+        communityName: memory.name, username: user.username);
     _checkResponseIsOk(response);
     return User.fromJson(json.decode(response.body),
         storeInMaxSessionCache: true);
@@ -1618,7 +1618,7 @@ class UserService {
     @required String query,
   }) async {
     HttpieResponse response = await _memoriesApiService.searchModerators(
-      memoryName: memory.name,
+      communityName: memory.name,
       query: query,
     );
 
@@ -1630,14 +1630,14 @@ class UserService {
   Future<void> addMemoryModerator(
       {@required Memory memory, @required User user}) async {
     HttpieResponse response = await _memoriesApiService.addMemoryModerator(
-        memoryName: memory.name, username: user.username);
+        communityName: memory.name, username: user.username);
     _checkResponseIsCreated(response);
   }
 
   Future<void> removeMemoryModerator(
       {@required Memory memory, @required User user}) async {
     HttpieResponse response = await _memoriesApiService.removeMemoryModerator(
-        memoryName: memory.name, username: user.username);
+        communityName: memory.name, username: user.username);
     _checkResponseIsOk(response);
   }
 
@@ -1657,7 +1657,7 @@ class UserService {
     @required String query,
   }) async {
     HttpieResponse response = await _memoriesApiService.searchAdministrators(
-      memoryName: memory.name,
+      communityName: memory.name,
       query: query,
     );
 
@@ -1669,7 +1669,7 @@ class UserService {
   Future<Memory> addMemoryAdministrator(
       {@required Memory memory, @required User user}) async {
     HttpieResponse response = await _memoriesApiService.addMemoryAdministrator(
-        memoryName: memory.name, username: user.username);
+        communityName: memory.name, username: user.username);
     _checkResponseIsCreated(response);
     return Memory.fromJSON(json.decode(response.body));
   }
@@ -1678,7 +1678,7 @@ class UserService {
       {@required Memory memory, @required User user}) async {
     HttpieResponse response =
         await _memoriesApiService.removeMemoryAdministrator(
-            memoryName: memory.name, username: user.username);
+            communityName: memory.name, username: user.username);
     _checkResponseIsOk(response);
   }
 
@@ -1697,7 +1697,7 @@ class UserService {
     @required String query,
   }) async {
     HttpieResponse response = await _memoriesApiService.searchBannedUsers(
-      memoryName: memory.name,
+      communityName: memory.name,
       query: query,
     );
 
@@ -1709,14 +1709,14 @@ class UserService {
   Future<void> banMemoryUser(
       {@required Memory memory, @required User user}) async {
     HttpieResponse response = await _memoriesApiService.banMemoryUser(
-        memoryName: memory.name, username: user.username);
+        communityName: memory.name, username: user.username);
     _checkResponseIsOk(response);
   }
 
   Future<void> unbanMemoryUser(
       {@required Memory memory, @required User user}) async {
     HttpieResponse response = await _memoriesApiService.unbanMemoryUser(
-        memoryName: memory.name, username: user.username);
+        communityName: memory.name, username: user.username);
     _checkResponseIsOk(response);
   }
 
@@ -1741,21 +1741,21 @@ class UserService {
 
   Future<void> favoriteMemory(Memory memory) async {
     HttpieResponse response =
-        await _memoriesApiService.favoriteMemory(memoryName: memory.name);
+        await _memoriesApiService.favoriteMemory(communityName: memory.name);
     _checkResponseIsCreated(response);
     return Memory.fromJSON(json.decode(response.body));
   }
 
   Future<void> unfavoriteMemory(Memory memory) async {
     HttpieResponse response =
-        await _memoriesApiService.unfavoriteMemory(memoryName: memory.name);
+        await _memoriesApiService.unfavoriteMemory(communityName: memory.name);
     _checkResponseIsOk(response);
     return Memory.fromJSON(json.decode(response.body));
   }
 
   Future<void> enableNewPostNotificationsForMemory(Memory memory) async {
     HttpieResponse response = await _memoriesApiService
-        .enableNewPostNotificationsForMemory(memoryName: memory.name);
+        .enableNewPostNotificationsForMemory(communityName: memory.name);
     _checkResponseIsCreated(response);
 
     return Memory.fromJSON(json.decode(response.body));
@@ -1763,7 +1763,7 @@ class UserService {
 
   Future<void> disableNewPostNotificationsForMemory(Memory memory) async {
     HttpieResponse response = await _memoriesApiService
-        .disableNewPostNotificationsForMemory(memoryName: memory.name);
+        .disableNewPostNotificationsForMemory(communityName: memory.name);
     _checkResponseIsOk(response);
 
     return Memory.fromJSON(json.decode(response.body));
@@ -2045,7 +2045,7 @@ class UserService {
       String description,
       @required ModerationCategory moderationCategory}) async {
     HttpieResponse response = await _memoriesApiService.reportMemoryWithName(
-        memoryName: memory.name,
+        communityName: memory.name,
         description: description,
         moderationCategoryId: moderationCategory.id);
     _checkResponseIsCreated(response);
@@ -2116,7 +2116,7 @@ class UserService {
       int maxId,
       bool verified}) async {
     HttpieResponse response = await _memoriesApiService.getModeratedObjects(
-        memoryName: memory.name,
+        communityName: memory.name,
         maxId: maxId,
         verified: verified,
         types: types != null
@@ -2217,7 +2217,7 @@ class UserService {
         await _moderationApiService.getModerationCategories();
 
     _checkResponseIsOk(response);
-
+    print(response.body);
     return ModerationCategoriesList.fromJson(json.decode(response.body));
   }
 

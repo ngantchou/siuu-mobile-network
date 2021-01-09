@@ -106,8 +106,8 @@ class OBEditProfileModalState extends State<OBEditProfileModal> {
                         overflow: Overflow.visible,
                         children: <Widget>[
                           _buildUserProfileCover(),
-                          Positioned(
-                            left: 20,
+                          Align(
+                            alignment: Alignment.center,
                             child: Column(
                               children: <Widget>[
                                 const SizedBox(

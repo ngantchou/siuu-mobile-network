@@ -10,77 +10,86 @@ class CommunitiesApiService {
 
   String apiURL;
 
-  static const SEARCH_COMMUNITIES_PATH = 'api/memories/search/';
-  static const GET_TRENDING_COMMUNITIES_PATH = 'api/memories/trending/';
-  static const GET_SUGGESTED_COMMUNITIES_PATH = 'api/memories/suggested/';
-  static const GET_JOINED_COMMUNITIES_PATH = 'api/memories/joined/';
-  static const SEARCH_JOINED_COMMUNITIES_PATH = 'api/memories/joined/search/';
-  static const CHECK_COMMUNITY_NAME_PATH = 'api/memories/name-check/';
-  static const CREATE_COMMUNITY_PATH = 'api/memories/';
-  static const DELETE_COMMUNITY_PATH = 'api/memories/{memoryName}/';
-  static const UPDATE_COMMUNITY_PATH = 'api/memories/{memoryName}/';
-  static const GET_COMMUNITY_PATH = 'api/memories/{memoryName}/';
-  static const REPORT_COMMUNITY_PATH = 'api/memories/{memoryName}/report/';
-  static const JOIN_COMMUNITY_PATH = 'api/memories/{memoryName}/members/join/';
+  static const SEARCH_COMMUNITIES_PATH = 'api/communities/search/';
+  static const GET_TRENDING_COMMUNITIES_PATH = 'api/communities/trending/';
+  static const GET_SUGGESTED_COMMUNITIES_PATH = 'api/communities/suggested/';
+  static const GET_JOINED_COMMUNITIES_PATH = 'api/communities/joined/';
+  static const SEARCH_JOINED_COMMUNITIES_PATH =
+      'api/communities/joined/search/';
+  static const CHECK_COMMUNITY_NAME_PATH = 'api/communities/name-check/';
+  static const CREATE_COMMUNITY_PATH = 'api/communities/';
+  static const DELETE_COMMUNITY_PATH = 'api/communities/{communityName}/';
+  static const UPDATE_COMMUNITY_PATH = 'api/communities/{communityName}/';
+  static const GET_COMMUNITY_PATH = 'api/communities/{communityName}/';
+  static const REPORT_COMMUNITY_PATH =
+      'api/communities/{communityName}/report/';
+  static const JOIN_COMMUNITY_PATH =
+      'api/communities/{communityName}/members/join/';
   static const LEAVE_COMMUNITY_PATH =
-      'api/memories/{memoryName}/members/leave/';
+      'api/communities/{communityName}/members/leave/';
   static const INVITE_USER_TO_COMMUNITY_PATH =
-      'api/memories/{memoryName}/members/invite/';
+      'api/communities/{communityName}/members/invite/';
   static const UNINVITE_USER_TO_COMMUNITY_PATH =
-      'api/memories/{memoryName}/members/uninvite/';
+      'api/communities/{communityName}/members/uninvite/';
   static const BAN_COMMUNITY_USER_PATH =
-      'api/memories/{memoryName}/banned-users/ban/';
+      'api/communities/{communityName}/banned-users/ban/';
   static const UNBAN_COMMUNITY_USER_PATH =
-      'api/memories/{memoryName}/banned-users/unban/';
+      'api/communities/{communityName}/banned-users/unban/';
   static const SEARCH_COMMUNITY_BANNED_USERS_PATH =
-      'api/memories/{memoryName}/banned-users/search/';
-  static const COMMUNITY_AVATAR_PATH = 'api/memories/{memoryName}/avatar/';
-  static const COMMUNITY_COVER_PATH = 'api/memories/{memoryName}/cover/';
-  static const SEARCH_COMMUNITY_PATH = 'api/memories/{memoryName}/search/';
-  static const FAVORITE_COMMUNITY_PATH = 'api/memories/{memoryName}/favorite/';
+      'api/communities/{communityName}/banned-users/search/';
+  static const COMMUNITY_AVATAR_PATH =
+      'api/communities/{communityName}/avatar/';
+  static const COMMUNITY_COVER_PATH = 'api/communities/{communityName}/cover/';
+  static const SEARCH_COMMUNITY_PATH =
+      'api/communities/{communityName}/search/';
+  static const FAVORITE_COMMUNITY_PATH =
+      'api/communities/{communityName}/favorite/';
   static const ENABLE_NEW_POST_NOTIFICATIONS_FOR_COMMUNITY_PATH =
-      'api/memories/{memoryName}/notifications/subscribe/new-post/';
-  static const GET_FAVORITE_COMMUNITIES_PATH = 'api/memories/favorites/';
+      'api/communities/{communityName}/notifications/subscribe/new-post/';
+  static const GET_FAVORITE_COMMUNITIES_PATH = 'api/communities/favorites/';
   static const SEARCH_FAVORITE_COMMUNITIES_PATH =
-      'api/memories/favorites/search/';
+      'api/communities/favorites/search/';
   static const GET_ADMINISTRATED_COMMUNITIES_PATH =
-      'api/memories/administrated/';
+      'api/communities/administrated/';
   static const SEARCH_ADMINISTRATED_COMMUNITIES_PATH =
-      'api/memories/administrated/search/';
-  static const GET_MODERATED_COMMUNITIES_PATH = 'api/memories/moderated/';
+      'api/communities/administrated/search/';
+  static const GET_MODERATED_COMMUNITIES_PATH = 'api/communities/moderated/';
   static const SEARCH_MODERATED_COMMUNITIES_PATH =
-      'api/memories/moderated/search/';
-  static const GET_COMMUNITY_POSTS_PATH = 'api/memories/{memoryName}/posts/';
+      'api/communities/moderated/search/';
+  static const GET_COMMUNITY_POSTS_PATH =
+      'api/communities/{communityName}/posts/';
   static const COUNT_COMMUNITY_POSTS_PATH =
-      'api/memories/{memoryName}/posts/count/';
-  static const CREATE_COMMUNITY_POST_PATH = 'api/memories/{memoryName}/posts/';
+      'api/communities/{communityName}/posts/count/';
+  static const CREATE_COMMUNITY_POST_PATH =
+      'api/communities/{communityName}/posts/';
   static const CLOSED_COMMUNITY_POSTS_PATH =
-      'api/memories/{memoryName}/posts/closed/';
+      'api/communities/{communityName}/posts/closed/';
   static const GET_COMMUNITY_MEMBERS_PATH =
-      'api/memories/{memoryName}/members/';
+      'api/communities/{communityName}/members/';
   static const SEARCH_COMMUNITY_MEMBERS_PATH =
-      'api/memories/{memoryName}/members/search/';
+      'api/communities/{communityName}/members/search/';
   static const GET_COMMUNITY_BANNED_USERS_PATH =
-      'api/memories/{memoryName}/banned-users/';
+      'api/communities/{communityName}/banned-users/';
   static const GET_COMMUNITY_ADMINISTRATORS_PATH =
-      'api/memories/{memoryName}/administrators/';
+      'api/communities/{communityName}/administrators/';
   static const SEARCH_COMMUNITY_ADMINISTRATORS_PATH =
-      'api/memories/{memoryName}/administrators/search/';
+      'api/communities/{communityName}/administrators/search/';
   static const ADD_COMMUNITY_ADMINISTRATOR_PATH =
-      'api/memories/{memoryName}/administrators/';
+      'api/communities/{communityName}/administrators/';
   static const REMOVE_COMMUNITY_ADMINISTRATORS_PATH =
-      'api/memories/{memoryName}/administrators/{username}/';
+      'api/communities/{communityName}/administrators/{username}/';
   static const GET_COMMUNITY_MODERATORS_PATH =
-      'api/memories/{memoryName}/moderators/';
+      'api/communities/{communityName}/moderators/';
   static const SEARCH_COMMUNITY_MODERATORS_PATH =
-      'api/memories/{memoryName}/moderators/search/';
+      'api/communities/{communityName}/moderators/search/';
   static const ADD_COMMUNITY_MODERATOR_PATH =
-      'api/memories/{memoryName}/moderators/';
+      'api/communities/{communityName}/moderators/';
   static const REMOVE_COMMUNITY_MODERATORS_PATH =
-      'api/memories/{memoryName}/moderators/{username}/';
-  static const CREATE_COMMUNITY_POSTS_PATH = 'api/memories/{memoryName}/posts/';
+      'api/communities/{communityName}/moderators/{username}/';
+  static const CREATE_COMMUNITY_POSTS_PATH =
+      'api/communities/{communityName}/posts/';
   static const GET_COMMUNITY_MODERATED_OBJECTS_PATH =
-      'api/memories/{memoryName}/moderated-objects/';
+      'api/communities/{communityName}/moderated-objects/';
 
   void setHttpieService(HttpieService httpService) {
     _httpService = httpService;
@@ -116,7 +125,7 @@ class CommunitiesApiService {
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieStreamedResponse> createPostForMemoryWithId(String memoryName,
+  Future<HttpieStreamedResponse> createPostForMemoryWithId(String communityName,
       {String text, File image, File video, bool isDraft = false}) {
     Map<String, dynamic> body = {};
 
@@ -136,13 +145,13 @@ class CommunitiesApiService {
       body['text'] = text;
     }
 
-    String url = _makeCreateMemoryPost(memoryName);
+    String url = _makeCreateMemoryPost(communityName);
 
     return _httpService.putMultiform(_makeApiUrl(url),
         body: body, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getPostsForMemoryWithName(String memoryName,
+  Future<HttpieResponse> getPostsForMemoryWithName(String communityName,
       {int maxId, int count, bool authenticatedRequest = true}) {
     Map<String, dynamic> queryParams = {};
 
@@ -150,22 +159,22 @@ class CommunitiesApiService {
 
     if (maxId != null) queryParams['max_id'] = maxId;
 
-    String url = _makeGetMemoryPostsPath(memoryName);
+    String url = _makeGetMemoryPostsPath(communityName);
 
     return _httpService.get(_makeApiUrl(url),
         queryParameters: queryParams,
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> getPostsCountForMemoryWithName(String memoryName,
+  Future<HttpieResponse> getPostsCountForMemoryWithName(String communityName,
       {bool authenticatedRequest = true}) {
-    String url = _makeGetPostsCountForMemoryWithNamePath(memoryName);
+    String url = _makeGetPostsCountForMemoryWithNamePath(communityName);
 
     return _httpService.get(_makeApiUrl(url),
         appendAuthorizationToken: authenticatedRequest);
   }
 
-  Future<HttpieResponse> getClosedPostsForMemoryWithName(String memoryName,
+  Future<HttpieResponse> getClosedPostsForMemoryWithName(String communityName,
       {int maxId, int count, bool authenticatedRequest = true}) {
     Map<String, dynamic> queryParams = {};
 
@@ -173,7 +182,7 @@ class CommunitiesApiService {
 
     if (maxId != null) queryParams['max_id'] = maxId;
 
-    String url = _makeClosedMemoryPostsPath(memoryName);
+    String url = _makeClosedMemoryPostsPath(communityName);
 
     return _httpService.get(_makeApiUrl(url),
         queryParameters: queryParams,
@@ -258,7 +267,7 @@ class CommunitiesApiService {
         body: body, appendAuthorizationToken: true);
   }
 
-  Future<HttpieStreamedResponse> updateMemoryWithName(String memoryName,
+  Future<HttpieStreamedResponse> updateMemoryWithName(String communityName,
       {String name,
       String title,
       List<String> categories,
@@ -312,50 +321,52 @@ class CommunitiesApiService {
     }
 
     return _httpService.patchMultiform(
-        _makeApiUrl(_makeUpdateMemoryPath(memoryName)),
+        _makeApiUrl(_makeUpdateMemoryPath(communityName)),
         body: body,
         appendAuthorizationToken: true);
   }
 
   Future<HttpieStreamedResponse> updateAvatarForMemoryWithName(
-      String memoryName,
+      String communityName,
       {File avatar}) {
     Map<String, dynamic> body = {'avatar': avatar};
 
     return _httpService.putMultiform(
-        _makeApiUrl(_makeMemoryAvatarPath(memoryName)),
+        _makeApiUrl(_makeMemoryAvatarPath(communityName)),
         body: body,
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> deleteAvatarForMemoryWithName(String memoryName) {
-    return _httpService.delete(_makeApiUrl(_makeMemoryAvatarPath(memoryName)),
+  Future<HttpieResponse> deleteAvatarForMemoryWithName(String communityName) {
+    return _httpService.delete(
+        _makeApiUrl(_makeMemoryAvatarPath(communityName)),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieStreamedResponse> updateCoverForMemoryWithName(String memoryName,
+  Future<HttpieStreamedResponse> updateCoverForMemoryWithName(
+      String communityName,
       {File cover}) {
     Map<String, dynamic> body = {'cover': cover};
 
     return _httpService.putMultiform(
-        _makeApiUrl(_makeMemoryCoverPath(memoryName)),
+        _makeApiUrl(_makeMemoryCoverPath(communityName)),
         body: body,
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> deleteCoverForMemoryWithName(String memoryName) {
-    return _httpService.delete(_makeApiUrl(_makeMemoryCoverPath(memoryName)),
+  Future<HttpieResponse> deleteCoverForMemoryWithName(String communityName) {
+    return _httpService.delete(_makeApiUrl(_makeMemoryCoverPath(communityName)),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> deleteMemoryWithName(String memoryName) {
-    String path = _makeDeleteMemoryPath(memoryName);
+  Future<HttpieResponse> deleteMemoryWithName(String communityName) {
+    String path = _makeDeleteMemoryPath(communityName);
 
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getMembersForMemoryWithId(String memoryName,
+  Future<HttpieResponse> getMembersForMemoryWithId(String communityName,
       {int count, int maxId, List<String> exclude}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
@@ -364,38 +375,38 @@ class CommunitiesApiService {
 
     if (exclude != null && exclude.isNotEmpty) queryParams['exclude'] = exclude;
 
-    String path = _makeGetMemoryMembersPath(memoryName);
+    String path = _makeGetMemoryMembersPath(communityName);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> searchMembers(
-      {@required String memoryName,
+      {@required String communityName,
       @required String query,
       List<String> exclude}) {
     Map<String, dynamic> queryParams = {'query': query};
 
     if (exclude != null && exclude.isNotEmpty) queryParams['exclude'] = exclude;
 
-    String path = _makeSearchMemoryMembersPath(memoryName);
+    String path = _makeSearchMemoryMembersPath(communityName);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> inviteUserToMemory(
-      {@required String memoryName, @required String username}) {
+      {@required String communityName, @required String username}) {
     Map<String, dynamic> body = {'username': username};
-    String path = _makeInviteUserToMemoryPath(memoryName);
+    String path = _makeInviteUserToMemoryPath(communityName);
     return _httpService.post(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> uninviteUserFromMemory(
-      {@required String memoryName, @required String username}) {
+      {@required String communityName, @required String username}) {
     Map<String, dynamic> body = {'username': username};
-    String path = _makeUninviteUserToMemoryPath(memoryName);
+    String path = _makeUninviteUserToMemoryPath(communityName);
     return _httpService.post(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
@@ -426,135 +437,137 @@ class CommunitiesApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> joinMemoryWithId(String memoryName) {
-    String path = _makeJoinMemoryPath(memoryName);
+  Future<HttpieResponse> joinMemoryWithId(String communityName) {
+    String path = _makeJoinMemoryPath(communityName);
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> leaveMemoryWithId(String memoryName) {
-    String path = _makeLeaveMemoryPath(memoryName);
+  Future<HttpieResponse> leaveMemoryWithId(String communityName) {
+    String path = _makeLeaveMemoryPath(communityName);
     return _httpService.post(_makeApiUrl(path), appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getModeratorsForMemoryWithId(String memoryName,
+  Future<HttpieResponse> getModeratorsForMemoryWithId(String communityName,
       {int count, int maxId}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
 
     if (maxId != null) queryParams['max_id'] = maxId;
 
-    String path = _makeGetMemoryModeratorsPath(memoryName);
+    String path = _makeGetMemoryModeratorsPath(communityName);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> searchModerators({
-    @required String memoryName,
+    @required String communityName,
     @required String query,
   }) {
     Map<String, dynamic> queryParams = {'query': query};
 
-    String path = _makeSearchMemoryModeratorsPath(memoryName);
+    String path = _makeSearchMemoryModeratorsPath(communityName);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> addMemoryModerator(
-      {@required String memoryName, @required String username}) {
+      {@required String communityName, @required String username}) {
     Map<String, dynamic> body = {'username': username};
 
-    String path = _makeAddMemoryModeratorPath(memoryName);
+    String path = _makeAddMemoryModeratorPath(communityName);
     return _httpService.putJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> removeMemoryModerator(
-      {@required String memoryName, @required String username}) {
-    String path = _makeRemoveMemoryModeratorPath(memoryName, username);
+      {@required String communityName, @required String username}) {
+    String path = _makeRemoveMemoryModeratorPath(communityName, username);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getAdministratorsForMemoryWithName(String memoryName,
-      {int count, int maxId}) {
+  Future<HttpieResponse> getAdministratorsForMemoryWithName(
+      String communityName,
+      {int count,
+      int maxId}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
 
     if (maxId != null) queryParams['max_id'] = maxId;
 
-    String path = _makeGetMemoryAdministratorsPath(memoryName);
+    String path = _makeGetMemoryAdministratorsPath(communityName);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> searchAdministrators({
-    @required String memoryName,
+    @required String communityName,
     @required String query,
   }) {
     Map<String, dynamic> queryParams = {'query': query};
 
-    String path = _makeSearchMemoryAdministratorsPath(memoryName);
+    String path = _makeSearchMemoryAdministratorsPath(communityName);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> addMemoryAdministrator(
-      {@required String memoryName, @required String username}) {
+      {@required String communityName, @required String username}) {
     Map<String, dynamic> body = {'username': username};
 
-    String path = _makeAddMemoryAdministratorPath(memoryName);
+    String path = _makeAddMemoryAdministratorPath(communityName);
     return _httpService.putJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> removeMemoryAdministrator(
-      {@required String memoryName, @required String username}) {
-    String path = _makeRemoveMemoryAdministratorPath(memoryName, username);
+      {@required String communityName, @required String username}) {
+    String path = _makeRemoveMemoryAdministratorPath(communityName, username);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> getBannedUsersForMemoryWithId(String memoryName,
+  Future<HttpieResponse> getBannedUsersForMemoryWithId(String communityName,
       {int count, int maxId}) {
     Map<String, dynamic> queryParams = {};
     if (count != null) queryParams['count'] = count;
 
     if (maxId != null) queryParams['max_id'] = maxId;
 
-    String path = _makeGetMemoryBannedUsersPath(memoryName);
+    String path = _makeGetMemoryBannedUsersPath(communityName);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> searchBannedUsers({
-    @required String memoryName,
+    @required String communityName,
     @required String query,
   }) {
     Map<String, dynamic> queryParams = {'query': query};
 
-    String path = _makeSearchMemoryBannedUsersPath(memoryName);
+    String path = _makeSearchMemoryBannedUsersPath(communityName);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> banMemoryUser(
-      {@required String memoryName, @required String username}) {
+      {@required String communityName, @required String username}) {
     Map<String, dynamic> body = {'username': username};
-    String path = _makeBanMemoryUserPath(memoryName);
+    String path = _makeBanMemoryUserPath(communityName);
     return _httpService.postJSON(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> unbanMemoryUser(
-      {@required String memoryName, @required String username}) {
+      {@required String communityName, @required String username}) {
     Map<String, dynamic> body = {'username': username};
-    String path = _makeUnbanMemoryUserPath(memoryName);
+    String path = _makeUnbanMemoryUserPath(communityName);
     return _httpService.post(_makeApiUrl(path),
         body: body, appendAuthorizationToken: true);
   }
@@ -576,28 +589,28 @@ class CommunitiesApiService {
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> favoriteMemory({@required String memoryName}) {
-    String path = _makeFavoriteMemoryPath(memoryName);
+  Future<HttpieResponse> favoriteMemory({@required String communityName}) {
+    String path = _makeFavoriteMemoryPath(communityName);
     return _httpService.putJSON(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  Future<HttpieResponse> unfavoriteMemory({@required String memoryName}) {
-    String path = _makeFavoriteMemoryPath(memoryName);
+  Future<HttpieResponse> unfavoriteMemory({@required String communityName}) {
+    String path = _makeFavoriteMemoryPath(communityName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> enableNewPostNotificationsForMemory(
-      {@required String memoryName}) {
-    String path = _makeEnableNewPostNotificationsForMemoryPath(memoryName);
+      {@required String communityName}) {
+    String path = _makeEnableNewPostNotificationsForMemoryPath(communityName);
     return _httpService.putJSON(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> disableNewPostNotificationsForMemory(
-      {@required String memoryName}) {
-    String path = _makeEnableNewPostNotificationsForMemoryPath(memoryName);
+      {@required String communityName}) {
+    String path = _makeEnableNewPostNotificationsForMemoryPath(communityName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
@@ -637,10 +650,10 @@ class CommunitiesApiService {
   }
 
   Future<HttpieResponse> reportMemoryWithName(
-      {@required String memoryName,
+      {@required String communityName,
       @required int moderationCategoryId,
       String description}) {
-    String path = _makeReportMemoryPath(memoryName);
+    String path = _makeReportMemoryPath(communityName);
 
     Map<String, dynamic> body = {
       'category_id': moderationCategoryId.toString()
@@ -655,7 +668,7 @@ class CommunitiesApiService {
   }
 
   Future<HttpieResponse> getModeratedObjects({
-    @required String memoryName,
+    @required String communityName,
     int count,
     int maxId,
     String type,
@@ -673,167 +686,167 @@ class CommunitiesApiService {
 
     if (verified != null) queryParams['verified'] = verified;
 
-    String path = _makeGetMemoryModeratedObjectsPath(memoryName);
+    String path = _makeGetMemoryModeratedObjectsPath(communityName);
 
     return _httpService.get(_makeApiUrl(path),
         queryParameters: queryParams, appendAuthorizationToken: true);
   }
 
-  String _makeGetMemoryModeratedObjectsPath(String memoryName) {
+  String _makeGetMemoryModeratedObjectsPath(String communityName) {
     return _stringTemplateService.parse(
-        GET_COMMUNITY_MODERATED_OBJECTS_PATH, {'memoryName': memoryName});
+        GET_COMMUNITY_MODERATED_OBJECTS_PATH, {'communityName': communityName});
   }
 
-  String _makeCreateMemoryPost(String memoryName) {
+  String _makeCreateMemoryPost(String communityName) {
     return _stringTemplateService
-        .parse(CREATE_COMMUNITY_POST_PATH, {'memoryName': memoryName});
+        .parse(CREATE_COMMUNITY_POST_PATH, {'communityName': communityName});
   }
 
-  String _makeReportMemoryPath(String memoryName) {
+  String _makeReportMemoryPath(String communityName) {
     return _stringTemplateService
-        .parse(REPORT_COMMUNITY_PATH, {'memoryName': memoryName});
+        .parse(REPORT_COMMUNITY_PATH, {'communityName': communityName});
   }
 
-  String _makeClosedMemoryPostsPath(String memoryName) {
+  String _makeClosedMemoryPostsPath(String communityName) {
     return _stringTemplateService
-        .parse(CLOSED_COMMUNITY_POSTS_PATH, {'memoryName': memoryName});
+        .parse(CLOSED_COMMUNITY_POSTS_PATH, {'communityName': communityName});
   }
 
-  String _makeInviteUserToMemoryPath(String memoryName) {
+  String _makeInviteUserToMemoryPath(String communityName) {
     return _stringTemplateService
-        .parse(INVITE_USER_TO_COMMUNITY_PATH, {'memoryName': memoryName});
+        .parse(INVITE_USER_TO_COMMUNITY_PATH, {'communityName': communityName});
   }
 
-  String _makeUninviteUserToMemoryPath(String memoryName) {
-    return _stringTemplateService
-        .parse(UNINVITE_USER_TO_COMMUNITY_PATH, {'memoryName': memoryName});
+  String _makeUninviteUserToMemoryPath(String communityName) {
+    return _stringTemplateService.parse(
+        UNINVITE_USER_TO_COMMUNITY_PATH, {'communityName': communityName});
   }
 
-  String _makeUnbanMemoryUserPath(String memoryName) {
+  String _makeUnbanMemoryUserPath(String communityName) {
     return _stringTemplateService
-        .parse(UNBAN_COMMUNITY_USER_PATH, {'memoryName': memoryName});
+        .parse(UNBAN_COMMUNITY_USER_PATH, {'communityName': communityName});
   }
 
-  String _makeBanMemoryUserPath(String memoryName) {
+  String _makeBanMemoryUserPath(String communityName) {
     return _stringTemplateService
-        .parse(BAN_COMMUNITY_USER_PATH, {'memoryName': memoryName});
+        .parse(BAN_COMMUNITY_USER_PATH, {'communityName': communityName});
   }
 
-  String _makeSearchMemoryBannedUsersPath(String memoryName) {
-    return _stringTemplateService
-        .parse(SEARCH_COMMUNITY_BANNED_USERS_PATH, {'memoryName': memoryName});
+  String _makeSearchMemoryBannedUsersPath(String communityName) {
+    return _stringTemplateService.parse(
+        SEARCH_COMMUNITY_BANNED_USERS_PATH, {'communityName': communityName});
   }
 
-  String _makeDeleteMemoryPath(String memoryName) {
+  String _makeDeleteMemoryPath(String communityName) {
     return _stringTemplateService
-        .parse(DELETE_COMMUNITY_PATH, {'memoryName': memoryName});
+        .parse(DELETE_COMMUNITY_PATH, {'communityName': communityName});
   }
 
-  String _makeGetMemoryPath(String memoryName) {
+  String _makeGetMemoryPath(String communityName) {
     return _stringTemplateService
-        .parse(GET_COMMUNITY_PATH, {'memoryName': memoryName});
+        .parse(GET_COMMUNITY_PATH, {'communityName': communityName});
   }
 
-  String _makeAddMemoryAdministratorPath(String memoryName) {
-    return _stringTemplateService
-        .parse(ADD_COMMUNITY_ADMINISTRATOR_PATH, {'memoryName': memoryName});
+  String _makeAddMemoryAdministratorPath(String communityName) {
+    return _stringTemplateService.parse(
+        ADD_COMMUNITY_ADMINISTRATOR_PATH, {'communityName': communityName});
   }
 
   String _makeRemoveMemoryAdministratorPath(
-      String memoryName, String username) {
+      String communityName, String username) {
     return _stringTemplateService.parse(REMOVE_COMMUNITY_ADMINISTRATORS_PATH,
-        {'memoryName': memoryName, 'username': username});
+        {'communityName': communityName, 'username': username});
   }
 
-  String _makeAddMemoryModeratorPath(String memoryName) {
+  String _makeAddMemoryModeratorPath(String communityName) {
     return _stringTemplateService
-        .parse(ADD_COMMUNITY_MODERATOR_PATH, {'memoryName': memoryName});
+        .parse(ADD_COMMUNITY_MODERATOR_PATH, {'communityName': communityName});
   }
 
-  String _makeRemoveMemoryModeratorPath(String memoryName, String username) {
+  String _makeRemoveMemoryModeratorPath(String communityName, String username) {
     return _stringTemplateService.parse(REMOVE_COMMUNITY_MODERATORS_PATH,
-        {'memoryName': memoryName, 'username': username});
+        {'communityName': communityName, 'username': username});
   }
 
-  String _makeGetMemoryPostsPath(String memoryName) {
+  String _makeGetMemoryPostsPath(String communityName) {
     return _stringTemplateService
-        .parse(GET_COMMUNITY_POSTS_PATH, {'memoryName': memoryName});
+        .parse(GET_COMMUNITY_POSTS_PATH, {'communityName': communityName});
   }
 
-  String _makeGetPostsCountForMemoryWithNamePath(String memoryName) {
+  String _makeGetPostsCountForMemoryWithNamePath(String communityName) {
     return _stringTemplateService
-        .parse(COUNT_COMMUNITY_POSTS_PATH, {'memoryName': memoryName});
+        .parse(COUNT_COMMUNITY_POSTS_PATH, {'communityName': communityName});
   }
 
-  String _makeFavoriteMemoryPath(String memoryName) {
+  String _makeFavoriteMemoryPath(String communityName) {
     return _stringTemplateService
-        .parse(FAVORITE_COMMUNITY_PATH, {'memoryName': memoryName});
+        .parse(FAVORITE_COMMUNITY_PATH, {'communityName': communityName});
   }
 
-  String _makeEnableNewPostNotificationsForMemoryPath(String memoryName) {
+  String _makeEnableNewPostNotificationsForMemoryPath(String communityName) {
     return _stringTemplateService.parse(
         ENABLE_NEW_POST_NOTIFICATIONS_FOR_COMMUNITY_PATH,
-        {'memoryName': memoryName});
+        {'communityName': communityName});
   }
 
-  String _makeJoinMemoryPath(String memoryName) {
+  String _makeJoinMemoryPath(String communityName) {
     return _stringTemplateService
-        .parse(JOIN_COMMUNITY_PATH, {'memoryName': memoryName});
+        .parse(JOIN_COMMUNITY_PATH, {'communityName': communityName});
   }
 
-  String _makeLeaveMemoryPath(String memoryName) {
+  String _makeLeaveMemoryPath(String communityName) {
     return _stringTemplateService
-        .parse(LEAVE_COMMUNITY_PATH, {'memoryName': memoryName});
+        .parse(LEAVE_COMMUNITY_PATH, {'communityName': communityName});
   }
 
-  String _makeUpdateMemoryPath(String memoryName) {
+  String _makeUpdateMemoryPath(String communityName) {
     return _stringTemplateService
-        .parse(UPDATE_COMMUNITY_PATH, {'memoryName': memoryName});
+        .parse(UPDATE_COMMUNITY_PATH, {'communityName': communityName});
   }
 
-  String _makeMemoryAvatarPath(String memoryName) {
+  String _makeMemoryAvatarPath(String communityName) {
     return _stringTemplateService
-        .parse(COMMUNITY_AVATAR_PATH, {'memoryName': memoryName});
+        .parse(COMMUNITY_AVATAR_PATH, {'communityName': communityName});
   }
 
-  String _makeMemoryCoverPath(String memoryName) {
+  String _makeMemoryCoverPath(String communityName) {
     return _stringTemplateService
-        .parse(COMMUNITY_COVER_PATH, {'memoryName': memoryName});
+        .parse(COMMUNITY_COVER_PATH, {'communityName': communityName});
   }
 
-  String _makeGetMemoryMembersPath(String memoryName) {
+  String _makeGetMemoryMembersPath(String communityName) {
     return _stringTemplateService
-        .parse(GET_COMMUNITY_MEMBERS_PATH, {'memoryName': memoryName});
+        .parse(GET_COMMUNITY_MEMBERS_PATH, {'communityName': communityName});
   }
 
-  String _makeSearchMemoryMembersPath(String memoryName) {
+  String _makeSearchMemoryMembersPath(String communityName) {
     return _stringTemplateService
-        .parse(SEARCH_COMMUNITY_MEMBERS_PATH, {'memoryName': memoryName});
+        .parse(SEARCH_COMMUNITY_MEMBERS_PATH, {'communityName': communityName});
   }
 
-  String _makeGetMemoryBannedUsersPath(String memoryName) {
-    return _stringTemplateService
-        .parse(GET_COMMUNITY_BANNED_USERS_PATH, {'memoryName': memoryName});
-  }
-
-  String _makeGetMemoryAdministratorsPath(String memoryName) {
-    return _stringTemplateService
-        .parse(GET_COMMUNITY_ADMINISTRATORS_PATH, {'memoryName': memoryName});
-  }
-
-  String _makeSearchMemoryAdministratorsPath(String memoryName) {
+  String _makeGetMemoryBannedUsersPath(String communityName) {
     return _stringTemplateService.parse(
-        SEARCH_COMMUNITY_ADMINISTRATORS_PATH, {'memoryName': memoryName});
+        GET_COMMUNITY_BANNED_USERS_PATH, {'communityName': communityName});
   }
 
-  String _makeGetMemoryModeratorsPath(String memoryName) {
-    return _stringTemplateService
-        .parse(GET_COMMUNITY_MODERATORS_PATH, {'memoryName': memoryName});
+  String _makeGetMemoryAdministratorsPath(String communityName) {
+    return _stringTemplateService.parse(
+        GET_COMMUNITY_ADMINISTRATORS_PATH, {'communityName': communityName});
   }
 
-  String _makeSearchMemoryModeratorsPath(String memoryName) {
+  String _makeSearchMemoryAdministratorsPath(String communityName) {
+    return _stringTemplateService.parse(
+        SEARCH_COMMUNITY_ADMINISTRATORS_PATH, {'communityName': communityName});
+  }
+
+  String _makeGetMemoryModeratorsPath(String communityName) {
     return _stringTemplateService
-        .parse(SEARCH_COMMUNITY_MODERATORS_PATH, {'memoryName': memoryName});
+        .parse(GET_COMMUNITY_MODERATORS_PATH, {'communityName': communityName});
+  }
+
+  String _makeSearchMemoryModeratorsPath(String communityName) {
+    return _stringTemplateService.parse(
+        SEARCH_COMMUNITY_MODERATORS_PATH, {'communityName': communityName});
   }
 
   String _makeApiUrl(String string) {

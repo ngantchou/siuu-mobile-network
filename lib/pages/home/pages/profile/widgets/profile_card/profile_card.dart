@@ -55,10 +55,10 @@ class OBProfileCard extends StatelessWidget {
             children: <Widget>[
               Row(
                 children: <Widget>[
-                  const SizedBox(
+                  /*const SizedBox(
                     height: (OBAvatar.AVATAR_SIZE_EXTRA_LARGE * 0.2),
                     width: OBAvatar.AVATAR_SIZE_EXTRA_LARGE,
-                  ),
+                  ),*/
                   Expanded(
                       child: OBProfileInlineActions(user,
                           onUserProfileUpdated: onUserProfileUpdated,
@@ -184,12 +184,15 @@ class OBProfileCard extends StatelessWidget {
       {@required User user,
       @required BuildContext context,
       @required ToastService toastService}) {
-    if (user.hasProfileBadges() && user.getProfileBadges().length > 0) {
-      return Row(children: <Widget>[
-        OBProfileName(user),
-        _getUserBadge(user: user, toastService: toastService, context: context)
-      ]);
-    }
+    /*if (user.hasProfileBadges() && user.getProfileBadges().length > 0) {
+      return Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            OBProfileName(user),
+            _getUserBadge(
+                user: user, toastService: toastService, context: context)
+          ]);
+    }*/
     return OBProfileName(user);
   }
 

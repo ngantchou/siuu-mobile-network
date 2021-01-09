@@ -56,9 +56,9 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       end: Alignment.bottomRight,
       colors: [Colors.white, Colors.white],
     );
-    isPng = true;
+    isPng = false;
     isSvg = false;
-    isColor = false;
+    isColor = true;
     color = 0xffffffff;
     isExpanded = false;
   }
@@ -84,7 +84,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         style: TextStyle(
           height: height * 0.002,
           fontFamily: "Segoe UI",
-          fontSize: 14,
+          fontSize: 20,
           color: Color(0xff78849e),
         ),
       );
@@ -113,7 +113,19 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
           ),
           Align(
             alignment: Alignment.center,
-            child: Container(child: Text(widget.post.text)),
+            child: Container(
+                child: GestureDetector(
+              child: Text(
+                widget.post.text,
+                style: TextStyle(
+                  height: height * 0.002,
+                  fontFamily: "Segoe UI",
+                  fontSize: 20,
+                  color: Color(0xff78849e),
+                ),
+              ),
+              onLongPress: _copyText,
+            )),
           ),
         ],
       ),

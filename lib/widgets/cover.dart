@@ -56,7 +56,7 @@ class OBCover extends StatelessWidget {
       image = _getCoverPlaceholder(coverHeight);
     } else {
       image = CachedNetworkImage(
-        fit: BoxFit.cover,
+        fit: BoxFit.fitWidth,
         imageUrl: coverUrl != null ? coverUrl : '',
         placeholder: (BuildContext context, String url) {
           return const Center(
@@ -108,16 +108,22 @@ class OBCover extends StatelessWidget {
               .showZoomablePhotoBoxView(imageUrl: coverUrl, context: context);
         },
         child: Container(
+          width: double.infinity,
           decoration: BoxDecoration(
             gradient: coverUrl == null ? linearGradient : null,
-            image: coverUrl != null
+            image: coverFile != null
                 ? new DecorationImage(
-                    image: new NetworkImage(coverUrl),
+                    image: new FileImage(coverFile),
                     fit: BoxFit.cover,
                   )
-                : null,
+                : coverUrl != null
+                    ? new DecorationImage(
+                        image: new NetworkImage(coverUrl),
+                        fit: BoxFit.cover,
+                      )
+                    : null,
           ),
-          height: height * 0.336,
+          height: coverHeight + 50,
           child: Padding(
             padding: const EdgeInsets.fromLTRB(20, 0, 20, 0),
             child: Column(

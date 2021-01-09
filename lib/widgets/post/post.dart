@@ -90,7 +90,7 @@ class OBPost extends StatelessWidget {
                   OBPostActions(
                     post,
                   ),
-                  //OBPostReactions(post),
+                  OBPostReactions(post),
                   const SizedBox(
                     height: 16,
                   ),

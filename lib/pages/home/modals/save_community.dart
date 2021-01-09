@@ -527,13 +527,15 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
     _setRequestInProgress(true);
     try {
       var memoryName = _nameController.text;
-      bool memoryNameTaken = await _isNameTaken(memoryName);
+      //bool memoryNameTaken = await _isNameTaken(memoryName);
 
-      if (memoryNameTaken) {
+      // TODO: check if memory already exist before create
+
+      /*if (memoryNameTaken) {
         _setTakenName(memoryName);
         _validateForm();
         return;
-      }
+      }*/
 
       Memory memory =
           await (_isEditingExistingMemory ? _updateMemory() : _createMemory());

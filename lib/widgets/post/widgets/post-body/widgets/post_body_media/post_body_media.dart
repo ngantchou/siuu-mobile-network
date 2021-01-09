@@ -45,14 +45,12 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
   @override
   void initState() {
     super.initState();
-    _needsBootstrap = false;
+    _needsBootstrap = true;
     _retrievePostMediaInProgress = true;
     _errorMessage = '';
     _mediaIsConstrained = false;
   }
 
-  @mustCallSuper
-  @protected
   void didUpdateWidget(oldWidget) {
     super.didUpdateWidget(oldWidget);
     _retrievePostMediaInProgress = true;
@@ -76,8 +74,8 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
       _needsBootstrap = false;
     }
 
-    return Center(
-      //padding: const EdgeInsets.only(bottom: 10, left: 10, right: 10),
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 10),
       child: SizedBox(
           width: _mediaWidth,
           height: _mediaHeight,
@@ -193,10 +191,8 @@ class OBPostBodyMediaState extends State<OBPostBodyMedia> {
     double imageAspectRatio = widget.post.mediaWidth / widget.post.mediaHeight;
     double imageHeight = (screenWidth / imageAspectRatio);
     _mediaHeight = min(imageHeight, maxBoxHeight);
-    //_mediaHeight = screenHeight * 0.43;
-    //imageHeight = _mediaHeight;
-    //if (_mediaHeight == maxBoxHeight) _mediaIsConstrained = true;
-    //_mediaWidth = screenWidth;
+    if (_mediaHeight == maxBoxHeight) _mediaIsConstrained = true;
+    _mediaWidth = screenWidth;
 
     if (widget.post.media != null) {
       _retrievePostMediaInProgress = false;

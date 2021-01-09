@@ -2,7 +2,9 @@ import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/user.dart';
 import 'package:Siuu/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Siuu/provider.dart';
+import 'package:Siuu/res/colors.dart';
 import 'package:Siuu/widgets/avatars/avatar.dart';
+import 'package:Siuu/widgets/avatars/letter_avatar.dart';
 import 'package:Siuu/widgets/icon.dart';
 import 'package:Siuu/widgets/post/post.dart';
 import 'package:Siuu/widgets/theming/text.dart';
@@ -67,10 +69,17 @@ class OBUserPostHeader extends StatelessWidget {
                         User postCreator = snapshot.data;
 
                         if (!postCreator.hasProfileAvatar())
-                          return const SizedBox();
+                          return OBLetterAvatar(
+                            color: Color(pinkColor),
+                            letter: postCreator.username[0],
+                            borderRadius: 30,
+                            customSize: OBLetterAvatar.fontSizeLarge,
+                            labelColor: Colors.white,
+                            size: OBAvatarSize.extraSmall,
+                          );
 
                         return OBAvatar(
-                          size: OBAvatarSize.medium,
+                          size: OBAvatarSize.extraSmall,
                           avatarUrl: postCreator.getProfileAvatar(),
                         );
                       })),

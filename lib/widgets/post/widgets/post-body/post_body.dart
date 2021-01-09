@@ -19,7 +19,7 @@ class OBPostBody extends StatelessWidget {
     List<Widget> bodyItems = [];
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     final double height = MediaQuery.of(context).size.height;
-    bodyItems.add(SizedBox(height: height * 0.009));
+    bodyItems.add(SizedBox(height: height * 0.001));
     if (post.hasText()) {
       if (!post.hasMediaThumbnail() && post.hasLinkToPreview()) {
         bodyItems.add(
@@ -42,7 +42,7 @@ class OBPostBody extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         child: Column(
-          // crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: bodyItems,
         ));
   }

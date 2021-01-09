@@ -28,12 +28,14 @@ class OBUserTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var openbookProvider = OpenbookProvider.of(context);
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
     Widget tile = ListTile(
       onTap: () {
         if (onUserTilePressed != null) onUserTilePressed(user);
       },
       leading: OBAvatar(
+        username: user.username,
         size: OBAvatarSize.medium,
         avatarUrl: user.getProfileAvatar(),
       ),
@@ -49,7 +51,8 @@ class OBUserTile extends StatelessWidget {
         children: [
           OBSecondaryText(user.getProfileName()),
           showFollowing && user.isFollowing != null && user.isFollowing
-              ? OBSecondaryText(_localizationService.trans('user__tile_following'))
+              ? OBSecondaryText(
+                  _localizationService.trans('user__tile_following'))
               : const SizedBox()
         ],
       ),
