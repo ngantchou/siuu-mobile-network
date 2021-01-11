@@ -14,6 +14,7 @@ import 'package:flutter/material.dart';
 
 class OBActionableSmartText extends StatefulWidget {
   final String text;
+  final TextStyle style;
   final int maxlength;
   final OBTextSize size;
   final TextOverflow overflow;
@@ -24,6 +25,7 @@ class OBActionableSmartText extends StatefulWidget {
   const OBActionableSmartText(
       {Key key,
       this.text,
+      this.style,
       this.maxlength,
       this.size = OBTextSize.medium,
       this.overflow = TextOverflow.clip,
@@ -70,6 +72,7 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     }
 
     return OBSmartText(
+      style: widget.style,
       text: widget.text,
       maxlength: widget.maxlength,
       overflow: widget.overflow,

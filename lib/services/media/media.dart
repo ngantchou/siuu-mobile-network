@@ -205,7 +205,7 @@ class MediaService {
       throw FileTooLargeException(
           _validationService.getAllowedImageSize(imageType));
     }
-    
+
     MediaFile result;
     if (imageType == OBImageType.post) {
       result = MediaFile(processedImage, media.type);
@@ -229,7 +229,6 @@ class MediaService {
 
     return media;
   }
-
 
   Future<File> fixExifRotation(File image, {deleteOriginal: false}) async {
     List<int> imageBytes = await image.readAsBytes();
@@ -409,11 +408,33 @@ class MediaService {
         aspectRatio: ratioX != null && ratioY != null
             ? CropAspectRatio(ratioX: ratioX, ratioY: ratioY)
             : null,
+        aspectRatioPresets: Platform.isAndroid
+            ? [
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio16x9
+              ]
+            : [
+                CropAspectRatioPreset.original,
+                CropAspectRatioPreset.square,
+                CropAspectRatioPreset.ratio3x2,
+                CropAspectRatioPreset.ratio4x3,
+                CropAspectRatioPreset.ratio5x3,
+                CropAspectRatioPreset.ratio5x4,
+                CropAspectRatioPreset.ratio7x5,
+                CropAspectRatioPreset.ratio16x9
+              ],
         androidUiSettings: AndroidUiSettings(
-          toolbarTitle: _localizationService.media_service__crop_image,
-          toolbarColor: Colors.black,
-          statusBarColor: Colors.black,
-          toolbarWidgetColor: Colors.white,
+            toolbarTitle: 'Cropper',
+            showCropGrid: true,
+            toolbarColor: Colors.deepOrange,
+            toolbarWidgetColor: Colors.white,
+            initAspectRatio: CropAspectRatioPreset.original,
+            lockAspectRatio: false),
+        iosUiSettings: IOSUiSettings(
+          title: 'Cropper',
         ));
   }
 }

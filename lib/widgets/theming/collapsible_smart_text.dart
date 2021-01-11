@@ -14,6 +14,7 @@ class OBCollapsibleSmartText extends StatefulWidget {
   final String text;
   final int maxlength;
   final OBTextSize size;
+  final TextStyle style;
   final TextOverflow overflow;
   final TextOverflow lengthOverflow;
   final SmartTextElement trailingSmartTextElement;
@@ -23,6 +24,7 @@ class OBCollapsibleSmartText extends StatefulWidget {
   const OBCollapsibleSmartText(
       {Key key,
       this.text,
+      this.style,
       this.maxlength,
       this.size = OBTextSize.medium,
       this.overflow = TextOverflow.clip,
@@ -124,9 +126,11 @@ class OBCollapsibleSmartTextState extends State<OBCollapsibleSmartText> {
     }
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         OBActionableSmartText(
+          style: widget.style,
           text: widget.text,
           maxlength: maxLength,
           size: widget.size,

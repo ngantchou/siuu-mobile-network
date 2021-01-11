@@ -454,7 +454,7 @@ class OBSmartText extends StatelessWidget {
           softWrap: true,
           text: _buildSpan(
               text: text,
-              style: textStyle,
+              style: style != null ? style : textStyle,
               secondaryTextStyle: secondaryTextStyle,
               linkStyle: smartItemsStyle,
               tagStyle: smartItemsStyle,

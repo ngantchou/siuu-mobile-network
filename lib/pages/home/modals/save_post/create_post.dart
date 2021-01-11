@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:Siuu/models/community.dart';
 import 'package:Siuu/models/memory.dart';
+import 'package:Siuu/models/memory.dart';
 import 'package:Siuu/models/link_preview/link_preview.dart';
 import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/post_image.dart';
@@ -55,16 +56,9 @@ class OBSavePostModal extends StatefulWidget {
   final File image;
   final File video;
   final Post post;
-  final PostText textMeta;
 
   const OBSavePostModal(
-      {Key key,
-      this.memory,
-      this.text,
-      this.image,
-      this.video,
-      this.post,
-      this.textMeta})
+      {Key key, this.memory, this.text, this.image, this.video, this.post})
       : super(key: key);
 
   @override
@@ -88,7 +82,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   FocusNode _focusNode;
   int _charactersCount;
   LinkPreview _linkPreview;
-  PostType type = PostType.Text;
+
   bool _isPostTextAllowedLength;
   bool _isPostTextContainingValidHashtags;
 
@@ -111,35 +105,21 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   List<Widget> _postItemsWidgets;
 
   bool _needsBootstrap;
-  bool _isCreateMemoryPostInProgress;
+  bool _isCreateCommunityPostInProgress;
 
   bool _isEditingPost;
-  VideoPlayerController _videoPlayerController;
+  PostText textMeta;
+  int color;
   bool _saveInProgress;
   CancelableOperation _saveOperation;
   CancelableOperation<LinkPreview> _linkPreviewCheckOperation;
-  File _video;
-  File _image;
-  PostText meta;
-  final picker = ImagePicker();
-  PostText textMeta;
-  int color;
 
   @override
   void initState() {
     super.initState();
     _isEditingPost = widget.post != null;
-
-    _focusNode = FocusNode();
-    _hasFocus = false;
-    _isPostTextAllowedLength = false;
-    _isPostTextContainingValidHashtags = false;
-    _isCreateMemoryPostInProgress = false;
-    _needsBootstrap = true;
-    color = 0xffffffff;
-    _focusNode.addListener(_onFocusNodeChanged);
     textMeta = new PostText(
-        color: color,
+        color: 0xffffffff,
         gradient: [Colors.white, Colors.white],
         imagePath: '',
         isExpanded: false,
@@ -148,6 +128,14 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         isSvg: false,
         isfontColorWhite: false,
         text: '');
+    _focusNode = FocusNode();
+    _hasFocus = false;
+    _isPostTextAllowedLength = false;
+    _isPostTextContainingValidHashtags = false;
+    _isCreateCommunityPostInProgress = false;
+    _needsBootstrap = true;
+
+    _focusNode.addListener(_onFocusNodeChanged);
   }
 
   @override
@@ -234,136 +222,47 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       bootstrap();
       _needsBootstrap = false;
     }
-    Widget widgetType;
-    switch (type) {
-      case PostType.Text:
-        widgetType = TextMemory(onWrited: (meta) {
-          //print(textMeta.isfontColorWhite);
 
-          setState(() {
-            textMeta = meta;
-            //_onPostTextChanged(onWrited: meta.text);
-          });
-        });
-        break;
-      case PostType.Picture:
-        widgetType = imageMemory();
-        break;
-      case PostType.Voice:
-        widgetType = VoiceMemory(onRecorded: (value) {
-          print(value);
-          setState(() {
-            _onPostTextChanged(onWrited: value);
-          });
-        });
-        break;
-      case PostType.Video:
-        widgetType = videoMemory();
-        break;
-      default:
-    }
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
     return CupertinoPageScaffold(
         backgroundColor: Colors.transparent,
         navigationBar: _buildNavigationBar(_localizationService),
         child: OBPrimaryColorContainer(
             child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(
-              height: height * 0.024,
-            ),
-            SizedBox(
-              height: height * 0.192,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        type = PostType.Text;
-                      });
-                    },
-                    child: buildSizedBox(
-                      text: 'Text',
-                      icon: Icons.format_color_text,
-                      color: [
-                        Color(0xff1a2a6c),
-                        Color(0xffb21f1f),
-                        Color(0xfffdbb2d),
-                        // Color(0xff03001e),
-                        // Color(0xff7303c0),
-                        // Color(0xffec38bc),
-                        // Color(0xfffdeff9),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.024,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        type = PostType.Picture;
-                      });
-                    },
-                    child: buildSizedBox(
-                      text: 'Pictures',
-                      icon: Icons.image,
-                      color: [
-                        Color(0xffc0392b),
-                        Color(0xff8e44ad),
-                      ],
-                    ),
-                  ),
-                  SizedBox(
-                    width: width * 0.024,
-                  ),
-                  InkWell(
-                    onTap: () {
-                      setState(() {
-                        type = PostType.Voice;
-                      });
-                    },
-                    child: buildSizedBox(
-                        text: 'VoiceClips',
-                        icon: Icons.record_voice_over,
-                        color: [
-                          Color(0xff7F00FF),
-                          Color(0xffE100FF),
-                        ]),
-                  ),
-                  /*SizedBox(
-                    width: width * 0.004,
-                  ),
-                  InkWell(
-                    onTap: () async {
-                      setState(() {
-                        type = PostType.Video;
-                      });
-                    },
-                    child: buildSizedBox(
-                      text: 'Videos',
-                      icon: Icons.videocam_sharp,
-                      color: [
-                        Color(0xffFDC830),
-                        Color(0xffF37335),
-                      ],
-                    ),
-                  ),*/
-                ],
-              ),
-            ),
-            SizedBox(
-              height: height * 0.024,
-            ),
-            Expanded(
-                flex: isAutocompleting ? 8 : 5,
+            _buildNewPostContent(),
+            /* Expanded(
+                flex: isAutocompleting ? 3 : 1,
                 child: Padding(
                   padding: EdgeInsets.only(left: 20.0, top: 20.0),
-                  child: _buildNewPostContent(),
-                )),
+                  child: _buildNewPostContent1(),
+                )),*/
+            isAutocompleting || (_hasImage || _hasVideo)
+                ? Expanded(
+                    child: SingleChildScrollView(
+                    physics: const ClampingScrollPhysics(),
+                    child: Padding(
+                        padding: EdgeInsets.only(
+                            left: 20.0, right: 20.0, bottom: 30.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: _postItemsWidgets,
+                        )),
+                  ))
+                : Expanded(
+                    child: TextMemory(
+                      controller: _textController,
+                      focusNode: _focusNode,
+                      onWrited: (meta) {
+                        //print(_textController);
+
+                        // setState(() {
+                        textMeta = meta;
+                        // _checkForLinkPreview()
+                        // _onPostTextChanged();
+                        //  });
+                      },
+                    ),
+                  ),
             isAutocompleting
                 ? Expanded(
                     flex: 7,
@@ -373,49 +272,14 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
             isAutocompleting || (_hasImage || _hasVideo)
                 ? const SizedBox()
                 : Container(
-                    height: _hasFocus == true ? height * 0.343 : height * 0.243,
+                    height: _hasFocus == true ? 51 : 67,
                     padding: EdgeInsets.only(
                         top: 8.0, bottom: _hasFocus == true ? 8 : 24),
                     color: Color.fromARGB(5, 0, 0, 0),
-                    child: widgetType,
+                    child: _buildPostActions(),
                   ),
           ],
         )));
-  }
-
-  SizedBox buildSizedBox({String text, List<Color> color, IconData icon}) {
-    final double height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
-    return SizedBox(
-      height: height * 0.292,
-      width: width * 0.364,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(10),
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: color),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Icon(icon, size: 40, color: Colors.white),
-            SizedBox(
-              height: height * 0.014,
-            ),
-            Text(
-              text,
-              style: TextStyle(
-                  fontFamily: "Segoe UI",
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
-                  color: Colors.white),
-            ),
-          ],
-        ),
-      ),
-    );
   }
 
   Widget _buildNavigationBar(LocalizationService _localizationService) {
@@ -460,9 +324,9 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
           type: OBButtonType.primary,
           child: Text(_localizationService.trans('post__share')),
           size: OBButtonSize.small,
-          onPressed: _onWantsToCreateMemoryPost,
-          isDisabled: !isEnabled || _isCreateMemoryPostInProgress,
-          isLoading: _isCreateMemoryPostInProgress);
+          onPressed: _onWantsToCreateCommunityPost,
+          isDisabled: !isEnabled || _isCreateCommunityPostInProgress,
+          isLoading: _isCreateCommunityPostInProgress);
     } else {
       if (isEnabled) {
         nextButton = GestureDetector(
@@ -480,7 +344,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     return nextButton;
   }
 
-  Future<void> _onWantsToCreateMemoryPost() {
+  Future<void> _onWantsToCreateCommunityPost() {
     if (!_isPostTextContainingValidHashtags) {
       _toastService.error(
           message: _localizationService.post__create_hashtags_invalid(
@@ -489,7 +353,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
           context: context);
       return null;
     }
-    return _createMemoryPost();
+    return _createCommunityPost();
   }
 
   void _onWantsToGoNext() async {
@@ -515,75 +379,46 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   Widget _buildNewPostContent() {
-    final double height = MediaQuery.of(context).size.height;
-    return Column(
+    return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Row(
-          children: [
-            Column(
-              children: <Widget>[
-                OBLoggedInUserAvatar(
-                  size: OBAvatarSize.medium,
-                ),
-                const SizedBox(
-                  height: 12.0,
-                ),
-                OBRemainingPostCharacters(
-                  maxCharacters: ValidationService.POST_MAX_LENGTH,
-                  currentCharacters: _charactersCount,
-                ),
-              ],
-            ),
-          ],
+        Padding(
+          padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
+          child: Column(
+            children: <Widget>[
+              OBLoggedInUserAvatar(
+                size: OBAvatarSize.small,
+              ),
+              const SizedBox(
+                height: 12.0,
+              ),
+              OBRemainingPostCharacters(
+                maxCharacters: ValidationService.POST_MAX_LENGTH,
+                currentCharacters: _charactersCount,
+              ),
+            ],
+          ),
         ),
-        Container(
-          color: Colors.red,
+        Expanded(
+          child: Padding(
+              padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
+              child: Text(
+                _userService.getLoggedInUser().username,
+                style: TextStyle(fontSize: 20),
+              )),
+        )
+        /*Expanded(
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
             child: Padding(
                 padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
-                child: type == PostType.Text
-                    ? Stack(children: <Widget>[
-                        Positioned.fill(
-                          child: new Container(
-                              decoration: new BoxDecoration(
-                                gradient: textMeta.isColor
-                                    ? LinearGradient(
-                                        begin: Alignment.topLeft,
-                                        end: Alignment.bottomRight,
-                                        colors: textMeta.gradient,
-                                      )
-                                    : null,
-                              ),
-                              child: textMeta.isSvg
-                                  ? SvgPicture.asset(
-                                      textMeta.imagePath,
-                                      fit: BoxFit.cover,
-                                    )
-                                  : textMeta.isPng
-                                      ? Image.asset(
-                                          textMeta.imagePath,
-                                          fit: BoxFit.cover,
-                                        )
-                                      : null),
-                        ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Container(
-                            child: OBCreatePostText(
-                                controller: _textController,
-                                focusNode: _focusNode),
-                          ),
-                        )
-                      ])
-                    : Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: _postItemsWidgets,
-                      )),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: _postItemsWidgets,
+                )),
           ),
-        )
+        )*/
       ],
     );
   }
@@ -673,9 +508,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     ];
   }
 
-  void _onPostTextChanged({String onWrited}) {
-    String text = onWrited ?? _textController.text;
-    _textController.text = text;
+  void _onPostTextChanged() {
+    String text = _textController.text;
     _checkForLinkPreview();
     setState(() {
       _charactersCount = text.length;
@@ -767,11 +601,6 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _addPostItemWidget(postImageWidget);
   }
 
-  void _setPostText(PostText postText) {
-    // To be called on init only, therefore no setState
-    meta = postText;
-  }
-
   Future<dynamic> _onShare({String text, File image, File video}) async {
     if (image != null || video != null) {
       if (_hasImage) {
@@ -799,7 +628,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     return true;
   }
 
-  Future<void> _createMemoryPost() async {
+  Future<void> _createCommunityPost() async {
     OBNewPostData newPostData = _makeNewPostData();
     if (this._postVideoFile != null)
       _mediaService.clearThumbnailForFile(this._postVideoFile);
@@ -929,7 +758,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
         text: _textController.text,
         media: media,
         memory: widget.memory,
-        textMeta: meta);
+        textMeta: textMeta);
   }
 
   VoidCallback _addPostItemWidget(Widget postItemWidget) {
@@ -970,147 +799,4 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   void debugLog(String log) {
     debugPrint('CreatePostModal:$log');
   }
-
-  Widget imageMemory() {
-    return Container(
-        child: !_hasImage
-            ? Column(
-                children: [
-                  Text(
-                    'Take a picture',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontFamily: "Segoe UI",
-                        fontSize: 18,
-                        color: Colors.blueGrey),
-                  ),
-                  Row(
-                    children: [
-                      OBPillButton(
-                        text: _localizationService.post__create_media,
-                        color: Pigment.fromString('#FCC14B'),
-                        icon: const OBIcon(OBIcons.photo),
-                        onPressed: () async {
-                          _unfocusTextField();
-                          try {
-                            var pickedMedia = await _mediaService.pickMedia(
-                              context: context,
-                              source: ImageSource.gallery,
-                              flattenGifs: false,
-                            );
-                            if (pickedMedia != null) {
-                              if (pickedMedia.type == FileType.image) {
-                                _setPostImageFile(pickedMedia.file);
-                              } else {
-                                _setPostVideoFile(pickedMedia.file);
-                              }
-                            }
-                          } catch (error) {
-                            _onError(error);
-                          }
-                        },
-                      ),
-                      OBPillButton(
-                        text: _localizationService.post__create_camera,
-                        color: Pigment.fromString('#50b1f2'),
-                        icon: const OBIcon(OBIcons.cameraCartoon),
-                        onPressed: () async {
-                          _unfocusTextField();
-                          try {
-                            var pickedMedia = await _mediaService.pickMedia(
-                                context: context, source: ImageSource.camera);
-                            if (pickedMedia != null) {
-                              if (pickedMedia.type == FileType.image) {
-                                _setPostImageFile(pickedMedia.file);
-                              } else {
-                                _setPostVideoFile(pickedMedia.file);
-                              }
-                            }
-                          } catch (error) {
-                            _onError(error);
-                          }
-                        },
-                      ),
-                    ],
-                  )
-                ],
-              )
-            : _buildNewPostContent());
-  }
-
-  _pickVideo() async {
-    PickedFile pickedFile = await picker.getVideo(
-      source: ImageSource.gallery,
-      maxDuration: Duration(seconds: 30),
-    );
-    _video = File(pickedFile.path);
-    _videoPlayerController = VideoPlayerController.file(_video)
-      ..initialize().then((_) {
-        setState(() {});
-        _videoPlayerController.play();
-      });
-  }
-
-  Widget videoMemory() {
-    //File _video = null;
-    return InkWell(
-      onTap: () async {
-        _unfocusTextField();
-
-        try {
-          PickedFile pickedFile = await picker.getVideo(
-            source: ImageSource.gallery,
-            maxDuration: Duration(seconds: 30),
-          );
-          _video = File(pickedFile.path);
-          _videoPlayerController = VideoPlayerController.file(_video)
-            ..initialize().then((_) {
-              setState(() {});
-              _videoPlayerController.play();
-            });
-          /*var pickedMedia = await _mediaService.pickMedia(
-              context: context, source: ImageSource.camera);*/
-          if (pickedFile != null) {
-            _setPostVideoFile(_video);
-          }
-        } catch (error) {
-          _onError(error);
-        }
-        //await _pickVideo();
-        print("video :$_video");
-        setState(() {});
-      },
-      child: _video == null
-          ? Column(
-              children: [
-                Text(
-                  'Record live story with\ncamera here',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                      fontFamily: "Segoe UI",
-                      fontSize: 18,
-                      color: Colors.blueGrey),
-                ),
-                IconButton(
-                    icon: Icon(
-                      Icons.camera_alt,
-                      size: 40,
-                    ),
-                    onPressed: null)
-              ],
-            )
-          : VideoMemory(
-              video: _video != null
-                  ? _videoPlayerController.value.initialized
-                      ? AspectRatio(
-                          aspectRatio: _videoPlayerController.value.aspectRatio,
-                          child: VideoPlayer(_videoPlayerController),
-                        )
-                      : Container()
-                  : Container(),
-            ),
-    );
-  }
 }
-
-enum PostType { Text, Picture, Voice, Video }

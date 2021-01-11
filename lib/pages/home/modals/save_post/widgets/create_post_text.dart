@@ -13,20 +13,29 @@ class OBCreatePostText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return OBTextField(
-      textInputAction: TextInputAction.newline,
+    return TextFormField(
+      //controller: _textController,
+      keyboardType: TextInputType.multiline,
+      onChanged: (value) {
+        // textMeta.text = value;
+        // widget.onWrited(textMeta);
+      },
+      // maxLength: 200,
+      maxLines: null,
       controller: controller,
       autofocus: true,
       focusNode: focusNode,
-      textCapitalization: TextCapitalization.sentences,
-      keyboardType: TextInputType.multiline,
-      maxLines: null,
-      style: TextStyle(fontSize: 18),
+      style: TextStyle(color: Colors.black),
+      textAlign: TextAlign.center,
       decoration: InputDecoration(
         border: InputBorder.none,
-        hintText: this.hintText != null ? this.hintText : 'What\'s going on?',
+        hintText: 'Express your seft here',
+        hintStyle: TextStyle(
+            fontFamily: "Segoe UI",
+            fontWeight: FontWeight.w300,
+            fontSize: 25,
+            color: Colors.black),
       ),
-      autocorrect: true,
     );
   }
 }

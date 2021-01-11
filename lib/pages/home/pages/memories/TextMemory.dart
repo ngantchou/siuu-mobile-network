@@ -1,12 +1,16 @@
 import 'package:Siuu/models/post_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 
 typedef IntCallback = Function(PostText textMeta);
 
 class TextMemory extends StatefulWidget {
   IntCallback onWrited;
-  TextMemory({this.onWrited});
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final String hintText;
+  TextMemory({this.onWrited, this.controller, this.focusNode, this.hintText});
   @override
   _TextMemoryState createState() => _TextMemoryState();
 }
@@ -44,7 +48,7 @@ class _TextMemoryState extends State<TextMemory> {
     color = 0xffffffff;
     isExpanded = false;
     textMeta = new PostText(
-        color: color,
+        color: 0xffffffff,
         gradient: [Colors.white, Colors.white],
         imagePath: '',
         isExpanded: false,
@@ -62,7 +66,7 @@ class _TextMemoryState extends State<TextMemory> {
     return Container(
       child: Stack(
         children: <Widget>[
-          /*  Positioned.fill(
+          Positioned.fill(
             child: new Container(
                 decoration: new BoxDecoration(
                   gradient: textMeta.isColor
@@ -89,14 +93,18 @@ class _TextMemoryState extends State<TextMemory> {
             alignment: Alignment.center,
             child: Container(
               child: TextFormField(
-                controller: _textController,
+                //controller: _textController,
                 keyboardType: TextInputType.multiline,
                 onChanged: (value) {
                   textMeta.text = value;
                   widget.onWrited(textMeta);
                 },
-                maxLength: 200,
+                // maxLength: 200,
                 maxLines: null,
+                //textDirection: ,
+                controller: widget.controller,
+                autofocus: true,
+                focusNode: widget.focusNode,
                 style: TextStyle(
                     color: textMeta.isfontColorWhite
                         ? Colors.white
@@ -115,7 +123,7 @@ class _TextMemoryState extends State<TextMemory> {
                 ),
               ),
             ),
-          ),*/
+          ),
           Positioned(
             //bottom: MediaQuery.of(context).viewInsets.bottom,
             bottom: 10,
@@ -372,7 +380,7 @@ class _TextMemoryState extends State<TextMemory> {
             textMeta.isColor = true;
             textMeta.isSvg = false;
             textMeta.isPng = false;
-            textMeta.color = boxColor;
+            textMeta.color = fontColor == 'white' ? 0xDD000000 : 0xffffffff;
           },
         );
       },

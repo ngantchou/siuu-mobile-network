@@ -64,11 +64,8 @@ class OBSharePostWithCirclesPageState
 
     if (_needsBootstrap) {
       _bootstrap();
-      _fakeWorldCircle = Circle(
-          id: 1,
-          name: _localizationService.trans('post__world_circle_name'),
-          color: '#023ca7',
-          usersCount: 7700000000);
+      _fakeWorldCircle =
+          Circle(id: 1, name: "Siuu", color: '#023ca7', usersCount: 7700000000);
       _needsBootstrap = false;
     }
 

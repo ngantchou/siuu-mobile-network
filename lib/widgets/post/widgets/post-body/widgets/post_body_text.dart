@@ -90,24 +90,32 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
 
           if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data = snapshot.data.data();
+            if(data ==null) return Text(
+        widget.post.text,
+        style: TextStyle(
+          height: height * 0.002,
+          fontFamily: "Segoe UI",
+          fontSize: 20,
+          color: Color(0xff78849e),
+        ),
+      );
             PostText meta = PostText.fromJSON(data);
-            print(meta.gradient.toString());
+            // print(meta.gradient.toString());
             return SizedBox(
-              height: height * 0.292,
+              height: meta.isColor ? height * 0.192 : height * 0.292,
               width: double.infinity,
               child: Stack(
                 children: <Widget>[
                   Positioned.fill(
                     child: new Container(
-                        decoration: new BoxDecoration(
-                          gradient: meta.isColor
-                              ? LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [meta.gradient[0], meta.gradient[1]],
-                                )
-                              : null,
-                        ),
+                        decoration: meta.isColor
+                            ? BoxDecoration(
+                                gradient: LinearGradient(
+                                begin: Alignment.topLeft,
+                                end: Alignment.bottomRight,
+                                colors: meta.gradient,
+                              ))
+                            : null,
                         child: meta.isSvg
                             ? SvgPicture.asset(
                                 meta.imagePath,
@@ -124,15 +132,21 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
                     alignment: Alignment.center,
                     child: Container(
                         child: GestureDetector(
-                      child: Text(
+                      child:
+                          /* Text(
                         widget.post.text,
                         style: TextStyle(
                           height: height * 0.002,
                           fontFamily: "Segoe UI",
                           fontSize: 20,
-                          color: Color(meta.color),
+                          color: meta.isfontColorWhite
+                              ? Colors.white
+                              : Color(0xff78849e),
                         ),
-                      ),
+                      ),*/
+                          _buildActionablePostText(meta.isfontColorWhite
+                              ? Colors.white
+                              : Color(0xff78849e)),
                       onLongPress: _copyText,
                     )),
                   ),
@@ -172,7 +186,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   }
 
   Widget _buildPostText() {
-    return _buildActionablePostText();
+    return _buildActionablePostText(null);
   }
 
   Future<String> _translatePostText() async {
@@ -188,7 +202,8 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     return translatedText;
   }
 
-  Widget _buildActionablePostText() {
+  Widget _buildActionablePostText(Color color) {
+    double height = MediaQuery.of(context).size.height;
     if (widget.post.isEdited != null && widget.post.isEdited) {
       return OBCollapsibleSmartText(
         text: _translatedText != null ? _translatedText : widget.post.text,
@@ -199,6 +214,12 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       );
     } else {
       return OBCollapsibleSmartText(
+        style: TextStyle(
+          height: height * 0.002,
+          fontFamily: "Segoe UI",
+          fontSize: 20,
+          color: color,
+        ),
         text: _translatedText != null ? _translatedText : widget.post.text,
         maxlength: MAX_LENGTH_LIMIT,
         getChild: _buildTranslationButton,
