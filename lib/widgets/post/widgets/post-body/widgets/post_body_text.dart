@@ -90,15 +90,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
 
           if (snapshot.connectionState == ConnectionState.done) {
             Map<String, dynamic> data = snapshot.data.data();
-            if(data ==null) return Text(
-        widget.post.text,
-        style: TextStyle(
-          height: height * 0.002,
-          fontFamily: "Segoe UI",
-          fontSize: 20,
-          color: Color(0xff78849e),
-        ),
-      );
+            if (data == null) return _buildPostText();
             PostText meta = PostText.fromJSON(data);
             // print(meta.gradient.toString());
             return SizedBox(
@@ -206,6 +198,12 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     double height = MediaQuery.of(context).size.height;
     if (widget.post.isEdited != null && widget.post.isEdited) {
       return OBCollapsibleSmartText(
+        style: TextStyle(
+          height: height * 0.002,
+          fontFamily: "Segoe UI",
+          fontSize: 20,
+          color: color,
+        ),
         text: _translatedText != null ? _translatedText : widget.post.text,
         trailingSmartTextElement: SecondaryTextElement(''),
         maxlength: MAX_LENGTH_LIMIT,
