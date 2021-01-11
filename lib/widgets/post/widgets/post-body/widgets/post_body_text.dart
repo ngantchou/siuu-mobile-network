@@ -25,7 +25,7 @@ class OBPostBodyText extends StatefulWidget {
 }
 
 class OBPostBodyTextState extends State<OBPostBodyText> {
-  static const int MAX_LENGTH_LIMIT = 1300;
+  static const int MAX_LENGTH_LIMIT = 200;
 
   ToastService _toastService;
   UserService _userService;
@@ -41,7 +41,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
   bool isfontColorWhite;
 
   LinearGradient gradient;
-
+  Widget textMeta;
   bool isExpanded;
   String imagePath;
   @override
@@ -77,6 +77,73 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
       _toastService = openbookProvider.toastService;
       _userService = openbookProvider.userService;
       _localizationService = openbookProvider.localizationService;
+      double height = MediaQuery.of(context).size.height;
+      CollectionReference users =
+          FirebaseFirestore.instance.collection('postMetas');
+      textMeta = FutureBuilder<DocumentSnapshot>(
+        future: users.doc(widget.post.uuid).get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text("Something went wrong");
+          }
+
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data = snapshot.data.data();
+            PostText meta = PostText.fromJSON(data);
+            print(meta.gradient.toString());
+            return SizedBox(
+              height: height * 0.292,
+              width: double.infinity,
+              child: Stack(
+                children: <Widget>[
+                  Positioned.fill(
+                    child: new Container(
+                        decoration: new BoxDecoration(
+                          gradient: meta.isColor
+                              ? LinearGradient(
+                                  begin: Alignment.topLeft,
+                                  end: Alignment.bottomRight,
+                                  colors: [meta.gradient[0], meta.gradient[1]],
+                                )
+                              : null,
+                        ),
+                        child: meta.isSvg
+                            ? SvgPicture.asset(
+                                meta.imagePath,
+                                fit: BoxFit.cover,
+                              )
+                            : meta.isPng
+                                ? Image.asset(
+                                    meta.imagePath,
+                                    fit: BoxFit.cover,
+                                  )
+                                : null),
+                  ),
+                  Align(
+                    alignment: Alignment.center,
+                    child: Container(
+                        child: GestureDetector(
+                      child: Text(
+                        widget.post.text,
+                        style: TextStyle(
+                          height: height * 0.002,
+                          fontFamily: "Segoe UI",
+                          fontSize: 20,
+                          color: Color(meta.color),
+                        ),
+                      ),
+                      onLongPress: _copyText,
+                    )),
+                  ),
+                ],
+              ),
+            );
+          }
+
+          return CircularProgressIndicator();
+        },
+      );
       _needsBootstrap = false;
     }
     final double height = MediaQuery.of(context).size.height;
@@ -92,72 +159,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
         ),
       );
     }
-    CollectionReference users =
-        FirebaseFirestore.instance.collection('postMetas');
-    return FutureBuilder<DocumentSnapshot>(
-      future: users.doc(widget.post.uuid).get(),
-      builder:
-          (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
-        if (snapshot.hasError) {
-          return Text("Something went wrong");
-        }
-
-        if (snapshot.connectionState == ConnectionState.done) {
-          Map<String, dynamic> data = snapshot.data.data();
-          PostText meta = PostText.fromJSON(data);
-          print(meta.gradient.toString());
-          return SizedBox(
-            height: height * 0.292,
-            width: double.infinity,
-            child: Stack(
-              children: <Widget>[
-                Positioned.fill(
-                  child: new Container(
-                      decoration: new BoxDecoration(
-                        gradient: meta.isColor
-                            ? LinearGradient(
-                                begin: Alignment.topLeft,
-                                end: Alignment.bottomRight,
-                                colors: [meta.gradient[0], meta.gradient[1]],
-                              )
-                            : null,
-                      ),
-                      child: meta.isSvg
-                          ? SvgPicture.asset(
-                              meta.imagePath,
-                              fit: BoxFit.cover,
-                            )
-                          : meta.isPng
-                              ? Image.asset(
-                                  meta.imagePath,
-                                  fit: BoxFit.cover,
-                                )
-                              : null),
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Container(
-                      child: GestureDetector(
-                    child: Text(
-                      widget.post.text,
-                      style: TextStyle(
-                        height: height * 0.002,
-                        fontFamily: "Segoe UI",
-                        fontSize: 20,
-                        color: Color(meta.color),
-                      ),
-                    ),
-                    onLongPress: _copyText,
-                  )),
-                ),
-              ],
-            ),
-          );
-        }
-
-        return Text("loading");
-      },
-    );
+    return textMeta;
   }
 
   Widget _buildFullPostText() {

@@ -526,10 +526,23 @@ class UserService {
         authenticatedRequest: true);
     _checkResponseIsOk(response);
     String postsData = response.body;
+    //var data = json.decode(postsData);
+    //data['meta'] = getPostTextMeta(data['uuid']);
+    //postsData = json.encode(data);
+    //print('post : $postsData');
+    //print('post : $data');
     if (cachePosts) {
       this._storeFirstPostsData(postsData);
     }
     return _makePostsList(postsData);
+  }
+
+  Future<Map<String, dynamic>> getPostTextMeta(String uuid) async {
+    DocumentSnapshot postMetas = await FirebaseFirestore.instance
+        .collection('postMetas')
+        .doc(uuid)
+        .get();
+    return postMetas.data();
   }
 
   Future<PostsList> getStoredFirstPosts() async {

@@ -148,6 +148,7 @@ class Post extends UpdatableModel<Post> {
       this.isEncircled,
       this.isClosed,
       this.isReported,
+      this.postText,
       this.isEdited})
       : super() {
     this._updateHashtagsMap();
@@ -492,6 +493,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         isEncircled: json['is_encircled'],
         isEdited: json['is_edited'],
         isClosed: json['is_closed'],
+        postText: parsePostText(json['meta']),
         reactionsEmojiCounts:
             parseReactionsEmojiCounts(json['reactions_emoji_counts']));
   }
@@ -499,6 +501,11 @@ class PostFactory extends UpdatableModelFactory<Post> {
   User parseUser(Map userData) {
     if (userData == null) return null;
     return User.fromJson(userData);
+  }
+
+  PostText parsePostText(Map meta) {
+    if (meta == null) return null;
+    return PostText.fromJSON(meta);
   }
 
   DateTime parseCreated(String created) {

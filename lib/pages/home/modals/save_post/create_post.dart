@@ -45,6 +45,7 @@ import 'package:async/async.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:pigment/pigment.dart';
 import 'package:video_player/video_player.dart';
 
@@ -121,6 +122,8 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   File _image;
   PostText meta;
   final picker = ImagePicker();
+  PostText textMeta;
+  int color;
 
   @override
   void initState() {
@@ -133,8 +136,18 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     _isPostTextContainingValidHashtags = false;
     _isCreateMemoryPostInProgress = false;
     _needsBootstrap = true;
-
+    color = 0xffffffff;
     _focusNode.addListener(_onFocusNodeChanged);
+    textMeta = new PostText(
+        color: color,
+        gradient: [Colors.white, Colors.white],
+        imagePath: '',
+        isExpanded: false,
+        isColor: true,
+        isPng: false,
+        isSvg: false,
+        isfontColorWhite: false,
+        text: '');
   }
 
   @override
@@ -224,11 +237,12 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     Widget widgetType;
     switch (type) {
       case PostType.Text:
-        widgetType = TextMemory(onWrited: (textMeta) {
-          print(textMeta.isfontColorWhite);
-          meta = textMeta;
+        widgetType = TextMemory(onWrited: (meta) {
+          //print(textMeta.isfontColorWhite);
+
           setState(() {
-            _onPostTextChanged(onWrited: textMeta.text);
+            textMeta = meta;
+            //_onPostTextChanged(onWrited: meta.text);
           });
         });
         break;
@@ -345,10 +359,10 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
               height: height * 0.024,
             ),
             Expanded(
-                flex: isAutocompleting ? 3 : 1,
+                flex: isAutocompleting ? 8 : 5,
                 child: Padding(
-                  padding: EdgeInsets.only(left: 20.0, top: 20.0, right: 20.0),
-                  child: widgetType ?? _buildNewPostContent(),
+                  padding: EdgeInsets.only(left: 20.0, top: 20.0),
+                  child: _buildNewPostContent(),
                 )),
             isAutocompleting
                 ? Expanded(
@@ -359,12 +373,12 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
             isAutocompleting || (_hasImage || _hasVideo)
                 ? const SizedBox()
                 : Container(
-                    height: _hasFocus == true ? 51 : 67,
+                    height: _hasFocus == true ? height * 0.343 : height * 0.243,
                     padding: EdgeInsets.only(
                         top: 8.0, bottom: _hasFocus == true ? 8 : 24),
                     color: Color.fromARGB(5, 0, 0, 0),
-                    child: Container() //_buildPostActions(),
-                    ),
+                    child: widgetType,
+                  ),
           ],
         )));
   }
@@ -501,33 +515,73 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
   }
 
   Widget _buildNewPostContent() {
-    return Row(
+    final double height = MediaQuery.of(context).size.height;
+    return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.max,
       children: <Widget>[
-        Column(
-          children: <Widget>[
-            OBLoggedInUserAvatar(
-              size: OBAvatarSize.medium,
-            ),
-            const SizedBox(
-              height: 12.0,
-            ),
-            OBRemainingPostCharacters(
-              maxCharacters: ValidationService.POST_MAX_LENGTH,
-              currentCharacters: _charactersCount,
+        Row(
+          children: [
+            Column(
+              children: <Widget>[
+                OBLoggedInUserAvatar(
+                  size: OBAvatarSize.medium,
+                ),
+                const SizedBox(
+                  height: 12.0,
+                ),
+                OBRemainingPostCharacters(
+                  maxCharacters: ValidationService.POST_MAX_LENGTH,
+                  currentCharacters: _charactersCount,
+                ),
+              ],
             ),
           ],
         ),
-        Expanded(
+        Container(
+          color: Colors.red,
           child: SingleChildScrollView(
             physics: const ClampingScrollPhysics(),
             child: Padding(
                 padding: EdgeInsets.only(left: 20.0, right: 20.0, bottom: 30.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: _postItemsWidgets,
-                )),
+                child: type == PostType.Text
+                    ? Stack(children: <Widget>[
+                        Positioned.fill(
+                          child: new Container(
+                              decoration: new BoxDecoration(
+                                gradient: textMeta.isColor
+                                    ? LinearGradient(
+                                        begin: Alignment.topLeft,
+                                        end: Alignment.bottomRight,
+                                        colors: textMeta.gradient,
+                                      )
+                                    : null,
+                              ),
+                              child: textMeta.isSvg
+                                  ? SvgPicture.asset(
+                                      textMeta.imagePath,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : textMeta.isPng
+                                      ? Image.asset(
+                                          textMeta.imagePath,
+                                          fit: BoxFit.cover,
+                                        )
+                                      : null),
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Container(
+                            child: OBCreatePostText(
+                                controller: _textController,
+                                focusNode: _focusNode),
+                          ),
+                        )
+                      ])
+                    : Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: _postItemsWidgets,
+                      )),
           ),
         )
       ],

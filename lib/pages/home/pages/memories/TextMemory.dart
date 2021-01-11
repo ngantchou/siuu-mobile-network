@@ -62,7 +62,7 @@ class _TextMemoryState extends State<TextMemory> {
     return Container(
       child: Stack(
         children: <Widget>[
-          Positioned.fill(
+          /*  Positioned.fill(
             child: new Container(
                 decoration: new BoxDecoration(
                   gradient: textMeta.isColor
@@ -115,7 +115,7 @@ class _TextMemoryState extends State<TextMemory> {
                 ),
               ),
             ),
-          ),
+          ),*/
           Positioned(
             //bottom: MediaQuery.of(context).viewInsets.bottom,
             bottom: 10,
@@ -301,7 +301,7 @@ class _TextMemoryState extends State<TextMemory> {
               ),
             ),
           ),
-          Positioned(
+          /*Positioned(
             right: 20,
             top: 30,
             child: InkWell(
@@ -317,7 +317,7 @@ class _TextMemoryState extends State<TextMemory> {
                         : Colors.black),
               ),
             ),
-          ),
+          ),*/
         ],
       ),
     );

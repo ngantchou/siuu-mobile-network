@@ -188,7 +188,7 @@ class _VoiceMemoryState extends State<VoiceMemory>
                           )
                         : null),
           ),
-          Align(
+          /*Align(
             alignment: Alignment.center,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -239,7 +239,7 @@ class _VoiceMemoryState extends State<VoiceMemory>
                 )
               ],
             ),
-          ),
+          ),*/
           Positioned(
             // bottom: MediaQuery.of(context).viewInsets.bottom,
             bottom: 10,
