@@ -333,6 +333,11 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
           onTap: _onWantsToGoNext,
           child: OBText(_localizationService.trans('post__create_next')),
         );
+        OBButton(
+            type: OBButtonType.primary,
+            child: Text(_localizationService.trans('post__share')),
+            size: OBButtonSize.small,
+            onPressed: _onWantsToGoNext);
       } else {
         nextButton = Opacity(
           opacity: 0.5,

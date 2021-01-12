@@ -124,21 +124,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
                     alignment: Alignment.center,
                     child: Container(
                         child: GestureDetector(
-                      child:
-                          /* Text(
-                        widget.post.text,
-                        style: TextStyle(
-                          height: height * 0.002,
-                          fontFamily: "Segoe UI",
-                          fontSize: 20,
-                          color: meta.isfontColorWhite
-                              ? Colors.white
-                              : Color(0xff78849e),
-                        ),
-                      ),*/
-                          _buildActionablePostText(meta.isfontColorWhite
-                              ? Colors.white
-                              : Color(0xff78849e)),
+                      child: _buildActionablePostText(null),
                       onLongPress: _copyText,
                     )),
                   ),
@@ -155,15 +141,24 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
     final double height = MediaQuery.of(context).size.height;
 
     if (widget.post.hasMediaThumbnail() || widget.post.hasLinkToPreview()) {
-      return Text(
-        widget.post.text,
-        style: TextStyle(
-          height: height * 0.002,
-          fontFamily: "Segoe UI",
-          fontSize: 20,
-          color: Color(0xff78849e),
-        ),
-      );
+      if (widget.post.isEdited != null && widget.post.isEdited) {
+        return OBCollapsibleSmartText(
+          size: OBTextSize.large,
+          text: _translatedText != null ? _translatedText : widget.post.text,
+          trailingSmartTextElement: SecondaryTextElement(''),
+          maxlength: MAX_LENGTH_LIMIT,
+          getChild: _buildTranslationButton,
+          hashtagsMap: widget.post.hashtagsMap,
+        );
+      } else {
+        return OBCollapsibleSmartText(
+          size: OBTextSize.large,
+          text: _translatedText != null ? _translatedText : widget.post.text,
+          maxlength: MAX_LENGTH_LIMIT,
+          getChild: _buildTranslationButton,
+          hashtagsMap: widget.post.hashtagsMap,
+        );
+      }
     }
     return textMeta;
   }
@@ -204,6 +199,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
           fontSize: 20,
           color: color,
         ),
+        size: OBTextSize.extraLarge,
         text: _translatedText != null ? _translatedText : widget.post.text,
         trailingSmartTextElement: SecondaryTextElement(''),
         maxlength: MAX_LENGTH_LIMIT,
@@ -218,6 +214,7 @@ class OBPostBodyTextState extends State<OBPostBodyText> {
           fontSize: 20,
           color: color,
         ),
+        size: OBTextSize.extraLarge,
         text: _translatedText != null ? _translatedText : widget.post.text,
         maxlength: MAX_LENGTH_LIMIT,
         getChild: _buildTranslationButton,

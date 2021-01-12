@@ -201,7 +201,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   }
 
   Widget buildBottomNavigationBarItem(
-      {String iconPath, int index, String title}) {
+      {String iconPath, int index, String title, Color color}) {
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
 
@@ -213,6 +213,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
             padding: EdgeInsets.only(bottom: 3),
             child: SvgPicture.asset(
               iconPath,
+              color: color,
             ),
           ),
           title != null
@@ -223,7 +224,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
                     style: TextStyle(
                       fontFamily: "Segoe UI",
                       fontSize: 12,
-                      color: Color(0xff78849e),
+                      color: color != null? color : Color(0xff78849e),
                     ),
                   ),
                 )
@@ -312,14 +313,20 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
           icon: buildBottomNavigationBarItem(
               iconPath: "assets/svg/home.svg", index: 0, title: 'Accueil'),
           activeIcon: buildBottomNavigationBarItem(
-              iconPath: "assets/svg/home.svg", index: 0, title: 'Accueil'),
+              color: Color(pinkColor),
+              iconPath: "assets/svg/home.svg",
+              index: 0,
+              title: 'Accueil'),
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
           icon: buildBottomNavigationBarItem(
               iconPath: "assets/svg/message.svg", index: 1, title: 'Message'),
           activeIcon: buildBottomNavigationBarItem(
-              iconPath: "assets/svg/message.svg", index: 1, title: 'Message'),
+              color: Color(pinkColor),
+              iconPath: "assets/svg/message.svg",
+              index: 1,
+              title: 'Message'),
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
@@ -377,20 +384,24 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         BottomNavigationBarItem(
           title: const SizedBox(),
           icon: buildBottomNavigationBarItem(
-              iconPath: "assets/svg/notification.svg",
-              index: 2,
-              title: 'Notifications'),
+              iconPath: "assets/svg/memories.svg", index: 3, title: 'Places'),
           activeIcon: buildBottomNavigationBarItem(
-              iconPath: "assets/svg/notification.svg",
+              color: Color(pinkColor),
+              iconPath: "assets/svg/memories.svg",
               index: 3,
-              title: 'Notifications'),
+              title: 'Places'),
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
           icon: buildBottomNavigationBarItem(
-              iconPath: "assets/svg/memories.svg", index: 3, title: 'Places'),
+              iconPath: "assets/svg/notification.svg",
+              index: 2,
+              title: 'Notifications'),
           activeIcon: buildBottomNavigationBarItem(
-              iconPath: "assets/svg/memories.svg", index: 3, title: 'Places'),
+              color: Color(pinkColor),
+              iconPath: "assets/svg/notification.svg",
+              index: 3,
+              title: 'Notifications'),
         ),
         /* BottomNavigationBarItem(
           title: const SizedBox(),

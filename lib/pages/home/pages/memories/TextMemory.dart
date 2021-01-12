@@ -112,7 +112,7 @@ class _TextMemoryState extends State<TextMemory> {
                 textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   border: InputBorder.none,
-                  hintText: 'Express your seft here',
+                  hintText: '#Siuuuuuuuuuuu now',
                   hintStyle: TextStyle(
                       fontFamily: "Segoe UI",
                       fontWeight: FontWeight.w300,

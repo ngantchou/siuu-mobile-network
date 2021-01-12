@@ -89,6 +89,67 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     final keyboardVisible = MediaQuery.of(context).viewInsets.bottom;
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
+    List<Widget> commentItems = [];
+    commentItems.addAll([
+      Column(
+        children: <Widget>[
+          OBLoggedInUserAvatar(
+            size: OBAvatarSize.extraSmall,
+          ),
+          _isMultiline
+              ? Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 10),
+                  child: OBRemainingPostCharacters(
+                    maxCharacters: ValidationService.POST_COMMENT_MAX_LENGTH,
+                    currentCharacters: _charactersCount,
+                  ),
+                )
+              : const SizedBox()
+        ],
+      ),
+      const SizedBox(
+        width: 10.0,
+      ),
+      Expanded(
+        child: OBAlert(
+          padding: const EdgeInsets.all(0),
+          child: Form(
+              key: _formKey,
+              child: LayoutBuilder(builder: (context, size) {
+                TextStyle style = TextStyle(
+                    fontSize: 14.0, fontFamilyFallback: ['NunitoSans']);
+                TextSpan text = new TextSpan(
+                    text: widget.textController.text, style: style);
+
+                TextPainter tp = new TextPainter(
+                  text: text,
+                  textDirection: TextDirection.ltr,
+                  textAlign: TextAlign.left,
+                );
+                tp.layout(maxWidth: size.maxWidth);
+
+                int lines = (tp.size.height / tp.preferredLineHeight).ceil();
+
+                _isMultiline = lines > 3;
+
+                int maxLines = 5;
+
+                return _buildTextFormField(
+                    lines < maxLines ? null : maxLines, style);
+              })),
+        ),
+      ),
+      Padding(
+        padding: EdgeInsets.only(right: 20.0, left: 10.0),
+        child: OBButton(
+          isLoading: _commentInProgress,
+          size: OBButtonSize.small,
+          onPressed: _submitForm,
+          child: SvgPicture.asset('assets/svg/postIcon.svg'),
+          //Text(_localizationService.trans('post__commenter_post_text')),
+        ),
+      )
+    ]);
     return Padding(
       padding: !viewStickers
           ? EdgeInsets.symmetric(vertical: 0.0)
@@ -97,83 +158,14 @@ class OBPostCommenterState extends State<OBPostCommenter> {
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          !viewStickers
-              ? const SizedBox(
-                  width: 20.0,
-                )
-              : Container(),
-          !viewStickers
-              ? Column(
-                  children: <Widget>[
-                    OBLoggedInUserAvatar(
-                      size: OBAvatarSize.medium,
-                    ),
-                    _isMultiline
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 10),
-                            child: OBRemainingPostCharacters(
-                              maxCharacters:
-                                  ValidationService.POST_COMMENT_MAX_LENGTH,
-                              currentCharacters: _charactersCount,
-                            ),
-                          )
-                        : const SizedBox()
-                  ],
-                )
-              : Container(),
-          !viewStickers
-              ? const SizedBox(
-                  width: 10.0,
-                )
-              : Container(),
-          Expanded(
-            child: OBAlert(
-              padding: const EdgeInsets.all(0),
-              child: Form(
-                  key: _formKey,
-                  child: LayoutBuilder(builder: (context, size) {
-                    TextStyle style = TextStyle(
-                        fontSize: 14.0, fontFamilyFallback: ['NunitoSans']);
-                    TextSpan text = new TextSpan(
-                        text: widget.textController.text, style: style);
+          Container(
+            // height: 100,
+            //bottom: 0,
 
-                    TextPainter tp = new TextPainter(
-                      text: text,
-                      textDirection: TextDirection.ltr,
-                      textAlign: TextAlign.left,
-                    );
-                    tp.layout(maxWidth: size.maxWidth);
-
-                    int lines =
-                        (tp.size.height / tp.preferredLineHeight).ceil();
-
-                    _isMultiline = lines > 3;
-
-                    int maxLines = 5;
-
-                    return _buildTextFormField(
-                        lines < maxLines ? null : maxLines, style);
-                  })),
-            ),
-          ),
-          !viewStickers
-              ? Padding(
-                  padding: EdgeInsets.only(right: 20.0, left: 10.0),
-                  child: OBButton(
-                    isLoading: _commentInProgress,
-                    size: OBButtonSize.small,
-                    onPressed: _submitForm,
-                    child: Text(_localizationService
-                        .trans('post__commenter_post_text')),
-                  ),
-                )
-              : Container(),
-          Positioned(
-            bottom: 0,
             child: keyboardVisible == 0
                 ? Column(
                     children: [
-                      //buildContainer(width),
+                      buildContainer(width),
                       viewStickers
                           ? LottiePersonaStickers(width: width)
                           : Container(),
@@ -181,7 +173,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                   )
                 : Column(
                     children: [
-                      //buildContainer(width),
+                      buildContainer(width),
                       viewStickers
                           ? LottiePersonaStickers(width: width)
                           : Container(),
@@ -191,6 +183,108 @@ class OBPostCommenterState extends State<OBPostCommenter> {
         ],
       ),
     );
+  }
+
+  Container buildContainer(double width) {
+    FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
+    return Container(
+      width: width,
+      decoration: BoxDecoration(
+        color: Color(0xffffffff),
+        boxShadow: [
+          BoxShadow(
+            offset: Offset(0.00, 4.00),
+            color: Color(0xff455b63).withOpacity(0.08),
+            blurRadius: 16,
+          ),
+        ],
+        borderRadius: BorderRadius.circular(12.00),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
+        child: Row(
+          children: [
+            Column(
+              children: <Widget>[
+                OBLoggedInUserAvatar(
+                  size: OBAvatarSize.extraSmall,
+                ),
+                _isMultiline
+                    ? Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 10),
+                        child: OBRemainingPostCharacters(
+                          maxCharacters:
+                              ValidationService.POST_COMMENT_MAX_LENGTH,
+                          currentCharacters: _charactersCount,
+                        ),
+                      )
+                    : const SizedBox()
+              ],
+            ),
+            SizedBox(width: width * 0.024),
+            Expanded(
+              child: OBAlert(
+                padding: const EdgeInsets.all(0),
+                child: Form(
+                    key: _formKey,
+                    child: LayoutBuilder(builder: (context, size) {
+                      TextStyle style = TextStyle(
+                          fontSize: 14.0, fontFamilyFallback: ['NunitoSans']);
+                      TextSpan text = new TextSpan(
+                          text: widget.textController.text, style: style);
+
+                      TextPainter tp = new TextPainter(
+                        text: text,
+                        textDirection: TextDirection.ltr,
+                        textAlign: TextAlign.left,
+                      );
+                      tp.layout(maxWidth: size.maxWidth);
+
+                      int lines =
+                          (tp.size.height / tp.preferredLineHeight).ceil();
+
+                      _isMultiline = lines > 3;
+
+                      int maxLines = 5;
+
+                      return _buildTextFormField(
+                          lines < maxLines ? null : maxLines, style);
+                    })),
+              ),
+            ),
+            Row(
+              children: [
+                SizedBox(width: width * 0.024),
+                InkWell(
+                    onTap: () {
+                      setState(() {
+                        viewStickers = !viewStickers;
+                        FocusScope.of(context).unfocus();
+                      });
+                    },
+                    child: viewStickers
+                        ? Icon(Icons.close)
+                        : SvgPicture.asset('assets/svg/emoji.svg')),
+                SizedBox(width: width * 0.024),
+                SvgPicture.asset('assets/svg/micIcon.svg'),
+                SizedBox(width: width * 0.024),
+                InkWell(
+                  onTap: () {
+                    _submitForm();
+                  },
+                  child: SvgPicture.asset('assets/svg/postIcon.svg'),
+                ),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<Widget> _listWidget(Widget _widget, List<Widget> _widgetList) {
+    _widgetList.add(_widget);
+    return _widgetList;
   }
 
   Widget _buildTextFormField(int maxLines, TextStyle style) {
@@ -219,17 +313,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
         padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
         child: Row(
           children: [
-            InkWell(
-                onTap: () {
-                  setState(() {
-                    viewStickers = !viewStickers;
-                    FocusScope.of(context).unfocus();
-                  });
-                },
-                child: viewStickers
-                    ? Icon(Icons.close)
-                    : SvgPicture.asset('assets/svg/emoji.svg')),
-            SizedBox(width: width * 0.024),
             Expanded(
               child: Container(
                 child: TextFormField(
@@ -285,11 +368,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                 ),*/
               ),
             ),
-            Row(
-              children: [
-                SvgPicture.asset('assets/svg/micIcon.svg'),
-              ],
-            )
           ],
         ),
       ),
