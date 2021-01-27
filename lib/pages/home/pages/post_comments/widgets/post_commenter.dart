@@ -271,7 +271,9 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                 !isAudio
                     ? InkWell(
                         onTap: () {
-                          isAudio = true;
+                          setState(() {
+                            isAudio = true;
+                          });
                         },
                         child: SvgPicture.asset('assets/svg/micIcon.svg'),
                       )
