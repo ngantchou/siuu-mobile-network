@@ -15,11 +15,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryActionsBottomSheet extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
   final OnMemoryReported onMemoryReported;
 
   const OBMemoryActionsBottomSheet(
-      {Key key, @required this.memory, this.onMemoryReported})
+      {Key key, @required this.crew, this.onMemoryReported})
       : super(key: key);
 
   @override
@@ -43,33 +43,33 @@ class OBMemoryActionsBottomSheetState
     _modalService = openbookProvider.modalService;
     _localizationService = openbookProvider.localizationService;
 
-    List<Widget> memoryActions = [
+    List<Widget> crewActions = [
       OBFavoriteMemoryTile(
-        memory: widget.memory,
+        crew: widget.crew,
         onFavoritedMemory: _dismiss,
         onUnfavoritedMemory: _dismiss,
       )
     ];
 
     User loggedInUser = _userService.getLoggedInUser();
-    Memory memory = widget.memory;
+    Memory crew = widget.crew;
 
-    bool isMemberOfMemory = memory.isMember(loggedInUser);
-    bool isMemoryAdministrator = memory.isAdministrator(loggedInUser);
-    bool isMemoryModerator = memory.isModerator(loggedInUser);
-    bool memoryHasInvitesEnabled = memory.invitesEnabled;
+    bool isMemberOfMemory = crew.isMember(loggedInUser);
+    bool isMemoryAdministrator = crew.isAdministrator(loggedInUser);
+    bool isMemoryModerator = crew.isModerator(loggedInUser);
+    bool crewHasInvitesEnabled = crew.invitesEnabled;
 
     if (isMemberOfMemory) {
-      memoryActions.add(OBNewPostNotificationsForMemoryTile(
-        memory: memory,
+      crewActions.add(OBNewPostNotificationsForMemoryTile(
+        crew: crew,
         onSubscribed: _dismiss,
         onUnsubscribed: _dismiss,
       ));
     }
 
-    if (memoryHasInvitesEnabled && isMemberOfMemory) {
-      memoryActions.add(ListTile(
-        leading: const OBIcon(OBIcons.memoryInvites),
+    if (crewHasInvitesEnabled && isMemberOfMemory) {
+      crewActions.add(ListTile(
+        leading: const OBIcon(OBIcons.crewInvites),
         title: OBText(
           _localizationService.community__actions_invite_people_title,
         ),
@@ -78,8 +78,8 @@ class OBMemoryActionsBottomSheetState
     }
 
     if (!isMemoryAdministrator && !isMemoryModerator) {
-      memoryActions.add(OBReportMemoryTile(
-        memory: memory,
+      crewActions.add(OBReportMemoryTile(
+        crew: crew,
         onWantsToReportMemory: () {
           Navigator.of(context).pop();
         },
@@ -88,7 +88,7 @@ class OBMemoryActionsBottomSheetState
 
     return OBRoundedBottomSheet(
       child: Column(
-        children: memoryActions,
+        children: crewActions,
         mainAxisSize: MainAxisSize.min,
       ),
     );
@@ -96,7 +96,7 @@ class OBMemoryActionsBottomSheetState
 
   Future _onWantsToInvitePeople() async {
     _dismiss();
-    _modalService.openInviteToMemory(context: context, memory: widget.memory);
+    _modalService.openInviteToMemory(context: context, crew: widget.crew);
   }
 
   void _dismiss() {
@@ -104,4 +104,4 @@ class OBMemoryActionsBottomSheetState
   }
 }
 
-typedef OnMemoryReported(Memory memory);
+typedef OnMemoryReported(Memory crew);

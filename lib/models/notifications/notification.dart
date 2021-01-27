@@ -144,10 +144,10 @@ class NotificationFactory extends UpdatableModelFactory<OBNotification> {
       case NotificationType.postUserMention:
         contentObject = PostUserMentionNotification.fromJson(contentObjectData);
         break;
-      case NotificationType.memoryInvite:
+      case NotificationType.crewInvite:
         contentObject = MemoryInviteNotification.fromJson(contentObjectData);
         break;
-      case NotificationType.memoryNewPost:
+      case NotificationType.crewNewPost:
         contentObject = MemoryNewPostNotification.fromJson(contentObjectData);
         break;
       case NotificationType.userNewPost:
@@ -182,11 +182,11 @@ class NotificationType {
   static const follow = const NotificationType._internal('F');
   static const followRequest = const NotificationType._internal('FR');
   static const followRequestApproved = const NotificationType._internal('FRA');
-  static const memoryInvite = const NotificationType._internal('CI');
+  static const crewInvite = const NotificationType._internal('CI');
   static const postCommentUserMention =
       const NotificationType._internal('PCUM');
   static const postUserMention = const NotificationType._internal('PUM');
-  static const memoryNewPost = const NotificationType._internal('CNP');
+  static const crewNewPost = const NotificationType._internal('CNP');
   static const userNewPost = const NotificationType._internal('UNP');
 
   static const _values = const <NotificationType>[
@@ -199,10 +199,10 @@ class NotificationType {
     follow,
     followRequest,
     followRequestApproved,
-    memoryInvite,
+    crewInvite,
     postCommentUserMention,
     postUserMention,
-    memoryNewPost,
+    crewNewPost,
     userNewPost
   ];
 

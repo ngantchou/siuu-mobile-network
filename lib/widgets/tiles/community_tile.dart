@@ -15,16 +15,16 @@ import 'package:tinycolor/tinycolor.dart';
 class OBMemoryTile extends StatelessWidget {
   static const COVER_PLACEHOLDER = 'assets/images/fallbacks/cover-fallback.jpg';
 
-  static const double smallSizeHeight = 60;
-  static const double normalSizeHeight = 80;
+  static const double smallSizeHeight = 65;
+  static const double normalSizeHeight = 85;
 
-  final Memory memory;
+  final Memory crew;
   final ValueChanged<Memory> onMemoryTilePressed;
   final ValueChanged<Memory> onMemoryTileDeleted;
   final OBMemoryTileSize size;
   final Widget trailing;
 
-  const OBMemoryTile(this.memory,
+  const OBMemoryTile(this.crew,
       {this.onMemoryTilePressed,
       this.onMemoryTileDeleted,
       Key key,
@@ -34,22 +34,22 @@ class OBMemoryTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String memoryHexColor = memory.color;
+    String crewHexColor = crew.color;
     LocalizationService localizationService =
         OpenbookProvider.of(context).localizationService;
     ThemeService themeService = OpenbookProvider.of(context).themeService;
     ThemeValueParserService themeValueParserService =
         OpenbookProvider.of(context).themeValueParserService;
-    Color memoryColor = themeValueParserService.parseColor(memoryHexColor);
+    Color crewColor = themeValueParserService.parseColor(crewHexColor);
     OBTheme theme = themeService.getActiveTheme();
     Color textColor;
 
     BoxDecoration containerDecoration;
     BorderRadius containerBorderRadius = BorderRadius.circular(10);
-    bool isMemoryColorDark = themeValueParserService.isDarkColor(memoryColor);
-    bool memoryHasCover = memory.hasCover();
+    bool isMemoryColorDark = themeValueParserService.isDarkColor(crewColor);
+    bool crewHasCover = crew.hasCover();
 
-    if (memoryHasCover) {
+    if (crewHasCover) {
       textColor = Colors.white;
       containerDecoration = BoxDecoration(
           borderRadius: containerBorderRadius,
@@ -57,55 +57,55 @@ class OBMemoryTile extends StatelessWidget {
               fit: BoxFit.cover,
               colorFilter: new ColorFilter.mode(
                   Colors.black.withOpacity(0.60), BlendMode.darken),
-              image: AdvancedNetworkImage(memory.cover,
+              image: AdvancedNetworkImage(crew.cover,
                   useDiskCache: true,
                   fallbackAssetImage: COVER_PLACEHOLDER,
                   retryLimit: 0)));
     } else {
       textColor = isMemoryColorDark ? Colors.white : Colors.black;
-      bool memoryColorIsNearWhite = memoryColor.computeLuminance() > 0.9;
+      bool crewColorIsNearWhite = crewColor.computeLuminance() > 0.9;
 
       containerDecoration = BoxDecoration(
-        color: memoryColorIsNearWhite
-            ? TinyColor(memoryColor).darken(5).color
-            : TinyColor(memoryColor).lighten(10).color,
+        color: crewColorIsNearWhite
+            ? TinyColor(crewColor).darken(5).color
+            : TinyColor(crewColor).lighten(10).color,
         borderRadius: containerBorderRadius,
       );
     }
 
     bool isNormalSize = size == OBMemoryTileSize.normal;
 
-    Widget memoryAvatar;
-    if (memory.hasAvatar()) {
-      memoryAvatar = OBAvatar(
-        avatarUrl: memory.avatar,
+    Widget crewAvatar;
+    if (crew.hasAvatar()) {
+      crewAvatar = OBAvatar(
+        avatarUrl: crew.avatar,
         size: isNormalSize ? OBAvatarSize.medium : OBAvatarSize.small,
       );
     } else {
-      Color avatarColor = memoryHasCover
-          ? memoryColor
+      Color avatarColor = crewHasCover
+          ? crewColor
           : (isMemoryColorDark
-              ? TinyColor(memoryColor).lighten(5).color
-              : memoryColor);
-      memoryAvatar = OBLetterAvatar(
-        letter: memory.name[0],
+              ? TinyColor(crewColor).lighten(5).color
+              : crewColor);
+      crewAvatar = OBLetterAvatar(
+        letter: crew.name[0],
         color: avatarColor,
         labelColor: textColor,
         size: isNormalSize ? OBAvatarSize.medium : OBAvatarSize.small,
       );
     }
 
-    String userAdjective = memory.userAdjective ??
-        localizationService.community__member_capitalized;
-    String usersAdjective = memory.usersAdjective ??
+    String userAdjective =
+        crew.userAdjective ?? localizationService.community__member_capitalized;
+    String usersAdjective = crew.usersAdjective ??
         localizationService.community__members_capitalized;
-    String membersPrettyCount = memory.membersCount != null
-        ? getPrettyCount(memory.membersCount, localizationService)
+    String membersPrettyCount = crew.membersCount != null
+        ? getPrettyCount(crew.membersCount, localizationService)
         : null;
     String finalAdjective =
-        memory.membersCount == 1 ? userAdjective : usersAdjective;
+        crew.membersCount == 1 ? userAdjective : usersAdjective;
 
-    Widget memoryTile = Container(
+    Widget crewTile = Container(
       height: isNormalSize ? normalSizeHeight : smallSizeHeight,
       decoration: containerDecoration,
       child: Row(
@@ -113,21 +113,21 @@ class OBMemoryTile extends StatelessWidget {
         children: <Widget>[
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 20),
-            child: memoryAvatar,
+            child: crewAvatar,
           ),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisSize: MainAxisSize.min,
               children: <Widget>[
-                Text('c/' + memory.name,
+                Text('c/' + crew.name,
                     style: TextStyle(
                       color: textColor,
                       fontSize: 16,
                     ),
                     overflow: TextOverflow.ellipsis),
                 Text(
-                  memory.title,
+                  crew.title,
                   style: TextStyle(
                       color: textColor,
                       fontSize: 18,
@@ -157,14 +157,14 @@ class OBMemoryTile extends StatelessWidget {
     );
 
     if (onMemoryTileDeleted != null && onMemoryTilePressed != null) {
-      memoryTile = Slidable(
+      crewTile = Slidable(
         delegate: new SlidableDrawerDelegate(),
         actionExtentRatio: 0.25,
         child: GestureDetector(
           onTap: () {
-            onMemoryTilePressed(memory);
+            onMemoryTilePressed(crew);
           },
-          child: memoryTile,
+          child: crewTile,
         ),
         secondaryActions: <Widget>[
           new IconSlideAction(
@@ -174,20 +174,20 @@ class OBMemoryTile extends StatelessWidget {
               color: Colors.transparent,
               icon: Icons.delete,
               onTap: () {
-                onMemoryTileDeleted(memory);
+                onMemoryTileDeleted(crew);
               }),
         ],
       );
     } else if (onMemoryTilePressed != null) {
-      memoryTile = GestureDetector(
+      crewTile = GestureDetector(
         onTap: () {
-          onMemoryTilePressed(memory);
+          onMemoryTilePressed(crew);
         },
-        child: memoryTile,
+        child: crewTile,
       );
     }
 
-    return memoryTile;
+    return crewTile;
   }
 }
 

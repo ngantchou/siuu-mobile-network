@@ -7,17 +7,17 @@ import 'widgets/community_members_count.dart';
 import 'widgets/community_posts_count.dart';
 
 class OBMemoryDetails extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryDetails(this.memory);
+  const OBMemoryDetails(this.crew);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        Memory memory = snapshot.data;
+        Memory crew = snapshot.data;
 
         return Row(
           mainAxisSize: MainAxisSize.min,
@@ -28,10 +28,10 @@ class OBMemoryDetails extends StatelessWidget {
                   spacing: 10.0,
                   runSpacing: 10.0,
                   children: <Widget>[
-                    OBMemoryType(memory),
-                    OBMemoryMembersCount(memory),
-                    OBMemoryPostsCount(memory),
-                    OBMemoryFavorite(memory)
+                    OBMemoryType(crew),
+                    OBMemoryMembersCount(crew),
+                    OBMemoryPostsCount(crew),
+                    OBMemoryFavorite(crew)
                   ],
                 ),
               ),

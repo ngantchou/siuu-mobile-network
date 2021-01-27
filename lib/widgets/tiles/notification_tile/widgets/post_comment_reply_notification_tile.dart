@@ -34,7 +34,8 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
 
     int postCreatorId = postCommentNotification.getPostCreatorId();
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
-    LocalizationService localizationService = openbookProvider.localizationService;
+    LocalizationService localizationService =
+        openbookProvider.localizationService;
 
     bool isOwnPostNotification =
         openbookProvider.userService.getLoggedInUser().id == postCreatorId;
@@ -65,14 +66,18 @@ class OBPostCommentReplyNotificationTile extends StatelessWidget {
       },
       leading: OBAvatar(
         onPressed: navigateToCommenterProfile,
-        size: OBAvatarSize.medium,
+        size: OBAvatarSize.small,
         avatarUrl: postComment.commenter.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
         text: TextSpan(
             text: isOwnPostNotification
-                ? localizationService.notifications__comment_reply_notification_tile_user_replied(postCommentText)
-                : localizationService.notifications__comment_reply_notification_tile_user_also_replied(postCommentText)),
+                ? localizationService
+                    .notifications__comment_reply_notification_tile_user_replied(
+                        postCommentText)
+                : localizationService
+                    .notifications__comment_reply_notification_tile_user_also_replied(
+                        postCommentText)),
         onUsernamePressed: navigateToCommenterProfile,
         user: postComment.commenter,
       ),

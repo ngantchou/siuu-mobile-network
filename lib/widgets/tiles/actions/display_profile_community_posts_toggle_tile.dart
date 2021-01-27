@@ -37,7 +37,7 @@ class OBDisplayProfileMemoryPostsToggleTileState
 
   bool _requestInProgress;
 
-  bool _memoryPostsVisible;
+  bool _crewPostsVisible;
 
   @override
   void initState() {
@@ -45,7 +45,7 @@ class OBDisplayProfileMemoryPostsToggleTileState
 
     _requestInProgress = false;
 
-    _memoryPostsVisible = widget.user.getProfileMemoryPostsVisible();
+    _crewPostsVisible = widget.user.getProfileMemoryPostsVisible();
   }
 
   @override
@@ -57,7 +57,7 @@ class OBDisplayProfileMemoryPostsToggleTileState
 
     return OBToggleField(
       hasDivider: widget.hasDivider,
-      value: _memoryPostsVisible,
+      value: _crewPostsVisible,
       title: _localizationService.user__manage_profile_community_posts_toggle,
       subtitle: OBText(
         _localizationService.user__manage_profile_community_posts_toggle__descr,
@@ -67,7 +67,7 @@ class OBDisplayProfileMemoryPostsToggleTileState
       isLoading: _requestInProgress,
       onTap: () {
         setState(() {
-          _memoryPostsVisible = !_memoryPostsVisible;
+          _crewPostsVisible = !_crewPostsVisible;
           _saveMemoryPosts();
         });
       },
@@ -78,9 +78,9 @@ class OBDisplayProfileMemoryPostsToggleTileState
     _setRequestInProgress(true);
     try {
       await _userService.updateUser(
-        memoryPostsVisible: _memoryPostsVisible,
+        crewPostsVisible: _crewPostsVisible,
       );
-      if (widget.onChanged != null) widget.onChanged(_memoryPostsVisible);
+      if (widget.onChanged != null) widget.onChanged(_crewPostsVisible);
     } catch (error) {
       _onError(error);
     } finally {

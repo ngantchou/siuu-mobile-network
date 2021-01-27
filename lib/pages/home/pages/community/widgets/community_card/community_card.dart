@@ -10,9 +10,9 @@ import 'widgets/community_name.dart';
 import 'widgets/community_title.dart';
 
 class OBMemoryCard extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryCard(this.memory);
+  OBMemoryCard(this.crew);
 
   @override
   Widget build(BuildContext context) {
@@ -25,11 +25,11 @@ class OBMemoryCard extends StatelessWidget {
           Row(
             children: <Widget>[
               OBMemoryAvatar(
-                memory: memory,
+                crew: crew,
                 size: OBAvatarSize.large,
                 isZoomable: true,
               ),
-              Expanded(child: OBMemoryActions(memory)),
+              Expanded(child: OBMemoryActions(crew)),
             ],
           ),
           SizedBox(
@@ -39,19 +39,19 @@ class OBMemoryCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
-              OBMemoryTitle(memory),
-              OBMemoryName(memory),
-              OBMemoryDescription(memory),
+              OBMemoryTitle(crew),
+              OBMemoryName(crew),
+              OBMemoryDescription(crew),
               const SizedBox(
                 height: 15,
               ),
-              OBMemoryDetails(memory),
-              OBMemoryCategories(memory),
+              OBMemoryDetails(crew),
+              OBMemoryCategories(crew),
               const SizedBox(
                 height: 10,
               ),
               OBMemoryButtons(
-                memory: memory,
+                crew: crew,
               ),
             ],
           ),

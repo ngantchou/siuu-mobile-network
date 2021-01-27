@@ -25,23 +25,24 @@ class OBFollowRequestNotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     var utilsService = openbookProvider.utilsService;
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
 
     var navigateToRequesterProfile = () {
       if (onPressed != null) onPressed();
       OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
       openbookProvider.navigationService.navigateToUserProfile(
-        user: followRequestNotification.followRequest.creator,
+          user: followRequestNotification.followRequest.creator,
           context: context);
     };
 
     return OBNotificationTileSkeleton(
       onTap: navigateToRequesterProfile,
       leading: OBAvatar(
-        size: OBAvatarSize.medium,
-        avatarUrl: followRequestNotification.followRequest.creator
-            .getProfileAvatar(),
+        size: OBAvatarSize.small,
+        avatarUrl:
+            followRequestNotification.followRequest.creator.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
           onUsernamePressed: navigateToRequesterProfile,
@@ -49,7 +50,8 @@ class OBFollowRequestNotificationTile extends StatelessWidget {
           text: TextSpan(
             text: _localizationService.notifications__follow_request_tile,
           )),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
+      subtitle: OBSecondaryText(
+          utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

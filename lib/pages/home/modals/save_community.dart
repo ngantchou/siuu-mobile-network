@@ -29,9 +29,9 @@ import 'package:flutter/material.dart';
 import 'package:pigment/pigment.dart';
 
 class OBSaveMemoryModal extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBSaveMemoryModal({this.memory});
+  const OBSaveMemoryModal({this.crew});
 
   @override
   OBSaveMemoryModalState createState() {
@@ -91,21 +91,21 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
     _categories = [];
 
     _formKey = GlobalKey<FormState>();
-    _isEditingExistingMemory = widget.memory != null;
+    _isEditingExistingMemory = widget.crew != null;
 
     if (_isEditingExistingMemory) {
-      _nameController.text = widget.memory.name;
-      _titleController.text = widget.memory.title;
-      _descriptionController.text = widget.memory.description;
-      _userAdjectiveController.text = widget.memory.userAdjective;
-      _usersAdjectiveController.text = widget.memory.usersAdjective;
-      _rulesController.text = widget.memory.rules;
-      _color = widget.memory.color;
-      _categories = widget.memory.categories.categories.toList();
-      _type = widget.memory.type;
-      _avatarUrl = widget.memory.avatar;
-      _coverUrl = widget.memory.cover;
-      _invitesEnabled = widget.memory.invitesEnabled;
+      _nameController.text = widget.crew.name;
+      _titleController.text = widget.crew.title;
+      _descriptionController.text = widget.crew.description;
+      _userAdjectiveController.text = widget.crew.userAdjective;
+      _usersAdjectiveController.text = widget.crew.usersAdjective;
+      _rulesController.text = widget.crew.rules;
+      _color = widget.crew.color;
+      _categories = widget.crew.categories.categories.toList();
+      _type = widget.crew.type;
+      _avatarUrl = widget.crew.avatar;
+      _coverUrl = widget.crew.cover;
+      _invitesEnabled = widget.crew.invitesEnabled;
     }
 
     _nameController.addListener(_updateFormValid);
@@ -180,9 +180,9 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
                                       .community__save_community_label_title_hint_text,
                                   prefixIcon: const OBIcon(OBIcons.memories),
                                 ),
-                                validator: (String memoryTitle) {
+                                validator: (String crewTitle) {
                                   return _validationService
-                                      .validateMemoryTitle(memoryTitle);
+                                      .validateMemoryTitle(crewTitle);
                                 }),
                             OBTextFormField(
                                 textCapitalization: TextCapitalization.none,
@@ -196,16 +196,16 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
                                     prefixText: 'c/',
                                     hintText: _localizationService
                                         .community__save_community_name_title_hint_text),
-                                validator: (String memoryName) {
+                                validator: (String crewName) {
                                   if (_takenName != null &&
-                                      _takenName == memoryName) {
+                                      _takenName == crewName) {
                                     return _localizationService
                                         .community__save_community_name_taken(
                                             _takenName);
                                   }
 
                                   return _validationService
-                                      .validateMemoryName(memoryName);
+                                      .validateMemoryName(crewName);
                                 }),
                             OBColorField(
                               initialColor: _color,
@@ -250,7 +250,7 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
                               title: _localizationService
                                   .community__save_community_name_category,
                               min: 1,
-                              max: 3,
+                              max: 1,
                               controller: _categoriesFieldController,
                               displayErrors: _formWasSubmitted,
                               onChanged: _onCategoriesChanged,
@@ -265,29 +265,29 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
                                 textInputAction: TextInputAction.newline,
                                 decoration: InputDecoration(
                                     prefixIcon:
-                                        const OBIcon(OBIcons.memoryDescription),
+                                        const OBIcon(OBIcons.crewDescription),
                                     labelText: _localizationService
                                         .community__save_community_name_label_desc_optional,
                                     hintText: _localizationService
                                         .community__save_community_name_label_desc_optional_hint_text),
-                                validator: (String memoryDescription) {
+                                validator: (String crewDescription) {
                                   return _validationService
                                       .validateMemoryDescription(
-                                          memoryDescription);
+                                          crewDescription);
                                 }),
                             OBTextFormField(
                               textCapitalization: TextCapitalization.sentences,
                               size: OBTextFormFieldSize.medium,
                               controller: _rulesController,
                               decoration: InputDecoration(
-                                  prefixIcon: const OBIcon(OBIcons.memoryRules),
+                                  prefixIcon: const OBIcon(OBIcons.crewRules),
                                   labelText: _localizationService
                                       .community__save_community_name_label_rules_optional,
                                   hintText: _localizationService
                                       .community__save_community_name_label_rules_optional_hint_text),
-                              validator: (String memoryRules) {
+                              validator: (String crewRules) {
                                 return _validationService
-                                    .validateMemoryRules(memoryRules);
+                                    .validateMemoryRules(crewRules);
                               },
                               keyboardType: TextInputType.multiline,
                               textInputAction: TextInputAction.newline,
@@ -300,33 +300,33 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
                                 controller: _userAdjectiveController,
                                 decoration: InputDecoration(
                                     prefixIcon:
-                                        const OBIcon(OBIcons.memoryMember),
+                                        const OBIcon(OBIcons.crewMember),
                                     labelText: _localizationService
                                         .community__save_community_name_label_member_adjective,
                                     hintText: _localizationService
                                         .community__save_community_name_label_member_adjective_hint_text),
-                                validator: (String memoryUserAdjective) {
+                                validator: (String crewUserAdjective) {
                                   return _validationService
                                       .validateMemoryUserAdjective(
-                                          memoryUserAdjective);
+                                          crewUserAdjective);
                                 }),
-                            OBTextFormField(
+                            /* OBTextFormField(
                                 textCapitalization:
                                     TextCapitalization.sentences,
                                 size: OBTextFormFieldSize.medium,
                                 controller: _usersAdjectiveController,
                                 decoration: InputDecoration(
                                     prefixIcon:
-                                        const OBIcon(OBIcons.memoryMembers),
+                                        const OBIcon(OBIcons.crewMembers),
                                     labelText: _localizationService
                                         .community__save_community_name_label_members_adjective,
                                     hintText: _localizationService
                                         .community__save_community_name_label_members_adjective_hint_text),
-                                validator: (String memoryUsersAdjective) {
+                                validator: (String crewUsersAdjective) {
                                   return _validationService
                                       .validateMemoryUserAdjective(
-                                          memoryUsersAdjective);
-                                }),
+                                          crewUsersAdjective);
+                                }),*/
                           ],
                         )),
                   ],
@@ -352,8 +352,8 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
           },
         ),
         title: _isEditingExistingMemory
-            ? _localizationService.community__save_community_edit_memory
-            : _localizationService.community__save_community_create_memory,
+            ? _localizationService.community__save_community_edit_crew
+            : _localizationService.community__save_community_create_crew,
         trailing: _requestInProgress
             ? OBProgressIndicator(color: actionsColor)
             : OBButton(
@@ -526,21 +526,21 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
 
     _setRequestInProgress(true);
     try {
-      var memoryName = _nameController.text;
-      //bool memoryNameTaken = await _isNameTaken(memoryName);
+      var crewName = _nameController.text;
+      //bool crewNameTaken = await _isNameTaken(crewName);
 
-      // TODO: check if memory already exist before create
+      // TODO: check if crew already exist before create
 
-      /*if (memoryNameTaken) {
-        _setTakenName(memoryName);
+      /*if (crewNameTaken) {
+        _setTakenName(crewName);
         _validateForm();
         return;
       }*/
 
-      Memory memory =
+      Memory crew =
           await (_isEditingExistingMemory ? _updateMemory() : _createMemory());
 
-      Navigator.of(context).pop(memory);
+      Navigator.of(context).pop(crew);
     } catch (error) {
       _onError(error);
     } finally {
@@ -566,8 +566,8 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
     await _updateMemoryAvatar();
     await _updateMemoryCover();
 
-    return _userService.updateMemory(widget.memory,
-        name: _nameController.text != widget.memory.name
+    return _userService.updateMemory(widget.crew,
+        name: _nameController.text != widget.crew.name
             ? _nameController.text
             : null,
         title: _titleController.text,
@@ -589,14 +589,14 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
     Future<void> updateFuture;
 
     if (!hasCover) {
-      if (widget.memory.cover != null) {
+      if (widget.crew.cover != null) {
         // Remove cover!
-        updateFuture = _userService.deleteCoverForMemory(widget.memory);
+        updateFuture = _userService.deleteCoverForMemory(widget.crew);
       }
     } else if (hasCoverFile) {
       // New cover
       updateFuture =
-          _userService.updateCoverForMemory(widget.memory, cover: _coverFile);
+          _userService.updateCoverForMemory(widget.crew, cover: _coverFile);
     } else {
       updateFuture = Future.value();
     }
@@ -612,14 +612,14 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
     Future<void> updateFuture;
 
     if (!hasAvatar) {
-      if (widget.memory.avatar != null) {
+      if (widget.crew.avatar != null) {
         // Remove avatar!
-        updateFuture = _userService.deleteAvatarForMemory(widget.memory);
+        updateFuture = _userService.deleteAvatarForMemory(widget.crew);
       }
     } else if (hasAvatarFile) {
       // New avatar
-      updateFuture = _userService.updateAvatarForMemory(widget.memory,
-          avatar: _avatarFile);
+      updateFuture =
+          _userService.updateAvatarForMemory(widget.crew, avatar: _avatarFile);
     } else {
       updateFuture = Future.value();
     }
@@ -643,12 +643,11 @@ class OBSaveMemoryModalState extends State<OBSaveMemoryModal> {
         cover: _coverFile);
   }
 
-  Future<bool> _isNameTaken(String memoryName) async {
-    if (_isEditingExistingMemory &&
-        widget.memory.name == _nameController.text) {
+  Future<bool> _isNameTaken(String crewName) async {
+    if (_isEditingExistingMemory && widget.crew.name == _nameController.text) {
       return false;
     }
-    return _validationService.isMemoryNameTaken(memoryName);
+    return _validationService.isMemoryNameTaken(crewName);
   }
 
   void _onNewColor(String newColor) {

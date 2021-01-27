@@ -54,13 +54,14 @@ class OBUserNewPostNotificationTile extends StatelessWidget {
       onTap: onTileTapped,
       leading: OBAvatar(
         onPressed: navigateToCreatorProfile,
-        size: OBAvatarSize.medium,
+        size: OBAvatarSize.small,
         avatarUrl: userNewPostNotification.post.creator.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
         onUsernamePressed: navigateToCreatorProfile,
         user: userNewPostNotification.post.creator,
-        text: TextSpan(text: _localizationService.notifications__user_new_post_tile),
+        text: TextSpan(
+            text: _localizationService.notifications__user_new_post_tile),
       ),
       trailing: postImagePreview,
       subtitle: OBSecondaryText(

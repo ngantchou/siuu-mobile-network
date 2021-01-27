@@ -34,21 +34,25 @@ class OBConnectionConfirmedNotificationTile extends StatelessWidget {
           user: connectionConfirmedNotification.connectionConfirmator,
           context: context);
     };
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     return OBNotificationTileSkeleton(
       onTap: navigateToConfirmatorProfile,
       leading: OBAvatar(
-        size: OBAvatarSize.medium,
+        size: OBAvatarSize.small,
         avatarUrl: connectionConfirmedNotification.connectionConfirmator
             .getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
         onUsernamePressed: navigateToConfirmatorProfile,
         user: connectionConfirmedNotification.connectionConfirmator,
-        text: TextSpan(text: _localizationService.notifications__accepted_connection_request_tile),
+        text: TextSpan(
+            text: _localizationService
+                .notifications__accepted_connection_request_tile),
       ),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
+      subtitle: OBSecondaryText(
+          utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

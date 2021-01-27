@@ -33,21 +33,25 @@ class OBFollowRequestApprovedNotificationTile extends StatelessWidget {
           user: followRequestApprovedNotification.follow.followedUser,
           context: context);
     };
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     return OBNotificationTileSkeleton(
       onTap: navigateToConfirmatorProfile,
       leading: OBAvatar(
-        size: OBAvatarSize.medium,
+        size: OBAvatarSize.small,
         avatarUrl: followRequestApprovedNotification.follow.followedUser
             .getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
         onUsernamePressed: navigateToConfirmatorProfile,
         user: followRequestApprovedNotification.follow.followedUser,
-        text: TextSpan(text: _localizationService.notifications__approved_follow_request_tile),
+        text: TextSpan(
+            text: _localizationService
+                .notifications__approved_follow_request_tile),
       ),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
+      subtitle: OBSecondaryText(
+          utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

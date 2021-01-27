@@ -8,7 +8,7 @@ class DocumentsService {
   static const termsOfUsePolicyUrl = 'https://siuu.fun/legal-notices/';
 
   // Cache
-  String _memoryGuidelines = '';
+  String _crewGuidelines = '';
   String _termsOfUse = '';
   String _privacyPolicy = '';
 
@@ -23,10 +23,10 @@ class DocumentsService {
   }
 
   Future<String> getMemoryGuidelines() async {
-    if (_memoryGuidelines.isNotEmpty) return _memoryGuidelines;
+    if (_crewGuidelines.isNotEmpty) return _crewGuidelines;
     HttpieResponse response = await _httpService.get(guidelinesUrl);
-    _memoryGuidelines = response.body;
-    return _memoryGuidelines;
+    _crewGuidelines = response.body;
+    return _crewGuidelines;
   }
 
   Future<String> getPrivacyPolicy() async {

@@ -188,7 +188,7 @@ class OBContextualMemorySearchBoxState
 
     _setGetAllInProgress(true);
 
-    debugLog('Refreshing all memorys');
+    debugLog('Refreshing all crews');
 
     try {
       _getAllOperation =

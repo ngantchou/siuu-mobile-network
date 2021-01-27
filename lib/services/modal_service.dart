@@ -48,7 +48,7 @@ class ModalService {
 
   Future<OBNewPostData> openCreatePost(
       {@required BuildContext context,
-      Memory memory,
+      Memory crew,
       String text,
       File image,
       File video}) async {
@@ -59,7 +59,7 @@ class ModalService {
                 builder: (BuildContext context) {
                   return Material(
                     child: OBSavePostModal(
-                      memory: memory,
+                      memory: crew,
                       text: text,
                       image: image,
                       video: video,
@@ -201,14 +201,14 @@ class ModalService {
   }
 
   Future<Memory> openEditMemory(
-      {@required BuildContext context, @required Memory memory}) async {
+      {@required BuildContext context, @required Memory crew}) async {
     Memory editedMemory = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Memory>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return Material(
                 child: OBSaveMemoryModal(
-                  memory: memory,
+                  crew: crew,
                 ),
               );
             }));
@@ -217,14 +217,14 @@ class ModalService {
   }
 
   Future<void> openInviteToMemory(
-      {@required BuildContext context, @required Memory memory}) async {
+      {@required BuildContext context, @required Memory crew}) async {
     return Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<Memory>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return Material(
                 child: OBInviteToMemoryModal(
-                  memory: memory,
+                  crew: crew,
                 ),
               );
             }));
@@ -244,7 +244,7 @@ class ModalService {
   }
 
   Future<User> openAddMemoryAdministrator(
-      {@required BuildContext context, @required Memory memory}) async {
+      {@required BuildContext context, @required Memory crew}) async {
     User addedMemoryAdministrator =
         await Navigator.of(context, rootNavigator: true)
             .push(CupertinoPageRoute<User>(
@@ -252,7 +252,7 @@ class ModalService {
                 builder: (BuildContext context) {
                   return Material(
                     child: OBAddMemoryAdministratorModal(
-                      memory: memory,
+                      crew: crew,
                     ),
                   );
                 }));
@@ -261,14 +261,14 @@ class ModalService {
   }
 
   Future<User> openAddMemoryModerator(
-      {@required BuildContext context, @required Memory memory}) async {
+      {@required BuildContext context, @required Memory crew}) async {
     User addedMemoryModerator = await Navigator.of(context, rootNavigator: true)
         .push(CupertinoPageRoute<User>(
             fullscreenDialog: true,
             builder: (BuildContext context) {
               return Material(
                 child: OBAddMemoryModeratorModal(
-                  memory: memory,
+                  crew: crew,
                 ),
               );
             }));
@@ -277,7 +277,7 @@ class ModalService {
   }
 
   Future<User> openBanMemoryUser(
-      {@required BuildContext context, @required Memory memory}) async {
+      {@required BuildContext context, @required Memory crew}) async {
     User addedMemoryBannedUser =
         await Navigator.of(context, rootNavigator: true)
             .push(CupertinoPageRoute<User>(
@@ -285,7 +285,7 @@ class ModalService {
                 builder: (BuildContext context) {
                   return Material(
                     child: OBBanMemoryUserModal(
-                      memory: memory,
+                      crew: crew,
                     ),
                   );
                 }));

@@ -3,21 +3,21 @@ import 'package:Siuu/widgets/cover.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBMemoryCover extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryCover(this.memory);
+  OBMemoryCover(this.crew);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        var memory = snapshot.data;
-        String memoryCover = memory?.cover;
+        var crew = snapshot.data;
+        String crewCover = crew?.cover;
 
         return OBCover(
-          coverUrl: memoryCover,
+          coverUrl: crewCover,
         );
       },
     );

@@ -1,20 +1,20 @@
 import 'package:Siuu/models/community_membership.dart';
 
 class MemoryMembershipList {
-  final List<MemoryMembership> memoryMemberships;
+  final List<MemoryMembership> crewMemberships;
 
   MemoryMembershipList({
-    this.memoryMemberships,
+    this.crewMemberships,
   });
 
   factory MemoryMembershipList.fromJson(List<dynamic> parsedJson) {
-    List<MemoryMembership> memoryMemberships = parsedJson
-        .map((memoryMembershipJson) =>
-            MemoryMembership.fromJSON(memoryMembershipJson))
+    List<MemoryMembership> crewMemberships = parsedJson
+        .map((crewMembershipJson) =>
+            MemoryMembership.fromJSON(crewMembershipJson))
         .toList();
 
     return new MemoryMembershipList(
-      memoryMemberships: memoryMemberships,
+      crewMemberships: crewMemberships,
     );
   }
 }

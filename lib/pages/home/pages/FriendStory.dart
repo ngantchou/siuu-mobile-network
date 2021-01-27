@@ -13,13 +13,13 @@ class _FriendStoryState extends State<FriendStory> {
   final formKey = GlobalKey<FormState>();
 
   bool expandViews;
-  bool memoryLongPress;
+  bool crewLongPress;
 
   @override
   void initState() {
     super.initState();
     expandViews = false;
-    memoryLongPress = false;
+    crewLongPress = false;
   }
 
   @override
@@ -38,12 +38,12 @@ class _FriendStoryState extends State<FriendStory> {
                 child: GestureDetector(
                   onLongPress: () {
                     setState(() {
-                      memoryLongPress = true;
+                      crewLongPress = true;
                     });
                   },
                   onLongPressEnd: (details) {
                     setState(() {
-                      memoryLongPress = false;
+                      crewLongPress = false;
                     });
                   },
                   child: Image.asset(
@@ -102,7 +102,7 @@ class _FriendStoryState extends State<FriendStory> {
                   ],
                 ),
               ),
-              memoryLongPress
+              crewLongPress
                   ? Container()
                   : Positioned(
                       bottom: 0,
@@ -137,7 +137,7 @@ class _FriendStoryState extends State<FriendStory> {
                         ),
                       ),
                     ),
-              memoryLongPress
+              crewLongPress
                   ? Container()
                   : Positioned(
                       bottom: 0,

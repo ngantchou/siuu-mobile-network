@@ -211,10 +211,10 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
   Future _createPost() async {
     Post draftPost;
 
-    if (_data.memory != null) {
-      debugLog('Creating memory post');
+    if (_data.crew != null) {
+      debugLog('Creating crew post');
 
-      draftPost = await _userService.createPostForMemory(_data.memory,
+      draftPost = await _userService.createPostForMemory(_data.crew,
           text: _data.text, isDraft: true);
     } else {
       debugLog('Creating circles post');
@@ -470,7 +470,7 @@ class OBNewPostDataUploaderState extends State<OBNewPostDataUploader>
 class OBNewPostData {
   String text;
   List<File> media;
-  Memory memory;
+  Memory crew;
   List<Circle> circles;
 
   // State persistence variables
@@ -485,7 +485,7 @@ class OBNewPostData {
   String _cachedKey;
 
   OBNewPostData(
-      {this.text, this.media, this.memory, this.circles, this.textMeta}) {
+      {this.text, this.media, this.crew, this.circles, this.textMeta}) {
     remainingMediaToCompress = media.toList();
   }
 
@@ -501,8 +501,8 @@ class OBNewPostData {
     this.circles = circles;
   }
 
-  void setMemory(Memory memory) {
-    this.memory = memory;
+  void setMemory(Memory crew) {
+    this.crew = crew;
   }
 
   void setPostMeta(PostText meta) {

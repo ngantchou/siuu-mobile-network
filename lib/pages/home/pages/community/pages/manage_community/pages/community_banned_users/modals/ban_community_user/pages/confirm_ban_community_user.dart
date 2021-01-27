@@ -13,10 +13,10 @@ import 'package:flutter/cupertino.dart';
 
 class OBConfirmBanMemoryUser<T> extends StatefulWidget {
   final User user;
-  final Memory memory;
+  final Memory crew;
 
   const OBConfirmBanMemoryUser(
-      {Key key, @required this.user, @required this.memory})
+      {Key key, @required this.user, @required this.crew})
       : super(key: key);
 
   @override
@@ -66,7 +66,7 @@ class OBConfirmBanMemoryUserState extends State<OBConfirmBanMemoryUser> {
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     OBIcon(
-                      OBIcons.memoryBannedUsers,
+                      OBIcons.crewBannedUsers,
                       themeColor: OBIconThemeColor.primaryAccent,
                       size: OBIconSize.extraLarge,
                     ),
@@ -121,8 +121,7 @@ class OBConfirmBanMemoryUserState extends State<OBConfirmBanMemoryUser> {
   void _onConfirm() async {
     _setConfirmationInProgress(true);
     try {
-      await _userService.banMemoryUser(
-          memory: widget.memory, user: widget.user);
+      await _userService.banMemoryUser(crew: widget.crew, user: widget.user);
       Navigator.of(context).pop(true);
     } catch (error) {
       _onError(error);

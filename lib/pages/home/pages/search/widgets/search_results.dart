@@ -16,7 +16,7 @@ import 'package:flutter/material.dart';
 
 class OBSearchResults extends StatefulWidget {
   final List<User> userResults;
-  final List<Memory> memoryResults;
+  final List<Memory> crewResults;
   final List<Hashtag> hashtagResults;
   final String searchQuery;
   final ValueChanged<User> onUserPressed;
@@ -26,17 +26,17 @@ class OBSearchResults extends StatefulWidget {
   final VoidCallback onScroll;
   final OBUserSearchResultsTab selectedTab;
   final bool userSearchInProgress;
-  final bool memorySearchInProgress;
+  final bool crewSearchInProgress;
   final bool hashtagSearchInProgress;
 
   const OBSearchResults(
       {Key key,
       @required this.userResults,
       this.selectedTab = OBUserSearchResultsTab.users,
-      @required this.memoryResults,
+      @required this.crewResults,
       @required this.hashtagResults,
       this.userSearchInProgress = false,
-      this.memorySearchInProgress = false,
+      this.crewSearchInProgress = false,
       this.hashtagSearchInProgress = false,
       @required this.searchQuery,
       @required this.onUserPressed,
@@ -198,17 +198,17 @@ class OBSearchResultsState extends State<OBSearchResults>
           },
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
           physics: const ClampingScrollPhysics(),
-          itemCount: widget.memoryResults.length + 1,
+          itemCount: widget.crewResults.length + 1,
           itemBuilder: (BuildContext context, int index) {
-            if (index == widget.memoryResults.length) {
+            if (index == widget.crewResults.length) {
               String searchQuery = widget.searchQuery;
-              if (widget.memorySearchInProgress) {
+              if (widget.crewSearchInProgress) {
                 // Search in progress
                 return ListTile(
                     leading: OBProgressIndicator(),
                     title: OBText(_localizationService
                         .user_search__searching_for(searchQuery)));
-              } else if (widget.memoryResults.isEmpty) {
+              } else if (widget.crewResults.isEmpty) {
                 // Results were empty
                 return ListTile(
                     leading: OBIcon(OBIcons.sad),
@@ -219,10 +219,10 @@ class OBSearchResultsState extends State<OBSearchResults>
               }
             }
 
-            Memory memory = widget.memoryResults[index];
+            Memory crew = widget.crewResults[index];
 
             return OBMemoryTile(
-              memory,
+              crew,
               onMemoryTilePressed: widget.onMemoryPressed,
             );
           }),

@@ -19,7 +19,7 @@ class Memory extends UpdatableModel<Memory> {
         result = 'P';
         break;
       default:
-        throw 'Unsupported memory type';
+        throw 'Unsupported crew type';
     }
     return result;
   }
@@ -34,7 +34,7 @@ class Memory extends UpdatableModel<Memory> {
         result = 'moderators';
         break;
       default:
-        throw 'Unsupported memory members exclusion';
+        throw 'Unsupported crew members exclusion';
     }
     return result;
   }
@@ -60,13 +60,13 @@ class Memory extends UpdatableModel<Memory> {
 
   MemoryType type;
 
-  // Whether the user has been invited to the memory
+  // Whether the user has been invited to the crew
   bool isInvited;
 
-  // Whether the user has subscribed to the memory
+  // Whether the user has subscribed to the crew
   bool areNewPostNotificationsEnabled;
 
-  // Whether the user is the creator of the memory
+  // Whether the user is the creator of the crew
   bool isCreator;
 
   bool isFavorite;
@@ -149,15 +149,15 @@ class Memory extends UpdatableModel<Memory> {
   MemoryMembership getMembershipForUser(User user) {
     if (memberships == null) return null;
 
-    int membershipIndex = memberships.memoryMemberships
-        .indexWhere((MemoryMembership memoryMembership) {
-      return memoryMembership.userId == user.id &&
-          memoryMembership.memoryId == this.id;
+    int membershipIndex = memberships.crewMemberships
+        .indexWhere((MemoryMembership crewMembership) {
+      return crewMembership.userId == user.id &&
+          crewMembership.crewId == this.id;
     });
 
     if (membershipIndex < 0) return null;
 
-    return memberships.memoryMemberships[membershipIndex];
+    return memberships.crewMemberships[membershipIndex];
   }
 
   static final factory = MemoryFactory();
@@ -187,7 +187,7 @@ class Memory extends UpdatableModel<Memory> {
       'is_reported': isReported,
       'moderators':
           moderators?.users?.map((User user) => user.toJson())?.toList(),
-      'memberships': memberships?.memoryMemberships
+      'memberships': memberships?.crewMemberships
           ?.map((MemoryMembership membership) => membership.toJson())
           ?.toList(),
       'administrators':
@@ -402,7 +402,7 @@ class MemoryFactory extends UpdatableModelFactory<Memory> {
     } else if (strType == 'T') {
       type = MemoryType.private;
     } else {
-      throw 'Unsupported memory type';
+      throw 'Unsupported crew type';
     }
 
     return type;

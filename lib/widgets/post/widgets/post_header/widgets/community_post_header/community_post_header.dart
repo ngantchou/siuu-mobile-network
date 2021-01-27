@@ -49,23 +49,23 @@ class OBMemoryPostHeader extends StatelessWidget {
     var utilsService = openbookProvider.utilsService;
 
     return StreamBuilder(
-        stream: _post.memory.updateSubject,
-        initialData: _post.memory,
+        stream: _post.crew.updateSubject,
+        initialData: _post.crew,
         builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-          Memory memory = snapshot.data;
+          Memory crew = snapshot.data;
 
           return displayContext == OBPostDisplayContext.ownProfilePosts ||
                   displayContext == OBPostDisplayContext.foreignProfilePosts
               ? _buildMemoryHighlightHeader(
                   context: context,
-                  memory: memory,
+                  crew: crew,
                   navigationService: navigationService,
                   bottomSheetService: bottomSheetService,
                   utilsService: utilsService,
                   localizationService: localizationService)
               : _buildUserHighlightHeader(
                   context: context,
-                  memory: memory,
+                  crew: crew,
                   navigationService: navigationService,
                   bottomSheetService: bottomSheetService);
         });
@@ -73,7 +73,7 @@ class OBMemoryPostHeader extends StatelessWidget {
 
   Widget _buildMemoryHighlightHeader(
       {BuildContext context,
-      Memory memory,
+      Memory crew,
       NavigationService navigationService,
       BottomSheetService bottomSheetService,
       UtilsService utilsService,
@@ -82,11 +82,10 @@ class OBMemoryPostHeader extends StatelessWidget {
 
     return ListTile(
         leading: OBMemoryAvatar(
-          memory: memory,
+          crew: crew,
           size: OBAvatarSize.medium,
           onPressed: () {
-            navigationService.navigateToMemory(
-                memory: memory, context: context);
+            navigationService.navigateToMemory(crew: crew, context: context);
           },
         ),
         trailing: hasActions
@@ -107,25 +106,23 @@ class OBMemoryPostHeader extends StatelessWidget {
             : null,
         title: GestureDetector(
           onTap: () {
-            navigationService.navigateToMemory(
-                memory: memory, context: context);
+            navigationService.navigateToMemory(crew: crew, context: context);
           },
           child: OBText(
-            memory.title,
+            crew.title,
             style: TextStyle(fontWeight: FontWeight.bold),
             overflow: TextOverflow.ellipsis,
           ),
         ),
         subtitle: GestureDetector(
           onTap: () {
-            navigationService.navigateToMemory(
-                memory: memory, context: context);
+            navigationService.navigateToMemory(crew: crew, context: context);
           },
           child: Row(
             children: <Widget>[
               Expanded(
                 child: OBSecondaryText(
-                  'c/' + memory.name + ' · $created',
+                  'c/' + crew.name + ' · $created',
                   style: TextStyle(fontSize: 12),
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -137,7 +134,7 @@ class OBMemoryPostHeader extends StatelessWidget {
 
   Widget _buildUserHighlightHeader(
       {BuildContext context,
-      Memory memory,
+      Memory crew,
       NavigationService navigationService,
       BottomSheetService bottomSheetService}) {
     return ListTile(
@@ -167,17 +164,17 @@ class OBMemoryPostHeader extends StatelessWidget {
           : null,
       title: GestureDetector(
         onTap: () {
-          navigationService.navigateToMemory(memory: memory, context: context);
+          navigationService.navigateToMemory(crew: crew, context: context);
         },
         child: Row(
           children: <Widget>[
             OBMemoryAvatar(
               borderRadius: 4,
               customSize: 16,
-              memory: memory,
+              crew: crew,
               onPressed: () {
                 navigationService.navigateToMemory(
-                    memory: memory, context: context);
+                    crew: crew, context: context);
               },
               size: OBAvatarSize.extraSmall,
             ),
@@ -186,7 +183,7 @@ class OBMemoryPostHeader extends StatelessWidget {
             ),
             Expanded(
               child: OBText(
-                'c/' + memory.name,
+                'c/' + crew.name,
                 style: TextStyle(fontWeight: FontWeight.bold),
                 overflow: TextOverflow.ellipsis,
               ),

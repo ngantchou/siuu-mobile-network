@@ -3,18 +3,18 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryTitle extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryTitle(this.memory);
+  OBMemoryTitle(this.crew);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        var memory = snapshot.data;
-        String title = memory?.title;
+        var crew = snapshot.data;
+        String title = crew?.title;
 
         if (title == null)
           return const SizedBox(

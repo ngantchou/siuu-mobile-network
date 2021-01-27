@@ -25,9 +25,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 
 class OBMemoryPage extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryPage(this.memory);
+  OBMemoryPage(this.crew);
 
   @override
   OBMemoryPageState createState() {
@@ -37,7 +37,7 @@ class OBMemoryPage extends StatefulWidget {
 
 class OBMemoryPageState extends State<OBMemoryPage>
     with TickerProviderStateMixin {
-  Memory _memory;
+  Memory _crew;
   OBPostsStreamController _obPostsStreamController;
   ScrollController _obPostsStreamScrollController;
   UserService _userService;
@@ -59,7 +59,7 @@ class OBMemoryPageState extends State<OBMemoryPage>
     _obPostsStreamScrollController = ScrollController();
     _obPostsStreamController = OBPostsStreamController();
     _needsBootstrap = true;
-    _memory = widget.memory;
+    _crew = widget.crew;
     _newPostsData = [];
 
     _hideFloatingButtonAnimation =
@@ -107,13 +107,13 @@ class OBMemoryPageState extends State<OBMemoryPage>
       _localizationService = openbookProvider.localizationService;
       _needsBootstrap = false;
 
-      // If the user doesn't have permission to view the memory we need to
+      // If the user doesn't have permission to view the crew we need to
       // manually trigger a refresh here to make sure the model contains all
-      // relevant memory information (like admins and moderators).
+      // relevant crew information (like admins and moderators).
       //
       // If the user can see the content, a refresh will be triggered
       // automatically by the OBPostsStream.
-      if (!_userCanSeeMemoryContent(_memory)) {
+      if (!_userCanSeeMemoryContent(_crew)) {
         _refreshMemory();
       }
     }
@@ -121,7 +121,7 @@ class OBMemoryPageState extends State<OBMemoryPage>
     return CupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBMemoryNavBar(
-          _memory,
+          _crew,
         ),
         child: OBPrimaryColorContainer(
           child: Column(
@@ -129,8 +129,8 @@ class OBMemoryPageState extends State<OBMemoryPage>
             children: <Widget>[
               Expanded(
                 child: StreamBuilder(
-                    stream: _memory.updateSubject,
-                    initialData: _memory,
+                    stream: _crew.updateSubject,
+                    initialData: _crew,
                     builder:
                         (BuildContext context, AsyncSnapshot<Memory> snapshot) {
                       Memory latestMemory = snapshot.data;
@@ -145,20 +145,20 @@ class OBMemoryPageState extends State<OBMemoryPage>
         ));
   }
 
-  bool _userCanSeeMemoryContent(Memory memory) {
-    bool memoryIsPrivate = memory.isPrivate();
+  bool _userCanSeeMemoryContent(Memory crew) {
+    bool crewIsPrivate = crew.isPrivate();
 
     User loggedInUser = _userService.getLoggedInUser();
-    bool userIsMember = memory.isMember(loggedInUser);
+    bool userIsMember = crew.isMember(loggedInUser);
 
-    return !memoryIsPrivate || userIsMember;
+    return !crewIsPrivate || userIsMember;
   }
 
   Widget _buildMemoryContent() {
     List<Widget> prependedItems = [
-      OBMemoryCover(_memory),
+      OBMemoryCover(_crew),
       OBMemoryCard(
-        _memory,
+        _crew,
       )
     ];
 
@@ -175,8 +175,8 @@ class OBMemoryPageState extends State<OBMemoryPage>
         refresher: _refreshMemoryPosts,
         controller: _obPostsStreamController,
         prependedItems: prependedItems,
-        displayContext: OBPostDisplayContext.memoryPosts,
-        streamIdentifier: 'community_' + widget.memory.name,
+        displayContext: OBPostDisplayContext.crewPosts,
+        streamIdentifier: 'community_' + widget.crew.name,
         secondaryRefresher: _refreshMemory,
         statusIndicatorBuilder: _buildPostsStreamStatusIndicator,
       ),
@@ -184,7 +184,7 @@ class OBMemoryPageState extends State<OBMemoryPage>
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     User loggedInUser = openbookProvider.userService.getLoggedInUser();
-    bool isMemberOfMemory = _memory.isMember(loggedInUser);
+    bool isMemberOfMemory = _crew.isMember(loggedInUser);
 
     if (isMemberOfMemory) {
       stackItems.add(Positioned(
@@ -193,7 +193,7 @@ class OBMemoryPageState extends State<OBMemoryPage>
           child: ScaleTransition(
             scale: _hideFloatingButtonAnimation,
             child: OBMemoryNewPostButton(
-              memory: _memory,
+              crew: _crew,
               onWantsToUploadNewPostData: _onWantsToUploadNewPostData,
             ),
           )));
@@ -230,19 +230,19 @@ class OBMemoryPageState extends State<OBMemoryPage>
   void _onNewPostDataUploaderPostPublished(
       Post publishedPost, OBNewPostData newPostData) {
     _removeNewPostData(newPostData);
-    _memory.incrementPostsCount();
+    _crew.incrementPostsCount();
     _obPostsStreamController.addPostToTop(publishedPost);
   }
 
   Widget _buildPrivateMemoryContent() {
-    bool memoryHasInvitesEnabled = _memory.invitesEnabled;
+    bool crewHasInvitesEnabled = _crew.invitesEnabled;
     return ListView(
       padding: EdgeInsets.all(0),
       physics: const ClampingScrollPhysics(),
       children: <Widget>[
-        OBMemoryCover(_memory),
+        OBMemoryCover(_crew),
         OBMemoryCard(
-          _memory,
+          _crew,
         ),
         Padding(
           padding: const EdgeInsets.all(20),
@@ -256,7 +256,7 @@ class OBMemoryPageState extends State<OBMemoryPage>
                   height: 10,
                 ),
                 OBText(
-                  memoryHasInvitesEnabled
+                  crewHasInvitesEnabled
                       ? _localizationService
                           .trans('community__invited_by_member')
                       : _localizationService
@@ -267,8 +267,8 @@ class OBMemoryPageState extends State<OBMemoryPage>
             ),
           ),
         ),
-        OBMemoryAdministrators(_memory),
-        OBMemoryModerators(_memory)
+        OBMemoryAdministrators(_crew),
+        OBMemoryModerators(_crew)
       ],
     );
   }
@@ -276,24 +276,24 @@ class OBMemoryPageState extends State<OBMemoryPage>
   Future<void> _refreshMemory() async {
     if (_refreshMemoryOperation != null) _refreshMemoryOperation.cancel();
     _refreshMemoryOperation = CancelableOperation.fromFuture(
-        _userService.getMemoryWithName(_memory.name));
+        _userService.getMemoryWithName(_crew.name));
     debugPrint(_localizationService.trans('community__refreshing'));
-    var memory = await _refreshMemoryOperation.value;
-    _setMemory(memory);
+    var crew = await _refreshMemoryOperation.value;
+    _setMemory(crew);
   }
 
   Future<List<Post>> _refreshMemoryPosts() async {
-    debugPrint('Refreshing memory posts');
-    PostsList memoryPosts = await _userService.getPostsForMemory(widget.memory);
-    return memoryPosts.posts;
+    debugPrint('Refreshing crew posts');
+    PostsList crewPosts = await _userService.getPostsForMemory(widget.crew);
+    return crewPosts.posts;
   }
 
-  Future<List<Post>> _loadMoreMemoryPosts(List<Post> memoryPostsList) async {
-    debugPrint('Loading more memory posts');
-    var lastMemoryPost = memoryPostsList.last;
+  Future<List<Post>> _loadMoreMemoryPosts(List<Post> crewPostsList) async {
+    debugPrint('Loading more crew posts');
+    var lastMemoryPost = crewPostsList.last;
     var lastMemoryPostId = lastMemoryPost.id;
     var moreMemoryPosts = (await _userService.getPostsForMemory(
-      widget.memory,
+      widget.crew,
       maxId: lastMemoryPostId,
       count: 10,
     ))
@@ -301,9 +301,9 @@ class OBMemoryPageState extends State<OBMemoryPage>
     return moreMemoryPosts;
   }
 
-  void _setMemory(Memory memory) {
+  void _setMemory(Memory crew) {
     setState(() {
-      _memory = memory;
+      _crew = crew;
     });
   }
 
@@ -324,11 +324,11 @@ class MemoryTabBarDelegate extends SliverPersistentHeaderDelegate {
   MemoryTabBarDelegate({
     this.controller,
     this.pageStorageKey,
-    this.memory,
+    this.crew,
   });
 
   final TabController controller;
-  final Memory memory;
+  final Memory crew;
   final PageStorageKey pageStorageKey;
 
   @override

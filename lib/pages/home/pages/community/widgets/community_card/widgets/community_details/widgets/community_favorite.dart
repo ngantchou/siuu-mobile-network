@@ -7,9 +7,9 @@ import 'package:flutter/material.dart';
 import '../../../../../../../../../provider.dart';
 
 class OBMemoryFavorite extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryFavorite(this.memory);
+  const OBMemoryFavorite(this.crew);
 
   @override
   Widget build(BuildContext context) {
@@ -17,11 +17,11 @@ class OBMemoryFavorite extends StatelessWidget {
         OpenbookProvider.of(context).localizationService;
 
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        Memory memory = snapshot.data;
-        if (memory.isFavorite == null || !memory.isFavorite)
+        Memory crew = snapshot.data;
+        if (crew.isFavorite == null || !crew.isFavorite)
           return const SizedBox();
 
         return Row(

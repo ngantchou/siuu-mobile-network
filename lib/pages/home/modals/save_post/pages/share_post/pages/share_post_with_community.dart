@@ -76,20 +76,20 @@ class OBSharePostWithMemoryPageState extends State<OBSharePostWithMemoryPage> {
 
   Widget _buildNavigationBar() {
     return OBThemedNavigationBar(
-      title: _localizationService.trans('post__share_to_community'),
+      title: _localizationService.trans('post'),
       trailing: OBButton(
         size: OBButtonSize.small,
         type: OBButtonType.primary,
         isDisabled: _chosenMemory == null,
         onPressed: createPost,
-        child: Text(_localizationService.trans('post__share_community')),
+        child: Text(_localizationService.trans('post')),
       ),
     );
   }
 
   Widget _buildMemoryItem(BuildContext context, Memory community) {
     return OBMemorySelectableTile(
-      memory: community,
+      crew: community,
       onMemoryPressed: _onMemoryPressed,
       isSelected: community == _chosenMemory,
     );

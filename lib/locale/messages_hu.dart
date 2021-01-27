@@ -87,13 +87,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m26(postCommentText) =>
       "[name] [username] válaszolt: ${postCommentText}";
 
-  static m27(memoryName) => "There was a new post in c/${memoryName}.";
+  static m27(crewName) => "There was a new post in c/${crewName}.";
 
   static m28(postCommentText) =>
       "[name] [username] megjelölt egy hozzászólásban: ${postCommentText}";
 
-  static m29(memoryName) =>
-      "[name] [username] meghívott téged a(z) /c/${memoryName} közösségbe.";
+  static m29(crewName) =>
+      "[name] [username] meghívott téged a(z) /c/${crewName} közösségbe.";
 
   static m30(maxLength) =>
       "A hozzászólás nem lehet ${maxLength} karakternél hosszabb.";
@@ -483,7 +483,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Ezáltal a tag módosíthatja a közösség beállításait, adminisztrátorait, moderátorait és letiltott felhasználóit."),
         "community__administrated_memories":
             MessageLookupByLibrary.simpleMessage("adminisztrált közösség"),
-        "community__administrated_memory":
+        "community__administrated_crew":
             MessageLookupByLibrary.simpleMessage("adminisztrált közösség"),
         "community__administrated_title":
             MessageLookupByLibrary.simpleMessage("Adminisztrált"),
@@ -524,7 +524,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Frissítés"),
         "community__memories_title":
             MessageLookupByLibrary.simpleMessage("Közösségek"),
-        "community__memory": MessageLookupByLibrary.simpleMessage("közösség"),
+        "community__crew": MessageLookupByLibrary.simpleMessage("közösség"),
         "community__community_members":
             MessageLookupByLibrary.simpleMessage("Közösség tagjai"),
         "community__community_staff":
@@ -545,13 +545,13 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Don\'t show posts from memories I\'m a member of"),
         "community__excluded_memories":
             MessageLookupByLibrary.simpleMessage("excluded memories"),
-        "community__excluded_memory":
-            MessageLookupByLibrary.simpleMessage("excluded memory"),
+        "community__excluded_crew":
+            MessageLookupByLibrary.simpleMessage("excluded crew"),
         "community__favorite_action": MessageLookupByLibrary.simpleMessage(
             "Közösség kedvencnek jelölése"),
         "community__favorite_memories":
             MessageLookupByLibrary.simpleMessage("kedvenc közösség"),
-        "community__favorite_memory":
+        "community__favorite_crew":
             MessageLookupByLibrary.simpleMessage("kedvenc közösség"),
         "community__favorites_title":
             MessageLookupByLibrary.simpleMessage("Kedvencek"),
@@ -569,15 +569,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ez a közösség zárt."),
         "community__join_memories_desc": MessageLookupByLibrary.simpleMessage(
             "Csatlakozz közösségekhez, hogy ne legyen üres ez a fül!"),
-        "community__join_memory":
+        "community__join_crew":
             MessageLookupByLibrary.simpleMessage("Csatlakozás"),
         "community__joined_memories":
             MessageLookupByLibrary.simpleMessage("csatlakozott közösség"),
-        "community__joined_memory":
+        "community__joined_crew":
             MessageLookupByLibrary.simpleMessage("csatlakozott közösség"),
         "community__joined_title":
             MessageLookupByLibrary.simpleMessage("Csatlakozott"),
-        "community__leave_memory":
+        "community__leave_crew":
             MessageLookupByLibrary.simpleMessage("Kilépés"),
         "community__leave_confirmation": MessageLookupByLibrary.simpleMessage(
             "Biztosan ki szeretnél lépni a közösségből?"),
@@ -641,7 +641,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("tag"),
         "community__moderated_memories":
             MessageLookupByLibrary.simpleMessage("moderált közösség"),
-        "community__moderated_memory":
+        "community__moderated_crew":
             MessageLookupByLibrary.simpleMessage("moderált közösség"),
         "community__moderated_title":
             MessageLookupByLibrary.simpleMessage("Moderált"),
@@ -682,11 +682,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Szabályok"),
         "community__rules_title":
             MessageLookupByLibrary.simpleMessage("Közösség szabályai"),
-        "community__save_community_create_memory":
+        "community__save_community_create_crew":
             MessageLookupByLibrary.simpleMessage("Közösség létrehozása"),
         "community__save_community_create_text":
             MessageLookupByLibrary.simpleMessage("Létrehozás"),
-        "community__save_community_edit_memory":
+        "community__save_community_edit_crew":
             MessageLookupByLibrary.simpleMessage("Közösség szerkesztése"),
         "community__save_community_label_title":
             MessageLookupByLibrary.simpleMessage("Cím"),
@@ -1057,7 +1057,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Meghívás közösségbe"),
         "notifications__community_new_post_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Be notified when there is a new post in a memory you enabled post notifications on"),
+                "Be notified when there is a new post in a crew you enabled post notifications on"),
         "notifications__community_new_post_tile": m27,
         "notifications__community_new_post_title":
             MessageLookupByLibrary.simpleMessage("Memory new post"),
@@ -1263,8 +1263,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Bejegyzés szerkesztése"),
         "post__enable_post_comments":
             MessageLookupByLibrary.simpleMessage("Hozzászólások engedélyezése"),
-        "post__exclude_post_memory": MessageLookupByLibrary.simpleMessage(
-            "Don\'t show posts from this memory"),
+        "post__exclude_post_crew": MessageLookupByLibrary.simpleMessage(
+            "Don\'t show posts from this crew"),
         "post__have_not_shared_anything": MessageLookupByLibrary.simpleMessage(
             "Még nem osztottál meg semmit sem."),
         "post__is_closed":
@@ -1301,7 +1301,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__search_circles":
             MessageLookupByLibrary.simpleMessage("Körök keresése..."),
         "post__share": MessageLookupByLibrary.simpleMessage("Megosztás"),
-        "post__share_memory": MessageLookupByLibrary.simpleMessage("Megosztás"),
+        "post__share_crew": MessageLookupByLibrary.simpleMessage("Megosztás"),
         "post__share_community_desc": MessageLookupByLibrary.simpleMessage(
             "Bejegyzés megosztása egy közösségben, amelynek tagja vagy."),
         "post__share_community_title":
@@ -1310,7 +1310,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Megosztás itt..."),
         "post__share_to_circles":
             MessageLookupByLibrary.simpleMessage("Megosztás körökben"),
-        "post__share_to_memory":
+        "post__share_to_crew":
             MessageLookupByLibrary.simpleMessage("Megosztás közösségben..."),
         "post__shared_privately_on":
             MessageLookupByLibrary.simpleMessage("Bizalmasan megosztva"),
@@ -1364,8 +1364,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Frissítés"),
         "post__trending_posts_title":
             MessageLookupByLibrary.simpleMessage("Felkapott bejegyzések"),
-        "post__undo_exclude_post_memory":
-            MessageLookupByLibrary.simpleMessage("Show posts from this memory"),
+        "post__undo_exclude_post_crew":
+            MessageLookupByLibrary.simpleMessage("Show posts from this crew"),
         "post__user_has_not_shared_anything": m34,
         "post__usernames_circles": m35,
         "post__world_circle_name":
@@ -1487,7 +1487,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user__confirm_connection_connection_confirmed":
             MessageLookupByLibrary.simpleMessage("Kapcsolat megerősítve"),
         "user__confirm_connection_with": m40,
-        "user__confirm_guidelines_reject_chat_memory":
+        "user__confirm_guidelines_reject_chat_crew":
             MessageLookupByLibrary.simpleMessage("Beszélgess a közösséggel."),
         "user__confirm_guidelines_reject_chat_immediately":
             MessageLookupByLibrary.simpleMessage(

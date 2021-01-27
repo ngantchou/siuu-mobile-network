@@ -21,9 +21,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryModeratorsPage extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryModeratorsPage({Key key, @required this.memory})
+  const OBMemoryModeratorsPage({Key key, @required this.crew})
       : super(key: key);
 
   @override
@@ -104,16 +104,16 @@ class OBMemoryModeratorsPageState extends State<OBMemoryModeratorsPage> {
     );
   }
 
-  void _onMemoryModeratorListItemPressed(User memoryModerator) {
+  void _onMemoryModeratorListItemPressed(User crewModerator) {
     _navigationService.navigateToUserProfile(
-        user: memoryModerator, context: context);
+        user: crewModerator, context: context);
   }
 
-  void _onMemoryModeratorListItemDeleted(User memoryModerator) async {
+  void _onMemoryModeratorListItemDeleted(User crewModerator) async {
     try {
       await _userService.removeMemoryModerator(
-          memory: widget.memory, user: memoryModerator);
-      _httpListController.removeListItem(memoryModerator);
+          crew: widget.crew, user: crewModerator);
+      _httpListController.removeListItem(crewModerator);
     } catch (error) {
       _onError(error);
     }
@@ -135,17 +135,17 @@ class OBMemoryModeratorsPageState extends State<OBMemoryModeratorsPage> {
   }
 
   Future<List<User>> _refreshMemoryModerators() async {
-    UsersList memoryModerators =
-        await _userService.getModeratorsForMemory(widget.memory);
-    return memoryModerators.users;
+    UsersList crewModerators =
+        await _userService.getModeratorsForMemory(widget.crew);
+    return crewModerators.users;
   }
 
   Future<List<User>> _loadMoreMemoryModerators(
-      List<User> memoryModeratorsList) async {
-    var lastMemoryModerator = memoryModeratorsList.last;
+      List<User> crewModeratorsList) async {
+    var lastMemoryModerator = crewModeratorsList.last;
     var lastMemoryModeratorId = lastMemoryModerator.id;
     var moreMemoryModerators = (await _userService.getModeratorsForMemory(
-      widget.memory,
+      widget.crew,
       maxId: lastMemoryModeratorId,
       count: 20,
     ))
@@ -155,14 +155,14 @@ class OBMemoryModeratorsPageState extends State<OBMemoryModeratorsPage> {
 
   Future<List<User>> _searchMemoryModerators(String query) async {
     UsersList results = await _userService.searchMemoryModerators(
-        query: query, memory: widget.memory);
+        query: query, crew: widget.crew);
 
     return results.users;
   }
 
   void _onWantsToAddNewModerator() async {
     User addedMemoryModerator = await _modalService.openAddMemoryModerator(
-        context: context, memory: widget.memory);
+        context: context, crew: widget.crew);
 
     if (addedMemoryModerator != null) {
       _httpListController.insertListItem(addedMemoryModerator);
@@ -171,5 +171,5 @@ class OBMemoryModeratorsPageState extends State<OBMemoryModeratorsPage> {
 }
 
 typedef Future<User> OnWantsToCreateMemoryModerator();
-typedef Future<User> OnWantsToEditMemoryModerator(User memoryModerator);
-typedef void OnWantsToSeeMemoryModerator(User memoryModerator);
+typedef Future<User> OnWantsToEditMemoryModerator(User crewModerator);
+typedef void OnWantsToSeeMemoryModerator(User crewModerator);

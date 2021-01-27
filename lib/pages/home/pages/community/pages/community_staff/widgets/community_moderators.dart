@@ -8,21 +8,21 @@ import 'package:Siuu/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryModerators extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryModerators(this.memory);
+  OBMemoryModerators(this.crew);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        var memory = snapshot.data;
+        var crew = snapshot.data;
 
-        List<User> memoryModerators = memory?.moderators?.users;
+        List<User> crewModerators = crew?.moderators?.users;
 
-        if (memoryModerators == null || memoryModerators.isEmpty)
+        if (crewModerators == null || crewModerators.isEmpty)
           return const SizedBox();
 
         return Row(
@@ -36,7 +36,7 @@ class OBMemoryModerators extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                     child: Row(children: [
                       OBIcon(
-                        OBIcons.memoryModerators,
+                        OBIcons.crewModerators,
                         size: OBIconSize.medium,
                       ),
                       const SizedBox(
@@ -56,14 +56,14 @@ class OBMemoryModerators extends StatelessWidget {
                     physics: const ClampingScrollPhysics(),
                     padding: EdgeInsets.all(0),
                     shrinkWrap: true,
-                    children: memoryModerators.map((User memoryModerator) {
+                    children: crewModerators.map((User crewModerator) {
                       return OBUserTile(
-                        memoryModerator,
+                        crewModerator,
                         onUserTilePressed: (User user) {
                           NavigationService navigationService =
                               OpenbookProvider.of(context).navigationService;
                           navigationService.navigateToUserProfile(
-                              user: memoryModerator, context: context);
+                              user: crewModerator, context: context);
                         },
                       );
                     }).toList(),

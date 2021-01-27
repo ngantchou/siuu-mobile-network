@@ -31,7 +31,7 @@ class OBPostHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return post.isMemoryPost() &&
-            displayContext != OBPostDisplayContext.memoryPosts
+            displayContext != OBPostDisplayContext.crewPosts
         ? OBMemoryPostHeader(post,
             onPostDeleted: onPostDeleted,
             onPostReported: onPostReported,

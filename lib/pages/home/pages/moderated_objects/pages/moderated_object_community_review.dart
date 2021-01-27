@@ -21,10 +21,10 @@ import 'package:flutter/material.dart';
 
 class OBModeratedObjectMemoryReviewPage extends StatefulWidget {
   final ModeratedObject moderatedObject;
-  final Memory memory;
+  final Memory crew;
 
   const OBModeratedObjectMemoryReviewPage(
-      {Key key, @required this.moderatedObject, @required this.memory})
+      {Key key, @required this.moderatedObject, @required this.crew})
       : super(key: key);
 
   @override

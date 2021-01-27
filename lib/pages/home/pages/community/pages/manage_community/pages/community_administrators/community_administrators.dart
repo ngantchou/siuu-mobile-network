@@ -21,9 +21,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryAdministratorsPage extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryAdministratorsPage({Key key, @required this.memory})
+  const OBMemoryAdministratorsPage({Key key, @required this.crew})
       : super(key: key);
 
   @override
@@ -105,16 +105,16 @@ class OBMemoryAdministratorsPageState
     );
   }
 
-  void _onMemoryAdministratorListItemPressed(User memoryAdministrator) {
+  void _onMemoryAdministratorListItemPressed(User crewAdministrator) {
     _navigationService.navigateToUserProfile(
-        user: memoryAdministrator, context: context);
+        user: crewAdministrator, context: context);
   }
 
-  void _onMemoryAdministratorListItemDeleted(User memoryAdministrator) async {
+  void _onMemoryAdministratorListItemDeleted(User crewAdministrator) async {
     try {
       await _userService.removeMemoryAdministrator(
-          memory: widget.memory, user: memoryAdministrator);
-      _httpListController.removeListItem(memoryAdministrator);
+          crew: widget.crew, user: crewAdministrator);
+      _httpListController.removeListItem(crewAdministrator);
     } catch (error) {
       _onError(error);
     }
@@ -135,18 +135,18 @@ class OBMemoryAdministratorsPageState
   }
 
   Future<List<User>> _refreshMemoryAdministrators() async {
-    UsersList memoryAdministrators =
-        await _userService.getAdministratorsForMemory(widget.memory);
-    return memoryAdministrators.users;
+    UsersList crewAdministrators =
+        await _userService.getAdministratorsForMemory(widget.crew);
+    return crewAdministrators.users;
   }
 
   Future<List<User>> _loadMoreMemoryAdministrators(
-      List<User> memoryAdministratorsList) async {
-    var lastMemoryAdministrator = memoryAdministratorsList.last;
+      List<User> crewAdministratorsList) async {
+    var lastMemoryAdministrator = crewAdministratorsList.last;
     var lastMemoryAdministratorId = lastMemoryAdministrator.id;
     var moreMemoryAdministrators =
         (await _userService.getAdministratorsForMemory(
-      widget.memory,
+      widget.crew,
       maxId: lastMemoryAdministratorId,
       count: 20,
     ))
@@ -156,14 +156,14 @@ class OBMemoryAdministratorsPageState
 
   Future<List<User>> _searchMemoryAdministrators(String query) async {
     UsersList results = await _userService.searchMemoryAdministrators(
-        query: query, memory: widget.memory);
+        query: query, crew: widget.crew);
 
     return results.users;
   }
 
   void _onWantsToAddNewAdministrator() async {
     User addedMemoryAdministrator = await _modalService
-        .openAddMemoryAdministrator(context: context, memory: widget.memory);
+        .openAddMemoryAdministrator(context: context, crew: widget.crew);
 
     if (addedMemoryAdministrator != null) {
       _httpListController.insertListItem(addedMemoryAdministrator);
@@ -172,5 +172,5 @@ class OBMemoryAdministratorsPageState
 }
 
 typedef Future<User> OnWantsToCreateMemoryAdministrator();
-typedef Future<User> OnWantsToEditMemoryAdministrator(User memoryAdministrator);
-typedef void OnWantsToSeeMemoryAdministrator(User memoryAdministrator);
+typedef Future<User> OnWantsToEditMemoryAdministrator(User crewAdministrator);
+typedef void OnWantsToSeeMemoryAdministrator(User crewAdministrator);

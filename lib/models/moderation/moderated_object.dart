@@ -27,7 +27,7 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
   static String statusRejected = 'R';
 
   final int id;
-  final Memory memory;
+  final Memory crew;
 
   dynamic contentObject;
   ModeratedObjectType type;
@@ -40,7 +40,7 @@ class ModeratedObject extends UpdatableModel<ModeratedObject> {
 
   ModeratedObject(
       {this.id,
-      this.memory,
+      this.crew,
       this.contentObject,
       this.type,
       this.status,
@@ -114,11 +114,11 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
     ModeratedObjectType type = parseType(json['object_type']);
     ModeratedObjectStatus status = parseStatus(json['status']);
     ModerationCategory category = parseModerationCategory(json['category']);
-    Memory memory = parseMemory(json['memory']);
+    Memory crew = parseMemory(json['crew']);
 
     return ModeratedObject(
         id: json['id'],
-        memory: memory,
+        crew: crew,
         category: category,
         description: json['description'],
         reportsCount: json['reports_count'],
@@ -129,9 +129,9 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
         verified: json['verified']);
   }
 
-  Memory parseMemory(Map memoryData) {
-    if (memoryData == null) return null;
-    return Memory.fromJSON(memoryData);
+  Memory parseMemory(Map crewData) {
+    if (crewData == null) return null;
+    return Memory.fromJSON(crewData);
   }
 
   ModerationCategory parseModerationCategory(Map moderationCategoryData) {
@@ -144,7 +144,7 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
 
     ModeratedObjectType moderatedObjectType;
     if (moderatedObjectTypeStr == ModeratedObject.objectTypeMemory) {
-      moderatedObjectType = ModeratedObjectType.memory;
+      moderatedObjectType = ModeratedObjectType.crew;
     } else if (moderatedObjectTypeStr == ModeratedObject.objectTypePost) {
       moderatedObjectType = ModeratedObjectType.post;
     } else if (moderatedObjectTypeStr ==
@@ -222,7 +222,7 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
     if (moderatedObjectType == null) return null;
 
     switch (moderatedObjectType) {
-      case ModeratedObjectType.memory:
+      case ModeratedObjectType.crew:
         return ModeratedObject.objectTypeMemory;
       case ModeratedObjectType.user:
         return ModeratedObject.objectTypeUser;
@@ -245,8 +245,8 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
     String result = 'object';
 
     switch (moderatedObjectType) {
-      case ModeratedObjectType.memory:
-        result = 'memory';
+      case ModeratedObjectType.crew:
+        result = 'crew';
         break;
       case ModeratedObjectType.user:
         result = 'user';
@@ -278,7 +278,7 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
       case ModeratedObjectType.postComment:
         contentObject = PostComment.fromJSON(contentObjectData);
         break;
-      case ModeratedObjectType.memory:
+      case ModeratedObjectType.crew:
         contentObject = Memory.fromJSON(contentObjectData);
         break;
       case ModeratedObjectType.user:
@@ -297,7 +297,7 @@ class ModeratedObjectFactory extends UpdatableModelFactory<ModeratedObject> {
   }
 }
 
-enum ModeratedObjectType { post, postComment, user, memory, hashtag }
+enum ModeratedObjectType { post, postComment, user, crew, hashtag }
 
 enum ModeratedObjectStatus {
   approved,

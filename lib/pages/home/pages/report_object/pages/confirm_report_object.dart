@@ -177,7 +177,7 @@ class OBConfirmReportObjectState extends State<OBConfirmReportObject> {
         _submitReportOperation = CancelableOperation.fromFuture(
             _userService.reportMemory(
                 description: _descriptionController.text,
-                memory: widget.object,
+                crew: widget.object,
                 moderationCategory: widget.category));
       } else if (widget.object is User) {
         _submitReportOperation = CancelableOperation.fromFuture(

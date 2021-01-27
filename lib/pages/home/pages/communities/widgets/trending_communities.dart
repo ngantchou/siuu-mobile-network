@@ -116,10 +116,10 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
   }
 
   Widget _buildMemory(BuildContext context, index) {
-    Memory memory = _trendingCommunities[index];
+    Memory crew = _trendingCommunities[index];
     return OBMemoryTile(
-      memory,
-      key: Key(memory.name),
+      crew,
+      key: Key(crew.name),
       onMemoryTilePressed: _onTrendingMemoryPressed,
     );
   }
@@ -169,8 +169,8 @@ class OBTrendingCommunitiesState extends State<OBTrendingCommunities>
     }
   }
 
-  void _onTrendingMemoryPressed(Memory memory) {
-    _navigationService.navigateToMemory(memory: memory, context: context);
+  void _onTrendingMemoryPressed(Memory crew) {
+    _navigationService.navigateToMemory(crew: crew, context: context);
   }
 
   void _setTrendingCommunities(List<Memory> memories) {

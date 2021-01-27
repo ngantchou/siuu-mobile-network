@@ -58,7 +58,7 @@ class OBPostReactionNotificationTile extends StatelessWidget {
       },
       leading: OBAvatar(
         onPressed: navigateToReactorProfile,
-        size: OBAvatarSize.medium,
+        size: OBAvatarSize.small,
         avatarUrl: postReaction.reactor.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(

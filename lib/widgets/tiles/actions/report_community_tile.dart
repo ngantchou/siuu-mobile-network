@@ -8,14 +8,14 @@ import 'package:Siuu/widgets/tiles/loading_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBReportMemoryTile extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
   final ValueChanged<dynamic> onMemoryReported;
   final VoidCallback onWantsToReportMemory;
 
   const OBReportMemoryTile({
     Key key,
     this.onMemoryReported,
-    @required this.memory,
+    @required this.crew,
     this.onWantsToReportMemory,
   }) : super(key: key);
 
@@ -43,12 +43,12 @@ class OBReportMemoryTileState extends State<OBReportMemoryTile> {
         openbookProvider.localizationService;
 
     return StreamBuilder(
-      stream: widget.memory.updateSubject,
-      initialData: widget.memory,
+      stream: widget.crew.updateSubject,
+      initialData: widget.crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        var memory = snapshot.data;
+        var crew = snapshot.data;
 
-        bool isReported = memory.isReported ?? false;
+        bool isReported = crew.isReported ?? false;
 
         return OBLoadingTile(
           isLoading: _requestInProgress || isReported,
@@ -67,7 +67,7 @@ class OBReportMemoryTileState extends State<OBReportMemoryTile> {
     if (widget.onWantsToReportMemory != null) widget.onWantsToReportMemory();
     _navigationService.navigateToReportObject(
         context: context,
-        object: widget.memory,
+        object: widget.crew,
         onObjectReported: widget.onMemoryReported);
   }
 }

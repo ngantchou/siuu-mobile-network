@@ -52,7 +52,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   UserPreferencesService _userPreferencesService;
   ShareService _shareService;
   MediaService _mediaService;
-
+  bool preventCloseApp = false;
   int _currentIndex;
   int _lastIndex;
   bool _needsBootstrap;
@@ -224,7 +224,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
                     style: TextStyle(
                       fontFamily: "Segoe UI",
                       fontSize: 12,
-                      color: color != null? color : Color(0xff78849e),
+                      color: color != null ? color : Color(0xff78849e),
                     ),
                   ),
                 )
@@ -484,16 +484,42 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
 
     bool canPopRootRoute = Navigator.of(context, rootNavigator: true).canPop();
     bool canPopRoute = currentTabController.canPop();
-    bool preventCloseApp = false;
 
     if (canPopRoute && !canPopRootRoute) {
       currentTabController.pop();
       // Stop default
-      preventCloseApp = true;
+
+      willQuitApp();
     }
 
     // Close the app
     return preventCloseApp;
+  }
+
+  void willQuitApp() async {
+    final value = await showDialog<bool>(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            content: Text('Are you sure you want to exit?'),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('No'),
+                onPressed: () {
+                  Navigator.of(context).pop(false);
+                },
+              ),
+              FlatButton(
+                child: Text('Yes, exit'),
+                onPressed: () {
+                  Navigator.of(context).pop(true);
+                },
+              ),
+            ],
+          );
+        });
+
+    preventCloseApp = value == true;
   }
 
   void _onLoggedInUserChange(User newUser) async {
@@ -541,7 +567,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
 
   void _onPushNotificationOpened(
       PushNotificationOpenedResult pushNotificationOpenedResult) {
-    //_navigateToTab(OBHomePageTabs.notifications);
+    _navigateToTab(OBHomePageTabs.notifications);
   }
 
   Future<bool> _onShare({String text, File image, File video}) async {
@@ -622,4 +648,4 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
   }
 }
 
-enum OBHomePageTabs { timeline, search, memories, notifications, menu }
+enum OBHomePageTabs { timeline, search, memories, menu, notifications }

@@ -77,13 +77,13 @@ class OBPostActionsBottomSheetState extends State<OBPostActionsBottomSheet> {
               post: post,
               onExcludedPostMemory: () {
                 if (widget.onMemoryExcluded != null) {
-                  widget.onMemoryExcluded(post.memory);
+                  widget.onMemoryExcluded(post.crew);
                 }
                 _dismiss();
               },
               onUndoExcludedPostMemory: () {
                 if (widget.onUndoMemoryExcluded != null) {
-                  widget.onUndoMemoryExcluded(post.memory);
+                  widget.onUndoMemoryExcluded(post.crew);
                 }
                 _dismiss();
               },

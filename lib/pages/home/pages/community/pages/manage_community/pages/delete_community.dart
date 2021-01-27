@@ -11,9 +11,9 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBDeleteMemoryPage<T> extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBDeleteMemoryPage({Key key, @required this.memory}) : super(key: key);
+  const OBDeleteMemoryPage({Key key, @required this.crew}) : super(key: key);
 
   @override
   OBDeleteMemoryPageState createState() {
@@ -115,12 +115,12 @@ class OBDeleteMemoryPageState extends State<OBDeleteMemoryPage> {
   void _onConfirm() async {
     _setConfirmationInProgress(true);
     try {
-      await _userService.deleteMemory(widget.memory);
-      // Pop back to manage memory
+      await _userService.deleteMemory(widget.crew);
+      // Pop back to manage crew
       Navigator.of(context).pop();
-      // Pop back to deleted memory
+      // Pop back to deleted crew
       Navigator.of(context).pop();
-      // Pop out of deleted memory
+      // Pop out of deleted crew
       Navigator.of(context).pop();
     } catch (error) {
       _onError(error);

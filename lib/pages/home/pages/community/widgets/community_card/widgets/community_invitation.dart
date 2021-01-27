@@ -5,18 +5,18 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryInvitation extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryInvitation(this.memory);
+  OBMemoryInvitation(this.crew);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        Memory memory = snapshot.data;
-        bool isInvited = memory?.isInvited;
+        Memory crew = snapshot.data;
+        bool isInvited = crew?.isInvited;
 
         if (isInvited == null) return const SizedBox();
 
@@ -29,7 +29,7 @@ class OBMemoryInvitation extends StatelessWidget {
               child: Column(
                 children: <Widget>[
                   OBText(
-                    'You have been invited to join the memory.',
+                    'You have been invited to join the crew.',
                     maxLines: 4,
                     size: OBTextSize.medium,
                     overflow: TextOverflow.ellipsis,
@@ -40,7 +40,7 @@ class OBMemoryInvitation extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: <Widget>[
-                      OBJoinMemoryButton(memory),
+                      OBJoinMemoryButton(crew),
                     ],
                   )
                 ],

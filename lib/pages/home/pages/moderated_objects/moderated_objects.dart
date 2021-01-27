@@ -21,9 +21,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBModeratedObjectsPage extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBModeratedObjectsPage({Key key, this.memory}) : super(key: key);
+  const OBModeratedObjectsPage({Key key, this.crew}) : super(key: key);
 
   @override
   OBModeratedObjectsPageState createState() {
@@ -36,7 +36,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
 
   OBModeratedObjectsPageController _controller;
 
-  Memory _memory;
+  Memory _crew;
   OBModeratedObjectsFilters _filters;
   ScrollController _scrollController;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -58,9 +58,9 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
   @override
   void initState() {
     super.initState();
-    _memory = widget.memory;
+    _crew = widget.crew;
     _filters = OBModeratedObjectsFilters.makeDefault(
-        isGlobalModeration: widget.memory == null);
+        isGlobalModeration: widget.crew == null);
     _controller = OBModeratedObjectsPageController(state: this);
     _scrollController = ScrollController();
     _moderatedObjects = [];
@@ -92,7 +92,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
     return CupertinoPageScaffold(
         backgroundColor: Color.fromARGB(0, 0, 0, 0),
         navigationBar: OBThemedNavigationBar(
-          title: widget.memory != null
+          title: widget.crew != null
               ? _localizationService.moderation__community_moderated_objects
               : _localizationService.moderation__globally_moderated_objects,
           trailing: _buildFiltersButton(),
@@ -146,7 +146,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
 
     return OBModeratedObject(
         moderatedObject: moderatedObject,
-        memory: widget.memory,
+        crew: widget.crew,
         key: Key(moderatedObject.id.toString()));
   }
 
@@ -206,7 +206,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
   Future<void> _refreshModeratedObjects() async {
     _setRefreshModeratedObjectsInProgress(true);
     try {
-      if (widget.memory == null) {
+      if (widget.crew == null) {
         _refreshModeratedObjectsOperation = CancelableOperation.fromFuture(
             _userService.getGlobalModeratedObjects(
                 count: itemsLoadMoreCount,
@@ -216,7 +216,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
       } else {
         _refreshModeratedObjectsOperation = CancelableOperation.fromFuture(
             _userService.getMemoryModeratedObjects(
-                memory: widget.memory,
+                crew: widget.crew,
                 count: itemsLoadMoreCount,
                 verified: _filters.onlyVerified,
                 statuses: _filters.statuses,
@@ -243,7 +243,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
     }
 
     try {
-      if (widget.memory == null) {
+      if (widget.crew == null) {
         _loadMoreOperation = CancelableOperation.fromFuture(
             _userService.getGlobalModeratedObjects(
                 maxId: lastModeratedObjectId,
@@ -254,7 +254,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
       } else {
         _loadMoreOperation = CancelableOperation.fromFuture(
             _userService.getMemoryModeratedObjects(
-                memory: _memory,
+                crew: _crew,
                 maxId: lastModeratedObjectId,
                 count: itemsLoadMoreCount,
                 verified: _filters.onlyVerified,
@@ -306,7 +306,7 @@ class OBModeratedObjectsPageState extends State<OBModeratedObjectsPage> {
   }
 
   bool hasMemory() {
-    return _memory != null;
+    return _crew != null;
   }
 
   void _onError(error) async {
@@ -341,7 +341,7 @@ class OBModeratedObjectsFilters {
     if (isGlobalModeration) {
       filterTypes.addAll([
         ModeratedObjectType.user,
-        ModeratedObjectType.memory,
+        ModeratedObjectType.crew,
         ModeratedObjectType.hashtag
       ]);
       filterStatuses.addAll(

@@ -11,7 +11,7 @@ String modelTypeToString(dynamic modelInstance, {bool capitalize = false}) {
   } else if (modelInstance is PostComment) {
     result = 'post comment';
   } else if (modelInstance is Memory) {
-    result = 'memory';
+    result = 'crew';
   } else if (modelInstance is User) {
     result = 'user';
   } else {

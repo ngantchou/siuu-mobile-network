@@ -9,7 +9,7 @@ class CommunitiesList {
 
   factory CommunitiesList.fromJson(List<dynamic> parsedJson) {
     List<Memory> memories =
-        parsedJson.map((memoryJson) => Memory.fromJSON(memoryJson)).toList();
+        parsedJson.map((crewJson) => Memory.fromJSON(crewJson)).toList();
 
     return new CommunitiesList(
       memories: memories,

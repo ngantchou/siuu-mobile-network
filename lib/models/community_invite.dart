@@ -4,19 +4,19 @@ import 'package:Siuu/models/user.dart';
 class MemoryInvite {
   final int id;
   final int creatorId;
-  final int memoryId;
+  final int crewId;
   final int invitedUserId;
 
   User invitedUser;
   User creator;
-  Memory memory;
+  Memory crew;
 
   MemoryInvite(
       {this.id,
       this.creatorId,
       this.invitedUserId,
-      this.memoryId,
-      this.memory,
+      this.crewId,
+      this.crew,
       this.invitedUser,
       this.creator});
 
@@ -30,16 +30,16 @@ class MemoryInvite {
     if (parsedJson.containsKey('creator'))
       creator = User.fromJson(parsedJson['creator']);
 
-    Memory memory;
-    if (parsedJson.containsKey('memory'))
-      memory = Memory.fromJSON(parsedJson['memory']);
+    Memory crew;
+    if (parsedJson.containsKey('crew'))
+      crew = Memory.fromJSON(parsedJson['crew']);
 
     return MemoryInvite(
         id: parsedJson['id'],
-        memoryId: parsedJson['community_id'],
+        crewId: parsedJson['community_id'],
         creatorId: parsedJson['creator_id'],
         invitedUserId: parsedJson['invited_user_id'],
-        memory: memory,
+        crew: crew,
         invitedUser: invitedUser,
         creator: creator);
   }
@@ -49,8 +49,8 @@ class MemoryInvite {
       'id': id,
       'creator_id': creatorId,
       'invited_user_id': invitedUserId,
-      'community_id': memoryId,
-      'memory': memory?.toJson(),
+      'community_id': crewId,
+      'crew': crew?.toJson(),
       'invited_user': invitedUser?.toJson(),
       'creator': creator?.toJson()
     };

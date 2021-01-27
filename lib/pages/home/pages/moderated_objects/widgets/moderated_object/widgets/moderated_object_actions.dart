@@ -8,11 +8,11 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBModeratedObjectActions extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
   final ModeratedObject moderatedObject;
 
   OBModeratedObjectActions(
-      {@required this.memory, @required this.moderatedObject});
+      {@required this.crew, @required this.moderatedObject});
 
   @override
   Widget build(BuildContext context) {
@@ -39,11 +39,11 @@ class OBModeratedObjectActions extends StatelessWidget {
               onPressed: () {
                 OpenbookProviderState openbookProvider =
                     OpenbookProvider.of(context);
-                if (memory != null) {
+                if (crew != null) {
                   openbookProvider.navigationService
                       .navigateToModeratedObjectMemoryReview(
                           moderatedObject: moderatedObject,
-                          memory: memory,
+                          crew: crew,
                           context: context);
                 } else {
                   openbookProvider.navigationService

@@ -88,7 +88,7 @@ class OBConfirmRejectGuidelinesState extends State<OBConfirmRejectGuidelines> {
                     ListTile(
                       leading: const OBIcon(OBIcons.slackChannel),
                       title: OBText(localizationService
-                          .user__confirm_guidelines_reject_chat_memory),
+                          .user__confirm_guidelines_reject_chat_crew),
                       subtitle: OBSecondaryText(localizationService
                           .user__confirm_guidelines_reject_join_slack),
                       onTap: () {

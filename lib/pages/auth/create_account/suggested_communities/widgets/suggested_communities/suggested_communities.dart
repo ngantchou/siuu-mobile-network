@@ -79,16 +79,16 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
   }
 
   Widget _buildMemory(BuildContext context, index) {
-    Memory memory = _suggestedCommunities[index];
+    Memory crew = _suggestedCommunities[index];
 
-    //bool memoryIsJoined = _selectedCommunities?.contains(memory);
+    //bool crewIsJoined = _selectedCommunities?.contains(crew);
 
     return OBMemoryTile(
-      memory,
+      crew,
       size: OBMemoryTileSize.normal,
       trailing: OBJoinMemoryButton(
-        memory,
-        memoryThemed: false,
+        crew,
+        crewThemed: false,
       ),
     );
   }

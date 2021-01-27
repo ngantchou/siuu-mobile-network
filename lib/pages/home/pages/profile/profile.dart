@@ -229,7 +229,7 @@ class OBProfilePageState extends State<OBProfilePage> {
     OBPostDisplayContext displayContext,
     ValueChanged<Post> onPostDeleted,
   }) {
-    return _recentlyExcludedCommunities.contains(post.memory)
+    return _recentlyExcludedCommunities.contains(post.crew)
         ? const SizedBox()
         : OBPost(
             post,

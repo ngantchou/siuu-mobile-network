@@ -88,13 +88,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m26(postCommentText) =>
       "[name] [username] yanıtladı: ${postCommentText}";
 
-  static m27(memoryName) => "There was a new post in c/${memoryName}.";
+  static m27(crewName) => "There was a new post in c/${crewName}.";
 
   static m28(postCommentText) =>
       "[name] [username] bir yorumda sizden bahsetti: ${postCommentText}";
 
-  static m29(memoryName) =>
-      "[name] [username] sizi /c/${memoryName} topluluğuna davet etti.";
+  static m29(crewName) =>
+      "[name] [username] sizi /c/${crewName} topluluğuna davet etti.";
 
   static m30(maxLength) =>
       "Yorum kısmı ${maxLength} karakterden daha uzun olamaz.";
@@ -484,7 +484,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Bu, üyenin topluluk ayrıntılarını, yöneticileri, moderatörleri ve engelli kullanıcıları düzenlemesini sağlar."),
         "community__administrated_memories":
             MessageLookupByLibrary.simpleMessage("yönetilen topluluklar"),
-        "community__administrated_memory":
+        "community__administrated_crew":
             MessageLookupByLibrary.simpleMessage("yönetilen topluluk"),
         "community__administrated_title":
             MessageLookupByLibrary.simpleMessage("Yönetilen"),
@@ -526,7 +526,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Yenile"),
         "community__memories_title":
             MessageLookupByLibrary.simpleMessage("Topluluklar"),
-        "community__memory": MessageLookupByLibrary.simpleMessage("topluluk"),
+        "community__crew": MessageLookupByLibrary.simpleMessage("topluluk"),
         "community__community_members":
             MessageLookupByLibrary.simpleMessage("Topluluk üyeleri"),
         "community__community_staff":
@@ -547,13 +547,13 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Don\'t show posts from memories I\'m a member of"),
         "community__excluded_memories":
             MessageLookupByLibrary.simpleMessage("excluded memories"),
-        "community__excluded_memory":
-            MessageLookupByLibrary.simpleMessage("excluded memory"),
+        "community__excluded_crew":
+            MessageLookupByLibrary.simpleMessage("excluded crew"),
         "community__favorite_action":
             MessageLookupByLibrary.simpleMessage("Favori topluluk"),
         "community__favorite_memories":
             MessageLookupByLibrary.simpleMessage("favori topluluklar"),
-        "community__favorite_memory":
+        "community__favorite_crew":
             MessageLookupByLibrary.simpleMessage("favori topluluk"),
         "community__favorites_title":
             MessageLookupByLibrary.simpleMessage("Favoriler"),
@@ -571,15 +571,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Bu topluluk özel."),
         "community__join_memories_desc": MessageLookupByLibrary.simpleMessage(
             "Bu sekmeyi canlandırmak için topluluklara katılın!"),
-        "community__join_memory": MessageLookupByLibrary.simpleMessage("Katıl"),
+        "community__join_crew": MessageLookupByLibrary.simpleMessage("Katıl"),
         "community__joined_memories":
             MessageLookupByLibrary.simpleMessage("topluluklara katıldın"),
-        "community__joined_memory":
+        "community__joined_crew":
             MessageLookupByLibrary.simpleMessage("topluluğa katıldın"),
         "community__joined_title":
             MessageLookupByLibrary.simpleMessage("Katıldın"),
-        "community__leave_memory":
-            MessageLookupByLibrary.simpleMessage("Ayrıl"),
+        "community__leave_crew": MessageLookupByLibrary.simpleMessage("Ayrıl"),
         "community__leave_confirmation": MessageLookupByLibrary.simpleMessage(
             "Topluluktan ayrılmak istediğinden emin misin?"),
         "community__leave_desc": MessageLookupByLibrary.simpleMessage(
@@ -644,7 +643,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Üyeler"),
         "community__moderated_memories":
             MessageLookupByLibrary.simpleMessage("denetlediğin topluluklar"),
-        "community__moderated_memory":
+        "community__moderated_crew":
             MessageLookupByLibrary.simpleMessage("denetlediğin topluluk"),
         "community__moderated_title":
             MessageLookupByLibrary.simpleMessage("Denetlediğin"),
@@ -686,11 +685,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Kurallar"),
         "community__rules_title":
             MessageLookupByLibrary.simpleMessage("Topluluk kuralları"),
-        "community__save_community_create_memory":
+        "community__save_community_create_crew":
             MessageLookupByLibrary.simpleMessage("Topluluk oluştur"),
         "community__save_community_create_text":
             MessageLookupByLibrary.simpleMessage("Oluştur"),
-        "community__save_community_edit_memory":
+        "community__save_community_edit_crew":
             MessageLookupByLibrary.simpleMessage("Topluluğu düzenle"),
         "community__save_community_label_title":
             MessageLookupByLibrary.simpleMessage("Başlık"),
@@ -1065,7 +1064,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Topluluk daveti"),
         "notifications__community_new_post_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Be notified when there is a new post in a memory you enabled post notifications on"),
+                "Be notified when there is a new post in a crew you enabled post notifications on"),
         "notifications__community_new_post_tile": m27,
         "notifications__community_new_post_title":
             MessageLookupByLibrary.simpleMessage("Memory new post"),
@@ -1260,8 +1259,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Gönderiyi düzenle"),
         "post__enable_post_comments": MessageLookupByLibrary.simpleMessage(
             "Yorum gönderilmesini etkinleştirin"),
-        "post__exclude_post_memory": MessageLookupByLibrary.simpleMessage(
-            "Don\'t show posts from this memory"),
+        "post__exclude_post_crew": MessageLookupByLibrary.simpleMessage(
+            "Don\'t show posts from this crew"),
         "post__have_not_shared_anything": MessageLookupByLibrary.simpleMessage(
             "Henüz hiçbir şey paylaşmadınız."),
         "post__is_closed": MessageLookupByLibrary.simpleMessage("Yorumu kapat"),
@@ -1295,7 +1294,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__search_circles":
             MessageLookupByLibrary.simpleMessage("Çevreleri ara..."),
         "post__share": MessageLookupByLibrary.simpleMessage("Paylaş"),
-        "post__share_memory": MessageLookupByLibrary.simpleMessage("Paylaş"),
+        "post__share_crew": MessageLookupByLibrary.simpleMessage("Paylaş"),
         "post__share_community_desc": MessageLookupByLibrary.simpleMessage(
             "Gönderiyi parçası olduğunuz bir toplulukta paylaşın."),
         "post__share_community_title":
@@ -1303,7 +1302,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__share_to": MessageLookupByLibrary.simpleMessage("Paylaşın"),
         "post__share_to_circles":
             MessageLookupByLibrary.simpleMessage("Çevreleri paylaş"),
-        "post__share_to_memory":
+        "post__share_to_crew":
             MessageLookupByLibrary.simpleMessage("Toplulukta paylaş"),
         "post__shared_privately_on":
             MessageLookupByLibrary.simpleMessage("Özel olarak paylaşıldı"),
@@ -1356,8 +1355,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Yenile"),
         "post__trending_posts_title":
             MessageLookupByLibrary.simpleMessage("Popüler gönderiler"),
-        "post__undo_exclude_post_memory":
-            MessageLookupByLibrary.simpleMessage("Show posts from this memory"),
+        "post__undo_exclude_post_crew":
+            MessageLookupByLibrary.simpleMessage("Show posts from this crew"),
         "post__user_has_not_shared_anything": m34,
         "post__usernames_circles": m35,
         "post__world_circle_name":
@@ -1473,7 +1472,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user__confirm_connection_connection_confirmed":
             MessageLookupByLibrary.simpleMessage("Bağlantı onaylandı"),
         "user__confirm_connection_with": m40,
-        "user__confirm_guidelines_reject_chat_memory":
+        "user__confirm_guidelines_reject_chat_crew":
             MessageLookupByLibrary.simpleMessage("Topluluk ile sohbet edin."),
         "user__confirm_guidelines_reject_chat_immediately":
             MessageLookupByLibrary.simpleMessage("Hemen bir sohbet başlat."),

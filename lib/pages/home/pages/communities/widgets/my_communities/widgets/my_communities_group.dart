@@ -14,11 +14,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMyCommunitiesGroup extends StatefulWidget {
-  final OBHttpListRefresher<Memory> memoryGroupListRefresher;
-  final OBHttpListSearcher<Memory> memoryGroupListSearcher;
-  final OBHttpListItemBuilder<Memory> memoryGroupListItemBuilder;
-  final OBHttpListItemBuilder<Memory> memorySearchResultListItemBuilder;
-  final OBHttpListOnScrollLoader<Memory> memoryGroupListOnScrollLoader;
+  final OBHttpListRefresher<Memory> crewGroupListRefresher;
+  final OBHttpListSearcher<Memory> crewGroupListSearcher;
+  final OBHttpListItemBuilder<Memory> crewGroupListItemBuilder;
+  final OBHttpListItemBuilder<Memory> crewSearchResultListItemBuilder;
+  final OBHttpListOnScrollLoader<Memory> crewGroupListOnScrollLoader;
   final OBMyCommunitiesGroupFallbackBuilder noGroupItemsFallbackBuilder;
   final OBMyCommunitiesGroupController controller;
   final String groupItemName;
@@ -28,15 +28,15 @@ class OBMyCommunitiesGroup extends StatefulWidget {
 
   const OBMyCommunitiesGroup({
     Key key,
-    @required this.memoryGroupListRefresher,
-    @required this.memoryGroupListOnScrollLoader,
+    @required this.crewGroupListRefresher,
+    @required this.crewGroupListOnScrollLoader,
     @required this.groupItemName,
     @required this.groupName,
     @required this.title,
     @required this.maxGroupListPreviewItems,
-    @required this.memoryGroupListItemBuilder,
-    this.memoryGroupListSearcher,
-    this.memorySearchResultListItemBuilder,
+    @required this.crewGroupListItemBuilder,
+    this.crewGroupListSearcher,
+    this.crewSearchResultListItemBuilder,
     this.noGroupItemsFallbackBuilder,
     this.controller,
   }) : super(key: key);
@@ -52,7 +52,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   ToastService _toastService;
   NavigationService _navigationService;
   LocalizationService _localizationService;
-  List<Memory> _memoryGroupList;
+  List<Memory> _crewGroupList;
   bool _refreshInProgress;
   CancelableOperation _refreshOperation;
 
@@ -61,7 +61,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
     super.initState();
     if (widget.controller != null) widget.controller.attach(this);
     _needsBootstrap = true;
-    _memoryGroupList = [];
+    _crewGroupList = [];
     _refreshInProgress = false;
   }
 
@@ -76,10 +76,9 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
       _needsBootstrap = false;
     }
 
-    int listItemCount =
-        _memoryGroupList.length < widget.maxGroupListPreviewItems
-            ? _memoryGroupList.length
-            : widget.maxGroupListPreviewItems;
+    int listItemCount = _crewGroupList.length < widget.maxGroupListPreviewItems
+        ? _crewGroupList.length
+        : widget.maxGroupListPreviewItems;
 
     if (listItemCount == 0) {
       if (widget.noGroupItemsFallbackBuilder != null && !_refreshInProgress) {
@@ -107,7 +106,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
           itemBuilder: _buildGroupListPreviewItem),
     ];
 
-    if (_memoryGroupList.length > widget.maxGroupListPreviewItems) {
+    if (_crewGroupList.length > widget.maxGroupListPreviewItems) {
       columnItems.add(_buildSeeAllButton());
     }
 
@@ -148,8 +147,8 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
   }
 
   Widget _buildGroupListPreviewItem(BuildContext context, index) {
-    Memory memory = _memoryGroupList[index];
-    return widget.memoryGroupListItemBuilder(context, memory);
+    Memory crew = _crewGroupList[index];
+    return widget.crewGroupListItemBuilder(context, crew);
   }
 
   Widget _buildMemorySeparator(BuildContext context, int index) {
@@ -167,7 +166,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
     _setRefreshInProgress(true);
     try {
       _refreshOperation =
-          CancelableOperation.fromFuture(widget.memoryGroupListRefresher());
+          CancelableOperation.fromFuture(widget.crewGroupListRefresher());
 
       List<Memory> groupCommunities = await _refreshOperation.value;
 
@@ -210,12 +209,12 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
           padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 0.0),
           child: OBHttpList<Memory>(
               separatorBuilder: _buildMemorySeparator,
-              listItemBuilder: widget.memoryGroupListItemBuilder,
-              listRefresher: widget.memoryGroupListRefresher,
-              listSearcher: widget.memoryGroupListSearcher,
+              listItemBuilder: widget.crewGroupListItemBuilder,
+              listRefresher: widget.crewGroupListRefresher,
+              listSearcher: widget.crewGroupListSearcher,
               searchResultListItemBuilder:
-                  widget.memorySearchResultListItemBuilder,
-              listOnScrollLoader: widget.memoryGroupListOnScrollLoader,
+                  widget.crewSearchResultListItemBuilder,
+              listOnScrollLoader: widget.crewGroupListOnScrollLoader,
               resourcePluralName: widget.groupName,
               resourceSingularName: widget.groupItemName),
         )),
@@ -225,7 +224,7 @@ class OBMyCommunitiesGroupState extends State<OBMyCommunitiesGroup> {
 
   void _setMemoryGroupList(List<Memory> memories) {
     setState(() {
-      _memoryGroupList = memories;
+      _crewGroupList = memories;
     });
   }
 

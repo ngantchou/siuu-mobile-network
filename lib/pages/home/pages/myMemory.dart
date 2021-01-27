@@ -6,9 +6,9 @@ import 'package:flutter_xlider/flutter_xlider.dart';
 import 'dart:math' as math;
 
 class MyMemory extends StatefulWidget {
-  final Widget memory;
+  final Widget crew;
 
-  MyMemory({this.memory});
+  MyMemory({this.crew});
   @override
   _MyMemoryState createState() => _MyMemoryState();
 }
@@ -17,7 +17,7 @@ class _MyMemoryState extends State<MyMemory> {
   final formKey = GlobalKey<FormState>();
 
   bool expandViews;
-  bool memoryLongPress;
+  bool crewLongPress;
 
   bool isFollowed;
 
@@ -26,7 +26,7 @@ class _MyMemoryState extends State<MyMemory> {
     super.initState();
     isFollowed = false;
     expandViews = false;
-    memoryLongPress = false;
+    crewLongPress = false;
   }
 
   @override
@@ -45,12 +45,12 @@ class _MyMemoryState extends State<MyMemory> {
                 child: GestureDetector(
                   onLongPress: () {
                     setState(() {
-                      memoryLongPress = true;
+                      crewLongPress = true;
                     });
                   },
                   onLongPressEnd: (details) {
                     setState(() {
-                      memoryLongPress = false;
+                      crewLongPress = false;
                     });
                   },
                   child: Image.asset(
@@ -109,7 +109,7 @@ class _MyMemoryState extends State<MyMemory> {
                   ],
                 ),
               ),
-              memoryLongPress
+              crewLongPress
                   ? Container()
                   : Positioned(
                       bottom: 0,
@@ -186,7 +186,7 @@ class _MyMemoryState extends State<MyMemory> {
                         ),
                       ),
                     )
-                  : memoryLongPress
+                  : crewLongPress
                       ? Container()
                       : Positioned(
                           bottom: 0,

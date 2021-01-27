@@ -6,22 +6,22 @@ import 'package:Siuu/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryButtons extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryButtons({Key key, this.memory}) : super(key: key);
+  const OBMemoryButtons({Key key, this.crew}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> memoryButtons = [];
+    List<Widget> crewButtons = [];
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     LocalizationService localizationService =
         openbookProvider.localizationService;
-    memoryButtons.add(
+    crewButtons.add(
       OBButton(
         child: Row(
           children: <Widget>[
             const OBIcon(
-              OBIcons.memoryStaff,
+              OBIcons.crewStaff,
               size: OBIconSize.small,
             ),
             const SizedBox(
@@ -32,14 +32,14 @@ class OBMemoryButtons extends StatelessWidget {
         ),
         onPressed: () async {
           openbookProvider.navigationService
-              .navigateToMemoryStaffPage(context: context, memory: memory);
+              .navigateToMemoryStaffPage(context: context, crew: crew);
         },
         type: OBButtonType.highlight,
       ),
     );
 
-    if (memory.rules != null && memory.rules.isNotEmpty) {
-      memoryButtons.add(
+    if (crew.rules != null && crew.rules.isNotEmpty) {
+      crewButtons.add(
         OBButton(
           child: Row(
             children: <Widget>[
@@ -55,7 +55,7 @@ class OBMemoryButtons extends StatelessWidget {
           ),
           onPressed: () async {
             openbookProvider.navigationService
-                .navigateToMemoryRulesPage(context: context, memory: memory);
+                .navigateToMemoryRulesPage(context: context, crew: crew);
           },
           type: OBButtonType.highlight,
         ),
@@ -68,10 +68,10 @@ class OBMemoryButtons extends StatelessWidget {
         height: 35,
         child: ListView.separated(
           physics: const ClampingScrollPhysics(),
-          itemCount: memoryButtons.length,
+          itemCount: crewButtons.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (BuildContext context, index) {
-            return memoryButtons[index];
+            return crewButtons[index];
           },
           separatorBuilder: (BuildContext context, index) {
             return const SizedBox(

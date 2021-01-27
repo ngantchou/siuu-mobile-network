@@ -214,7 +214,7 @@ class _VoiceMemoryState extends State<VoiceMemory>
                         ],
                       )
                     : isRecorded
-                        ? buildText(text: 'Play your recorded memory')
+                        ? buildText(text: 'Play your recorded crew')
                         : buildText(text: 'Record Your Voice\nMemory here'),
                 GestureDetector(
                   child: Icon(

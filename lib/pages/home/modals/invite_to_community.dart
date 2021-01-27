@@ -16,10 +16,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBInviteToMemoryModal extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBInviteToMemoryModal({Key key, @required this.memory})
-      : super(key: key);
+  const OBInviteToMemoryModal({Key key, @required this.crew}) : super(key: key);
 
   @override
   State<OBInviteToMemoryModal> createState() {
@@ -81,7 +80,7 @@ class OBInviteToMemoryModalState extends State<OBInviteToMemoryModal> {
       key: Key(user.id.toString()),
       trailing: OBInviteUserToMemoryButton(
         user: user,
-        memory: widget.memory,
+        crew: widget.crew,
       ),
       //trailing: OBButton,
     );
@@ -89,7 +88,7 @@ class OBInviteToMemoryModalState extends State<OBInviteToMemoryModal> {
 
   Future<List<User>> _refreshLinkedUsers() async {
     UsersList linkedUsers =
-        await _userService.getLinkedUsers(withMemory: widget.memory);
+        await _userService.getLinkedUsers(withMemory: widget.crew);
     return linkedUsers.users;
   }
 
@@ -97,14 +96,14 @@ class OBInviteToMemoryModalState extends State<OBInviteToMemoryModal> {
     var lastLinkedUser = linkedUsersList.last;
     var lastLinkedUserId = lastLinkedUser.id;
     var moreLinkedUsers = (await _userService.getLinkedUsers(
-            maxId: lastLinkedUserId, count: 10, withMemory: widget.memory))
+            maxId: lastLinkedUserId, count: 10, withMemory: widget.crew))
         .users;
     return moreLinkedUsers;
   }
 
   Future<List<User>> _searchLinkedUsers(String query) async {
     UsersList results = await _userService.searchLinkedUsers(
-        query: query, withMemory: widget.memory);
+        query: query, withMemory: widget.crew);
 
     return results.users;
   }

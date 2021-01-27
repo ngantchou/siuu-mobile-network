@@ -11,8 +11,8 @@ class UserNotificationsSettings {
   bool followRequestApprovedNotifications;
   bool connectionRequestNotifications;
   bool connectionConfirmedNotifications;
-  bool memoryInviteNotifications;
-  bool memoryNewPostNotifications;
+  bool crewInviteNotifications;
+  bool crewNewPostNotifications;
   bool userNewPostNotifications;
 
   UserNotificationsSettings(
@@ -28,8 +28,8 @@ class UserNotificationsSettings {
       this.postUserMentionNotifications,
       this.postCommentReplyNotifications,
       this.postReactionNotifications,
-      this.memoryInviteNotifications,
-      this.memoryNewPostNotifications,
+      this.crewInviteNotifications,
+      this.crewNewPostNotifications,
       this.userNewPostNotifications});
 
   factory UserNotificationsSettings.fromJSON(Map<String, dynamic> parsedJson) {
@@ -53,9 +53,8 @@ class UserNotificationsSettings {
       postUserMentionNotifications:
           parsedJson['post_user_mention_notifications'],
       postReactionNotifications: parsedJson['post_reaction_notifications'],
-      memoryInviteNotifications: parsedJson['community_invite_notifications'],
-      memoryNewPostNotifications:
-          parsedJson['community_new_post_notifications'],
+      crewInviteNotifications: parsedJson['community_invite_notifications'],
+      crewNewPostNotifications: parsedJson['community_new_post_notifications'],
       userNewPostNotifications: parsedJson['user_new_post_notifications'],
     );
   }
@@ -76,8 +75,8 @@ class UserNotificationsSettings {
       'post_user_mention_notifications': postUserMentionNotifications,
       'post_comment_reply_notifications': postCommentReplyNotifications,
       'post_reaction_notifications': postReactionNotifications,
-      'community_invite_notifications': memoryInviteNotifications,
-      'community_new_post_notifications': memoryNewPostNotifications,
+      'community_invite_notifications': crewInviteNotifications,
+      'community_new_post_notifications': crewNewPostNotifications,
       'user_new_post_notifications': userNewPostNotifications,
     };
   }
@@ -118,9 +117,9 @@ class UserNotificationsSettings {
     if (json.containsKey('post_reaction_notifications'))
       postReactionNotifications = json['post_reaction_notifications'];
     if (json.containsKey('community_invite_notifications'))
-      memoryInviteNotifications = json['community_invite_notifications'];
+      crewInviteNotifications = json['community_invite_notifications'];
     if (json.containsKey('community_new_post_notifications'))
-      memoryNewPostNotifications = json['community_new_post_notifications'];
+      crewNewPostNotifications = json['community_new_post_notifications'];
     if (json.containsKey('user_new_post_notifications'))
       userNewPostNotifications = json['user_new_post_notifications'];
   }

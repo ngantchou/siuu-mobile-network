@@ -7,13 +7,13 @@ import 'package:flutter/material.dart';
 import '../../../../../../../../../provider.dart';
 
 class OBMemoryType extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryType(this.memory);
+  const OBMemoryType(this.crew);
 
   @override
   Widget build(BuildContext context) {
-    MemoryType type = memory.type;
+    MemoryType type = crew.type;
     LocalizationService localizationService =
         OpenbookProvider.of(context).localizationService;
 

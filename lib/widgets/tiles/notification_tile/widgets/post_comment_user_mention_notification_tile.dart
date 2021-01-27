@@ -38,7 +38,8 @@ class OBPostCommentUserMentionNotificationTile extends StatelessWidget {
       openbookProvider.navigationService.navigateToUserProfile(
           user: postCommentUserMention.postComment.commenter, context: context);
     };
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
 
     String postCommentText = postComment.text;
     return OBNotificationTileSkeleton(
@@ -47,23 +48,27 @@ class OBPostCommentUserMentionNotificationTile extends StatelessWidget {
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
         PostComment parentComment = postComment.parentComment;
-        if(parentComment!=null){
+        if (parentComment != null) {
           openbookProvider.navigationService.navigateToPostCommentRepliesLinked(
               postComment: postComment,
               context: context,
               parentComment: parentComment);
-        }else {
+        } else {
           openbookProvider.navigationService.navigateToPostCommentsLinked(
               postComment: postComment, context: context);
         }
       },
       leading: OBAvatar(
         onPressed: navigateToMentionerProfile,
-        size: OBAvatarSize.medium,
-        avatarUrl: postCommentUserMention.postComment.commenter.getProfileAvatar(),
+        size: OBAvatarSize.small,
+        avatarUrl:
+            postCommentUserMention.postComment.commenter.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
-        text: TextSpan(text: _localizationService.notifications__mentioned_in_post_comment_tile(postCommentText)),
+        text: TextSpan(
+            text: _localizationService
+                .notifications__mentioned_in_post_comment_tile(
+                    postCommentText)),
         onUsernamePressed: navigateToMentionerProfile,
         user: postCommentUserMention.postComment.commenter,
       ),

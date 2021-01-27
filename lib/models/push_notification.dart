@@ -14,8 +14,8 @@ class PushNotification {
       pushNotificationType = PushNotificationType.connectionRequest;
     } else if (pushNotificationTypeStr == NotificationType.follow.code) {
       pushNotificationType = PushNotificationType.follow;
-    } else if (pushNotificationTypeStr == NotificationType.memoryInvite.code) {
-      pushNotificationType = PushNotificationType.memoryInvite;
+    } else if (pushNotificationTypeStr == NotificationType.crewInvite.code) {
+      pushNotificationType = PushNotificationType.crewInvite;
     } else {
       throw 'Unsupported push notification type';
     }
@@ -41,5 +41,5 @@ enum PushNotificationType {
   postComment,
   connectionRequest,
   follow,
-  memoryInvite
+  crewInvite
 }

@@ -10,9 +10,9 @@ import 'package:Siuu/widgets/buttons/community_button.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryActions extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryActions(this.memory);
+  OBMemoryActions(this.crew);
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +24,8 @@ class OBMemoryActions extends StatelessWidget {
 
     User loggedInUser = userService.getLoggedInUser();
 
-    bool isMemoryAdmin = memory?.isAdministrator(loggedInUser) ?? false;
-    bool isMemoryModerator = memory?.isModerator(loggedInUser) ?? false;
+    bool isMemoryAdmin = crew?.isAdministrator(loggedInUser) ?? false;
+    bool isMemoryModerator = crew?.isModerator(loggedInUser) ?? false;
 
     List<Widget> actions = [];
 
@@ -34,11 +34,11 @@ class OBMemoryActions extends StatelessWidget {
           _buildManageButton(navigationService, context, localizationService));
     } else {
       actions.addAll([
-        OBJoinMemoryButton(memory),
+        OBJoinMemoryButton(crew),
         const SizedBox(
           width: 10,
         ),
-        OBMemoryActionMore(memory)
+        OBMemoryActionMore(crew)
       ]);
     }
 
@@ -51,12 +51,12 @@ class OBMemoryActions extends StatelessWidget {
   _buildManageButton(NavigationService navigationService, context,
       LocalizationService localizationService) {
     return OBMemoryButton(
-        memory: memory,
+        crew: crew,
         isLoading: false,
         text: localizationService.community__actions_manage_text,
         onPressed: () {
           navigationService.navigateToManageMemory(
-              memory: memory, context: context);
+              crew: crew, context: context);
         });
   }
 }

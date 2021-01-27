@@ -14,20 +14,20 @@ import 'notification_tile_title.dart';
 
 class OBMemoryNewPostNotificationTile extends StatelessWidget {
   final OBNotification notification;
-  final MemoryNewPostNotification memoryNewPostNotification;
+  final MemoryNewPostNotification crewNewPostNotification;
   static final double postImagePreviewSize = 40;
   final VoidCallback onPressed;
 
   const OBMemoryNewPostNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.memoryNewPostNotification,
+      @required this.crewNewPostNotification,
       this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Post post = memoryNewPostNotification.post;
+    Post post = crewNewPostNotification.post;
 
     Widget postImagePreview;
     if (post.hasMediaThumbnail()) {
@@ -44,7 +44,7 @@ class OBMemoryNewPostNotificationTile extends StatelessWidget {
 
     Function navigateToMemory = () {
       openbookProvider.navigationService
-          .navigateToMemory(memory: post.memory, context: context);
+          .navigateToMemory(crew: post.crew, context: context);
     };
 
     return OBNotificationTileSkeleton(
@@ -56,13 +56,13 @@ class OBMemoryNewPostNotificationTile extends StatelessWidget {
       },
       leading: OBMemoryAvatar(
         onPressed: navigateToMemory,
-        size: OBAvatarSize.medium,
-        memory: post.memory,
+        size: OBAvatarSize.small,
+        crew: post.crew,
       ),
       title: OBNotificationTileTitle(
         text: TextSpan(
             text: _localizationService
-                .notifications__community_new_post_tile(post.memory.name)),
+                .notifications__community_new_post_tile(post.crew.name)),
       ),
       subtitle: OBSecondaryText(
           utilsService.timeAgo(notification.created, _localizationService)),

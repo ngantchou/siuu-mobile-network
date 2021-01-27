@@ -56,15 +56,15 @@ class UsernameElement extends SmartTextElement {
   }
 }
 
-/// Represents an element containing a memory name
+/// Represents an element containing a crew name
 class MemoryNameElement extends SmartTextElement {
-  final String memoryName;
+  final String crewName;
 
-  MemoryNameElement(this.memoryName) : super(memoryName);
+  MemoryNameElement(this.crewName) : super(crewName);
 
   @override
   String toString() {
-    return "MemoryNameElement: $memoryName";
+    return "MemoryNameElement: $crewName";
   }
 }
 
@@ -114,7 +114,7 @@ final _usernameRegex = RegExp(
     caseSensitive: false);
 
 // Same idea as inner part of above regex, but only _ is allowed as special character
-final _memoryNameRegex = RegExp(
+final _crewNameRegex = RegExp(
     r"((?:(?<=\s)|^)([/]?)c/([A-Za-z0-9]|[_](?![_])){1,30})(?=\b|$)",
     caseSensitive: false);
 
@@ -133,7 +133,7 @@ List<SmartTextElement> _smartify(String text) {
     return SmartMatch(
         UsernameElement(m.group(1)), m.start + m.group(0).indexOf("@"), m.end);
   }));
-  matches.addAll(_memoryNameRegex.allMatches(text).map((m) {
+  matches.addAll(_crewNameRegex.allMatches(text).map((m) {
     return SmartMatch(MemoryNameElement(m.group(0)), m.start, m.end);
   }));
   matches.addAll(linkRegex.allMatches(text).map((m) {
@@ -259,7 +259,7 @@ class OBSmartText extends StatelessWidget {
     TextStyle linkStyle,
     TextStyle tagStyle,
     TextStyle usernameStyle,
-    TextStyle memoryNameStyle,
+    TextStyle crewNameStyle,
     StringCallback onLinkTapped,
     StringCallback onTagTapped,
     StringCallback onUsernameTapped,
@@ -280,14 +280,14 @@ class OBSmartText extends StatelessWidget {
       }
     }
 
-    void _onMemoryNameTapped(String memoryName) {
+    void _onMemoryNameTapped(String crewName) {
       if (onMemoryNameTapped != null) {
-        String cleanedMemoryName = memoryName;
+        String cleanedMemoryName = crewName;
         // Remove c/
         if (cleanedMemoryName.startsWith('/c/')) {
-          cleanedMemoryName = cleanedMemoryName.substring(3, memoryName.length);
+          cleanedMemoryName = cleanedMemoryName.substring(3, crewName.length);
         } else if (cleanedMemoryName.startsWith('c/')) {
-          cleanedMemoryName = cleanedMemoryName.substring(2, memoryName.length);
+          cleanedMemoryName = cleanedMemoryName.substring(2, crewName.length);
         }
 
         cleanedMemoryName = cleanedMemoryName.toLowerCase();
@@ -361,8 +361,8 @@ class OBSmartText extends StatelessWidget {
       } else if (element is MemoryNameElement) {
         textSpan = LinkTextSpan(
           text: element.text,
-          style: memoryNameStyle,
-          onPressed: () => _onMemoryNameTapped(element.memoryName),
+          style: crewNameStyle,
+          onPressed: () => _onMemoryNameTapped(element.crewName),
         );
       }
 
@@ -458,7 +458,7 @@ class OBSmartText extends StatelessWidget {
               secondaryTextStyle: secondaryTextStyle,
               linkStyle: smartItemsStyle,
               tagStyle: smartItemsStyle,
-              memoryNameStyle: smartItemsStyle,
+              crewNameStyle: smartItemsStyle,
               usernameStyle: smartItemsStyle,
               onLinkTapped: onLinkTapped,
               onMemoryNameTapped: onMemoryNameTapped,

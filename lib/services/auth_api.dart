@@ -105,7 +105,7 @@ class AuthApiService {
     String username,
     String url,
     bool followersCountVisible,
-    bool memoryPostsVisible,
+    bool crewPostsVisible,
     String bio,
     String location,
     String visibility,
@@ -139,8 +139,8 @@ class AuthApiService {
     if (followersCountVisible != null)
       body['followers_count_visible'] = followersCountVisible;
 
-    if (memoryPostsVisible != null)
-      body['community_posts_visible'] = memoryPostsVisible;
+    if (crewPostsVisible != null)
+      body['community_posts_visible'] = crewPostsVisible;
 
     if (location != null) body['location'] = location;
 
@@ -234,7 +234,7 @@ class AuthApiService {
 
     if (count != null) queryParams['count'] = count;
 
-    if (withMemory != null) queryParams['with_memory'] = withMemory;
+    if (withMemory != null) queryParams['with_crew'] = withMemory;
 
     return _httpService.get('$apiURL$SEARCH_LINKED_USERS_PATH',
         queryParameters: queryParams, appendAuthorizationToken: true);
@@ -251,7 +251,7 @@ class AuthApiService {
 
     if (maxId != null) queryParams['max_id'] = maxId;
 
-    if (withMemory != null) queryParams['with_memory'] = withMemory;
+    if (withMemory != null) queryParams['with_crew'] = withMemory;
 
     return _httpService.get('$apiURL$GET_LINKED_USERS_PATH',
         queryParameters: queryParams,
@@ -397,8 +397,8 @@ class AuthApiService {
     bool followRequestApprovedNotifications,
     bool connectionRequestNotifications,
     bool connectionConfirmedNotifications,
-    bool memoryInviteNotifications,
-    bool memoryNewPostNotifications,
+    bool crewInviteNotifications,
+    bool crewNewPostNotifications,
     bool userNewPostNotifications,
   }) {
     Map<String, dynamic> body = {};
@@ -436,11 +436,11 @@ class AuthApiService {
     if (connectionRequestNotifications != null)
       body['connection_request_notifications'] = connectionRequestNotifications;
 
-    if (memoryInviteNotifications != null)
-      body['community_invite_notifications'] = memoryInviteNotifications;
+    if (crewInviteNotifications != null)
+      body['community_invite_notifications'] = crewInviteNotifications;
 
-    if (memoryNewPostNotifications != null)
-      body['community_new_post_notifications'] = memoryNewPostNotifications;
+    if (crewNewPostNotifications != null)
+      body['community_new_post_notifications'] = crewNewPostNotifications;
 
     if (userNewPostNotifications != null)
       body['user_new_post_notifications'] = userNewPostNotifications;

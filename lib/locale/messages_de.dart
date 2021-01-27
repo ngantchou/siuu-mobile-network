@@ -91,13 +91,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m26(postCommentText) =>
       "[name] [username] hat geantwortet: ${postCommentText}";
 
-  static m27(memoryName) => "Es gab einen neuen Beitrag in c/${memoryName}.";
+  static m27(crewName) => "Es gab einen neuen Beitrag in c/${crewName}.";
 
   static m28(postCommentText) =>
       "[name] [username] hat dich in einem Kommentar erwähnt: ${postCommentText}";
 
-  static m29(memoryName) =>
-      "[name] [username] hat dich in die Memory /c/${memoryName} eingeladen.";
+  static m29(crewName) =>
+      "[name] [username] hat dich in die Memory /c/${crewName} eingeladen.";
 
   static m30(maxLength) =>
       "Ein Kommentar darf nicht länger als ${maxLength} Zeichen lang sein.";
@@ -487,7 +487,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Dies ermöglicht dem Mitglied, folgendes zu bearbeiten: Die Memory-Details, Administratoren, Moderatoren und gesperrte Benutzer."),
         "community__administrated_memories":
             MessageLookupByLibrary.simpleMessage("verwaltete Communities"),
-        "community__administrated_memory":
+        "community__administrated_crew":
             MessageLookupByLibrary.simpleMessage("verwaltete Memory"),
         "community__administrated_title":
             MessageLookupByLibrary.simpleMessage("Verwaltet"),
@@ -528,7 +528,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aktualisieren"),
         "community__memories_title":
             MessageLookupByLibrary.simpleMessage("Communities"),
-        "community__memory": MessageLookupByLibrary.simpleMessage("Memory"),
+        "community__crew": MessageLookupByLibrary.simpleMessage("Memory"),
         "community__community_members":
             MessageLookupByLibrary.simpleMessage("Memory-Mitglieder"),
         "community__community_staff":
@@ -550,13 +550,13 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Zeige keine Beiträge von Communities, in denen ich Mitglied bin"),
         "community__excluded_memories":
             MessageLookupByLibrary.simpleMessage("ausgeschlossene Communities"),
-        "community__excluded_memory":
+        "community__excluded_crew":
             MessageLookupByLibrary.simpleMessage("ausgeschlossene Memory"),
         "community__favorite_action":
             MessageLookupByLibrary.simpleMessage("Memory favorisieren"),
         "community__favorite_memories":
             MessageLookupByLibrary.simpleMessage("favorisierte Communities"),
-        "community__favorite_memory":
+        "community__favorite_crew":
             MessageLookupByLibrary.simpleMessage("favorisierte Memory"),
         "community__favorites_title":
             MessageLookupByLibrary.simpleMessage("Favoriten"),
@@ -574,15 +574,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Diese Memory ist privat."),
         "community__join_memories_desc": MessageLookupByLibrary.simpleMessage(
             "Werde Mitglied von Communities und diese Registerkarte erwacht zum Leben!"),
-        "community__join_memory":
+        "community__join_crew":
             MessageLookupByLibrary.simpleMessage("Beitreten"),
         "community__joined_memories":
             MessageLookupByLibrary.simpleMessage("Beigetretene Communities"),
-        "community__joined_memory":
+        "community__joined_crew":
             MessageLookupByLibrary.simpleMessage("Beigetretene Memory"),
         "community__joined_title":
             MessageLookupByLibrary.simpleMessage("Beigetreten"),
-        "community__leave_memory":
+        "community__leave_crew":
             MessageLookupByLibrary.simpleMessage("Verlassen"),
         "community__leave_confirmation": MessageLookupByLibrary.simpleMessage(
             "Bist du sicher, dass du die Memory verlassen möchtest?"),
@@ -648,7 +648,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Mitglieder"),
         "community__moderated_memories":
             MessageLookupByLibrary.simpleMessage("moderierte Communities"),
-        "community__moderated_memory":
+        "community__moderated_crew":
             MessageLookupByLibrary.simpleMessage("moderierte Memory"),
         "community__moderated_title":
             MessageLookupByLibrary.simpleMessage("Moderiert"),
@@ -688,11 +688,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__rules_text": MessageLookupByLibrary.simpleMessage("Regeln"),
         "community__rules_title":
             MessageLookupByLibrary.simpleMessage("Memory-Regeln"),
-        "community__save_community_create_memory":
+        "community__save_community_create_crew":
             MessageLookupByLibrary.simpleMessage("Memory erstellen"),
         "community__save_community_create_text":
             MessageLookupByLibrary.simpleMessage("Erstellen"),
-        "community__save_community_edit_memory":
+        "community__save_community_edit_crew":
             MessageLookupByLibrary.simpleMessage("Memory bearbeiten"),
         "community__save_community_label_title":
             MessageLookupByLibrary.simpleMessage("Titel"),
@@ -1066,7 +1066,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Memory-Einladungen"),
         "notifications__community_new_post_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Be notified when there is a new post in a memory you enabled post notifications on"),
+                "Be notified when there is a new post in a crew you enabled post notifications on"),
         "notifications__community_new_post_tile": m27,
         "notifications__community_new_post_title":
             MessageLookupByLibrary.simpleMessage("Neuer Memory-Beitrag"),
@@ -1265,7 +1265,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Beitrag bearbeiten"),
         "post__enable_post_comments":
             MessageLookupByLibrary.simpleMessage("Kommentare aktivieren"),
-        "post__exclude_post_memory": MessageLookupByLibrary.simpleMessage(
+        "post__exclude_post_crew": MessageLookupByLibrary.simpleMessage(
             "Keine Beiträge von dieser Memory anzeigen"),
         "post__have_not_shared_anything": MessageLookupByLibrary.simpleMessage(
             "Du hast noch nichts geteilt."),
@@ -1303,7 +1303,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__search_circles":
             MessageLookupByLibrary.simpleMessage("Kreise suchen..."),
         "post__share": MessageLookupByLibrary.simpleMessage("Teilen"),
-        "post__share_memory": MessageLookupByLibrary.simpleMessage("Teilen"),
+        "post__share_crew": MessageLookupByLibrary.simpleMessage("Teilen"),
         "post__share_community_desc": MessageLookupByLibrary.simpleMessage(
             "Teile den Beitrag mit einer Memory, der du angehörst."),
         "post__share_community_title":
@@ -1311,7 +1311,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__share_to": MessageLookupByLibrary.simpleMessage("Teilen mit "),
         "post__share_to_circles":
             MessageLookupByLibrary.simpleMessage("Mit Kreisen teilen"),
-        "post__share_to_memory":
+        "post__share_to_crew":
             MessageLookupByLibrary.simpleMessage("Mit Memory teilen"),
         "post__shared_privately_on":
             MessageLookupByLibrary.simpleMessage("Privat geteilt mit"),
@@ -1365,7 +1365,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aktualisieren"),
         "post__trending_posts_title":
             MessageLookupByLibrary.simpleMessage("Angesagte Beiträge"),
-        "post__undo_exclude_post_memory": MessageLookupByLibrary.simpleMessage(
+        "post__undo_exclude_post_crew": MessageLookupByLibrary.simpleMessage(
             "Beiträge von dieser Memory anzeigen"),
         "post__user_has_not_shared_anything": m34,
         "post__usernames_circles": m35,
@@ -1489,7 +1489,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user__confirm_connection_connection_confirmed":
             MessageLookupByLibrary.simpleMessage("Verbindung bestätigt"),
         "user__confirm_connection_with": m40,
-        "user__confirm_guidelines_reject_chat_memory":
+        "user__confirm_guidelines_reject_chat_crew":
             MessageLookupByLibrary.simpleMessage("Chatte mit der Memory."),
         "user__confirm_guidelines_reject_chat_immediately":
             MessageLookupByLibrary.simpleMessage("Beginne einen Chat."),

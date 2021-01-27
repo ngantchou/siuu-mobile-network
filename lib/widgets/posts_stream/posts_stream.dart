@@ -493,7 +493,7 @@ class OBPostsStreamState extends State<OBPostsStream>
     setState(() {
       _posts.remove(deletedPost);
       if (_posts.isEmpty) _setStatus(OBPostsStreamStatus.empty);
-      if (deletedPost.isMemoryPost()) deletedPost.memory.decrementPostsCount();
+      if (deletedPost.isMemoryPost()) deletedPost.crew.decrementPostsCount();
     });
   }
 

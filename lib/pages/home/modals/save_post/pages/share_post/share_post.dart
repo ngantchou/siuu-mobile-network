@@ -76,7 +76,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
 
               List<Widget> shareToTiles = [
                 SizedBox(
-                  height: 50,
+                  height: 10,
                 ),
                 ListTile(
                   leading: const OBIcon(OBIcons.circles, color: Colors.black),
@@ -92,7 +92,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
                 )
               ];
 
-              if (latestUser.isMemberOfCommunities != null &&
+              /* if (latestUser.isMemberOfCommunities != null &&
                   latestUser.isMemberOfCommunities) {
                 shareToTiles.add(ListTile(
                   leading: const OBIcon(OBIcons.memories),
@@ -104,7 +104,7 @@ class OBSharePostPageState extends State<OBSharePostPage> {
                   ),
                   onTap: _onWantsToSharePostToCommunity,
                 ));
-              }
+             // }*/
 
               return Column(
                 children: <Widget>[

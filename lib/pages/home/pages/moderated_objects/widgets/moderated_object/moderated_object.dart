@@ -16,10 +16,9 @@ import '../../../../../../provider.dart';
 
 class OBModeratedObject extends StatelessWidget {
   final ModeratedObject moderatedObject;
-  final Memory memory;
+  final Memory crew;
 
-  const OBModeratedObject(
-      {Key key, @required this.moderatedObject, this.memory})
+  const OBModeratedObject({Key key, @required this.moderatedObject, this.crew})
       : super(key: key);
 
   @override
@@ -77,7 +76,7 @@ class OBModeratedObject extends StatelessWidget {
           ],
         ),
         OBTileGroupTitle(
-          title: memory != null
+          title: crew != null
               ? _localizationService
                   .moderation__moderated_object_verified_by_staff
               : _localizationService.moderation__moderated_object_verified,
@@ -114,7 +113,7 @@ class OBModeratedObject extends StatelessWidget {
         ),
         OBModeratedObjectActions(
           moderatedObject: moderatedObject,
-          memory: memory,
+          crew: crew,
         ),
         const SizedBox(
           height: 10,

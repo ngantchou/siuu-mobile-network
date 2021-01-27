@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 
 class OBInviteUserToMemoryButton extends StatefulWidget {
   final User user;
-  final Memory memory;
+  final Memory crew;
 
-  OBInviteUserToMemoryButton({@required this.user, @required this.memory});
+  OBInviteUserToMemoryButton({@required this.user, @required this.crew});
 
   @override
   OBInviteUserToMemoryButtonState createState() {
@@ -57,9 +57,8 @@ class OBInviteUserToMemoryButtonState
             User latestUser = latestUserSnapshot.data;
             if (latestUser == null) return const SizedBox();
 
-            bool isMemoryMember = latestUser.isMemberOfMemory(widget.memory);
-            bool isInvitedToMemory =
-                latestUser.isInvitedToMemory(widget.memory);
+            bool isMemoryMember = latestUser.isMemberOfMemory(widget.crew);
+            bool isInvitedToMemory = latestUser.isInvitedToMemory(widget.crew);
 
             if (isMemoryMember) {
               return _buildAlreadyMemberButton();
@@ -109,7 +108,7 @@ class OBInviteUserToMemoryButtonState
     _setRequestInProgress(true);
     try {
       await _userService.inviteUserToMemory(
-          user: widget.user, memory: widget.memory);
+          user: widget.user, crew: widget.crew);
     } catch (e) {
       _onError(e);
     } finally {
@@ -121,7 +120,7 @@ class OBInviteUserToMemoryButtonState
     _setRequestInProgress(true);
     try {
       await _userService.uninviteUserFromMemory(
-          user: widget.user, memory: widget.memory);
+          user: widget.user, crew: widget.crew);
     } catch (e) {
       _onError(e);
     } finally {

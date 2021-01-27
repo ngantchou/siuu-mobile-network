@@ -8,9 +8,9 @@ import 'package:Siuu/widgets/progress_indicator.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryPostsCount extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryPostsCount(this.memory);
+  OBMemoryPostsCount(this.crew);
 
   @override
   OBMemoryPostsCountState createState() {
@@ -46,23 +46,23 @@ class OBMemoryPostsCountState extends State<OBMemoryPostsCount> {
     }
 
     return StreamBuilder(
-      stream: widget.memory.updateSubject,
-      initialData: widget.memory,
+      stream: widget.crew.updateSubject,
+      initialData: widget.crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        var memory = snapshot.data;
+        var crew = snapshot.data;
 
         return _hasError
             ? _buildErrorIcon()
             : _requestInProgress
                 ? _buildLoadingIcon()
-                : _buildPostsCount(memory);
+                : _buildPostsCount(crew);
       },
     );
   }
 
-  Widget _buildPostsCount(Memory memory) {
+  Widget _buildPostsCount(Memory crew) {
     return OBPostsCount(
-      memory.postsCount,
+      crew.postsCount,
       showZero: true,
       fontSize: 16,
     );
@@ -81,7 +81,7 @@ class OBMemoryPostsCountState extends State<OBMemoryPostsCount> {
   void _refreshMemoryPostsCount() async {
     _setRequestInProgress(true);
     try {
-      await _userService.countPostsForMemory(widget.memory);
+      await _userService.countPostsForMemory(widget.crew);
     } catch (e) {
       _onError(e);
     } finally {

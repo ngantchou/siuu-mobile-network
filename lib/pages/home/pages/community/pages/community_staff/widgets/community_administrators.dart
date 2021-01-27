@@ -8,21 +8,21 @@ import 'package:Siuu/widgets/tiles/user_tile.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryAdministrators extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryAdministrators(this.memory);
+  OBMemoryAdministrators(this.crew);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        var memory = snapshot.data;
+        var crew = snapshot.data;
 
-        List<User> memoryAdministrators = memory?.administrators?.users;
+        List<User> crewAdministrators = crew?.administrators?.users;
 
-        if (memoryAdministrators == null || memoryAdministrators.isEmpty)
+        if (crewAdministrators == null || crewAdministrators.isEmpty)
           return const SizedBox();
 
         return Row(
@@ -36,7 +36,7 @@ class OBMemoryAdministrators extends StatelessWidget {
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                     child: Row(children: [
                       OBIcon(
-                        OBIcons.memoryAdministrators,
+                        OBIcons.crewAdministrators,
                         size: OBIconSize.medium,
                       ),
                       const SizedBox(
@@ -56,15 +56,14 @@ class OBMemoryAdministrators extends StatelessWidget {
                     physics: const ClampingScrollPhysics(),
                     padding: EdgeInsets.all(0),
                     shrinkWrap: true,
-                    children:
-                        memoryAdministrators.map((User memoryAdministrator) {
+                    children: crewAdministrators.map((User crewAdministrator) {
                       return OBUserTile(
-                        memoryAdministrator,
+                        crewAdministrator,
                         onUserTilePressed: (User user) {
                           NavigationService navigationService =
                               OpenbookProvider.of(context).navigationService;
                           navigationService.navigateToUserProfile(
-                              user: memoryAdministrator, context: context);
+                              user: crewAdministrator, context: context);
                         },
                       );
                     }).toList(),

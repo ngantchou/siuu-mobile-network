@@ -9,7 +9,7 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBFavoriteMemoryTile extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
   final VoidCallback onFavoritedMemory;
   final VoidCallback onUnfavoritedMemory;
   final Widget favoriteSubtitle;
@@ -17,7 +17,7 @@ class OBFavoriteMemoryTile extends StatefulWidget {
 
   const OBFavoriteMemoryTile(
       {Key key,
-      @required this.memory,
+      @required this.crew,
       this.onFavoritedMemory,
       this.onUnfavoritedMemory,
       this.favoriteSubtitle,
@@ -50,12 +50,12 @@ class OBFavoriteMemoryTileState extends State<OBFavoriteMemoryTile> {
     _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
-      stream: widget.memory.updateSubject,
-      initialData: widget.memory,
+      stream: widget.crew.updateSubject,
+      initialData: widget.crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        var memory = snapshot.data;
+        var crew = snapshot.data;
 
-        bool isFavorite = memory.isFavorite;
+        bool isFavorite = crew.isFavorite;
 
         return ListTile(
           enabled: !_requestInProgress,
@@ -75,7 +75,7 @@ class OBFavoriteMemoryTileState extends State<OBFavoriteMemoryTile> {
   void _favoriteMemory() async {
     _setRequestInProgress(true);
     try {
-      await _userService.favoriteMemory(widget.memory);
+      await _userService.favoriteMemory(widget.crew);
       if (widget.onFavoritedMemory != null) widget.onFavoritedMemory();
     } catch (e) {
       _onError(e);
@@ -87,7 +87,7 @@ class OBFavoriteMemoryTileState extends State<OBFavoriteMemoryTile> {
   void _unfavoriteMemory() async {
     _setRequestInProgress(true);
     try {
-      await _userService.unfavoriteMemory(widget.memory);
+      await _userService.unfavoriteMemory(widget.crew);
       if (widget.onUnfavoritedMemory != null) widget.onUnfavoritedMemory();
     } catch (e) {
       _onError(e);

@@ -82,7 +82,7 @@ class OBNotificationTile extends StatelessWidget {
       case MemoryInviteNotification:
         notificationTile = OBMemoryInviteNotificationTile(
           notification: notification,
-          memoryInviteNotification: notificationContentObject,
+          crewInviteNotification: notificationContentObject,
           onPressed: finalOnPressed,
         );
         break;
@@ -166,7 +166,7 @@ class OBNotificationTile extends StatelessWidget {
       case MemoryNewPostNotification:
         notificationTile = OBMemoryNewPostNotificationTile(
           notification: notification,
-          memoryNewPostNotification: notificationContentObject,
+          crewNewPostNotification: notificationContentObject,
           onPressed: finalOnPressed,
         );
         break;

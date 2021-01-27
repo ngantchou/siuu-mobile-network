@@ -37,7 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Adjectives can\'t be longer than ${maxLength} characters.";
 
   static m6(username) =>
-      "Are you sure you want to add @${username} as a memory administrator?";
+      "Are you sure you want to add @${username} as a crew administrator?";
 
   static m7(username) => "Are you sure you want to ban @${username}?";
 
@@ -45,7 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Description can\'t be longer than ${maxLength} characters.";
 
   static m9(username) =>
-      "Are you sure you want to add @${username} as a memory moderator?";
+      "Are you sure you want to add @${username} as a crew moderator?";
 
   static m10(maxLength) =>
       "Name can\'t be longer than ${maxLength} characters.";
@@ -59,7 +59,7 @@ class MessageLookup extends MessageLookupByLibrary {
   static m14(maxLength) =>
       "Rules can\'t be longer than ${maxLength} characters.";
 
-  static m15(takenName) => "Memory name \'${takenName}\' is taken";
+  static m15(takenName) => "Crew name \'${takenName}\' is taken";
 
   static m16(maxLength) =>
       "Title can\'t be longer than ${maxLength} characters.";
@@ -91,13 +91,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m26(postCommentText) =>
       "[name] [username] replied: ${postCommentText}";
 
-  static m27(memoryName) => "There was a new post in c/${memoryName}.";
+  static m27(crewName) => "There was a new post in c/${crewName}.";
 
   static m28(postCommentText) =>
       "[name] [username] mentioned you on a comment: ${postCommentText}";
 
-  static m29(memoryName) =>
-      "[name] [username] has invited you to join memory c/${memoryName}.";
+  static m29(crewName) =>
+      "[name] [username] has invited you to join crew c/${crewName}.";
 
   static m30(maxLength) =>
       "A comment can\'t be longer than ${maxLength} characters.";
@@ -174,7 +174,7 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static m61(resourcePluralName) => "Search ${resourcePluralName} ...";
 
-  static m62(searchQuery) => "No memories found for \'${searchQuery}\'.";
+  static m62(searchQuery) => "No crews found for \'${searchQuery}\'.";
 
   static m63(searchQuery) => "No hashtags found for \'${searchQuery}\'.";
 
@@ -353,9 +353,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Request"),
         "auth__create_acc__subscribe_to_waitlist_text":
             MessageLookupByLibrary.simpleMessage("Request an invite!"),
-        "auth__create_acc__suggested_memories":
+        "auth__create_acc__suggested_crews":
             MessageLookupByLibrary.simpleMessage(
-                "🥳 Get started by joining the following memories."),
+                "🥳 Get started by joining the following crews."),
         "auth__create_acc__username_characters_error":
             MessageLookupByLibrary.simpleMessage(
                 "😅 A username can only contain alphanumeric characters and underscores."),
@@ -479,7 +479,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Enable new post notifications"),
         "community__actions_invite_people_title":
-            MessageLookupByLibrary.simpleMessage("Invite people to memory"),
+            MessageLookupByLibrary.simpleMessage("Invite people to crew"),
         "community__actions_manage_text":
             MessageLookupByLibrary.simpleMessage("Manage"),
         "community__add_administrators_title":
@@ -489,11 +489,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__adjectives_range_error": m5,
         "community__admin_add_confirmation": m6,
         "community__admin_desc": MessageLookupByLibrary.simpleMessage(
-            "This will allow the member to edit the memory details, administrators, moderators and banned users."),
-        "community__administrated_memories":
-            MessageLookupByLibrary.simpleMessage("administrated memories"),
-        "community__administrated_memory":
-            MessageLookupByLibrary.simpleMessage("administrated memory"),
+            "This will allow the member to edit the crew details, administrators, moderators and banned users."),
+        "community__administrated_crews":
+            MessageLookupByLibrary.simpleMessage("administrated crews"),
+        "community__administrated_crew":
+            MessageLookupByLibrary.simpleMessage("administrated crew"),
         "community__administrated_title":
             MessageLookupByLibrary.simpleMessage("Administrated"),
         "community__administrator_plural":
@@ -506,7 +506,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Administrators"),
         "community__ban_confirmation": m7,
         "community__ban_desc": MessageLookupByLibrary.simpleMessage(
-            "This will remove the user from the memory and disallow them from joining again."),
+            "This will remove the user from the crew and disallow them from joining again."),
         "community__ban_user_title":
             MessageLookupByLibrary.simpleMessage("Ban user"),
         "community__banned_user_text":
@@ -523,48 +523,48 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("categories."),
         "community__category":
             MessageLookupByLibrary.simpleMessage("category."),
-        "community__memories": MessageLookupByLibrary.simpleMessage("memories"),
-        "community__memories_all_text":
+        "community__crews": MessageLookupByLibrary.simpleMessage("crews"),
+        "community__crews_all_text":
             MessageLookupByLibrary.simpleMessage("All"),
-        "community__memories_no_category_found":
+        "community__crews_no_category_found":
             MessageLookupByLibrary.simpleMessage(
                 "No categories found. Please try again in a few minutes."),
-        "community__memories_refresh_text":
+        "community__crews_refresh_text":
             MessageLookupByLibrary.simpleMessage("Refresh"),
-        "community__memories_title":
+        "community__crews_title":
             MessageLookupByLibrary.simpleMessage("Memories"),
-        "community__memory": MessageLookupByLibrary.simpleMessage("memory"),
+        "community__crew": MessageLookupByLibrary.simpleMessage("crew"),
         "community__community_members":
-            MessageLookupByLibrary.simpleMessage("Memory members"),
+            MessageLookupByLibrary.simpleMessage("Crew members"),
         "community__community_staff":
-            MessageLookupByLibrary.simpleMessage("Memory staff"),
+            MessageLookupByLibrary.simpleMessage("Crew staff"),
         "community__community_type_private_community_hint_text":
             MessageLookupByLibrary.simpleMessage(
-                "Note: Private memories cannot be later changed to Public"),
+                "Note: Private crews cannot be later changed to Public"),
         "community__confirmation_title":
             MessageLookupByLibrary.simpleMessage("Confirmation"),
         "community__delete_confirmation": MessageLookupByLibrary.simpleMessage(
-            "Are you sure you want to delete the memory?"),
+            "Are you sure you want to delete the crew?"),
         "community__delete_desc": MessageLookupByLibrary.simpleMessage(
             "You won\'t see it\'s posts in your timeline nor will be able to post to it anymore."),
         "community__description_range_error": m8,
         "community__details_favorite":
             MessageLookupByLibrary.simpleMessage("In favorites"),
-        "community__exclude_joined_memories":
-            MessageLookupByLibrary.simpleMessage("Exclude joined memories"),
-        "community__exclude_joined_memories_desc":
+        "community__exclude_joined_crews":
+            MessageLookupByLibrary.simpleMessage("Exclude joined crews"),
+        "community__exclude_joined_crews_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Don\'t show posts from memories I\'m a member of"),
-        "community__excluded_memories":
-            MessageLookupByLibrary.simpleMessage("hidden memories"),
-        "community__excluded_memory":
-            MessageLookupByLibrary.simpleMessage("hidden memory"),
+                "Don\'t show posts from crews I\'m a member of"),
+        "community__excluded_crews":
+            MessageLookupByLibrary.simpleMessage("hidden crews"),
+        "community__excluded_crew":
+            MessageLookupByLibrary.simpleMessage("hidden crew"),
         "community__favorite_action":
-            MessageLookupByLibrary.simpleMessage("Favorite memory"),
-        "community__favorite_memories":
-            MessageLookupByLibrary.simpleMessage("favorite memories"),
-        "community__favorite_memory":
-            MessageLookupByLibrary.simpleMessage("favorite memory"),
+            MessageLookupByLibrary.simpleMessage("Favorite crew"),
+        "community__favorite_crews":
+            MessageLookupByLibrary.simpleMessage("favorite crews"),
+        "community__favorite_crew":
+            MessageLookupByLibrary.simpleMessage("favorite crew"),
         "community__favorites_title":
             MessageLookupByLibrary.simpleMessage("Favorites"),
         "community__invite_to_community_resource_plural":
@@ -572,30 +572,29 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__invite_to_community_resource_singular":
             MessageLookupByLibrary.simpleMessage("connection or follower"),
         "community__invite_to_community_title":
-            MessageLookupByLibrary.simpleMessage("Invite to memory"),
+            MessageLookupByLibrary.simpleMessage("Invite to crew"),
         "community__invited_by_member": MessageLookupByLibrary.simpleMessage(
             "You must be invited by a member."),
         "community__invited_by_moderator": MessageLookupByLibrary.simpleMessage(
             "You must be invited by a moderator."),
         "community__is_private":
-            MessageLookupByLibrary.simpleMessage("This memory is private."),
-        "community__join_memories_desc": MessageLookupByLibrary.simpleMessage(
-            "Join memories to see this tab come to life!"),
-        "community__join_memory": MessageLookupByLibrary.simpleMessage("Join"),
-        "community__joined_memories":
-            MessageLookupByLibrary.simpleMessage("joined memories"),
-        "community__joined_memory":
-            MessageLookupByLibrary.simpleMessage("joined memory"),
+            MessageLookupByLibrary.simpleMessage("This crew is private."),
+        "community__join_crews_desc": MessageLookupByLibrary.simpleMessage(
+            "Join crews to see this tab come to life!"),
+        "community__join_crew": MessageLookupByLibrary.simpleMessage("Join"),
+        "community__joined_crews":
+            MessageLookupByLibrary.simpleMessage("joined crews"),
+        "community__joined_crew":
+            MessageLookupByLibrary.simpleMessage("joined crew"),
         "community__joined_title":
             MessageLookupByLibrary.simpleMessage("Joined"),
-        "community__leave_memory":
-            MessageLookupByLibrary.simpleMessage("Leave"),
+        "community__leave_crew": MessageLookupByLibrary.simpleMessage("Leave"),
         "community__leave_confirmation": MessageLookupByLibrary.simpleMessage(
-            "Are you sure you want to leave the memory?"),
+            "Are you sure you want to leave the crew?"),
         "community__leave_desc": MessageLookupByLibrary.simpleMessage(
             "You won\'t see its posts in your timeline nor will be able to post to it anymore."),
         "community__manage_add_favourite": MessageLookupByLibrary.simpleMessage(
-            "Add the memory to your favorites"),
+            "Add the crew to your favorites"),
         "community__manage_admins_desc": MessageLookupByLibrary.simpleMessage(
             "See, add and remove administrators."),
         "community__manage_admins_title":
@@ -609,9 +608,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__manage_closed_posts_title":
             MessageLookupByLibrary.simpleMessage("Closed posts"),
         "community__manage_delete_desc":
-            MessageLookupByLibrary.simpleMessage("Delete the memory, forever."),
+            MessageLookupByLibrary.simpleMessage("Delete the crew, forever."),
         "community__manage_delete_title":
-            MessageLookupByLibrary.simpleMessage("Delete memory"),
+            MessageLookupByLibrary.simpleMessage("Delete crew"),
         "community__manage_details_desc": MessageLookupByLibrary.simpleMessage(
             "Change the title, name, avatar, cover photo and more."),
         "community__manage_details_title":
@@ -623,16 +622,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Enable new post notifications"),
         "community__manage_invite_desc": MessageLookupByLibrary.simpleMessage(
-            "Invite your connections and followers to join the memory."),
+            "Invite your connections and followers to join the crew."),
         "community__manage_invite_title":
             MessageLookupByLibrary.simpleMessage("Invite people"),
         "community__manage_leave_desc":
-            MessageLookupByLibrary.simpleMessage("Leave the memory."),
+            MessageLookupByLibrary.simpleMessage("Leave the crew."),
         "community__manage_leave_title":
-            MessageLookupByLibrary.simpleMessage("Leave memory"),
+            MessageLookupByLibrary.simpleMessage("Leave crew"),
         "community__manage_mod_reports_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Review the memory moderation reports."),
+                "Review the crew moderation reports."),
         "community__manage_mod_reports_title":
             MessageLookupByLibrary.simpleMessage("Moderation reports"),
         "community__manage_mods_desc": MessageLookupByLibrary.simpleMessage(
@@ -641,9 +640,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Moderators"),
         "community__manage_remove_favourite":
             MessageLookupByLibrary.simpleMessage(
-                "Remove the memory from your favorites"),
+                "Remove the crew from your favorites"),
         "community__manage_title":
-            MessageLookupByLibrary.simpleMessage("Manage memory"),
+            MessageLookupByLibrary.simpleMessage("Manage crew"),
         "community__member": MessageLookupByLibrary.simpleMessage("member"),
         "community__member_capitalized":
             MessageLookupByLibrary.simpleMessage("Member"),
@@ -651,15 +650,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("members"),
         "community__members_capitalized":
             MessageLookupByLibrary.simpleMessage("Members"),
-        "community__moderated_memories":
-            MessageLookupByLibrary.simpleMessage("moderated memories"),
-        "community__moderated_memory":
-            MessageLookupByLibrary.simpleMessage("moderated memory"),
+        "community__moderated_crews":
+            MessageLookupByLibrary.simpleMessage("moderated crews"),
+        "community__moderated_crew":
+            MessageLookupByLibrary.simpleMessage("moderated crew"),
         "community__moderated_title":
             MessageLookupByLibrary.simpleMessage("Moderated"),
         "community__moderator_add_confirmation": m9,
         "community__moderator_desc": MessageLookupByLibrary.simpleMessage(
-            "This will allow the member to edit the memory details, moderators and banned users."),
+            "This will allow the member to edit the crew details, moderators and banned users."),
         "community__moderator_resource_name":
             MessageLookupByLibrary.simpleMessage("moderator"),
         "community__moderators_resource_name":
@@ -684,7 +683,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__refresh_text":
             MessageLookupByLibrary.simpleMessage("Refresh"),
         "community__refreshing":
-            MessageLookupByLibrary.simpleMessage("Refreshing memory"),
+            MessageLookupByLibrary.simpleMessage("Refreshing crew"),
         "community__retry_loading_posts":
             MessageLookupByLibrary.simpleMessage("Tap to retry"),
         "community__rules_empty_error":
@@ -692,13 +691,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__rules_range_error": m14,
         "community__rules_text": MessageLookupByLibrary.simpleMessage("Rules"),
         "community__rules_title":
-            MessageLookupByLibrary.simpleMessage("Memory rules"),
-        "community__save_community_create_memory":
-            MessageLookupByLibrary.simpleMessage("Create memory"),
+            MessageLookupByLibrary.simpleMessage("Crew rules"),
+        "community__save_community_create_crew":
+            MessageLookupByLibrary.simpleMessage("Create crew"),
         "community__save_community_create_text":
             MessageLookupByLibrary.simpleMessage("Create"),
-        "community__save_community_edit_memory":
-            MessageLookupByLibrary.simpleMessage("Edit memory"),
+        "community__save_community_edit_crew":
+            MessageLookupByLibrary.simpleMessage("Edit crew"),
         "community__save_community_label_title":
             MessageLookupByLibrary.simpleMessage("Title"),
         "community__save_community_label_title_hint_text":
@@ -713,7 +712,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__save_community_name_label_desc_optional":
             MessageLookupByLibrary.simpleMessage("Description · Optional"),
         "community__save_community_name_label_desc_optional_hint_text":
-            MessageLookupByLibrary.simpleMessage("What is your memory about?"),
+            MessageLookupByLibrary.simpleMessage("What is your crew about?"),
         "community__save_community_name_label_member_adjective":
             MessageLookupByLibrary.simpleMessage("Member adjective · Optional"),
         "community__save_community_name_label_member_adjective_hint_text":
@@ -738,7 +737,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Member invites"),
         "community__save_community_name_member_invites_subtitle":
             MessageLookupByLibrary.simpleMessage(
-                "Members can invite people to the memory"),
+                "Members can invite people to the crew"),
         "community__save_community_name_taken": m15,
         "community__save_community_name_title":
             MessageLookupByLibrary.simpleMessage("Name"),
@@ -752,18 +751,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__title_empty_error":
             MessageLookupByLibrary.simpleMessage("Title cannot be empty."),
         "community__title_range_error": m16,
-        "community__top_posts_excluded_memories":
-            MessageLookupByLibrary.simpleMessage("Hidden memories"),
-        "community__top_posts_excluded_memories_desc":
+        "community__top_posts_excluded_crews":
+            MessageLookupByLibrary.simpleMessage("Hidden crews"),
+        "community__top_posts_excluded_crews_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Manage memories hidden from the explore timeline"),
+                "Manage crews hidden from the explore timeline"),
         "community__top_posts_settings":
             MessageLookupByLibrary.simpleMessage("Explore settings"),
         "community__trending_in_all":
             MessageLookupByLibrary.simpleMessage("Trending in all categories"),
         "community__trending_in_category": m17,
         "community__trending_none_found": MessageLookupByLibrary.simpleMessage(
-            "No trending memories found. Try again in a few minutes."),
+            "No trending crews found. Try again in a few minutes."),
         "community__trending_refresh":
             MessageLookupByLibrary.simpleMessage("Refresh"),
         "community__type_private":
@@ -771,7 +770,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__type_public":
             MessageLookupByLibrary.simpleMessage("Public"),
         "community__unfavorite_action":
-            MessageLookupByLibrary.simpleMessage("Unfavorite memory"),
+            MessageLookupByLibrary.simpleMessage("Unfavorite crew"),
         "community__user_you_text": MessageLookupByLibrary.simpleMessage("You"),
         "community__yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "contextual_account_search_box__no_results":
@@ -864,7 +863,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Take a look at what we\'re planning to do in the future"),
         "drawer__useful_links_slack_channel":
-            MessageLookupByLibrary.simpleMessage("Memory Slack channel"),
+            MessageLookupByLibrary.simpleMessage("Crew Slack channel"),
         "drawer__useful_links_slack_channel_desc":
             MessageLookupByLibrary.simpleMessage(
                 "A place to discuss everything about Siuu"),
@@ -905,7 +904,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "moderation__category_text":
             MessageLookupByLibrary.simpleMessage("Category"),
         "moderation__community_moderated_objects":
-            MessageLookupByLibrary.simpleMessage("Memory moderated objects"),
+            MessageLookupByLibrary.simpleMessage("Crew moderated objects"),
         "moderation__community_review_approve":
             MessageLookupByLibrary.simpleMessage("Approve"),
         "moderation__community_review_item_verified":
@@ -917,7 +916,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "moderation__community_review_title":
             MessageLookupByLibrary.simpleMessage("Review moderated object"),
         "moderation__confirm_report_community_reported":
-            MessageLookupByLibrary.simpleMessage("Memory reported"),
+            MessageLookupByLibrary.simpleMessage("Crew reported"),
         "moderation__confirm_report_item_reported":
             MessageLookupByLibrary.simpleMessage("Item reported"),
         "moderation__confirm_report_post_comment_reported":
@@ -932,7 +931,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Here\'s what will happen next:"),
         "moderation__confirm_report_provide_happen_next_desc":
             MessageLookupByLibrary.simpleMessage(
-                "- Your report will be submitted anonymously. \n- If you are reporting a post or comment, the report will be sent to the Siuu staff and the memory moderators if applicable and the post will be hidden from your feed. \n- If you are reporting an account or memory, it will be sent to the Siuu staff. \n- We\'ll review it, if approved, content will be deleted and penalties delivered to the people involved ranging from a temporary suspension to deletion of the account depending on the severity of the transgression. \n- If the report is found to be made in an attempt to damage the reputation of another member or memory in the platform with no infringement of the stated reason, penalties will be applied to you. \n"),
+                "- Your report will be submitted anonymously. \n- If you are reporting a post or comment, the report will be sent to the Siuu staff and the crew moderators if applicable and the post will be hidden from your feed. \n- If you are reporting an account or crew, it will be sent to the Siuu staff. \n- We\'ll review it, if approved, content will be deleted and penalties delivered to the people involved ranging from a temporary suspension to deletion of the account depending on the severity of the transgression. \n- If the report is found to be made in an attempt to damage the reputation of another member or crew in the platform with no infringement of the stated reason, penalties will be applied to you. \n"),
         "moderation__confirm_report_provide_optional_hint_text":
             MessageLookupByLibrary.simpleMessage("Type here..."),
         "moderation__confirm_report_provide_optional_info":
@@ -1004,7 +1003,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "moderation__report_comment_text":
             MessageLookupByLibrary.simpleMessage("Report comment"),
         "moderation__report_community_text":
-            MessageLookupByLibrary.simpleMessage("Report memory"),
+            MessageLookupByLibrary.simpleMessage("Report crew"),
         "moderation__report_hashtag_text":
             MessageLookupByLibrary.simpleMessage("Report hashtag"),
         "moderation__report_post_text":
@@ -1042,8 +1041,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "You have reported this comment"),
         "moderation__you_have_reported_community_text":
-            MessageLookupByLibrary.simpleMessage(
-                "You have reported this memory"),
+            MessageLookupByLibrary.simpleMessage("You have reported this crew"),
         "moderation__you_have_reported_hashtag_text":
             MessageLookupByLibrary.simpleMessage(
                 "You have reported this hashtag"),
@@ -1077,15 +1075,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Post comment mention"),
         "notifications__community_invite_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Be notified when someone invites you to join a memory"),
+                "Be notified when someone invites you to join a crew"),
         "notifications__community_invite_title":
-            MessageLookupByLibrary.simpleMessage("Memory invite"),
+            MessageLookupByLibrary.simpleMessage("Crew invite"),
         "notifications__community_new_post_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Be notified when there is a new post in a memory you enabled post notifications on"),
+                "Be notified when there is a new post in a crew you enabled post notifications on"),
         "notifications__community_new_post_tile": m27,
         "notifications__community_new_post_title":
-            MessageLookupByLibrary.simpleMessage("Memory new post"),
+            MessageLookupByLibrary.simpleMessage("Crew new post"),
         "notifications__connection_desc": MessageLookupByLibrary.simpleMessage(
             "Be notified when someone wants to connect with you"),
         "notifications__connection_request_tile":
@@ -1276,14 +1274,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enable post comments"),
         "post__exclude_community_from_profile_posts":
             MessageLookupByLibrary.simpleMessage(
-                "Hide this memory from my profile"),
+                "Hide this crew from my profile"),
         "post__exclude_community_from_profile_posts_confirmation":
             MessageLookupByLibrary.simpleMessage(
-                "This will hide all posts from this memory from your profile."),
+                "This will hide all posts from this crew from your profile."),
         "post__exclude_community_from_profile_posts_success":
-            MessageLookupByLibrary.simpleMessage("Memory hidden"),
-        "post__exclude_post_memory": MessageLookupByLibrary.simpleMessage(
-            "Don\'t show posts from this memory"),
+            MessageLookupByLibrary.simpleMessage("Crew hidden"),
+        "post__exclude_post_crew": MessageLookupByLibrary.simpleMessage(
+            "Don\'t show posts from this crew"),
         "post__have_not_shared_anything": MessageLookupByLibrary.simpleMessage(
             "You have not shared anything yet."),
         "post__is_closed": MessageLookupByLibrary.simpleMessage("Closed post"),
@@ -1317,16 +1315,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__search_circles":
             MessageLookupByLibrary.simpleMessage("Search circles..."),
         "post__share": MessageLookupByLibrary.simpleMessage("Share"),
-        "post__share_memory": MessageLookupByLibrary.simpleMessage("Share"),
+        "post__share_crew": MessageLookupByLibrary.simpleMessage("Share"),
         "post__share_community_desc": MessageLookupByLibrary.simpleMessage(
-            "Share the post to a memory you\'re part of."),
+            "Share the post to a crew you\'re part of."),
         "post__share_community_title":
-            MessageLookupByLibrary.simpleMessage("A memory"),
+            MessageLookupByLibrary.simpleMessage("A crew"),
         "post__share_to": MessageLookupByLibrary.simpleMessage("Share to"),
         "post__share_to_circles":
             MessageLookupByLibrary.simpleMessage("Share to circles"),
-        "post__share_to_memory":
-            MessageLookupByLibrary.simpleMessage("Share to memory"),
+        "post__share_to_crew":
+            MessageLookupByLibrary.simpleMessage("Share to crew"),
         "post__shared_privately_on":
             MessageLookupByLibrary.simpleMessage("Shared privately on"),
         "post__sharing_post_to":
@@ -1362,7 +1360,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Could not load your timeline."),
         "post__timeline_posts_no_more_drhoo_subtitle":
             MessageLookupByLibrary.simpleMessage(
-                "Follow users or join a memory to get started!"),
+                "Follow users or join a crew to get started!"),
         "post__timeline_posts_refresh_posts":
             MessageLookupByLibrary.simpleMessage("Refresh posts"),
         "post__timeline_posts_refreshing_drhoo_title":
@@ -1378,8 +1376,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Refresh"),
         "post__trending_posts_title":
             MessageLookupByLibrary.simpleMessage("Trending"),
-        "post__undo_exclude_post_memory":
-            MessageLookupByLibrary.simpleMessage("Show posts from this memory"),
+        "post__undo_exclude_post_crew":
+            MessageLookupByLibrary.simpleMessage("Show posts from this crew"),
         "post__user_has_not_shared_anything": m34,
         "post__usernames_circles": m35,
         "post__world_circle_name":
@@ -1442,7 +1440,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Update lists"),
         "user__billion_postfix": MessageLookupByLibrary.simpleMessage("b"),
         "user__block_description": MessageLookupByLibrary.simpleMessage(
-            "You will both dissapear from each other\'s social network experience, with the exception of memories which the person is a staff member of."),
+            "You will both dissapear from each other\'s social network experience, with the exception of crews which the person is a staff member of."),
         "user__block_user": MessageLookupByLibrary.simpleMessage("Block user"),
         "user__change_email_current_email_text":
             MessageLookupByLibrary.simpleMessage("Current email"),
@@ -1497,8 +1495,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "user__confirm_connection_connection_confirmed":
             MessageLookupByLibrary.simpleMessage("Connection confirmed"),
         "user__confirm_connection_with": m40,
-        "user__confirm_guidelines_reject_chat_memory":
-            MessageLookupByLibrary.simpleMessage("Chat with the memory."),
+        "user__confirm_guidelines_reject_chat_crew":
+            MessageLookupByLibrary.simpleMessage("Chat with the crew."),
         "user__confirm_guidelines_reject_chat_immediately":
             MessageLookupByLibrary.simpleMessage("Start a chat immediately."),
         "user__confirm_guidelines_reject_chat_with_team":
@@ -1703,10 +1701,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "user__list_name_range_error": m53,
         "user__manage": MessageLookupByLibrary.simpleMessage("Manage"),
         "user__manage_profile_community_posts_toggle":
-            MessageLookupByLibrary.simpleMessage("Memory posts"),
+            MessageLookupByLibrary.simpleMessage("Crew posts"),
         "user__manage_profile_community_posts_toggle__descr":
             MessageLookupByLibrary.simpleMessage(
-                "Display posts you share with public memories, on your profile."),
+                "Display posts you share with public crews, on your profile."),
         "user__manage_profile_details_title":
             MessageLookupByLibrary.simpleMessage("Details"),
         "user__manage_profile_details_title_desc":
@@ -1739,13 +1737,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("In circles"),
         "user__profile_location_length_error": m55,
         "user__profile_Siuu_age_toast": m56,
-        "user__profile_posts_exclude_memories":
-            MessageLookupByLibrary.simpleMessage("Exclude memories"),
-        "user__profile_posts_excluded_memories":
-            MessageLookupByLibrary.simpleMessage("Hidden memories"),
-        "user__profile_posts_excluded_memories_desc":
+        "user__profile_posts_exclude_crews":
+            MessageLookupByLibrary.simpleMessage("Exclude crews"),
+        "user__profile_posts_excluded_crews":
+            MessageLookupByLibrary.simpleMessage("Hidden crews"),
+        "user__profile_posts_excluded_crews_desc":
             MessageLookupByLibrary.simpleMessage(
-                "See, add and remove hidden memories from your profile."),
+                "See, add and remove hidden crews from your profile."),
         "user__profile_url_invalid_error":
             MessageLookupByLibrary.simpleMessage("Please provide a valid url."),
         "user__remove_account_from_list":
@@ -1820,8 +1818,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user__update_connection_circles_title":
             MessageLookupByLibrary.simpleMessage("Update connection circles"),
         "user_search__cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
-        "user_search__memories":
-            MessageLookupByLibrary.simpleMessage("Memories"),
+        "user_search__crews": MessageLookupByLibrary.simpleMessage("Memories"),
         "user_search__hashtags":
             MessageLookupByLibrary.simpleMessage("Hashtags"),
         "user_search__list_no_results_found": m60,
@@ -1830,7 +1827,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user_search__list_retry":
             MessageLookupByLibrary.simpleMessage("Tap to retry."),
         "user_search__list_search_text": m61,
-        "user_search__no_memories_for": m62,
+        "user_search__no_crews_for": m62,
         "user_search__no_hashtags_for": m63,
         "user_search__no_results_for": m64,
         "user_search__no_users_for": m65,

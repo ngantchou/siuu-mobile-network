@@ -18,6 +18,8 @@ import 'package:flutter/material.dart';
 import 'package:Siuu/services/httpie.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import 'post_comment/widgets/post_comment_audio.dart';
+
 class OBPostCommenter extends StatefulWidget {
   final Post post;
   final PostComment postComment;
@@ -57,7 +59,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   CancelableOperation _submitFormOperation;
 
   final _formKey = GlobalKey<FormState>();
-
+  bool isAudio = false;
   @override
   void initState() {
     super.initState();
@@ -266,7 +268,14 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                         ? Icon(Icons.close)
                         : SvgPicture.asset('assets/svg/emoji.svg')),
                 SizedBox(width: width * 0.024),
-                SvgPicture.asset('assets/svg/micIcon.svg'),
+                !isAudio
+                    ? InkWell(
+                        onTap: () {
+                          isAudio = true;
+                        },
+                        child: SvgPicture.asset('assets/svg/micIcon.svg'),
+                      )
+                    : PostCommentAudio(),
                 SizedBox(width: width * 0.024),
                 InkWell(
                   onTap: () {

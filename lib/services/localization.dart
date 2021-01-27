@@ -924,16 +924,16 @@ class LocalizationService {
     return Intl.message("Rules", name: 'community__button_rules');
   }
 
-  String get community__memory {
-    return Intl.message("memory", name: 'community__memory');
+  String get community__crew {
+    return Intl.message("crew", name: 'community__crew');
   }
 
   String get community__memories {
     return Intl.message("memories", name: 'community__memories');
   }
 
-  String get community__excluded_memory {
-    return Intl.message("hidden memory", name: 'community__excluded_memory');
+  String get community__excluded_crew {
+    return Intl.message("hidden crew", name: 'community__excluded_crew');
   }
 
   String get community__excluded_memories {
@@ -973,7 +973,7 @@ class LocalizationService {
 
   String get community__admin_desc {
     return Intl.message(
-        "This will allow the member to edit the memory details, administrators, moderators and banned users.",
+        "This will allow the member to edit the crew details, administrators, moderators and banned users.",
         name: 'community__admin_desc');
   }
 
@@ -987,7 +987,7 @@ class LocalizationService {
 
   String community__admin_add_confirmation(String username) {
     return Intl.message(
-        "Are you sure you want to add @$username as a memory administrator?",
+        "Are you sure you want to add @$username as a crew administrator?",
         args: [username],
         name: 'community__admin_add_confirmation');
   }
@@ -999,20 +999,20 @@ class LocalizationService {
 
   String get community__ban_desc {
     return Intl.message(
-        "This will remove the user from the memory and disallow them from joining again.",
+        "This will remove the user from the crew and disallow them from joining again.",
         name: 'community__ban_desc');
   }
 
   String community__moderator_add_confirmation(String username) {
     return Intl.message(
-        "Are you sure you want to add @$username as a memory moderator?",
+        "Are you sure you want to add @$username as a crew moderator?",
         args: [username],
         name: 'community__moderator_add_confirmation');
   }
 
   String get community__moderator_desc {
     return Intl.message(
-        "This will allow the member to edit the memory details, moderators and banned users.",
+        "This will allow the member to edit the crew details, moderators and banned users.",
         name: 'community__moderator_desc');
   }
 
@@ -1031,7 +1031,7 @@ class LocalizationService {
   }
 
   String get community__leave_confirmation {
-    return Intl.message("Are you sure you want to leave the memory?",
+    return Intl.message("Are you sure you want to leave the crew?",
         name: 'community__leave_confirmation');
   }
 
@@ -1051,7 +1051,7 @@ class LocalizationService {
   }
 
   String get community__delete_confirmation {
-    return Intl.message("Are you sure you want to delete the memory?",
+    return Intl.message("Are you sure you want to delete the crew?",
         name: 'community__delete_confirmation');
   }
 
@@ -1066,7 +1066,7 @@ class LocalizationService {
   }
 
   String get community__manage_title {
-    return Intl.message("Manage memory", name: 'community__manage_title');
+    return Intl.message("Manage crew", name: 'community__manage_title');
   }
 
   String get community__manage_details_title {
@@ -1112,7 +1112,7 @@ class LocalizationService {
   }
 
   String get community__manage_mod_reports_desc {
-    return Intl.message("Review the memory moderation reports.",
+    return Intl.message("Review the crew moderation reports.",
         name: 'community__manage_mod_reports_desc');
   }
 
@@ -1133,36 +1133,35 @@ class LocalizationService {
 
   String get community__manage_invite_desc {
     return Intl.message(
-        "Invite your connections and followers to join the memory.",
+        "Invite your connections and followers to join the crew.",
         name: 'community__manage_invite_desc');
   }
 
   String get community__manage_delete_title {
-    return Intl.message("Delete memory",
-        name: 'community__manage_delete_title');
+    return Intl.message("Delete crew", name: 'community__manage_delete_title');
   }
 
   String get community__manage_delete_desc {
-    return Intl.message("Delete the memory, forever.",
+    return Intl.message("Delete the crew, forever.",
         name: 'community__manage_delete_desc');
   }
 
   String get community__manage_leave_title {
-    return Intl.message("Leave memory", name: 'community__manage_leave_title');
+    return Intl.message("Leave crew", name: 'community__manage_leave_title');
   }
 
   String get community__manage_leave_desc {
-    return Intl.message("Leave the memory.",
+    return Intl.message("Leave the crew.",
         name: 'community__manage_leave_desc');
   }
 
   String get community__manage_add_favourite {
-    return Intl.message("Add the memory to your favorites",
+    return Intl.message("Add the crew to your favorites",
         name: 'community__manage_add_favourite');
   }
 
   String get community__manage_remove_favourite {
-    return Intl.message("Remove the memory from your favorites",
+    return Intl.message("Remove the crew from your favorites",
         name: 'community__manage_remove_favourite');
   }
 
@@ -1177,8 +1176,7 @@ class LocalizationService {
   }
 
   String get community__is_private {
-    return Intl.message("This memory is private.",
-        name: 'community__is_private');
+    return Intl.message("This crew is private.", name: 'community__is_private');
   }
 
   String get community__invited_by_member {
@@ -1192,7 +1190,7 @@ class LocalizationService {
   }
 
   String get community__refreshing {
-    return Intl.message("Refreshing memory", name: 'community__refreshing');
+    return Intl.message("Refreshing crew", name: 'community__refreshing');
   }
 
   String get community__posts {
@@ -1310,11 +1308,11 @@ class LocalizationService {
     return Intl.message("Favorites", name: 'community__favorites_title');
   }
 
-  String get community__favorite_memory {
-    return Intl.message("favorite memory",
+  String get community__favorite_crew {
+    return Intl.message("favorite crew",
         desc:
-            'Currently unsused, reserved for potential use. Could be used as Showing 1 favorite memory',
-        name: 'community__favorite_memory');
+            'Currently unsused, reserved for potential use. Could be used as Showing 1 favorite crew',
+        name: 'community__favorite_crew');
   }
 
   String get community__favorite_memories {
@@ -1329,11 +1327,11 @@ class LocalizationService {
         name: 'community__administrated_title');
   }
 
-  String get community__administrated_memory {
-    return Intl.message("administrated memory",
+  String get community__administrated_crew {
+    return Intl.message("administrated crew",
         desc:
-            'Currently unsused, reserved for potential use. Could be used as Showing 1 administrated memory',
-        name: 'community__administrated_memory');
+            'Currently unsused, reserved for potential use. Could be used as Showing 1 administrated crew',
+        name: 'community__administrated_crew');
   }
 
   String get community__administrated_memories {
@@ -1347,11 +1345,11 @@ class LocalizationService {
     return Intl.message("Moderated", name: 'community__moderated_title');
   }
 
-  String get community__moderated_memory {
-    return Intl.message("moderated memory",
+  String get community__moderated_crew {
+    return Intl.message("moderated crew",
         desc:
-            'Currently unsused, reserved for potential use. Could be used as Showing 1 moderated memory',
-        name: 'community__moderated_memory');
+            'Currently unsused, reserved for potential use. Could be used as Showing 1 moderated crew',
+        name: 'community__moderated_crew');
   }
 
   String get community__moderated_memories {
@@ -1365,11 +1363,11 @@ class LocalizationService {
     return Intl.message("Joined", name: 'community__joined_title');
   }
 
-  String get community__joined_memory {
-    return Intl.message("joined memory",
+  String get community__joined_crew {
+    return Intl.message("joined crew",
         desc:
-            'Currently unsused, reserved for potential use. Could be used as Showing 1 joined memory',
-        name: 'community__joined_memory');
+            'Currently unsused, reserved for potential use. Could be used as Showing 1 joined crew',
+        name: 'community__joined_crew');
   }
 
   String get community__joined_memories {
@@ -1409,7 +1407,7 @@ class LocalizationService {
   }
 
   String get community__memories_title {
-    return Intl.message("Communities", name: 'community__memories_title');
+    return Intl.message("Crews", name: 'community__memories_title');
   }
 
   String get community__memories_no_category_found {
@@ -1427,7 +1425,7 @@ class LocalizationService {
   }
 
   String get community__invite_to_community_title {
-    return Intl.message("Invite to memory",
+    return Intl.message("Invite to crew",
         name: 'community__invite_to_community_title');
   }
 
@@ -1446,11 +1444,11 @@ class LocalizationService {
   }
 
   String get community__favorite_action {
-    return Intl.message("Favorite memory", name: 'community__favorite_action');
+    return Intl.message("Favorite crew", name: 'community__favorite_action');
   }
 
   String get community__unfavorite_action {
-    return Intl.message("Unfavorite memory",
+    return Intl.message("Unfavorite crew",
         name: 'community__unfavorite_action');
   }
 
@@ -1509,7 +1507,7 @@ class LocalizationService {
   }
 
   String get community__save_community_name_member_invites_subtitle {
-    return Intl.message("Members can invite people to the memory",
+    return Intl.message("Members can invite people to the crew",
         name: 'community__save_community_name_member_invites_subtitle');
   }
 
@@ -1524,7 +1522,7 @@ class LocalizationService {
   }
 
   String get community__save_community_name_label_desc_optional_hint_text {
-    return Intl.message("What is your memory about?",
+    return Intl.message("What is your crew about?",
         name: 'community__save_community_name_label_desc_optional_hint_text');
   }
 
@@ -1560,14 +1558,14 @@ class LocalizationService {
             'community__save_community_name_label_members_adjective_hint_text');
   }
 
-  String get community__save_community_edit_memory {
-    return Intl.message("Edit memory",
-        name: 'community__save_community_edit_memory');
+  String get community__save_community_edit_crew {
+    return Intl.message("Edit crew",
+        name: 'community__save_community_edit_crew');
   }
 
-  String get community__save_community_create_memory {
-    return Intl.message("Create memory",
-        name: 'community__save_community_create_memory');
+  String get community__save_community_create_crew {
+    return Intl.message("Create crew",
+        name: 'community__save_community_create_crew');
   }
 
   String get community__save_community_save_text {
@@ -1580,7 +1578,7 @@ class LocalizationService {
   }
 
   String get community__actions_invite_people_title {
-    return Intl.message("Invite people to memory",
+    return Intl.message("Invite people to crew",
         name: 'community__actions_invite_people_title');
   }
 
@@ -1604,12 +1602,12 @@ class LocalizationService {
         name: 'community__actions_disable_new_post_notifications_success');
   }
 
-  String get community__join_memory {
-    return Intl.message("Join", name: 'community__join_memory');
+  String get community__join_crew {
+    return Intl.message("Join", name: 'community__join_crew');
   }
 
-  String get community__leave_memory {
-    return Intl.message("Leave", name: 'community__leave_memory');
+  String get community__leave_crew {
+    return Intl.message("Leave", name: 'community__leave_crew');
   }
 
   String get community__community_staff {
@@ -1680,7 +1678,7 @@ class LocalizationService {
         "Adjectives can't be longer than $maxLength characters.",
         args: [maxLength],
         desc:
-            'This refers to the customisable adjectives assigned to memory members,eg. 1k travellers,5k photographers',
+            'This refers to the customisable adjectives assigned to crew members,eg. 1k travellers,5k photographers',
         name: 'community__adjectives_range_error');
   }
 
@@ -1704,7 +1702,7 @@ class LocalizationService {
   }
 
   String get user_search__memories {
-    return Intl.message("Communities", name: 'user_search__memories');
+    return Intl.message("Crews", name: 'user_search__memories');
   }
 
   String get user_search__hashtags {
@@ -1813,7 +1811,7 @@ class LocalizationService {
   }
 
   String get post__timeline_posts_no_more_drhoo_subtitle {
-    return Intl.message("Follow users or join a memory to get started!",
+    return Intl.message("Follow users or join a crew to get started!",
         name: 'post__timeline_posts_no_more_drhoo_subtitle');
   }
 
@@ -1916,20 +1914,20 @@ class LocalizationService {
         args: [postCreatorUsername], name: 'post__usernames_circles');
   }
 
-  String get post__share_memory {
-    return Intl.message("Share", name: 'post__share_memory');
+  String get post__share_crew {
+    return Intl.message("Share", name: 'post__share_crew');
   }
 
-  String get post__share_to_memory {
-    return Intl.message("Share to memory", name: 'post__share_to_memory');
+  String get post__share_to_crew {
+    return Intl.message("Share to crew", name: 'post__share_to_crew');
   }
 
   String get post__share_community_title {
-    return Intl.message("A memory", name: 'post__share_community_title');
+    return Intl.message("A crew", name: 'post__share_community_title');
   }
 
   String get post__share_community_desc {
-    return Intl.message("Share the post to a memory you're part of.",
+    return Intl.message("Share the post to a crew you're part of.",
         name: 'post__share_community_desc');
   }
 
@@ -2229,18 +2227,18 @@ class LocalizationService {
         name: 'post__enable_post_comments');
   }
 
-  String get post__exclude_post_memory {
-    return Intl.message("Don't show posts from this memory",
-        name: 'post__exclude_post_memory');
+  String get post__exclude_post_crew {
+    return Intl.message("Don't show posts from this crew",
+        name: 'post__exclude_post_crew');
   }
 
-  String get post__undo_exclude_post_memory {
-    return Intl.message("Show posts from this memory",
-        name: 'post__undo_exclude_post_memory');
+  String get post__undo_exclude_post_crew {
+    return Intl.message("Show posts from this crew",
+        name: 'post__undo_exclude_post_crew');
   }
 
   String get post__exclude_community_from_profile_posts {
-    return Intl.message("Hide this memory from my profile",
+    return Intl.message("Hide this crew from my profile",
         name: 'post__exclude_community_from_profile_posts');
   }
 
@@ -2251,7 +2249,7 @@ class LocalizationService {
 
   String get post__exclude_community_from_profile_posts_confirmation {
     return Intl.message(
-        "This will hide all posts from this memory from your profile.",
+        "This will hide all posts from this crew from your profile.",
         name: 'post__exclude_community_from_profile_posts_confirmation');
   }
 
@@ -2714,8 +2712,7 @@ class LocalizationService {
   }
 
   String get user__edit_profile_community_posts {
-    return Intl.message("Communities",
-        name: 'user__edit_profile_community_posts');
+    return Intl.message("Crews", name: 'user__edit_profile_community_posts');
   }
 
   String get user__edit_profile_community_posts_descr {
@@ -3308,9 +3305,9 @@ class LocalizationService {
         name: 'user__confirm_guidelines_reject_chat_immediately');
   }
 
-  String get user__confirm_guidelines_reject_chat_memory {
-    return Intl.message("Chat with the memory.",
-        name: 'user__confirm_guidelines_reject_chat_memory');
+  String get user__confirm_guidelines_reject_chat_crew {
+    return Intl.message("Chat with the crew.",
+        name: 'user__confirm_guidelines_reject_chat_crew');
   }
 
   String get user__confirm_guidelines_reject_join_slack {
@@ -3620,7 +3617,7 @@ class LocalizationService {
   }
 
   String get notifications__community_invite_desc {
-    return Intl.message("Be notified when someone invites you to join a memory",
+    return Intl.message("Be notified when someone invites you to join a crew",
         name: 'notifications__community_invite_desc');
   }
 
@@ -3631,7 +3628,7 @@ class LocalizationService {
 
   String get notifications__community_new_post_desc {
     return Intl.message(
-        "Be notified when there is a new post in a memory you enabled post notifications on",
+        "Be notified when there is a new post in a crew you enabled post notifications on",
         name: 'notifications__community_new_post_desc');
   }
 
@@ -3708,17 +3705,17 @@ class LocalizationService {
         name: 'notifications__following_you_tile');
   }
 
-  String notifications__user_community_invite_tile(String memoryName) {
+  String notifications__user_community_invite_tile(String crewName) {
     return Intl.message(
-        "[name] [username] has invited you to join memory c/$memoryName.",
-        args: [memoryName],
-        desc: "Eg.: James @jamest has invited you to join memory c/Siuu.",
+        "[name] [username] has invited you to join crew c/$crewName.",
+        args: [crewName],
+        desc: "Eg.: James @jamest has invited you to join crew c/Siuu.",
         name: 'notifications__user_community_invite_tile');
   }
 
-  String notifications__community_new_post_tile(String memoryName) {
-    return Intl.message("There was a new post in c/$memoryName.",
-        args: [memoryName],
+  String notifications__community_new_post_tile(String crewName) {
+    return Intl.message("There was a new post in c/$crewName.",
+        args: [crewName],
         desc: "Eg.: There was a new post in c/Siuu.",
         name: 'notifications__community_new_post_tile');
   }
@@ -3938,10 +3935,10 @@ class LocalizationService {
   String get moderation__confirm_report_provide_happen_next_desc {
     return Intl.message(
         "- Your report will be submitted anonymously. \n"
-        "- If you are reporting a post or comment, the report will be sent to the Siuu staff and the memory moderators if applicable and the post will be hidden from your feed. \n"
-        "- If you are reporting an account or memory, it will be sent to the Siuu staff. \n"
+        "- If you are reporting a post or comment, the report will be sent to the Siuu staff and the crew moderators if applicable and the post will be hidden from your feed. \n"
+        "- If you are reporting an account or crew, it will be sent to the Siuu staff. \n"
         "- We'll review it, if approved, content will be deleted and penalties delivered to the people involved ranging from a temporary suspension to deletion of the account depending on the severity of the transgression. \n"
-        "- If the report is found to be made in an attempt to damage the reputation of another member or memory in the platform with no infringement of the stated reason, penalties will be applied to you. \n",
+        "- If the report is found to be made in an attempt to damage the reputation of another member or crew in the platform with no infringement of the stated reason, penalties will be applied to you. \n",
         name: 'moderation__confirm_report_provide_happen_next_desc');
   }
 
@@ -4020,12 +4017,12 @@ class LocalizationService {
   }
 
   String get moderation__report_community_text {
-    return Intl.message("Report memory",
+    return Intl.message("Report crew",
         name: 'moderation__report_community_text');
   }
 
   String get moderation__you_have_reported_community_text {
-    return Intl.message("You have reported this memory",
+    return Intl.message("You have reported this crew",
         name: 'moderation__you_have_reported_community_text');
   }
 
@@ -4145,7 +4142,7 @@ class LocalizationService {
   String get contextual_community_search_box__suggestions {
     return Intl.message("Suggestions",
         desc:
-            "The title to display on the suggestions when searching for memorys when trying to mention someone.",
+            "The title to display on the suggestions when searching for crews when trying to mention someone.",
         name: 'contextual_community_search_box__suggestions');
   }
 

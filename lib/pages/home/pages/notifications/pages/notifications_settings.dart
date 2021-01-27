@@ -45,8 +45,8 @@ class OBNotificationsSettingsPageState
   bool _followRequestNotifications;
   bool _followRequestApprovedNotifications;
   bool _connectionRequestNotifications;
-  bool _memoryInviteNotifications;
-  bool _memoryNewPostNotifications;
+  bool _crewInviteNotifications;
+  bool _crewNewPostNotifications;
   bool _userNewPostNotifications;
 
   @override
@@ -62,8 +62,8 @@ class OBNotificationsSettingsPageState
     _followRequestNotifications = true;
     _followRequestApprovedNotifications = true;
     _connectionRequestNotifications = true;
-    _memoryInviteNotifications = true;
-    _memoryNewPostNotifications = true;
+    _crewInviteNotifications = true;
+    _crewNewPostNotifications = true;
     _userNewPostNotifications = true;
     _postUserMentionNotifications = true;
     _postCommentUserMentionNotifications = true;
@@ -242,7 +242,7 @@ class OBNotificationsSettingsPageState
         ),
         OBToggleField(
           key: Key('Memory invite'),
-          value: _memoryInviteNotifications,
+          value: _crewInviteNotifications,
           title: _localizationService
               .trans('notifications__community_invite_title'),
           subtitle: OBText(_localizationService
@@ -253,7 +253,7 @@ class OBNotificationsSettingsPageState
         ),
         OBToggleField(
           key: Key('Memory new post'),
-          value: _memoryNewPostNotifications,
+          value: _crewNewPostNotifications,
           title: _localizationService.notifications__community_new_post_title,
           subtitle: OBText(
               _localizationService.notifications__community_new_post_desc),
@@ -348,24 +348,24 @@ class OBNotificationsSettingsPageState
   }
 
   void _toggleMemoryInviteNotifications() {
-    _setMemoryInviteNotifications(!_memoryInviteNotifications);
+    _setMemoryInviteNotifications(!_crewInviteNotifications);
   }
 
   void _setMemoryInviteNotifications(bool newValue) {
     setState(() {
-      _memoryInviteNotifications = newValue;
+      _crewInviteNotifications = newValue;
     });
 
     _submitNotificationsSettings();
   }
 
   void _toggleMemoryNewPostNotifications() {
-    _setMemoryNewPostNotifications(!_memoryNewPostNotifications);
+    _setMemoryNewPostNotifications(!_crewNewPostNotifications);
   }
 
   void _setMemoryNewPostNotifications(bool newValue) {
     setState(() {
-      _memoryNewPostNotifications = newValue;
+      _crewNewPostNotifications = newValue;
     });
 
     _submitNotificationsSettings();
@@ -499,9 +499,9 @@ class OBNotificationsSettingsPageState
           postCommentReactionNotifications: _postCommentReactionNotifications,
           postReactionNotifications: _postReactionNotifications,
           connectionRequestNotifications: _connectionRequestNotifications,
-          memoryNewPostNotifications: _memoryNewPostNotifications,
+          crewNewPostNotifications: _crewNewPostNotifications,
           userNewPostNotifications: _userNewPostNotifications,
-          memoryInviteNotifications: _memoryInviteNotifications);
+          crewInviteNotifications: _crewInviteNotifications);
     } catch (error) {
       _onError(error);
     }
@@ -543,10 +543,8 @@ class OBNotificationsSettingsPageState
           notificationSettings.followRequestNotifications;
       _followRequestApprovedNotifications =
           notificationSettings.followRequestApprovedNotifications;
-      _memoryInviteNotifications =
-          notificationSettings.memoryInviteNotifications;
-      _memoryNewPostNotifications =
-          notificationSettings.memoryNewPostNotifications;
+      _crewInviteNotifications = notificationSettings.crewInviteNotifications;
+      _crewNewPostNotifications = notificationSettings.crewNewPostNotifications;
       _userNewPostNotifications = notificationSettings.userNewPostNotifications;
     });
   }

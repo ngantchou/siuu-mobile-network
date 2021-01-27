@@ -35,7 +35,8 @@ class OBPostCommentNotificationTile extends StatelessWidget {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     bool isOwnPostNotification =
         openbookProvider.userService.getLoggedInUser().id == postCreatorId;
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     Widget postImagePreview;
     if (post.hasMediaThumbnail()) {
@@ -61,7 +62,7 @@ class OBPostCommentNotificationTile extends StatelessWidget {
       },
       leading: OBAvatar(
         onPressed: navigateToCommenterProfile,
-        size: OBAvatarSize.medium,
+        size: OBAvatarSize.small,
         avatarUrl: postComment.commenter.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
@@ -69,11 +70,16 @@ class OBPostCommentNotificationTile extends StatelessWidget {
         user: postComment.commenter,
         text: TextSpan(
             text: isOwnPostNotification
-                ? _localizationService.notifications__comment_comment_notification_tile_user_commented(postCommentText)
-                : _localizationService.notifications__comment_comment_notification_tile_user_also_commented(postCommentText)),
+                ? _localizationService
+                    .notifications__comment_comment_notification_tile_user_commented(
+                        postCommentText)
+                : _localizationService
+                    .notifications__comment_comment_notification_tile_user_also_commented(
+                        postCommentText)),
       ),
       trailing: postImagePreview,
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
+      subtitle: OBSecondaryText(
+          utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

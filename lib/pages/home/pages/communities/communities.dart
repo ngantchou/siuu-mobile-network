@@ -294,7 +294,7 @@ class OBMainCommunitiesPageState extends State<OBMainCommunitiesPage>
         await _modalService.openCreateMemory(context: context);
     if (createdMemory != null) {
       _navigationService.navigateToMemory(
-          memory: createdMemory, context: context);
+          crew: createdMemory, context: context);
     }
   }
 

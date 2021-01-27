@@ -57,7 +57,7 @@ class OBPostUserMentionNotificationTile extends StatelessWidget {
       onTap: onTileTapped,
       leading: OBAvatar(
         onPressed: navigateToMentionerProfile,
-        size: OBAvatarSize.medium,
+        size: OBAvatarSize.small,
         avatarUrl: postUserMention.post.creator.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(

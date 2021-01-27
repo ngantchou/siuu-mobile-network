@@ -68,30 +68,30 @@ class OBMyModerationTasksPageState extends State<OBMyModerationTasksPage> {
   }
 
   Widget _buildPendingModeratedObjectsMemoryListItem(
-      BuildContext context, Memory memory) {
+      BuildContext context, Memory crew) {
     return GestureDetector(
-      onTap: () => _onPendingModeratedObjectsMemoryListItemPressed(memory),
+      onTap: () => _onPendingModeratedObjectsMemoryListItemPressed(crew),
       child: Row(
         children: <Widget>[
           SizedBox(height: 50),
           Expanded(
-            child: OBMemoryTile(memory),
+            child: OBMemoryTile(crew),
           ),
           SizedBox(
             width: 20,
           ),
           OBBadge(
             size: 25,
-            count: memory.pendingModeratedObjectsCount,
+            count: crew.pendingModeratedObjectsCount,
           )
         ],
       ),
     );
   }
 
-  void _onPendingModeratedObjectsMemoryListItemPressed(Memory memory) {
+  void _onPendingModeratedObjectsMemoryListItemPressed(Memory crew) {
     _navigationService.navigateToMemoryModeratedObjects(
-        memory: memory, context: context);
+        crew: crew, context: context);
   }
 
   Future<List<Memory>> _refreshPendingModeratedObjectsCommunities() async {

@@ -60,18 +60,18 @@ class OBProfilePostsExcludedCommunitiesState
           listSearcher: _searchCommunities,
           selectionSubmitter: _excludeCommunities,
           onSelectionSubmitted: _onCommunitiesWereExcluded,
-          resourceSingularName: _localizationService.community__memory,
+          resourceSingularName: _localizationService.community__crew,
           resourcePluralName: _localizationService.community__memories,
         ),
       ),
     );
   }
 
-  Widget _buildMemoryListItem(BuildContext context, Memory memory) {
+  Widget _buildMemoryListItem(BuildContext context, Memory crew) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0),
       child: OBMemoryTile(
-        memory,
+        crew,
         size: OBMemoryTileSize.small,
       ),
     );
@@ -79,7 +79,7 @@ class OBProfilePostsExcludedCommunitiesState
 
   Future<void> _excludeCommunities(List<Memory> memories) {
     return Future.wait(memories
-        .map((memory) => _userService.excludeMemoryFromProfilePosts(memory))
+        .map((crew) => _userService.excludeMemoryFromProfilePosts(crew))
         .toList());
   }
 

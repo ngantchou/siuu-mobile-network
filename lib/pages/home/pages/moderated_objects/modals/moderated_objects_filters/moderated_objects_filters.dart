@@ -58,7 +58,7 @@ class OBModeratedObjectsFiltersModalState
       _types = [
         ModeratedObjectType.post,
         ModeratedObjectType.postComment,
-        ModeratedObjectType.memory,
+        ModeratedObjectType.crew,
         ModeratedObjectType.user,
         ModeratedObjectType.hashtag,
       ];

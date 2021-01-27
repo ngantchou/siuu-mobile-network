@@ -58,7 +58,7 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
     switch (_autocompletionType) {
       case TextAutocompletionType.account:
         return _buildAccountSearchBox();
-      case TextAutocompletionType.memory:
+      case TextAutocompletionType.crew:
         return _buildMemorySearchBox();
       case TextAutocompletionType.hashtag:
         return _buildHashtagSearchBox();
@@ -101,8 +101,8 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
     autocompleteFoundAccountUsername(user.username);
   }
 
-  void _onMemorySearchBoxUserPressed(Memory memory) {
-    autocompleteFoundMemoryName(memory.name);
+  void _onMemorySearchBoxUserPressed(Memory crew) {
+    autocompleteFoundMemoryName(crew.name);
   }
 
   void _onHashtagSearchBoxUserPressed(Hashtag hashtag) {
@@ -127,7 +127,7 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
           _contextualAccountSearchBoxController
               .search(result.autocompleteQuery);
           break;
-        case TextAutocompletionType.memory:
+        case TextAutocompletionType.crew:
           _contextualMemorySearchBoxController.search(result.autocompleteQuery);
           break;
       }
@@ -154,7 +154,7 @@ abstract class OBContextualSearchBoxState<T extends StatefulWidget>
   void autocompleteFoundMemoryName(String foundMemoryName) {
     if (!isAutocompleting) {
       debugLog(
-          'Tried to autocomplete found memory name but was not searching memory');
+          'Tried to autocomplete found crew name but was not searching crew');
       return;
     }
 

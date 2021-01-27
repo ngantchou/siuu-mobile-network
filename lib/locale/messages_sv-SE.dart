@@ -89,13 +89,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m26(postCommentText) =>
       "[name] [username] svarade: ${postCommentText}";
 
-  static m27(memoryName) => "Det finns ett nytt inlägg i c/${memoryName}.";
+  static m27(crewName) => "Det finns ett nytt inlägg i c/${crewName}.";
 
   static m28(postCommentText) =>
       "[name] [username] nämnde dig i en kommentar: ${postCommentText}";
 
-  static m29(memoryName) =>
-      "[name] [username] har bjudit in dig till gemenskapen /c/${memoryName}.";
+  static m29(crewName) =>
+      "[name] [username] har bjudit in dig till gemenskapen /c/${crewName}.";
 
   static m30(maxLength) =>
       "En kommentar kan inte vara längre än ${maxLength} tecken.";
@@ -480,7 +480,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Detta kommer tillåta medlemmen att redigera gemenskapens information, administratörer, moderatorer och bannade användare."),
         "community__administrated_memories":
             MessageLookupByLibrary.simpleMessage("administrerade gemenskaper"),
-        "community__administrated_memory":
+        "community__administrated_crew":
             MessageLookupByLibrary.simpleMessage("administrerad gemenskap"),
         "community__administrated_title":
             MessageLookupByLibrary.simpleMessage("Administrerade"),
@@ -522,7 +522,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Uppdatera"),
         "community__memories_title":
             MessageLookupByLibrary.simpleMessage("Gemenskaper"),
-        "community__memory": MessageLookupByLibrary.simpleMessage("gemenskap"),
+        "community__crew": MessageLookupByLibrary.simpleMessage("gemenskap"),
         "community__community_members":
             MessageLookupByLibrary.simpleMessage("Gemenskapens medlemmar"),
         "community__community_staff":
@@ -544,13 +544,13 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Visa inte gemenskaper som jag är medlem i"),
         "community__excluded_memories":
             MessageLookupByLibrary.simpleMessage("uteslutna gemenskaper"),
-        "community__excluded_memory":
+        "community__excluded_crew":
             MessageLookupByLibrary.simpleMessage("utesluten gemenskap"),
         "community__favorite_action": MessageLookupByLibrary.simpleMessage(
             "Markera gemenskap som favorit"),
         "community__favorite_memories":
             MessageLookupByLibrary.simpleMessage("favoritgemenskaper"),
-        "community__favorite_memory":
+        "community__favorite_crew":
             MessageLookupByLibrary.simpleMessage("favoritgemenskap"),
         "community__favorites_title":
             MessageLookupByLibrary.simpleMessage("Favoriter"),
@@ -568,16 +568,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "Den här gemenskapen är privat."),
         "community__join_memories_desc": MessageLookupByLibrary.simpleMessage(
             "Gå med i gemenskaper för att se den här fliken komma till liv!"),
-        "community__join_memory":
-            MessageLookupByLibrary.simpleMessage("Gå med"),
+        "community__join_crew": MessageLookupByLibrary.simpleMessage("Gå med"),
         "community__joined_memories":
             MessageLookupByLibrary.simpleMessage("gemenskaper du är medlem i"),
-        "community__joined_memory":
+        "community__joined_crew":
             MessageLookupByLibrary.simpleMessage("gemenskap du är medlem i"),
         "community__joined_title":
             MessageLookupByLibrary.simpleMessage("Medlem i"),
-        "community__leave_memory":
-            MessageLookupByLibrary.simpleMessage("Lämna"),
+        "community__leave_crew": MessageLookupByLibrary.simpleMessage("Lämna"),
         "community__leave_confirmation": MessageLookupByLibrary.simpleMessage(
             "Är du säker på att du vill lämna gemenskapen?"),
         "community__leave_desc": MessageLookupByLibrary.simpleMessage(
@@ -642,7 +640,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Medlemmar"),
         "community__moderated_memories":
             MessageLookupByLibrary.simpleMessage("modererade gemenskaper"),
-        "community__moderated_memory":
+        "community__moderated_crew":
             MessageLookupByLibrary.simpleMessage("modererad gemenskap"),
         "community__moderated_title":
             MessageLookupByLibrary.simpleMessage("Modererade"),
@@ -682,11 +680,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__rules_text": MessageLookupByLibrary.simpleMessage("Regler"),
         "community__rules_title":
             MessageLookupByLibrary.simpleMessage("Gemenskapens regler"),
-        "community__save_community_create_memory":
+        "community__save_community_create_crew":
             MessageLookupByLibrary.simpleMessage("Skapa gemenskap"),
         "community__save_community_create_text":
             MessageLookupByLibrary.simpleMessage("Skapa"),
-        "community__save_community_edit_memory":
+        "community__save_community_edit_crew":
             MessageLookupByLibrary.simpleMessage("Redigera gemenskap"),
         "community__save_community_label_title":
             MessageLookupByLibrary.simpleMessage("Titel"),
@@ -1059,7 +1057,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Gemenskapsinbjudan"),
         "notifications__community_new_post_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Be notified when there is a new post in a memory you enabled post notifications on"),
+                "Be notified when there is a new post in a crew you enabled post notifications on"),
         "notifications__community_new_post_tile": m27,
         "notifications__community_new_post_title":
             MessageLookupByLibrary.simpleMessage("Nytt gemenskapsinlägg"),
@@ -1262,7 +1260,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Redigera inlägg"),
         "post__enable_post_comments":
             MessageLookupByLibrary.simpleMessage("Öppna kommentarsfältet"),
-        "post__exclude_post_memory": MessageLookupByLibrary.simpleMessage(
+        "post__exclude_post_crew": MessageLookupByLibrary.simpleMessage(
             "Visa inte inlägg från den här gemenskapen"),
         "post__have_not_shared_anything": MessageLookupByLibrary.simpleMessage(
             "Du har inte delat något ännu."),
@@ -1299,7 +1297,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__search_circles":
             MessageLookupByLibrary.simpleMessage("Sök kretsar..."),
         "post__share": MessageLookupByLibrary.simpleMessage("Dela"),
-        "post__share_memory": MessageLookupByLibrary.simpleMessage("Dela"),
+        "post__share_crew": MessageLookupByLibrary.simpleMessage("Dela"),
         "post__share_community_desc": MessageLookupByLibrary.simpleMessage(
             "Dela inlägget med en gemenskap du är del av."),
         "post__share_community_title":
@@ -1307,7 +1305,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__share_to": MessageLookupByLibrary.simpleMessage("Dela med"),
         "post__share_to_circles":
             MessageLookupByLibrary.simpleMessage("Dela med kretsar"),
-        "post__share_to_memory":
+        "post__share_to_crew":
             MessageLookupByLibrary.simpleMessage("Dela med en gemenskap"),
         "post__shared_privately_on":
             MessageLookupByLibrary.simpleMessage("Delat privat i"),
@@ -1360,7 +1358,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Uppdatera"),
         "post__trending_posts_title":
             MessageLookupByLibrary.simpleMessage("Trendiga inlägg"),
-        "post__undo_exclude_post_memory": MessageLookupByLibrary.simpleMessage(
+        "post__undo_exclude_post_crew": MessageLookupByLibrary.simpleMessage(
             "Visa inlägg från den här gemenskapen"),
         "post__user_has_not_shared_anything": m34,
         "post__usernames_circles": m35,
@@ -1477,7 +1475,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user__confirm_connection_connection_confirmed":
             MessageLookupByLibrary.simpleMessage("Kontaktförfrågan bekräftad"),
         "user__confirm_connection_with": m40,
-        "user__confirm_guidelines_reject_chat_memory":
+        "user__confirm_guidelines_reject_chat_crew":
             MessageLookupByLibrary.simpleMessage("Chatta med gemenskapen."),
         "user__confirm_guidelines_reject_chat_immediately":
             MessageLookupByLibrary.simpleMessage("Starta en chat direkt."),

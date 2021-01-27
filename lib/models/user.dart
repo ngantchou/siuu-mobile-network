@@ -124,10 +124,10 @@ class User extends UpdatableModel<User> {
       'follow_lists': followLists?.lists
           ?.map((FollowsList followList) => followList.toJson())
           ?.toList(),
-      'memories_memberships': memoriesMemberships?.memoryMemberships
+      'memories_memberships': memoriesMemberships?.crewMemberships
           ?.map((MemoryMembership membership) => membership.toJson())
           ?.toList(),
-      'memories_invites': memoriesInvites?.memoryInvites
+      'memories_invites': memoriesInvites?.crewInvites
           ?.map((MemoryInvite invite) => invite.toJson())
           ?.toList(),
     };
@@ -314,7 +314,7 @@ class User extends UpdatableModel<User> {
   }
 
   bool getProfileMemoryPostsVisible() {
-    return this.profile.memoryPostsVisible;
+    return this.profile.crewPostsVisible;
   }
 
   String getProfileUrl() {
@@ -351,52 +351,52 @@ class User extends UpdatableModel<User> {
     return followLists != null && followLists.lists.length > 0;
   }
 
-  bool isAdministratorOfMemory(Memory memory) {
-    MemoryMembership membership = getMembershipForMemory(memory);
+  bool isAdministratorOfMemory(Memory crew) {
+    MemoryMembership membership = getMembershipForMemory(crew);
     if (membership == null) return false;
     return membership.isAdministrator;
   }
 
-  bool isModeratorOfMemory(Memory memory) {
-    MemoryMembership membership = getMembershipForMemory(memory);
+  bool isModeratorOfMemory(Memory crew) {
+    MemoryMembership membership = getMembershipForMemory(crew);
     if (membership == null) return false;
     return membership.isModerator;
   }
 
-  bool isMemberOfMemory(Memory memory) {
-    return getMembershipForMemory(memory) != null;
+  bool isMemberOfMemory(Memory crew) {
+    return getMembershipForMemory(crew) != null;
   }
 
-  MemoryMembership getMembershipForMemory(Memory memory) {
+  MemoryMembership getMembershipForMemory(Memory crew) {
     if (memoriesMemberships == null) return null;
 
-    int membershipIndex = memoriesMemberships.memoryMemberships
-        .indexWhere((MemoryMembership memoryMembership) {
-      return memoryMembership.userId == this.id &&
-          memoryMembership.memoryId == memory.id;
+    int membershipIndex = memoriesMemberships.crewMemberships
+        .indexWhere((MemoryMembership crewMembership) {
+      return crewMembership.userId == this.id &&
+          crewMembership.crewId == crew.id;
     });
 
     if (membershipIndex < 0) return null;
 
-    return memoriesMemberships.memoryMemberships[membershipIndex];
+    return memoriesMemberships.crewMemberships[membershipIndex];
   }
 
-  bool isInvitedToMemory(Memory memory) {
-    MemoryInvite invite = getInviteForMemory(memory);
+  bool isInvitedToMemory(Memory crew) {
+    MemoryInvite invite = getInviteForMemory(crew);
     return invite != null;
   }
 
-  MemoryInvite getInviteForMemory(Memory memory) {
+  MemoryInvite getInviteForMemory(Memory crew) {
     if (memoriesInvites == null) return null;
 
     int inviteIndex =
-        memoriesInvites.memoryInvites.indexWhere((MemoryInvite memoryInvite) {
-      return memoryInvite.memoryId == memory.id;
+        memoriesInvites.crewInvites.indexWhere((MemoryInvite crewInvite) {
+      return crewInvite.crewId == crew.id;
     });
 
     if (inviteIndex < 0) return null;
 
-    return memoriesInvites.memoryInvites[inviteIndex];
+    return memoriesInvites.crewInvites[inviteIndex];
   }
 
   bool hasUnreadNotifications() {
@@ -469,7 +469,7 @@ class User extends UpdatableModel<User> {
     bool _canDisableOrEnableComments = false;
 
     if (post.hasMemory()) {
-      Memory postMemory = post.memory;
+      Memory postMemory = post.crew;
 
       if (postMemory.isAdministrator(loggedInUser) ||
           postMemory.isModerator(loggedInUser)) {
@@ -484,7 +484,7 @@ class User extends UpdatableModel<User> {
     bool _canCloseOrOpenPost = false;
 
     if (post.hasMemory()) {
-      Memory postMemory = post.memory;
+      Memory postMemory = post.crew;
 
       if (postMemory.isAdministrator(loggedInUser) ||
           postMemory.isModerator(loggedInUser)) {
@@ -494,58 +494,56 @@ class User extends UpdatableModel<User> {
     return _canCloseOrOpenPost;
   }
 
-  bool canCloseOrOpenPostsInMemory(Memory memory) {
+  bool canCloseOrOpenPostsInMemory(Memory crew) {
     User loggedInUser = this;
     bool _canCloseOrOpenPost = false;
 
-    if (memory.isAdministrator(loggedInUser) ||
-        memory.isModerator(loggedInUser)) {
+    if (crew.isAdministrator(loggedInUser) || crew.isModerator(loggedInUser)) {
       _canCloseOrOpenPost = true;
     }
 
     return _canCloseOrOpenPost;
   }
 
-  bool canBanOrUnbanUsersInMemory(Memory memory) {
+  bool canBanOrUnbanUsersInMemory(Memory crew) {
     User loggedInUser = this;
     bool _canBanOrUnban = false;
 
-    if (memory.isAdministrator(loggedInUser) ||
-        memory.isModerator(loggedInUser)) {
+    if (crew.isAdministrator(loggedInUser) || crew.isModerator(loggedInUser)) {
       _canBanOrUnban = true;
     }
 
     return _canBanOrUnban;
   }
 
-  bool isCreatorOfMemory(Memory memory) {
-    return memory.isCreator;
+  bool isCreatorOfMemory(Memory crew) {
+    return crew.isCreator;
   }
 
-  bool canChangeDetailsOfMemory(Memory memory) {
+  bool canChangeDetailsOfMemory(Memory crew) {
     User loggedInUser = this;
     bool _canChangeDetails = false;
 
-    if (memory.isAdministrator(loggedInUser)) {
+    if (crew.isAdministrator(loggedInUser)) {
       _canChangeDetails = true;
     }
 
     return _canChangeDetails;
   }
 
-  bool canAddOrRemoveModeratorsInMemory(Memory memory) {
+  bool canAddOrRemoveModeratorsInMemory(Memory crew) {
     User loggedInUser = this;
     bool _canAddOrRemoveMods = false;
 
-    if (memory.isAdministrator(loggedInUser)) {
+    if (crew.isAdministrator(loggedInUser)) {
       _canAddOrRemoveMods = true;
     }
 
     return _canAddOrRemoveMods;
   }
 
-  bool canAddOrRemoveAdministratorsInMemory(Memory memory) {
-    return memory.isCreator;
+  bool canAddOrRemoveAdministratorsInMemory(Memory crew) {
+    return crew.isCreator;
   }
 
   bool canCommentOnPostWithDisabledComments(Post post) {
@@ -553,7 +551,7 @@ class User extends UpdatableModel<User> {
     bool _canComment = false;
 
     if (post.hasMemory()) {
-      Memory postMemory = post.memory;
+      Memory postMemory = post.crew;
 
       if (postMemory.isAdministrator(loggedInUser) ||
           postMemory.isModerator(loggedInUser)) {
@@ -563,14 +561,14 @@ class User extends UpdatableModel<User> {
     return _canComment;
   }
 
-  bool isStaffForMemory(Memory memory) {
+  bool isStaffForMemory(Memory crew) {
     User loggedInUser = this;
     bool loggedInUserIsMemoryAdministrator = false;
     bool loggedInUserIsMemoryModerator = false;
 
-    loggedInUserIsMemoryAdministrator = memory.isAdministrator(loggedInUser);
+    loggedInUserIsMemoryAdministrator = crew.isAdministrator(loggedInUser);
 
-    loggedInUserIsMemoryModerator = memory.isModerator(loggedInUser);
+    loggedInUserIsMemoryModerator = crew.isModerator(loggedInUser);
 
     return loggedInUserIsMemoryModerator || loggedInUserIsMemoryAdministrator;
   }
@@ -582,7 +580,7 @@ class User extends UpdatableModel<User> {
     bool loggedInUserIsStaffForMemory = false;
 
     if (post.hasMemory()) {
-      loggedInUserIsStaffForMemory = this.isStaffForMemory(post.memory);
+      loggedInUserIsStaffForMemory = this.isStaffForMemory(post.crew);
     }
 
     if (loggedInUserIsPostCreator || loggedInUserIsStaffForMemory) {
@@ -623,7 +621,7 @@ class User extends UpdatableModel<User> {
         loggedInUserIsCommenter && !post.isClosed && post.areCommentsEnabled;
 
     if (post.hasMemory()) {
-      loggedInUserIsStaffForMemory = isStaffForMemory(post.memory);
+      loggedInUserIsStaffForMemory = isStaffForMemory(post.crew);
     }
 
     return loggedInUserIsCommenterForOpenPost ||
@@ -652,7 +650,7 @@ class User extends UpdatableModel<User> {
         (loggedInUser.id == postCommenter.id) && !post.isClosed;
 
     if (post.hasMemory()) {
-      loggedInUserIsStaffForMemory = this.isStaffForMemory(post.memory);
+      loggedInUserIsStaffForMemory = this.isStaffForMemory(post.crew);
     }
 
     return (loggedInUserIsCommenterForOpenPost ||

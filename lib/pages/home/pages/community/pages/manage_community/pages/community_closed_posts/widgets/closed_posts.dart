@@ -16,9 +16,9 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryClosedPosts extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryClosedPosts({this.memory});
+  const OBMemoryClosedPosts({this.crew});
 
   @override
   OBMemoryClosedPostsState createState() {
@@ -221,7 +221,7 @@ class OBMemoryClosedPostsState extends State<OBMemoryClosedPosts> {
 
   Future _bootstrap() async {
     PostsList closedPosts =
-        await _userService.getClosedPostsForMemory(widget.memory);
+        await _userService.getClosedPostsForMemory(widget.crew);
     if (closedPosts.posts != null) _setPosts(closedPosts.posts);
     _refreshIndicatorKey.currentState.show();
   }
@@ -231,7 +231,7 @@ class OBMemoryClosedPostsState extends State<OBMemoryClosedPosts> {
     _setStatus(OBMemoryClosedPostsStatus.refreshingPosts);
     try {
       Future<PostsList> postsListFuture =
-          _userService.getClosedPostsForMemory(widget.memory, count: 10);
+          _userService.getClosedPostsForMemory(widget.crew, count: 10);
 
       _postsRequest = CancelableOperation.fromFuture(postsListFuture);
 
@@ -263,7 +263,7 @@ class OBMemoryClosedPostsState extends State<OBMemoryClosedPosts> {
     var lastPostId = lastPost.id;
     try {
       Future<PostsList> morePostsListFuture = _userService
-          .getClosedPostsForMemory(widget.memory, maxId: lastPostId, count: 10);
+          .getClosedPostsForMemory(widget.crew, maxId: lastPostId, count: 10);
 
       _postsRequest = CancelableOperation.fromFuture(morePostsListFuture);
 

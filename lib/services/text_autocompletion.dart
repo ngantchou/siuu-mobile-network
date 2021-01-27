@@ -27,7 +27,7 @@ class TextAutocompletionService {
         return TextAutocompletionResult(
             isAutocompleting: true,
             autocompleteQuery: searchQuery,
-            type: TextAutocompletionType.memory);
+            type: TextAutocompletionType.crew);
       } else if (lastWord.startsWith('#') &&
           lastWord.length > 1 &&
           _validationService.isPostTextContainingValidHashtags(lastWord)) {
@@ -83,20 +83,20 @@ class TextAutocompletionService {
   }
 
   void autocompleteTextWithMemoryName(
-      TextEditingController textController, String memoryName) {
+      TextEditingController textController, String crewName) {
     String text = textController.text;
     int cursorPosition = textController.selection.baseOffset;
     String lastWord = _getWordBeforeCursor(text, cursorPosition);
 
     if (!lastWord.startsWith('c/')) {
-      throw 'Tried to autocomplete text with memory name without c/';
+      throw 'Tried to autocomplete text with crew name without c/';
     }
 
     var newText = text.substring(0, cursorPosition - lastWord.length) +
-        'c/$memoryName ' +
+        'c/$crewName ' +
         text.substring(cursorPosition);
     var newSelection = TextSelection.collapsed(
-        offset: cursorPosition - lastWord.length + memoryName.length + 4);
+        offset: cursorPosition - lastWord.length + crewName.length + 4);
 
     textController.value =
         TextEditingValue(text: newText, selection: newSelection);
@@ -121,4 +121,4 @@ class TextAutocompletionResult {
       {@required this.isAutocompleting, this.type, this.autocompleteQuery});
 }
 
-enum TextAutocompletionType { account, memory, hashtag }
+enum TextAutocompletionType { account, crew, hashtag }

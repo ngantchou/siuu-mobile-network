@@ -31,20 +31,23 @@ class OBFollowNotificationTile extends StatelessWidget {
       openbookProvider.navigationService.navigateToUserProfile(
           user: followNotification.follower, context: context);
     };
-    LocalizationService _localizationService = OpenbookProvider.of(context).localizationService;
+    LocalizationService _localizationService =
+        OpenbookProvider.of(context).localizationService;
 
     return OBNotificationTileSkeleton(
       onTap: navigateToFollowerProfile,
       leading: OBAvatar(
-        size: OBAvatarSize.medium,
+        size: OBAvatarSize.small,
         avatarUrl: followNotification.follower.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
         onUsernamePressed: navigateToFollowerProfile,
         user: followNotification.follower,
-        text: TextSpan(text: _localizationService.notifications__following_you_tile),
+        text: TextSpan(
+            text: _localizationService.notifications__following_you_tile),
       ),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
+      subtitle: OBSecondaryText(
+          utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

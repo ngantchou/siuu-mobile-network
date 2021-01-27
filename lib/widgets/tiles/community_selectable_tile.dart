@@ -4,13 +4,13 @@ import 'package:Siuu/widgets/tiles/community_tile.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBMemorySelectableTile extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
   final ValueChanged<Memory> onMemoryPressed;
   final bool isSelected;
 
   const OBMemorySelectableTile(
       {Key key,
-      @required this.memory,
+      @required this.crew,
       @required this.onMemoryPressed,
       @required this.isSelected})
       : super(key: key);
@@ -19,13 +19,13 @@ class OBMemorySelectableTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        onMemoryPressed(memory);
+        onMemoryPressed(crew);
       },
       child: Row(
         children: <Widget>[
           Expanded(
             child: OBMemoryTile(
-              memory,
+              crew,
               size: OBMemoryTileSize.small,
             ),
           ),

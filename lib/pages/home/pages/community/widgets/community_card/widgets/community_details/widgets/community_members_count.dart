@@ -6,13 +6,13 @@ import 'package:Siuu/services/localization.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryMembersCount extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryMembersCount(this.memory);
+  OBMemoryMembersCount(this.crew);
 
   @override
   Widget build(BuildContext context) {
-    int membersCount = memory.membersCount;
+    int membersCount = crew.membersCount;
     LocalizationService localizationService =
         OpenbookProvider.of(context).localizationService;
 
@@ -20,9 +20,9 @@ class OBMemoryMembersCount extends StatelessWidget {
 
     String count = getPrettyCount(membersCount, localizationService);
 
-    String userAdjective = memory.userAdjective ??
-        localizationService.community__member_capitalized;
-    String usersAdjective = memory.usersAdjective ??
+    String userAdjective =
+        crew.userAdjective ?? localizationService.community__member_capitalized;
+    String usersAdjective = crew.usersAdjective ??
         localizationService.community__members_capitalized;
 
     var openbookProvider = OpenbookProvider.of(context);
@@ -39,13 +39,13 @@ class OBMemoryMembersCount extends StatelessWidget {
 
           return GestureDetector(
             onTap: () {
-              bool isPublicMemory = memory.isPublic();
+              bool isPublicMemory = crew.isPublic();
               bool isLoggedInUserMember =
-                  memory.isMember(userService.getLoggedInUser());
+                  crew.isMember(userService.getLoggedInUser());
 
               if (isPublicMemory || isLoggedInUserMember) {
                 navigationService.navigateToMemoryMembers(
-                    memory: memory, context: context);
+                    crew: crew, context: context);
               }
             },
             child: Row(

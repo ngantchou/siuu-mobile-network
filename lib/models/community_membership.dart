@@ -1,14 +1,14 @@
 class MemoryMembership {
   final int id;
   final int userId;
-  final int memoryId;
+  final int crewId;
   bool isAdministrator;
   bool isModerator;
 
   MemoryMembership(
       {this.id,
       this.userId,
-      this.memoryId,
+      this.crewId,
       this.isAdministrator,
       this.isModerator});
 
@@ -16,7 +16,7 @@ class MemoryMembership {
     if (parsedJson == null) return null;
     return MemoryMembership(
         id: parsedJson['id'],
-        memoryId: parsedJson['community_id'],
+        crewId: parsedJson['community_id'],
         userId: parsedJson['user_id'],
         isAdministrator: parsedJson['is_administrator'],
         isModerator: parsedJson['is_moderator']);
@@ -26,7 +26,7 @@ class MemoryMembership {
     return {
       'id': id,
       'user_id': userId,
-      'community_id': memoryId,
+      'community_id': crewId,
       'is_administrator': isAdministrator,
       'is_moderator': isModerator
     };

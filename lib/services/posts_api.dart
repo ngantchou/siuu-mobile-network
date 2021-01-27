@@ -15,13 +15,13 @@ class PostsApiService {
   static const EXCLUDED_TOP_POSTS_COMMUNITIES_PATH =
       'api/posts/top/excluded-memories/';
   static const EXCLUDED_TOP_POSTS_COMMUNITY_PATH =
-      'api/posts/top/excluded-memories/{memoryName}/';
+      'api/posts/top/excluded-memories/{crewName}/';
   static const EXCLUDED_TOP_POSTS_COMMUNITIES_SEARCH_PATH =
       'api/posts/top/excluded-memories/search/';
   static const EXCLUDED_PROFILE_POSTS_COMMUNITIES_PATH =
       'api/posts/profile/excluded-memories/';
   static const EXCLUDED_PROFILE_POSTS_COMMUNITY_PATH =
-      'api/posts/profile/excluded-memories/{memoryName}/';
+      'api/posts/profile/excluded-memories/{crewName}/';
   static const EXCLUDED_PROFILE_POSTS_COMMUNITIES_SEARCH_PATH =
       'api/posts/profile/excluded-memories/search/';
   static const GET_TRENDING_POSTS_PATH = 'api/posts/trending/new/';
@@ -564,21 +564,21 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> excludeMemoryFromTopPosts(
-      {@required String memoryName}) {
+      {@required String crewName}) {
     return _httpService.putJSON('$apiURL$EXCLUDED_TOP_POSTS_COMMUNITIES_PATH',
-        body: {'community_name': memoryName}, appendAuthorizationToken: true);
+        body: {'community_name': crewName}, appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> undoExcludeMemoryFromTopPosts(
-      {@required String memoryName}) {
-    String path = _makeExcludedMemoryFromTopPostsPath(memoryName);
+      {@required String crewName}) {
+    String path = _makeExcludedMemoryFromTopPostsPath(crewName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
 
-  String _makeExcludedMemoryFromTopPostsPath(String memoryName) {
+  String _makeExcludedMemoryFromTopPostsPath(String crewName) {
     return _stringTemplateService
-        .parse(EXCLUDED_TOP_POSTS_COMMUNITY_PATH, {'memoryName': memoryName});
+        .parse(EXCLUDED_TOP_POSTS_COMMUNITY_PATH, {'crewName': crewName});
   }
 
   Future<HttpieResponse> getProfilePostsExcludedCommunities(
@@ -599,16 +599,16 @@ class PostsApiService {
   }
 
   Future<HttpieResponse> excludeMemoryFromProfilePosts(
-      {@required String memoryName}) {
+      {@required String crewName}) {
     return _httpService.putJSON(
         '$apiURL$EXCLUDED_PROFILE_POSTS_COMMUNITIES_PATH',
-        body: {'community_name': memoryName},
+        body: {'community_name': crewName},
         appendAuthorizationToken: true);
   }
 
   Future<HttpieResponse> undoExcludeMemoryFromProfilePosts(
-      {@required String memoryName}) {
-    String path = _makeExcludedMemoryFromProfilePostsPath(memoryName);
+      {@required String crewName}) {
+    String path = _makeExcludedMemoryFromProfilePostsPath(crewName);
     return _httpService.delete(_makeApiUrl(path),
         appendAuthorizationToken: true);
   }
@@ -627,9 +627,9 @@ class PostsApiService {
         body: body, appendAuthorizationToken: true);
   }
 
-  String _makeExcludedMemoryFromProfilePostsPath(String memoryName) {
-    return _stringTemplateService.parse(
-        EXCLUDED_PROFILE_POSTS_COMMUNITY_PATH, {'memoryName': memoryName});
+  String _makeExcludedMemoryFromProfilePostsPath(String crewName) {
+    return _stringTemplateService
+        .parse(EXCLUDED_PROFILE_POSTS_COMMUNITY_PATH, {'crewName': crewName});
   }
 
   String _makePostPath(String postUuid) {

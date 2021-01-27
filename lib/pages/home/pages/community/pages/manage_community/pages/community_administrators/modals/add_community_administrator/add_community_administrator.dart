@@ -16,9 +16,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBAddMemoryAdministratorModal extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBAddMemoryAdministratorModal({Key key, @required this.memory})
+  const OBAddMemoryAdministratorModal({Key key, @required this.crew})
       : super(key: key);
 
   @override
@@ -77,18 +77,15 @@ class OBAddMemoryAdministratorModalState
   }
 
   Future<List<User>> _refreshMemoryMembers() async {
-    UsersList memoryMembers = await _userService.getMembersForMemory(
-        widget.memory,
+    UsersList crewMembers = await _userService.getMembersForMemory(widget.crew,
         exclude: [MemoryMembersExclusion.administrators]);
-    return memoryMembers.users;
+    return crewMembers.users;
   }
 
-  Future<List<User>> _loadMoreMemoryMembers(
-      List<User> memoryMembersList) async {
-    var lastMemoryMember = memoryMembersList.last;
+  Future<List<User>> _loadMoreMemoryMembers(List<User> crewMembersList) async {
+    var lastMemoryMember = crewMembersList.last;
     var lastMemoryMemberId = lastMemoryMember.id;
-    var moreMemoryMembers = (await _userService.getMembersForMemory(
-            widget.memory,
+    var moreMemoryMembers = (await _userService.getMembersForMemory(widget.crew,
             maxId: lastMemoryMemberId,
             count: 20,
             exclude: [MemoryMembersExclusion.administrators]))
@@ -99,7 +96,7 @@ class OBAddMemoryAdministratorModalState
   Future<List<User>> _searchMemoryMembers(String query) async {
     UsersList results = await _userService.searchMemoryMembers(
         query: query,
-        memory: widget.memory,
+        crew: widget.crew,
         exclude: [MemoryMembersExclusion.administrators]);
 
     return results.users;
@@ -108,7 +105,7 @@ class OBAddMemoryAdministratorModalState
   void _onWantsToAddNewAdministrator(User user) async {
     var addedMemoryAdministrator =
         await _navigationService.navigateToConfirmAddMemoryAdministrator(
-            context: context, memory: widget.memory, user: user);
+            context: context, crew: widget.crew, user: user);
 
     if (addedMemoryAdministrator != null && addedMemoryAdministrator) {
       Navigator.of(context).pop(user);

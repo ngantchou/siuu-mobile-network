@@ -127,7 +127,7 @@ class OBPost extends StatelessWidget {
 enum OBPostDisplayContext {
   timelinePosts,
   topPosts,
-  memoryPosts,
+  crewPosts,
   foreignProfilePosts,
   ownProfilePosts
 }

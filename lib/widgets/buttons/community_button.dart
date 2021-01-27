@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:tinycolor/tinycolor.dart';
 
 class OBMemoryButton extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
   final bool isLoading;
   final String text;
   final VoidCallback onPressed;
@@ -18,13 +18,13 @@ class OBMemoryButton extends StatelessWidget {
   const OBMemoryButton(
       {Key key,
       this.isLoading = false,
-      @required this.memory,
+      @required this.crew,
       @required this.text,
       @required this.onPressed})
       : super(key: key);
 
   Widget build(BuildContext context) {
-    String memoryHexColor = memory.color;
+    String crewHexColor = crew.color;
     OpenbookProviderState openbookProviderState = OpenbookProvider.of(context);
     ThemeValueParserService themeValueParserService =
         openbookProviderState.themeValueParserService;
@@ -36,18 +36,18 @@ class OBMemoryButton extends StatelessWidget {
     double currentThemePrimaryColorLuminance =
         currentThemePrimaryColor.computeLuminance();
 
-    Color memoryColor = themeValueParserService.parseColor(memoryHexColor);
-    Color textColor = themeValueParserService.isDarkColor(memoryColor)
+    Color crewColor = themeValueParserService.parseColor(crewHexColor);
+    Color textColor = themeValueParserService.isDarkColor(crewColor)
         ? Colors.white
         : Colors.black;
-    double memoryColorLuminance = memoryColor.computeLuminance();
+    double crewColorLuminance = crewColor.computeLuminance();
 
-    if (memoryColorLuminance > 0.9 && currentThemePrimaryColorLuminance > 0.9) {
+    if (crewColorLuminance > 0.9 && currentThemePrimaryColorLuminance > 0.9) {
       // Is extremely white and our current theem is also extremely white, darken it
-      memoryColor = TinyColor(memoryColor).darken(5).color;
-    } else if (memoryColorLuminance < 0.1) {
+      crewColor = TinyColor(crewColor).darken(5).color;
+    } else if (crewColorLuminance < 0.1) {
       // Is extremely dark and our current theme is also extremely dark, lighten it
-      memoryColor = TinyColor(memoryColor).lighten(10).color;
+      crewColor = TinyColor(crewColor).lighten(10).color;
     }
 
     return ButtonTheme(
@@ -63,7 +63,7 @@ class OBMemoryButton extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: 16),
                 ),
-          color: memoryColor,
+          color: crewColor,
           onPressed: onPressed,
           shape: new RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(borderRadius))),

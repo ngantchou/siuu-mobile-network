@@ -89,13 +89,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m26(postCommentText) =>
       "[name] [username] svarede: ${postCommentText}";
 
-  static m27(memoryName) => "Der er et nyt indlæg i c/${memoryName}.";
+  static m27(crewName) => "Der er et nyt indlæg i c/${crewName}.";
 
   static m28(postCommentText) =>
       "[name] [username] nævnte dig i en kommentar: ${postCommentText}";
 
-  static m29(memoryName) =>
-      "[name] [username] indbyder dig til at blive medlem i fælleskabet /c/${memoryName}.";
+  static m29(crewName) =>
+      "[name] [username] indbyder dig til at blive medlem i fælleskabet /c/${crewName}.";
 
   static m30(maxLength) =>
       "En kommentar kan ikke være længere end ${maxLength} tegn.";
@@ -484,7 +484,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Dette vil tillade medlemmet at redigere fællesskabs detaljerne, administratorer, moderatorer og blokerede brugere."),
         "community__administrated_memories":
             MessageLookupByLibrary.simpleMessage("administrerede fællesskaber"),
-        "community__administrated_memory":
+        "community__administrated_crew":
             MessageLookupByLibrary.simpleMessage("administreret fællesskab"),
         "community__administrated_title":
             MessageLookupByLibrary.simpleMessage("Administreret"),
@@ -526,7 +526,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Opdater"),
         "community__memories_title":
             MessageLookupByLibrary.simpleMessage("Fælleskaber"),
-        "community__memory": MessageLookupByLibrary.simpleMessage("fællesskab"),
+        "community__crew": MessageLookupByLibrary.simpleMessage("fællesskab"),
         "community__community_members":
             MessageLookupByLibrary.simpleMessage("Fællesskabs medlemmer"),
         "community__community_staff":
@@ -548,13 +548,13 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Vis ikke indlæg fra grupper jeg er medlem af"),
         "community__excluded_memories":
             MessageLookupByLibrary.simpleMessage("ekskluderede grupper"),
-        "community__excluded_memory":
+        "community__excluded_crew":
             MessageLookupByLibrary.simpleMessage("ekskluderet gruppe"),
         "community__favorite_action":
             MessageLookupByLibrary.simpleMessage("Favorit fællesskab"),
         "community__favorite_memories":
             MessageLookupByLibrary.simpleMessage("favorit fællesskaber"),
-        "community__favorite_memory":
+        "community__favorite_crew":
             MessageLookupByLibrary.simpleMessage("favorit fællesskab"),
         "community__favorites_title":
             MessageLookupByLibrary.simpleMessage("Favoritter"),
@@ -572,16 +572,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Dette fællesskab er privat."),
         "community__join_memories_desc": MessageLookupByLibrary.simpleMessage(
             "Tilmeld fællesskaber for at se denne tab komme til live!"),
-        "community__join_memory":
-            MessageLookupByLibrary.simpleMessage("Deltag"),
+        "community__join_crew": MessageLookupByLibrary.simpleMessage("Deltag"),
         "community__joined_memories":
             MessageLookupByLibrary.simpleMessage("tilmeldte fællesskaber"),
-        "community__joined_memory":
+        "community__joined_crew":
             MessageLookupByLibrary.simpleMessage("tilmeldt fællesskab"),
         "community__joined_title":
             MessageLookupByLibrary.simpleMessage("Tilmeldt"),
-        "community__leave_memory":
-            MessageLookupByLibrary.simpleMessage("Forlad"),
+        "community__leave_crew": MessageLookupByLibrary.simpleMessage("Forlad"),
         "community__leave_confirmation": MessageLookupByLibrary.simpleMessage(
             "Er du sikker på at du vil forlade fællesskabet?"),
         "community__leave_desc": MessageLookupByLibrary.simpleMessage(
@@ -646,7 +644,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Medlemmer"),
         "community__moderated_memories":
             MessageLookupByLibrary.simpleMessage("modererede fællesskaber"),
-        "community__moderated_memory":
+        "community__moderated_crew":
             MessageLookupByLibrary.simpleMessage("modereret fællesskab"),
         "community__moderated_title":
             MessageLookupByLibrary.simpleMessage("Modereret"),
@@ -687,11 +685,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__rules_text": MessageLookupByLibrary.simpleMessage("Regler"),
         "community__rules_title":
             MessageLookupByLibrary.simpleMessage("Fællesskabs regler"),
-        "community__save_community_create_memory":
+        "community__save_community_create_crew":
             MessageLookupByLibrary.simpleMessage("Opret fællesskab"),
         "community__save_community_create_text":
             MessageLookupByLibrary.simpleMessage("Opret"),
-        "community__save_community_edit_memory":
+        "community__save_community_edit_crew":
             MessageLookupByLibrary.simpleMessage("Rediger fællesskab"),
         "community__save_community_label_title":
             MessageLookupByLibrary.simpleMessage("Titel"),
@@ -1261,7 +1259,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Rediger opslag"),
         "post__enable_post_comments":
             MessageLookupByLibrary.simpleMessage("Aktiver kommentarer"),
-        "post__exclude_post_memory": MessageLookupByLibrary.simpleMessage(
+        "post__exclude_post_crew": MessageLookupByLibrary.simpleMessage(
             "Vis ingen indlæg fra denne gruppe"),
         "post__have_not_shared_anything": MessageLookupByLibrary.simpleMessage(
             "Du har ikke delt noget endnu."),
@@ -1298,7 +1296,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__search_circles":
             MessageLookupByLibrary.simpleMessage("Søg cirkler..."),
         "post__share": MessageLookupByLibrary.simpleMessage("Del"),
-        "post__share_memory": MessageLookupByLibrary.simpleMessage("Del"),
+        "post__share_crew": MessageLookupByLibrary.simpleMessage("Del"),
         "post__share_community_desc": MessageLookupByLibrary.simpleMessage(
             "Del opslaget til et fællesskab du er del af."),
         "post__share_community_title":
@@ -1306,7 +1304,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__share_to": MessageLookupByLibrary.simpleMessage("Del via"),
         "post__share_to_circles":
             MessageLookupByLibrary.simpleMessage("Del til cirkler"),
-        "post__share_to_memory":
+        "post__share_to_crew":
             MessageLookupByLibrary.simpleMessage("Del til fællesskab"),
         "post__shared_privately_on":
             MessageLookupByLibrary.simpleMessage("Delt privat i"),
@@ -1357,7 +1355,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Opdater"),
         "post__trending_posts_title":
             MessageLookupByLibrary.simpleMessage("Populære opslag"),
-        "post__undo_exclude_post_memory":
+        "post__undo_exclude_post_crew":
             MessageLookupByLibrary.simpleMessage("Vis indlæg fra denne gruppe"),
         "post__user_has_not_shared_anything": m34,
         "post__usernames_circles": m35,
@@ -1473,7 +1471,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user__confirm_connection_connection_confirmed":
             MessageLookupByLibrary.simpleMessage("Kontakt bekræftet"),
         "user__confirm_connection_with": m40,
-        "user__confirm_guidelines_reject_chat_memory":
+        "user__confirm_guidelines_reject_chat_crew":
             MessageLookupByLibrary.simpleMessage("Snak med fælleskabet."),
         "user__confirm_guidelines_reject_chat_immediately":
             MessageLookupByLibrary.simpleMessage("Start en samtale omgående."),

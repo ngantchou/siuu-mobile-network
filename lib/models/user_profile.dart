@@ -10,7 +10,7 @@ class UserProfile {
   String url;
   String location;
   bool followersCountVisible;
-  bool memoryPostsVisible;
+  bool crewPostsVisible;
   List<Badge> badges;
 
   UserProfile({
@@ -23,7 +23,7 @@ class UserProfile {
     this.location,
     this.badges,
     this.followersCountVisible,
-    this.memoryPostsVisible,
+    this.crewPostsVisible,
   });
 
   factory UserProfile.fromJSON(Map<String, dynamic> parsedJson) {
@@ -37,7 +37,7 @@ class UserProfile {
       location: parsedJson['location'],
       badges: parseBadges(parsedJson['badges']),
       followersCountVisible: parsedJson['followers_count_visible'],
-      memoryPostsVisible: parsedJson['community_posts_visible'],
+      crewPostsVisible: parsedJson['community_posts_visible'],
     );
   }
 
@@ -52,7 +52,7 @@ class UserProfile {
       'location': location,
       'badges': badges?.map((Badge badge) => badge.toJson())?.toList(),
       'followers_count_visible': followersCountVisible,
-      'community_posts_visible': memoryPostsVisible,
+      'community_posts_visible': crewPostsVisible,
     };
   }
 
@@ -72,7 +72,7 @@ class UserProfile {
     if (json.containsKey('followers_count_visible'))
       followersCountVisible = json['followers_count_visible'];
     if (json.containsKey('community_posts_visible'))
-      memoryPostsVisible = json['community_posts_visible'];
+      crewPostsVisible = json['community_posts_visible'];
   }
 
   bool hasLocation() {

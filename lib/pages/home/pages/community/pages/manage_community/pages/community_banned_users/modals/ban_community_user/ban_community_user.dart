@@ -16,10 +16,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBBanMemoryUserModal extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBBanMemoryUserModal({Key key, @required this.memory})
-      : super(key: key);
+  const OBBanMemoryUserModal({Key key, @required this.crew}) : super(key: key);
 
   @override
   State<OBBanMemoryUserModal> createState() {
@@ -76,20 +75,18 @@ class OBBanMemoryUserModalState extends State<OBBanMemoryUserModal> {
   }
 
   Future<List<User>> _refreshMemoryMembers() async {
-    UsersList memoryMembers = await _userService
-        .getMembersForMemory(widget.memory, exclude: [
-      MemoryMembersExclusion.administrators,
-      MemoryMembersExclusion.moderators
-    ]);
-    return memoryMembers.users;
+    UsersList crewMembers = await _userService.getMembersForMemory(widget.crew,
+        exclude: [
+          MemoryMembersExclusion.administrators,
+          MemoryMembersExclusion.moderators
+        ]);
+    return crewMembers.users;
   }
 
-  Future<List<User>> _loadMoreMemoryMembers(
-      List<User> memoryMembersList) async {
-    var lastMemoryMember = memoryMembersList.last;
+  Future<List<User>> _loadMoreMemoryMembers(List<User> crewMembersList) async {
+    var lastMemoryMember = crewMembersList.last;
     var lastMemoryMemberId = lastMemoryMember.id;
-    var moreMemoryMembers = (await _userService.getMembersForMemory(
-            widget.memory,
+    var moreMemoryMembers = (await _userService.getMembersForMemory(widget.crew,
             maxId: lastMemoryMemberId,
             count: 20,
             exclude: [
@@ -103,7 +100,7 @@ class OBBanMemoryUserModalState extends State<OBBanMemoryUserModal> {
   Future<List<User>> _searchMemoryMembers(String query) async {
     UsersList results = await _userService.searchMemoryMembers(
         query: query,
-        memory: widget.memory,
+        crew: widget.crew,
         exclude: [
           MemoryMembersExclusion.administrators,
           MemoryMembersExclusion.moderators
@@ -115,7 +112,7 @@ class OBBanMemoryUserModalState extends State<OBBanMemoryUserModal> {
   void _onWantsToAddNewBannedUser(User user) async {
     var addedMemoryBannedUser =
         await _navigationService.navigateToConfirmBanMemoryUser(
-            context: context, memory: widget.memory, user: user);
+            context: context, crew: widget.crew, user: user);
 
     if (addedMemoryBannedUser != null && addedMemoryBannedUser) {
       Navigator.of(context).pop(user);

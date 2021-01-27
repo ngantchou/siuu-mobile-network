@@ -11,9 +11,9 @@ import 'package:flutter/material.dart';
 import '../../../../../provider.dart';
 
 class OBMemoryRulesPage extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryRulesPage({Key key, @required this.memory}) : super(key: key);
+  const OBMemoryRulesPage({Key key, @required this.crew}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +26,16 @@ class OBMemoryRulesPage extends StatelessWidget {
       ),
       child: OBPrimaryColorContainer(
         child: StreamBuilder(
-          stream: memory.updateSubject,
-          initialData: memory,
+          stream: crew.updateSubject,
+          initialData: crew,
           builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-            var memory = snapshot.data;
+            var crew = snapshot.data;
 
-            String memoryRules = memory?.rules;
-            String memoryColor = memory?.color;
+            String crewRules = crew?.rules;
+            String crewColor = crew?.color;
 
-            if (memoryRules == null ||
-                memoryRules.isEmpty ||
-                memoryColor == null) return const SizedBox();
+            if (crewRules == null || crewRules.isEmpty || crewColor == null)
+              return const SizedBox();
 
             return SingleChildScrollView(
               physics: const ClampingScrollPhysics(),
@@ -67,7 +66,7 @@ class OBMemoryRulesPage extends StatelessWidget {
                     const SizedBox(
                       height: 10,
                     ),
-                    OBActionableSmartText(text: memory.rules)
+                    OBActionableSmartText(text: crew.rules)
                   ],
                 ),
               ),

@@ -6,19 +6,19 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryCategories extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryCategories(this.memory);
+  OBMemoryCategories(this.crew);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      initialData: memory,
-      stream: memory.updateSubject,
+      initialData: crew,
+      stream: crew.updateSubject,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        Memory memory = snapshot.data;
-        if (memory.categories == null) return const SizedBox();
-        List<Category> categories = memory.categories.categories;
+        Memory crew = snapshot.data;
+        if (crew.categories == null) return const SizedBox();
+        List<Category> categories = crew.categories.categories;
 
         List<Widget> connectionItems = [];
 

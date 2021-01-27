@@ -21,9 +21,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryBannedUsersPage extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryBannedUsersPage({Key key, @required this.memory})
+  const OBMemoryBannedUsersPage({Key key, @required this.crew})
       : super(key: key);
 
   @override
@@ -103,16 +103,16 @@ class OBMemoryBannedUsersPageState extends State<OBMemoryBannedUsersPage> {
     );
   }
 
-  void _onMemoryBannedUserListItemPressed(User memoryBannedUser) {
+  void _onMemoryBannedUserListItemPressed(User crewBannedUser) {
     _navigationService.navigateToUserProfile(
-        user: memoryBannedUser, context: context);
+        user: crewBannedUser, context: context);
   }
 
-  void _onMemoryBannedUserListItemDeleted(User memoryBannedUser) async {
+  void _onMemoryBannedUserListItemDeleted(User crewBannedUser) async {
     try {
       await _userService.unbanMemoryUser(
-          memory: widget.memory, user: memoryBannedUser);
-      _httpListController.removeListItem(memoryBannedUser);
+          crew: widget.crew, user: crewBannedUser);
+      _httpListController.removeListItem(crewBannedUser);
     } catch (error) {
       _onError(error);
     }
@@ -133,17 +133,17 @@ class OBMemoryBannedUsersPageState extends State<OBMemoryBannedUsersPage> {
   }
 
   Future<List<User>> _refreshMemoryBannedUsers() async {
-    UsersList memoryBannedUsers =
-        await _userService.getBannedUsersForMemory(widget.memory);
-    return memoryBannedUsers.users;
+    UsersList crewBannedUsers =
+        await _userService.getBannedUsersForMemory(widget.crew);
+    return crewBannedUsers.users;
   }
 
   Future<List<User>> _loadMoreMemoryBannedUsers(
-      List<User> memoryBannedUsersList) async {
-    var lastMemoryBannedUser = memoryBannedUsersList.last;
+      List<User> crewBannedUsersList) async {
+    var lastMemoryBannedUser = crewBannedUsersList.last;
     var lastMemoryBannedUserId = lastMemoryBannedUser.id;
     var moreMemoryBannedUsers = (await _userService.getBannedUsersForMemory(
-      widget.memory,
+      widget.crew,
       maxId: lastMemoryBannedUserId,
       count: 20,
     ))
@@ -153,14 +153,14 @@ class OBMemoryBannedUsersPageState extends State<OBMemoryBannedUsersPage> {
 
   Future<List<User>> _searchMemoryBannedUsers(String query) async {
     UsersList results = await _userService.searchMemoryBannedUsers(
-        query: query, memory: widget.memory);
+        query: query, crew: widget.crew);
 
     return results.users;
   }
 
   void _onWantsToAddNewBannedUser() async {
     User addedMemoryBannedUser = await _modalService.openBanMemoryUser(
-        context: context, memory: widget.memory);
+        context: context, crew: widget.crew);
 
     if (addedMemoryBannedUser != null) {
       _httpListController.insertListItem(addedMemoryBannedUser);

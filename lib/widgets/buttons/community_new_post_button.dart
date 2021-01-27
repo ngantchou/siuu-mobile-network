@@ -19,7 +19,7 @@ class OBMemoryNewPostButton extends StatelessWidget {
   final double minWidth;
   final EdgeInsets padding;
   final OBButtonType type;
-  final Memory memory;
+  final Memory crew;
   final ValueChanged<OBNewPostData> onWantsToUploadNewPostData;
 
   const OBMemoryNewPostButton({
@@ -30,7 +30,7 @@ class OBMemoryNewPostButton extends StatelessWidget {
     this.isLoading = false,
     this.padding,
     this.minWidth,
-    this.memory,
+    this.crew,
     this.onWantsToUploadNewPostData,
   });
 
@@ -38,12 +38,12 @@ class OBMemoryNewPostButton extends StatelessWidget {
     LocalizationService _localizationService =
         OpenbookProvider.of(context).localizationService;
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        Memory memory = snapshot.data;
+        Memory crew = snapshot.data;
 
-        String memoryHexColor = memory.color;
+        String crewHexColor = crew.color;
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
         ThemeValueParserService themeValueParserService =
             openbookProvider.themeValueParserService;
@@ -55,33 +55,33 @@ class OBMemoryNewPostButton extends StatelessWidget {
         double currentThemePrimaryColorLuminance =
             currentThemePrimaryColor.computeLuminance();
 
-        Color memoryColor = themeValueParserService.parseColor(memoryHexColor);
-        Color textColor = themeValueParserService.isDarkColor(memoryColor)
+        Color crewColor = themeValueParserService.parseColor(crewHexColor);
+        Color textColor = themeValueParserService.isDarkColor(crewColor)
             ? Colors.white
             : Colors.black;
-        double memoryColorLuminance = memoryColor.computeLuminance();
+        double crewColorLuminance = crewColor.computeLuminance();
 
-        if (memoryColorLuminance > 0.9 &&
+        if (crewColorLuminance > 0.9 &&
             currentThemePrimaryColorLuminance > 0.9) {
           // Is extremely white and our current theem is also extremely white, darken it
-          memoryColor = TinyColor(memoryColor).darken(5).color;
-        } else if (memoryColorLuminance < 0.1) {
+          crewColor = TinyColor(crewColor).darken(5).color;
+        } else if (crewColorLuminance < 0.1) {
           // Is extremely dark and our current theme is also extremely dark, lighten it
-          memoryColor = TinyColor(memoryColor).lighten(10).color;
+          crewColor = TinyColor(crewColor).lighten(10).color;
         }
 
         return Semantics(
             button: true,
             label: _localizationService.post__create_new_community_post_label,
             child: OBFloatingActionButton(
-                color: memoryColor,
+                color: crewColor,
                 textColor: textColor,
                 onPressed: () async {
                   OpenbookProviderState openbookProvider =
                       OpenbookProvider.of(context);
                   OBNewPostData createPostData = await openbookProvider
                       .modalService
-                      .openCreatePost(context: context, memory: memory);
+                      .openCreatePost(context: context, crew: crew);
                   if (createPostData != null &&
                       onWantsToUploadNewPostData != null)
                     onWantsToUploadNewPostData(createPostData);

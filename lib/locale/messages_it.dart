@@ -90,13 +90,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m26(postCommentText) =>
       "[name] [username] ha risposto: ${postCommentText}";
 
-  static m27(memoryName) => "C\'è un nuovo post in c/${memoryName}.";
+  static m27(crewName) => "C\'è un nuovo post in c/${crewName}.";
 
   static m28(postCommentText) =>
       "[name] [username] ti ha menzionato in un commento: ${postCommentText}";
 
-  static m29(memoryName) =>
-      "[name] [username] ti ha invitato a unirti alla comunità /c/${memoryName}.";
+  static m29(crewName) =>
+      "[name] [username] ti ha invitato a unirti alla comunità /c/${crewName}.";
 
   static m30(maxLength) =>
       "Un commento non può essere più lungo di ${maxLength} caratteri.";
@@ -491,7 +491,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Questo permetterà al membro di modificare i dettagli della comunità, gli amministratori, i moderatori e gli utenti bannati."),
         "community__administrated_memories":
             MessageLookupByLibrary.simpleMessage("comunità amministrate"),
-        "community__administrated_memory":
+        "community__administrated_crew":
             MessageLookupByLibrary.simpleMessage("comunità amministrata"),
         "community__administrated_title":
             MessageLookupByLibrary.simpleMessage("Amministrate"),
@@ -532,7 +532,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aggiorna"),
         "community__memories_title":
             MessageLookupByLibrary.simpleMessage("Comunità"),
-        "community__memory": MessageLookupByLibrary.simpleMessage("comunità"),
+        "community__crew": MessageLookupByLibrary.simpleMessage("comunità"),
         "community__community_members":
             MessageLookupByLibrary.simpleMessage("Membri della comunità"),
         "community__community_staff":
@@ -554,13 +554,13 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Non mostrare i post delle comunità di cui sono membro"),
         "community__excluded_memories":
             MessageLookupByLibrary.simpleMessage("comunità escluse"),
-        "community__excluded_memory":
+        "community__excluded_crew":
             MessageLookupByLibrary.simpleMessage("comunità esclusa"),
         "community__favorite_action": MessageLookupByLibrary.simpleMessage(
             "Aggiungi comunità alle preferite"),
         "community__favorite_memories":
             MessageLookupByLibrary.simpleMessage("comunità preferite"),
-        "community__favorite_memory":
+        "community__favorite_crew":
             MessageLookupByLibrary.simpleMessage("comunità preferita"),
         "community__favorites_title":
             MessageLookupByLibrary.simpleMessage("Preferiti"),
@@ -578,16 +578,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Questa comunità è privata."),
         "community__join_memories_desc": MessageLookupByLibrary.simpleMessage(
             "Unisciti a qualche comunità per vedere questa scheda prendere vita!"),
-        "community__join_memory":
+        "community__join_crew":
             MessageLookupByLibrary.simpleMessage("Unisciti"),
         "community__joined_memories":
             MessageLookupByLibrary.simpleMessage("comunità di cui fai parte"),
-        "community__joined_memory":
+        "community__joined_crew":
             MessageLookupByLibrary.simpleMessage("comunità di cui fai parte"),
         "community__joined_title":
             MessageLookupByLibrary.simpleMessage("Iscritto"),
-        "community__leave_memory":
-            MessageLookupByLibrary.simpleMessage("Lascia"),
+        "community__leave_crew": MessageLookupByLibrary.simpleMessage("Lascia"),
         "community__leave_confirmation": MessageLookupByLibrary.simpleMessage(
             "Sei sicuro di voler lasciare la comunità?"),
         "community__leave_desc": MessageLookupByLibrary.simpleMessage(
@@ -652,7 +651,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Membri"),
         "community__moderated_memories":
             MessageLookupByLibrary.simpleMessage("comunità moderate"),
-        "community__moderated_memory":
+        "community__moderated_crew":
             MessageLookupByLibrary.simpleMessage("comunità moderata"),
         "community__moderated_title":
             MessageLookupByLibrary.simpleMessage("Moderate"),
@@ -691,11 +690,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__rules_text": MessageLookupByLibrary.simpleMessage("Regole"),
         "community__rules_title":
             MessageLookupByLibrary.simpleMessage("Regole della comunità"),
-        "community__save_community_create_memory":
+        "community__save_community_create_crew":
             MessageLookupByLibrary.simpleMessage("Crea comunità"),
         "community__save_community_create_text":
             MessageLookupByLibrary.simpleMessage("Crea"),
-        "community__save_community_edit_memory":
+        "community__save_community_edit_crew":
             MessageLookupByLibrary.simpleMessage("Modifica comunità"),
         "community__save_community_label_title":
             MessageLookupByLibrary.simpleMessage("Titolo"),
@@ -1274,7 +1273,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Modifica post"),
         "post__enable_post_comments": MessageLookupByLibrary.simpleMessage(
             "Abilita i commenti per il post"),
-        "post__exclude_post_memory": MessageLookupByLibrary.simpleMessage(
+        "post__exclude_post_crew": MessageLookupByLibrary.simpleMessage(
             "Non mostrare i post di questa comunità"),
         "post__have_not_shared_anything": MessageLookupByLibrary.simpleMessage(
             "Non hai ancora condiviso niente."),
@@ -1309,7 +1308,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__search_circles":
             MessageLookupByLibrary.simpleMessage("Trova cerchie..."),
         "post__share": MessageLookupByLibrary.simpleMessage("Condividi"),
-        "post__share_memory": MessageLookupByLibrary.simpleMessage("Condividi"),
+        "post__share_crew": MessageLookupByLibrary.simpleMessage("Condividi"),
         "post__share_community_desc": MessageLookupByLibrary.simpleMessage(
             "Condividi il post con una comunità di cui sei parte."),
         "post__share_community_title":
@@ -1317,7 +1316,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__share_to": MessageLookupByLibrary.simpleMessage("Condividi con"),
         "post__share_to_circles": MessageLookupByLibrary.simpleMessage(
             "Condividi con le tue cerchie"),
-        "post__share_to_memory":
+        "post__share_to_crew":
             MessageLookupByLibrary.simpleMessage("Condividi con la comunità"),
         "post__shared_privately_on":
             MessageLookupByLibrary.simpleMessage("Condiviso privatamente con"),
@@ -1369,7 +1368,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Aggiorna"),
         "post__trending_posts_title":
             MessageLookupByLibrary.simpleMessage("Post in tendenza"),
-        "post__undo_exclude_post_memory": MessageLookupByLibrary.simpleMessage(
+        "post__undo_exclude_post_crew": MessageLookupByLibrary.simpleMessage(
             "Mostra post di questa comunità"),
         "post__user_has_not_shared_anything": m34,
         "post__usernames_circles": m35,
@@ -1491,7 +1490,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user__confirm_connection_connection_confirmed":
             MessageLookupByLibrary.simpleMessage("Connessione confermata"),
         "user__confirm_connection_with": m40,
-        "user__confirm_guidelines_reject_chat_memory":
+        "user__confirm_guidelines_reject_chat_crew":
             MessageLookupByLibrary.simpleMessage("Chatta con la comunità."),
         "user__confirm_guidelines_reject_chat_immediately":
             MessageLookupByLibrary.simpleMessage(

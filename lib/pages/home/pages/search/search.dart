@@ -52,11 +52,11 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
 
   bool _hasSearch;
   bool _userSearchRequestInProgress;
-  bool _memorySearchRequestInProgress;
+  bool _crewSearchRequestInProgress;
   bool _hashtagSearchRequestInProgress;
   String _searchQuery;
   List<User> _userSearchResults;
-  List<Memory> _memorySearchResults;
+  List<Memory> _crewSearchResults;
   List<Hashtag> _hashtagSearchResults;
   OBTopPostsController _topPostsController;
   OBTrendingPostsController _trendingPostsController;
@@ -88,12 +88,12 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _topPostsController = OBTopPostsController();
     _trendingPostsController = OBTrendingPostsController();
     _userSearchRequestInProgress = false;
-    _memorySearchRequestInProgress = false;
+    _crewSearchRequestInProgress = false;
     _hashtagSearchRequestInProgress = false;
     _hasSearch = false;
     _heightTabs = HEIGHT_TABS_SECTION;
     _userSearchResults = [];
-    _memorySearchResults = [];
+    _crewSearchResults = [];
     _hashtagSearchResults = [];
     _selectedSearchResultsTab = OBUserSearchResultsTab.users;
     _tabController = new TabController(length: 2, vsync: this);
@@ -172,8 +172,8 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
             searchQuery: _searchQuery,
             userResults: _userSearchResults,
             userSearchInProgress: _userSearchRequestInProgress,
-            memoryResults: _memorySearchResults,
-            memorySearchInProgress: _memorySearchRequestInProgress,
+            crewResults: _crewSearchResults,
+            crewSearchInProgress: _crewSearchRequestInProgress,
             hashtagResults: _hashtagSearchResults,
             hashtagSearchInProgress: _hashtagSearchRequestInProgress,
             onUserPressed: _onSearchUserPressed,
@@ -416,7 +416,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
 
   void _setMemorySearchRequestInProgress(bool requestInProgress) {
     setState(() {
-      _memorySearchRequestInProgress = requestInProgress;
+      _crewSearchRequestInProgress = requestInProgress;
     });
   }
 
@@ -461,7 +461,7 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
 
   void _setMemorySearchResults(List<Memory> searchResults) {
     setState(() {
-      _memorySearchResults = searchResults;
+      _crewSearchResults = searchResults;
     });
   }
 
@@ -476,9 +476,9 @@ class OBMainSearchPageState extends State<OBMainSearchPage>
     _navigationService.navigateToUserProfile(user: user, context: context);
   }
 
-  void _onSearchMemoryPressed(Memory memory) {
+  void _onSearchMemoryPressed(Memory crew) {
     _hideKeyboard();
-    _navigationService.navigateToMemory(memory: memory, context: context);
+    _navigationService.navigateToMemory(crew: crew, context: context);
   }
 
   void _onSearchHashtagPressed(Hashtag hashtag) {

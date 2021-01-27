@@ -99,7 +99,7 @@ class OBMainMenuPage extends StatelessWidget {
                           },
                         ),
                         /*ListTile(
-                          leading: const OBIcon(OBIcons.memoryModerators),
+                          leading: const OBIcon(OBIcons.crewModerators),
                           title: OBText(
                               localizationService.drawer__my_pending_mod_tasks),
                           onTap: () async {

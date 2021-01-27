@@ -13,10 +13,10 @@ import 'package:flutter/cupertino.dart';
 
 class OBConfirmAddMemoryAdministrator<T> extends StatefulWidget {
   final User user;
-  final Memory memory;
+  final Memory crew;
 
   const OBConfirmAddMemoryAdministrator(
-      {Key key, @required this.user, @required this.memory})
+      {Key key, @required this.user, @required this.crew})
       : super(key: key);
 
   @override
@@ -72,7 +72,7 @@ class OBConfirmAddMemoryAdministratorState
                   mainAxisSize: MainAxisSize.min,
                   children: <Widget>[
                     OBIcon(
-                      OBIcons.memoryAdministrators,
+                      OBIcons.crewAdministrators,
                       themeColor: OBIconThemeColor.primaryAccent,
                       size: OBIconSize.extraLarge,
                     ),
@@ -130,7 +130,7 @@ class OBConfirmAddMemoryAdministratorState
     _setConfirmationInProgress(true);
     try {
       await _userService.addMemoryAdministrator(
-          memory: widget.memory, user: widget.user);
+          crew: widget.crew, user: widget.user);
       Navigator.of(context).pop(true);
     } catch (error) {
       _onError(error);

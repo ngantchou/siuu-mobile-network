@@ -218,13 +218,13 @@ class BottomSheetService {
 
   Future<void> showMemoryActions(
       {@required BuildContext context,
-      @required Memory memory,
+      @required Memory crew,
       OnMemoryReported onMemoryReported}) {
     return _showModalBottomSheetApp(
         context: context,
         builder: (BuildContext context) {
           return OBMemoryActionsBottomSheet(
-            memory: memory,
+            crew: crew,
             onMemoryReported: onMemoryReported,
           );
         });

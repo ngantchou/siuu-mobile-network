@@ -106,6 +106,9 @@ class _TextMemoryState extends State<TextMemory> {
                 autofocus: true,
                 focusNode: widget.focusNode,
                 style: TextStyle(
+                    fontFamily: "Segoe UI",
+                    fontWeight: FontWeight.w300,
+                    fontSize: 35,
                     color: textMeta.isfontColorWhite
                         ? Colors.white
                         : Colors.black),

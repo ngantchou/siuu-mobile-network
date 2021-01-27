@@ -37,7 +37,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Bijnamen van leden mogen niet langer zijn dan ${maxLength} tekens.";
 
   static m6(username) =>
-      "Weet je zeker dat je @${username} wil toevoegen als beheerder van de memory?";
+      "Weet je zeker dat je @${username} wil toevoegen als beheerder van de crew?";
 
   static m7(username) => "Weet je zeker dat je @${username} wil blokkeren?";
 
@@ -45,7 +45,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "Omschrijving mag niet langer zijn dan ${maxLength} tekens.";
 
   static m9(username) =>
-      "Weet je zeker dat je @${username} wilt toevoegen als moderator van de memory?";
+      "Weet je zeker dat je @${username} wilt toevoegen als moderator van de crew?";
 
   static m10(maxLength) =>
       "Een gebruikersnaam mag niet langer zijn dan ${maxLength} tekens.";
@@ -89,13 +89,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m26(postCommentText) =>
       "[name] [username] antwoordde: ${postCommentText}";
 
-  static m27(memoryName) => "Er was een nieuw bericht in c/${memoryName}.";
+  static m27(crewName) => "Er was een nieuw bericht in c/${crewName}.";
 
   static m28(postCommentText) =>
       "[name] [username] heeft je in een commentaar genoemd: ${postCommentText}";
 
-  static m29(memoryName) =>
-      "[name] [username] heeft je uitgenodigd om deel te nemen aan de memory /c/${memoryName}.";
+  static m29(crewName) =>
+      "[name] [username] heeft je uitgenodigd om deel te nemen aan de crew /c/${crewName}.";
 
   static m30(maxLength) =>
       "Een reactie mag niet langer zijn dan ${maxLength} tekens.";
@@ -473,7 +473,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Nieuwe berichtmeldingen inschakelen"),
         "community__actions_invite_people_title":
             MessageLookupByLibrary.simpleMessage(
-                "Nodig mensen uit voor deze memory"),
+                "Nodig mensen uit voor deze crew"),
         "community__actions_manage_text":
             MessageLookupByLibrary.simpleMessage("Beheer"),
         "community__add_administrators_title":
@@ -483,11 +483,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__adjectives_range_error": m5,
         "community__admin_add_confirmation": m6,
         "community__admin_desc": MessageLookupByLibrary.simpleMessage(
-            "Hiermee wordt een lid in staat gesteld om de memory gegevens, de beheerders, de moderators en geblokkeerde gebruikers, aan te passen."),
+            "Hiermee wordt een lid in staat gesteld om de crew gegevens, de beheerders, de moderators en geblokkeerde gebruikers, aan te passen."),
         "community__administrated_memories":
             MessageLookupByLibrary.simpleMessage("beheerders memories"),
-        "community__administrated_memory":
-            MessageLookupByLibrary.simpleMessage("beheerders memory"),
+        "community__administrated_crew":
+            MessageLookupByLibrary.simpleMessage("beheerders crew"),
         "community__administrated_title":
             MessageLookupByLibrary.simpleMessage("Beheer"),
         "community__administrator_plural":
@@ -500,7 +500,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Beheerders"),
         "community__ban_confirmation": m7,
         "community__ban_desc": MessageLookupByLibrary.simpleMessage(
-            "Dit zorgt ervoor dat de gebruiker verwijderd wordt uit de memory en verbiedt de gebruiker nogmaals toe te treden."),
+            "Dit zorgt ervoor dat de gebruiker verwijderd wordt uit de crew en verbiedt de gebruiker nogmaals toe te treden."),
         "community__ban_user_title":
             MessageLookupByLibrary.simpleMessage("Blokkeer gebruiker"),
         "community__banned_user_text":
@@ -526,15 +526,15 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ververs"),
         "community__memories_title":
             MessageLookupByLibrary.simpleMessage("Communities"),
-        "community__memory": MessageLookupByLibrary.simpleMessage("memory"),
+        "community__crew": MessageLookupByLibrary.simpleMessage("crew"),
         "community__community_members":
-            MessageLookupByLibrary.simpleMessage("Leden van een memory"),
+            MessageLookupByLibrary.simpleMessage("Leden van een crew"),
         "community__community_staff":
             MessageLookupByLibrary.simpleMessage("Memory staf"),
         "community__confirmation_title":
             MessageLookupByLibrary.simpleMessage("Bevestiging"),
         "community__delete_confirmation": MessageLookupByLibrary.simpleMessage(
-            "Weet je zeker dat je deze memory wil verwijderen?"),
+            "Weet je zeker dat je deze crew wil verwijderen?"),
         "community__delete_desc": MessageLookupByLibrary.simpleMessage(
             "Je zult de berichten niet meer in je tijdslijn zien, noch in staat zijn om er in te posten."),
         "community__description_range_error": m8,
@@ -548,14 +548,14 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Geen berichten tonen van gemeenschappen waar ik lid van ben"),
         "community__excluded_memories":
             MessageLookupByLibrary.simpleMessage("uitgesloten memories"),
-        "community__excluded_memory":
-            MessageLookupByLibrary.simpleMessage("uitgesloten memory"),
+        "community__excluded_crew":
+            MessageLookupByLibrary.simpleMessage("uitgesloten crew"),
         "community__favorite_action":
-            MessageLookupByLibrary.simpleMessage("Favoriete memory"),
+            MessageLookupByLibrary.simpleMessage("Favoriete crew"),
         "community__favorite_memories":
             MessageLookupByLibrary.simpleMessage("favoriete memories"),
-        "community__favorite_memory":
-            MessageLookupByLibrary.simpleMessage("favoriete memory"),
+        "community__favorite_crew":
+            MessageLookupByLibrary.simpleMessage("favoriete crew"),
         "community__favorites_title":
             MessageLookupByLibrary.simpleMessage("Favorieten"),
         "community__invite_to_community_resource_plural":
@@ -564,31 +564,31 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("connectie of volger"),
         "community__invite_to_community_title":
             MessageLookupByLibrary.simpleMessage(
-                "Uitnodiging om deel te nemen aan deze memory"),
+                "Uitnodiging om deel te nemen aan deze crew"),
         "community__invited_by_member": MessageLookupByLibrary.simpleMessage(
             "Je dient uitgenodigd te worden door een lid."),
         "community__invited_by_moderator": MessageLookupByLibrary.simpleMessage(
             "Je dient uitgenodigd te worden door een moderator."),
         "community__is_private":
-            MessageLookupByLibrary.simpleMessage("Deze memory is besloten."),
+            MessageLookupByLibrary.simpleMessage("Deze crew is besloten."),
         "community__join_memories_desc": MessageLookupByLibrary.simpleMessage(
             "Word lid van memories om deze tab tot leven te zien komen!"),
-        "community__join_memory":
+        "community__join_crew":
             MessageLookupByLibrary.simpleMessage("Word lid"),
         "community__joined_memories":
             MessageLookupByLibrary.simpleMessage("lid van deze memories"),
-        "community__joined_memory":
-            MessageLookupByLibrary.simpleMessage("lid van deze memory sinds"),
+        "community__joined_crew":
+            MessageLookupByLibrary.simpleMessage("lid van deze crew sinds"),
         "community__joined_title":
             MessageLookupByLibrary.simpleMessage("Lid sinds"),
-        "community__leave_memory":
+        "community__leave_crew":
             MessageLookupByLibrary.simpleMessage("Verlaat"),
         "community__leave_confirmation": MessageLookupByLibrary.simpleMessage(
-            "Weet je zeker dat je deze memory wil verlaten?"),
+            "Weet je zeker dat je deze crew wil verlaten?"),
         "community__leave_desc": MessageLookupByLibrary.simpleMessage(
             "Je zult de berichten niet in je tijdslijn zien, noch bent in staat er nog in te posten."),
         "community__manage_add_favourite": MessageLookupByLibrary.simpleMessage(
-            "Voeg de memory aan je favorieten toe"),
+            "Voeg de crew aan je favorieten toe"),
         "community__manage_admins_desc": MessageLookupByLibrary.simpleMessage(
             "Bekijk, voeg toe en verwijder beheerders."),
         "community__manage_admins_title":
@@ -603,9 +603,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__manage_closed_posts_title":
             MessageLookupByLibrary.simpleMessage("Gesloten berichten"),
         "community__manage_delete_desc": MessageLookupByLibrary.simpleMessage(
-            "Voorgoed een memory verwijderen."),
+            "Voorgoed een crew verwijderen."),
         "community__manage_delete_title":
-            MessageLookupByLibrary.simpleMessage("Een memory verwijderen"),
+            MessageLookupByLibrary.simpleMessage("Een crew verwijderen"),
         "community__manage_details_desc": MessageLookupByLibrary.simpleMessage(
             "Verander de titel, naam, avatar, omslagfoto en meer."),
         "community__manage_details_title":
@@ -617,16 +617,16 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Enable new post notifications"),
         "community__manage_invite_desc": MessageLookupByLibrary.simpleMessage(
-            "Nodig je connecties en volgers uit om deel te nemen aan de memory."),
+            "Nodig je connecties en volgers uit om deel te nemen aan de crew."),
         "community__manage_invite_title":
             MessageLookupByLibrary.simpleMessage("Mensen uitnodigen"),
         "community__manage_leave_desc":
-            MessageLookupByLibrary.simpleMessage("De memory verlaten."),
+            MessageLookupByLibrary.simpleMessage("De crew verlaten."),
         "community__manage_leave_title":
-            MessageLookupByLibrary.simpleMessage("Een memory verlaten"),
+            MessageLookupByLibrary.simpleMessage("Een crew verlaten"),
         "community__manage_mod_reports_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Beoordeel de moderatierapporten van de memory."),
+                "Beoordeel de moderatierapporten van de crew."),
         "community__manage_mod_reports_title":
             MessageLookupByLibrary.simpleMessage("Moderatierapporten"),
         "community__manage_mods_desc": MessageLookupByLibrary.simpleMessage(
@@ -635,9 +635,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Moderators"),
         "community__manage_remove_favourite":
             MessageLookupByLibrary.simpleMessage(
-                "Verwijder de memory uit je favorieten"),
+                "Verwijder de crew uit je favorieten"),
         "community__manage_title":
-            MessageLookupByLibrary.simpleMessage("Beheer de memory"),
+            MessageLookupByLibrary.simpleMessage("Beheer de crew"),
         "community__member": MessageLookupByLibrary.simpleMessage("lid"),
         "community__member_capitalized":
             MessageLookupByLibrary.simpleMessage("Lid"),
@@ -647,13 +647,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Leden"),
         "community__moderated_memories":
             MessageLookupByLibrary.simpleMessage("gemodereerde memories"),
-        "community__moderated_memory":
-            MessageLookupByLibrary.simpleMessage("gemodereerde memory"),
+        "community__moderated_crew":
+            MessageLookupByLibrary.simpleMessage("gemodereerde crew"),
         "community__moderated_title":
             MessageLookupByLibrary.simpleMessage("Gemodereerd"),
         "community__moderator_add_confirmation": m9,
         "community__moderator_desc": MessageLookupByLibrary.simpleMessage(
-            "Dit stelt het lid in staat om memory gegevens, moderators en verboden gebruikers te wijzigen."),
+            "Dit stelt het lid in staat om crew gegevens, moderators en verboden gebruikers te wijzigen."),
         "community__moderator_resource_name":
             MessageLookupByLibrary.simpleMessage("moderator"),
         "community__moderators_resource_name":
@@ -679,7 +679,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__refresh_text":
             MessageLookupByLibrary.simpleMessage("Ververs"),
         "community__refreshing":
-            MessageLookupByLibrary.simpleMessage("Verversen memory"),
+            MessageLookupByLibrary.simpleMessage("Verversen crew"),
         "community__retry_loading_posts": MessageLookupByLibrary.simpleMessage(
             "Tik om het opnieuw te proberen"),
         "community__rules_empty_error": MessageLookupByLibrary.simpleMessage(
@@ -688,12 +688,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__rules_text": MessageLookupByLibrary.simpleMessage("Regels"),
         "community__rules_title":
             MessageLookupByLibrary.simpleMessage("Memory regels"),
-        "community__save_community_create_memory":
-            MessageLookupByLibrary.simpleMessage("Maak een memory"),
+        "community__save_community_create_crew":
+            MessageLookupByLibrary.simpleMessage("Maak een crew"),
         "community__save_community_create_text":
             MessageLookupByLibrary.simpleMessage("Creëer"),
-        "community__save_community_edit_memory":
-            MessageLookupByLibrary.simpleMessage("Bewerk memory"),
+        "community__save_community_edit_crew":
+            MessageLookupByLibrary.simpleMessage("Bewerk crew"),
         "community__save_community_label_title":
             MessageLookupByLibrary.simpleMessage("Titel"),
         "community__save_community_label_title_hint_text":
@@ -709,7 +709,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Omschrijving · Optioneel"),
         "community__save_community_name_label_desc_optional_hint_text":
             MessageLookupByLibrary.simpleMessage(
-                "Wat is het onderwerp van je memory?"),
+                "Wat is het onderwerp van je crew?"),
         "community__save_community_name_label_member_adjective":
             MessageLookupByLibrary.simpleMessage(
                 "Bijnaam lid (enkelvoud) · Optioneel"),
@@ -735,7 +735,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Lid uitnodigen"),
         "community__save_community_name_member_invites_subtitle":
             MessageLookupByLibrary.simpleMessage(
-                "Leden kunnen mensen voor de memory uitnodigen"),
+                "Leden kunnen mensen voor de crew uitnodigen"),
         "community__save_community_name_taken": m15,
         "community__save_community_name_title":
             MessageLookupByLibrary.simpleMessage("Naam"),
@@ -768,7 +768,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__type_public":
             MessageLookupByLibrary.simpleMessage("Openbaar"),
         "community__unfavorite_action":
-            MessageLookupByLibrary.simpleMessage("Niet favoriete memory"),
+            MessageLookupByLibrary.simpleMessage("Niet favoriete crew"),
         "community__user_you_text": MessageLookupByLibrary.simpleMessage("Jij"),
         "community__yes": MessageLookupByLibrary.simpleMessage("Ja"),
         "contextual_account_search_box__no_results":
@@ -859,7 +859,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Een website met alles wat er te weten is over het gebruik van het platform"),
         "drawer__useful_links_slack_channel":
-            MessageLookupByLibrary.simpleMessage("Slack kanaal voor de memory"),
+            MessageLookupByLibrary.simpleMessage("Slack kanaal voor de crew"),
         "drawer__useful_links_slack_channel_desc":
             MessageLookupByLibrary.simpleMessage(
                 "Een plek om alles te bespreken over Siuu"),
@@ -902,7 +902,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Beoordeel gemodereerd object"),
         "moderation__confirm_report_community_reported":
-            MessageLookupByLibrary.simpleMessage("Gemelde memory"),
+            MessageLookupByLibrary.simpleMessage("Gemelde crew"),
         "moderation__confirm_report_item_reported":
             MessageLookupByLibrary.simpleMessage("Gemelde item"),
         "moderation__confirm_report_post_comment_reported":
@@ -916,7 +916,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Dit is de volgende stap:"),
         "moderation__confirm_report_provide_happen_next_desc":
             MessageLookupByLibrary.simpleMessage(
-                "- Je melding zal anoniem ingediend worden.\n- Als je een post of commentaar meldt, zal de melding aan medewerkers van Siuu en indien van toepassing aan de memory moderators gestuurd worden. De post zal niet zichtbaar zijn in je tijdlijn.\n- Als je een account of memory aanmeldt, zal deze naar medewerkers van Siuu gestuurd worden.\n- We zullen het bekijken en indien mee eens, zal de content verwijderd worden. Daarnaast zullen sancties uitgedeeld worden aan de mensen die betrokken zijn. Deze sancties variëren van een tijdelijke schorsing tot het verwijderen van het account, afhankelijk van de ernst van de overtreding. \n- Als de melding wordt gedaan in een poging om de reputatie van een ander lid of een andere gemeenschap in het platform te schaden zonder dat er sprake is van een inbreuk op de vermelde grond, zullen er sancties aan u worden opgelegd. \n"),
+                "- Je melding zal anoniem ingediend worden.\n- Als je een post of commentaar meldt, zal de melding aan medewerkers van Siuu en indien van toepassing aan de crew moderators gestuurd worden. De post zal niet zichtbaar zijn in je tijdlijn.\n- Als je een account of crew aanmeldt, zal deze naar medewerkers van Siuu gestuurd worden.\n- We zullen het bekijken en indien mee eens, zal de content verwijderd worden. Daarnaast zullen sancties uitgedeeld worden aan de mensen die betrokken zijn. Deze sancties variëren van een tijdelijke schorsing tot het verwijderen van het account, afhankelijk van de ernst van de overtreding. \n- Als de melding wordt gedaan in een poging om de reputatie van een ander lid of een andere gemeenschap in het platform te schaden zonder dat er sprake is van een inbreuk op de vermelde grond, zullen er sancties aan u worden opgelegd. \n"),
         "moderation__confirm_report_provide_optional_hint_text":
             MessageLookupByLibrary.simpleMessage("Typ hier..."),
         "moderation__confirm_report_provide_optional_info":
@@ -989,7 +989,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "moderation__report_comment_text":
             MessageLookupByLibrary.simpleMessage("Rapporteer commentaar"),
         "moderation__report_community_text":
-            MessageLookupByLibrary.simpleMessage("Rapporteer memory"),
+            MessageLookupByLibrary.simpleMessage("Rapporteer crew"),
         "moderation__report_hashtag_text":
             MessageLookupByLibrary.simpleMessage("Hashtag melden"),
         "moderation__report_post_text":
@@ -1028,7 +1028,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Je hebt dit commentaar gerapporteerd"),
         "moderation__you_have_reported_community_text":
             MessageLookupByLibrary.simpleMessage(
-                "Je hebt deze memory gerapporteerd"),
+                "Je hebt deze crew gerapporteerd"),
         "moderation__you_have_reported_hashtag_text":
             MessageLookupByLibrary.simpleMessage("Je hebt deze hashtag gemeld"),
         "moderation__you_have_reported_post_text":
@@ -1064,15 +1064,15 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Bericht commentaar vermelding"),
         "notifications__community_invite_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Melden wanneer iemand je uitnodigt om lid te worden van een memory"),
+                "Melden wanneer iemand je uitnodigt om lid te worden van een crew"),
         "notifications__community_invite_title":
             MessageLookupByLibrary.simpleMessage("Memory uitnodiging"),
         "notifications__community_new_post_desc":
             MessageLookupByLibrary.simpleMessage(
-                "Be notified when there is a new post in a memory you enabled post notifications on"),
+                "Be notified when there is a new post in a crew you enabled post notifications on"),
         "notifications__community_new_post_tile": m27,
         "notifications__community_new_post_title":
-            MessageLookupByLibrary.simpleMessage("Nieuw bericht memory"),
+            MessageLookupByLibrary.simpleMessage("Nieuw bericht crew"),
         "notifications__connection_desc": MessageLookupByLibrary.simpleMessage(
             "Melden wanneer iemand met je wil verbinden"),
         "notifications__connection_request_tile":
@@ -1255,7 +1255,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__create_new":
             MessageLookupByLibrary.simpleMessage("Nieuw bericht"),
         "post__create_new_community_post_label":
-            MessageLookupByLibrary.simpleMessage("Nieuw memorybericht maken"),
+            MessageLookupByLibrary.simpleMessage("Nieuw crewbericht maken"),
         "post__create_new_post_label":
             MessageLookupByLibrary.simpleMessage("Nieuw bericht maken"),
         "post__create_next": MessageLookupByLibrary.simpleMessage("Volgende"),
@@ -1268,8 +1268,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Wijzig bericht"),
         "post__enable_post_comments":
             MessageLookupByLibrary.simpleMessage("Commentaren inschakelen"),
-        "post__exclude_post_memory": MessageLookupByLibrary.simpleMessage(
-            "Geen berichten van deze memory tonen"),
+        "post__exclude_post_crew": MessageLookupByLibrary.simpleMessage(
+            "Geen berichten van deze crew tonen"),
         "post__have_not_shared_anything":
             MessageLookupByLibrary.simpleMessage("Je hebt nog niets gedeeld."),
         "post__is_closed":
@@ -1306,16 +1306,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__search_circles":
             MessageLookupByLibrary.simpleMessage("Doorzoek cirkels..."),
         "post__share": MessageLookupByLibrary.simpleMessage("Deel"),
-        "post__share_memory": MessageLookupByLibrary.simpleMessage("Deel"),
+        "post__share_crew": MessageLookupByLibrary.simpleMessage("Deel"),
         "post__share_community_desc": MessageLookupByLibrary.simpleMessage(
-            "Deel het bericht met een memory waar je lid van bent."),
+            "Deel het bericht met een crew waar je lid van bent."),
         "post__share_community_title":
-            MessageLookupByLibrary.simpleMessage("Een memory"),
+            MessageLookupByLibrary.simpleMessage("Een crew"),
         "post__share_to": MessageLookupByLibrary.simpleMessage("Delen met"),
         "post__share_to_circles":
             MessageLookupByLibrary.simpleMessage("Deel naar kringen"),
-        "post__share_to_memory":
-            MessageLookupByLibrary.simpleMessage("Deel met memory"),
+        "post__share_to_crew":
+            MessageLookupByLibrary.simpleMessage("Deel met crew"),
         "post__shared_privately_on":
             MessageLookupByLibrary.simpleMessage("Privé gedeeld op"),
         "post__sharing_post_to":
@@ -1350,7 +1350,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Kan je tijdlijn niet laden."),
         "post__timeline_posts_no_more_drhoo_subtitle":
             MessageLookupByLibrary.simpleMessage(
-                "Volg gebruikers of word lid van een memory om aan de slag te gaan!"),
+                "Volg gebruikers of word lid van een crew om aan de slag te gaan!"),
         "post__timeline_posts_refresh_posts":
             MessageLookupByLibrary.simpleMessage("Berichten vernieuwen"),
         "post__timeline_posts_refreshing_drhoo_title":
@@ -1366,8 +1366,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Verversen"),
         "post__trending_posts_title":
             MessageLookupByLibrary.simpleMessage("Populaire berichten"),
-        "post__undo_exclude_post_memory": MessageLookupByLibrary.simpleMessage(
-            "Berichten van deze memory tonen"),
+        "post__undo_exclude_post_crew": MessageLookupByLibrary.simpleMessage(
+            "Berichten van deze crew tonen"),
         "post__user_has_not_shared_anything": m34,
         "post__usernames_circles": m35,
         "post__world_circle_name":
@@ -1483,8 +1483,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "user__confirm_connection_connection_confirmed":
             MessageLookupByLibrary.simpleMessage("Connectie bevestigd"),
         "user__confirm_connection_with": m40,
-        "user__confirm_guidelines_reject_chat_memory":
-            MessageLookupByLibrary.simpleMessage("Chat met de memory."),
+        "user__confirm_guidelines_reject_chat_crew":
+            MessageLookupByLibrary.simpleMessage("Chat met de crew."),
         "user__confirm_guidelines_reject_chat_immediately":
             MessageLookupByLibrary.simpleMessage("Start nu een chat."),
         "user__confirm_guidelines_reject_chat_with_team":

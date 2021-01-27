@@ -17,9 +17,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryMembersPage extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryMembersPage({Key key, @required this.memory}) : super(key: key);
+  const OBMemoryMembersPage({Key key, @required this.crew}) : super(key: key);
 
   @override
   State<OBMemoryMembersPage> createState() {
@@ -52,11 +52,11 @@ class OBMemoryMembersPageState extends State<OBMemoryMembersPage> {
       _needsBootstrap = false;
     }
 
-    String title = widget.memory.usersAdjective ??
+    String title = widget.crew.usersAdjective ??
         _localizationService.community__community_members;
     String singularName =
-        widget.memory.userAdjective ?? _localizationService.community__member;
-    String pluralName = widget.memory.usersAdjective ??
+        widget.crew.userAdjective ?? _localizationService.community__member;
+    String pluralName = widget.crew.usersAdjective ??
         _localizationService.community__member_plural;
 
     return OBCupertinoPageScaffold(
@@ -92,23 +92,21 @@ class OBMemoryMembersPageState extends State<OBMemoryMembersPage> {
               ));
   }
 
-  void _onMemoryMemberListItemPressed(User memoryMember) {
+  void _onMemoryMemberListItemPressed(User crewMember) {
     _navigationService.navigateToUserProfile(
-        user: memoryMember, context: context);
+        user: crewMember, context: context);
   }
 
   Future<List<User>> _refreshMemoryMembers() async {
-    UsersList memoryMembers =
-        await _userService.getMembersForMemory(widget.memory);
-    return memoryMembers.users;
+    UsersList crewMembers = await _userService.getMembersForMemory(widget.crew);
+    return crewMembers.users;
   }
 
-  Future<List<User>> _loadMoreMemoryMembers(
-      List<User> memoryMembersList) async {
-    var lastMemoryMember = memoryMembersList.last;
+  Future<List<User>> _loadMoreMemoryMembers(List<User> crewMembersList) async {
+    var lastMemoryMember = crewMembersList.last;
     var lastMemoryMemberId = lastMemoryMember.id;
     var moreMemoryMembers = (await _userService.getMembersForMemory(
-      widget.memory,
+      widget.crew,
       maxId: lastMemoryMemberId,
       count: 20,
     ))
@@ -117,8 +115,8 @@ class OBMemoryMembersPageState extends State<OBMemoryMembersPage> {
   }
 
   Future<List<User>> _searchMemoryMembers(String query) async {
-    UsersList results = await _userService.searchMemoryMembers(
-        query: query, memory: widget.memory);
+    UsersList results =
+        await _userService.searchMemoryMembers(query: query, crew: widget.crew);
 
     return results.users;
   }

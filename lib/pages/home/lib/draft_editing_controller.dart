@@ -16,8 +16,8 @@ abstract class DraftTextEditingController extends TextEditingController {
   }
 
   factory DraftTextEditingController.post(
-      {int memoryId, String text, @required DraftService draftService}) {
-    return _PostDraftEditingController(memoryId, text, draftService);
+      {int crewId, String text, @required DraftService draftService}) {
+    return _PostDraftEditingController(crewId, text, draftService);
   }
 
   void _onChanged() {
@@ -57,23 +57,23 @@ class _CommentDraftEditingController extends DraftTextEditingController {
 }
 
 class _PostDraftEditingController extends DraftTextEditingController {
-  final int memoryId;
+  final int crewId;
 
   _PostDraftEditingController(
-      this.memoryId, String text, DraftService draftService)
+      this.crewId, String text, DraftService draftService)
       : super(draftService) {
     if (text == null) {
-      this.text = _draftService.getPostDraft(memoryId);
+      this.text = _draftService.getPostDraft(crewId);
     } else {
       this.text = text;
     }
   }
 
   void _textChanged() {
-    _draftService.setPostDraft(text, memoryId);
+    _draftService.setPostDraft(text, crewId);
   }
 
   void clearDraft() {
-    _draftService.removePostDraft(memoryId);
+    _draftService.removePostDraft(crewId);
   }
 }

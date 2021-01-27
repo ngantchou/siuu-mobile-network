@@ -89,13 +89,13 @@ class MessageLookup extends MessageLookupByLibrary {
   static m26(postCommentText) =>
       "[name] [username] respondió: ${postCommentText}";
 
-  static m27(memoryName) => "Hubo una nueva publicación en c/${memoryName}.";
+  static m27(crewName) => "Hubo una nueva publicación en c/${crewName}.";
 
   static m28(postCommentText) =>
       "[name] [username] te mencionó en un comentario: ${postCommentText}";
 
-  static m29(memoryName) =>
-      "[name] [username] te ha invitado a unirte a la comunidad /c/${memoryName}.";
+  static m29(crewName) =>
+      "[name] [username] te ha invitado a unirte a la comunidad /c/${crewName}.";
 
   static m30(maxLength) =>
       "Un comentario no puede ser más largo que ${maxLength} caracteres.";
@@ -489,7 +489,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Esto permitirá al miembro editar los detalles de la comunidad, administradores, moderadores y usuarios baneados."),
         "community__administrated_memories":
             MessageLookupByLibrary.simpleMessage("comunidades administradas"),
-        "community__administrated_memory":
+        "community__administrated_crew":
             MessageLookupByLibrary.simpleMessage("comunidad administrada"),
         "community__administrated_title":
             MessageLookupByLibrary.simpleMessage("Administradas"),
@@ -531,7 +531,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Refrescar"),
         "community__memories_title":
             MessageLookupByLibrary.simpleMessage("Comunidades"),
-        "community__memory": MessageLookupByLibrary.simpleMessage("comunidad"),
+        "community__crew": MessageLookupByLibrary.simpleMessage("comunidad"),
         "community__community_members":
             MessageLookupByLibrary.simpleMessage("Miembros de la comunidad"),
         "community__community_staff":
@@ -553,13 +553,13 @@ class MessageLookup extends MessageLookupByLibrary {
                 "No mostrar posts de comunidades de las que soy miembro"),
         "community__excluded_memories":
             MessageLookupByLibrary.simpleMessage("comunidades excluidas"),
-        "community__excluded_memory":
+        "community__excluded_crew":
             MessageLookupByLibrary.simpleMessage("comunidad excluida"),
         "community__favorite_action":
             MessageLookupByLibrary.simpleMessage("Favorizar comunidad"),
         "community__favorite_memories":
             MessageLookupByLibrary.simpleMessage("comunidades favoritas"),
-        "community__favorite_memory":
+        "community__favorite_crew":
             MessageLookupByLibrary.simpleMessage("favorizar comunidad"),
         "community__favorites_title":
             MessageLookupByLibrary.simpleMessage("Favoritas"),
@@ -577,16 +577,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Esta comunidad es privada."),
         "community__join_memories_desc": MessageLookupByLibrary.simpleMessage(
             "¡Únete a comunidades para llenar esta pestaña!"),
-        "community__join_memory":
-            MessageLookupByLibrary.simpleMessage("Unirse"),
+        "community__join_crew": MessageLookupByLibrary.simpleMessage("Unirse"),
         "community__joined_memories":
             MessageLookupByLibrary.simpleMessage("comunidades parte de"),
-        "community__joined_memory":
+        "community__joined_crew":
             MessageLookupByLibrary.simpleMessage("comunidad parte de"),
         "community__joined_title":
             MessageLookupByLibrary.simpleMessage("Parte de"),
-        "community__leave_memory":
-            MessageLookupByLibrary.simpleMessage("Dejar"),
+        "community__leave_crew": MessageLookupByLibrary.simpleMessage("Dejar"),
         "community__leave_confirmation": MessageLookupByLibrary.simpleMessage(
             "¿Está seguro de que deseas abandonar la comunidad?"),
         "community__leave_desc": MessageLookupByLibrary.simpleMessage(
@@ -651,7 +649,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Miembros"),
         "community__moderated_memories":
             MessageLookupByLibrary.simpleMessage("comunidades moderadas"),
-        "community__moderated_memory":
+        "community__moderated_crew":
             MessageLookupByLibrary.simpleMessage("comunidad moderada"),
         "community__moderated_title":
             MessageLookupByLibrary.simpleMessage("Moderadas"),
@@ -690,11 +688,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "community__rules_text": MessageLookupByLibrary.simpleMessage("Reglas"),
         "community__rules_title":
             MessageLookupByLibrary.simpleMessage("Reglas de la comunidad"),
-        "community__save_community_create_memory":
+        "community__save_community_create_crew":
             MessageLookupByLibrary.simpleMessage("Crear comunidad"),
         "community__save_community_create_text":
             MessageLookupByLibrary.simpleMessage("Crear"),
-        "community__save_community_edit_memory":
+        "community__save_community_edit_crew":
             MessageLookupByLibrary.simpleMessage("Editar comunidad"),
         "community__save_community_label_title":
             MessageLookupByLibrary.simpleMessage("Título"),
@@ -1280,7 +1278,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__edit_title": MessageLookupByLibrary.simpleMessage("Editar post"),
         "post__enable_post_comments":
             MessageLookupByLibrary.simpleMessage("Habilitar comentarios"),
-        "post__exclude_post_memory": MessageLookupByLibrary.simpleMessage(
+        "post__exclude_post_crew": MessageLookupByLibrary.simpleMessage(
             "No mostrar publicaciones de esta comunidad"),
         "post__have_not_shared_anything": MessageLookupByLibrary.simpleMessage(
             "Todavía no has compartido nada."),
@@ -1316,7 +1314,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__search_circles":
             MessageLookupByLibrary.simpleMessage("Buscar círculos..."),
         "post__share": MessageLookupByLibrary.simpleMessage("Compartir"),
-        "post__share_memory": MessageLookupByLibrary.simpleMessage("Compartir"),
+        "post__share_crew": MessageLookupByLibrary.simpleMessage("Compartir"),
         "post__share_community_desc": MessageLookupByLibrary.simpleMessage(
             "Compartir con una comunidad de la que eres parte."),
         "post__share_community_title":
@@ -1324,7 +1322,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "post__share_to": MessageLookupByLibrary.simpleMessage("Compartir con"),
         "post__share_to_circles":
             MessageLookupByLibrary.simpleMessage("Compartir en círculos"),
-        "post__share_to_memory":
+        "post__share_to_crew":
             MessageLookupByLibrary.simpleMessage("Compartir con comunidad"),
         "post__shared_privately_on":
             MessageLookupByLibrary.simpleMessage("Compartido en privado en"),
@@ -1377,7 +1375,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Refrescar"),
         "post__trending_posts_title":
             MessageLookupByLibrary.simpleMessage("Posts trending"),
-        "post__undo_exclude_post_memory": MessageLookupByLibrary.simpleMessage(
+        "post__undo_exclude_post_crew": MessageLookupByLibrary.simpleMessage(
             "Mostrar publicaciones de esta comunidad"),
         "post__user_has_not_shared_anything": m34,
         "post__usernames_circles": m35,
@@ -1498,7 +1496,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "user__confirm_connection_connection_confirmed":
             MessageLookupByLibrary.simpleMessage("Conexión confirmada"),
         "user__confirm_connection_with": m40,
-        "user__confirm_guidelines_reject_chat_memory":
+        "user__confirm_guidelines_reject_chat_crew":
             MessageLookupByLibrary.simpleMessage("Chatear con la comunidad."),
         "user__confirm_guidelines_reject_chat_immediately":
             MessageLookupByLibrary.simpleMessage(

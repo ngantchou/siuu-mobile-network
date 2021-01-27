@@ -87,19 +87,19 @@ class OBActionableTextState extends State<OBActionableSmartText> {
     );
   }
 
-  void _onMemoryNameTapped(String memoryName) {
+  void _onMemoryNameTapped(String crewName) {
     _clearRequestSubscription();
 
     StreamSubscription requestSubscription = _userService
-        .getMemoryWithName(memoryName)
+        .getMemoryWithName(crewName)
         .asStream()
         .listen(_onMemoryNameMemoryRetrieved,
             onError: _onError, onDone: _onRequestDone);
     _setRequestSubscription(requestSubscription);
   }
 
-  void _onMemoryNameMemoryRetrieved(Memory memory) {
-    _navigationService.navigateToMemory(memory: memory, context: context);
+  void _onMemoryNameMemoryRetrieved(Memory crew) {
+    _navigationService.navigateToMemory(crew: crew, context: context);
   }
 
   void _onUsernameTapped(String username) {

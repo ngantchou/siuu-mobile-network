@@ -56,7 +56,7 @@ class OBExcludeMemoryFromProfilePostsTileState
         actionCompleter: (BuildContext context) async {
           await _excludePostMemory();
 
-          widget.onPostMemoryExcludedFromProfilePosts(widget.post.memory);
+          widget.onPostMemoryExcludedFromProfilePosts(widget.post.crew);
           _toastService.success(
               message: _localizationService
                   .post__exclude_community_from_profile_posts_success,
@@ -65,6 +65,6 @@ class OBExcludeMemoryFromProfilePostsTileState
   }
 
   Future _excludePostMemory() async {
-    return _userService.excludeMemoryFromProfilePosts(widget.post.memory);
+    return _userService.excludeMemoryFromProfilePosts(widget.post.crew);
   }
 }

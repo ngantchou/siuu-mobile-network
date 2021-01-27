@@ -46,7 +46,7 @@ class Post extends UpdatableModel<Post> {
 
   PostMediaList media;
   PostCommentList commentsList;
-  Memory memory;
+  Memory crew;
   HashtagsList hashtagsList;
   PostLinksList postLinksList;
   Map<String, Hashtag> hashtagsMap;
@@ -107,7 +107,7 @@ class Post extends UpdatableModel<Post> {
       'links': postLinksList?.postLinks
           ?.map((PostLink postLink) => postLink.toJson())
           ?.toList(),
-      'memory': memory?.toJson(),
+      'crew': crew?.toJson(),
       'is_muted': isMuted,
       'is_encircled': isEncircled,
       'is_edited': isEdited,
@@ -141,7 +141,7 @@ class Post extends UpdatableModel<Post> {
       this.reactionsEmojiCounts,
       this.areCommentsEnabled,
       this.circles,
-      this.memory,
+      this.crew,
       this.status,
       this.publicReactions,
       this.isMuted,
@@ -204,8 +204,7 @@ class Post extends UpdatableModel<Post> {
 
     if (json.containsKey('media')) media = factory.parseMedia(json['media']);
 
-    if (json.containsKey('memory'))
-      memory = factory.parseMemory(json['memory']);
+    if (json.containsKey('crew')) crew = factory.parseMemory(json['crew']);
 
     if (json.containsKey('creator'))
       creator = factory.parseUser(json['creator']);
@@ -244,7 +243,7 @@ class Post extends UpdatableModel<Post> {
   }
 
   bool hasMemory() {
-    return memory != null;
+    return crew != null;
   }
 
   bool isReactionEmoji(Emoji emoji) {
@@ -260,7 +259,7 @@ class Post extends UpdatableModel<Post> {
   }
 
   bool isMemoryPost() {
-    return memory != null;
+    return crew != null;
   }
 
   bool hasMediaThumbnail() {
@@ -486,7 +485,7 @@ class PostFactory extends UpdatableModelFactory<Post> {
         mediaThumbnail: json['media_thumbnail'],
         media: parseMedia(json['media']),
         reaction: parseReaction(json['reaction']),
-        memory: parseMemory(json['memory']),
+        crew: parseMemory(json['crew']),
         commentsList: parseCommentList(json['comments']),
         hashtagsList: parseHashtagsList(json['hashtags']),
         postLinksList: parsePostLinksList(json['links']),
@@ -528,9 +527,9 @@ class PostFactory extends UpdatableModelFactory<Post> {
     return PostReaction.fromJson(postReaction);
   }
 
-  Memory parseMemory(Map memoryData) {
-    if (memoryData == null) return null;
-    return Memory.fromJSON(memoryData);
+  Memory parseMemory(Map crewData) {
+    if (crewData == null) return null;
+    return Memory.fromJSON(crewData);
   }
 
   ReactionsEmojiCountList parseReactionsEmojiCounts(List reactionsEmojiCounts) {

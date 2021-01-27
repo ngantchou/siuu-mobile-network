@@ -25,7 +25,8 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
   Widget build(BuildContext context) {
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     var utilsService = openbookProvider.utilsService;
-    LocalizationService _localizationService = openbookProvider.localizationService;
+    LocalizationService _localizationService =
+        openbookProvider.localizationService;
 
     var navigateToRequesterProfile = () {
       if (onPressed != null) onPressed();
@@ -39,7 +40,7 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
     return OBNotificationTileSkeleton(
       onTap: navigateToRequesterProfile,
       leading: OBAvatar(
-        size: OBAvatarSize.medium,
+        size: OBAvatarSize.small,
         avatarUrl: connectionRequestNotification.connectionRequester
             .getProfileAvatar(),
       ),
@@ -49,7 +50,8 @@ class OBConnectionRequestNotificationTile extends StatelessWidget {
           text: TextSpan(
             text: _localizationService.notifications__connection_request_tile,
           )),
-      subtitle: OBSecondaryText(utilsService.timeAgo(notification.created, _localizationService)),
+      subtitle: OBSecondaryText(
+          utilsService.timeAgo(notification.created, _localizationService)),
     );
   }
 }

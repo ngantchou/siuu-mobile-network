@@ -7,22 +7,22 @@ import 'package:flutter/material.dart';
 
 class OBMemoryNavBar extends StatelessWidget
     implements ObstructingPreferredSizeWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryNavBar(this.memory);
+  const OBMemoryNavBar(this.crew);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-        stream: memory.updateSubject,
-        initialData: memory,
+        stream: crew.updateSubject,
+        initialData: crew,
         builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-          var memory = snapshot.data;
+          var crew = snapshot.data;
 
-          String memoryColor = memory.color;
+          String crewColor = crew.color;
           ThemeValueParserService themeValueParserService =
               OpenbookProvider.of(context).themeValueParserService;
-          Color color = themeValueParserService.parseColor(memoryColor);
+          Color color = themeValueParserService.parseColor(crewColor);
           bool isDarkColor = themeValueParserService.isDarkColor(color);
           Color actionsColor = isDarkColor ? Colors.white : Colors.black;
 
@@ -30,7 +30,7 @@ class OBMemoryNavBar extends StatelessWidget
             border: null,
             actionsForegroundColor: actionsColor,
             middle: OBText(
-              'c/' + memory.name,
+              'c/' + crew.name,
               style:
                   TextStyle(color: actionsColor, fontWeight: FontWeight.bold),
             ),

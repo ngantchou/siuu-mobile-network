@@ -11,9 +11,9 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/cupertino.dart';
 
 class OBLeaveMemoryPage<T> extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBLeaveMemoryPage({Key key, @required this.memory}) : super(key: key);
+  const OBLeaveMemoryPage({Key key, @required this.crew}) : super(key: key);
 
   @override
   OBLeaveMemoryPageState createState() {
@@ -114,10 +114,10 @@ class OBLeaveMemoryPageState extends State<OBLeaveMemoryPage> {
   void _onConfirm() async {
     _setConfirmationInProgress(true);
     try {
-      await _userService.leaveMemory(widget.memory);
-      // Pop back to manage memory
+      await _userService.leaveMemory(widget.crew);
+      // Pop back to manage crew
       Navigator.of(context).pop();
-      // Pop back to memory
+      // Pop back to crew
       Navigator.of(context).pop();
     } catch (error) {
       _onError(error);

@@ -8,7 +8,7 @@ import 'package:Siuu/widgets/theming/text.dart';
 import 'package:flutter/material.dart';
 
 class OBNewPostNotificationsForMemoryTile extends StatefulWidget {
-  final Memory memory;
+  final Memory crew;
   final VoidCallback onSubscribed;
   final VoidCallback onUnsubscribed;
   final Widget title;
@@ -16,7 +16,7 @@ class OBNewPostNotificationsForMemoryTile extends StatefulWidget {
 
   const OBNewPostNotificationsForMemoryTile(
       {Key key,
-      @required this.memory,
+      @required this.crew,
       this.onSubscribed,
       this.onUnsubscribed,
       this.title,
@@ -50,13 +50,13 @@ class OBNewPostNotificationsForMemoryTileState
     _toastService = openbookProvider.toastService;
 
     return StreamBuilder(
-      stream: widget.memory.updateSubject,
-      initialData: widget.memory,
+      stream: widget.crew.updateSubject,
+      initialData: widget.crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        var memory = snapshot.data;
+        var crew = snapshot.data;
 
         bool areNotificationsEnabled =
-            memory.areNewPostNotificationsEnabled ?? false;
+            crew.areNewPostNotificationsEnabled ?? false;
 
         return ListTile(
           enabled: !_requestInProgress,
@@ -79,7 +79,7 @@ class OBNewPostNotificationsForMemoryTileState
   void _subscribeMemory() async {
     _setRequestInProgress(true);
     try {
-      await _userService.enableNewPostNotificationsForMemory(widget.memory);
+      await _userService.enableNewPostNotificationsForMemory(widget.crew);
       _toastService.success(
           message: _localizationService
               .community__actions_enable_new_post_notifications_success,
@@ -95,7 +95,7 @@ class OBNewPostNotificationsForMemoryTileState
   void _unsubscribeMemory() async {
     _setRequestInProgress(true);
     try {
-      await _userService.disableNewPostNotificationsForMemory(widget.memory);
+      await _userService.disableNewPostNotificationsForMemory(widget.crew);
       _toastService.success(
           message: _localizationService
               .community__actions_disable_new_post_notifications_success,

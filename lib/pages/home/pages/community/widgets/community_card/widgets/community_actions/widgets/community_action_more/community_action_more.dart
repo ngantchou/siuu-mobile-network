@@ -4,9 +4,9 @@ import 'package:Siuu/widgets/icon.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryActionMore extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBMemoryActionMore(this.memory);
+  const OBMemoryActionMore(this.crew);
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +18,7 @@ class OBMemoryActionMore extends StatelessWidget {
       onPressed: () {
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
         openbookProvider.bottomSheetService
-            .showMemoryActions(context: context, memory: memory);
+            .showMemoryActions(context: context, crew: crew);
       },
     );
   }

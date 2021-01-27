@@ -10,10 +10,10 @@ import 'package:Siuu/widgets/buttons/community_button.dart';
 import 'package:flutter/material.dart';
 
 class OBJoinMemoryButton extends StatefulWidget {
-  final Memory memory;
-  final bool memoryThemed;
+  final Memory crew;
+  final bool crewThemed;
 
-  OBJoinMemoryButton(this.memory, {this.memoryThemed = true});
+  OBJoinMemoryButton(this.crew, {this.crewThemed = true});
 
   @override
   OBJoinMemoryButtonState createState() {
@@ -41,37 +41,37 @@ class OBJoinMemoryButtonState extends State<OBJoinMemoryButton> {
     _localizationService = openbookProvider.localizationService;
 
     return StreamBuilder(
-      stream: widget.memory.updateSubject,
-      initialData: widget.memory,
+      stream: widget.crew.updateSubject,
+      initialData: widget.crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        var memory = snapshot.data;
+        var crew = snapshot.data;
 
-        bool isCreator = memory.isCreator ?? true;
+        bool isCreator = crew.isCreator ?? true;
 
         if (isCreator) return SizedBox();
 
-        bool isInvited = memory.isInvited ?? false;
+        bool isInvited = crew.isInvited ?? false;
 
         User loggedInUser = _userService.getLoggedInUser();
 
-        bool isMember = memory.isMember(loggedInUser) ?? false;
+        bool isMember = crew.isMember(loggedInUser) ?? false;
 
-        if (memory.type == MemoryType.private && !isMember && !isInvited)
+        if (crew.type == MemoryType.private && !isMember && !isInvited)
           return SizedBox();
 
-        return widget.memoryThemed
+        return widget.crewThemed
             ? OBMemoryButton(
-                memory: memory,
+                crew: crew,
                 text: isMember
-                    ? _localizationService.community__leave_memory
-                    : _localizationService.community__join_memory,
+                    ? _localizationService.community__leave_crew
+                    : _localizationService.community__join_crew,
                 isLoading: _requestInProgress,
                 onPressed: isMember ? _leaveMemory : _joinMemory,
               )
             : OBButton(
                 child: Text(isMember
-                    ? _localizationService.community__leave_memory
-                    : _localizationService.community__join_memory),
+                    ? _localizationService.community__leave_crew
+                    : _localizationService.community__join_crew),
                 isLoading: _requestInProgress,
                 onPressed: isMember ? _leaveMemory : _joinMemory,
               );
@@ -82,8 +82,8 @@ class OBJoinMemoryButtonState extends State<OBJoinMemoryButton> {
   void _joinMemory() async {
     _setRequestInProgress(true);
     try {
-      await _userService.joinMemory(widget.memory);
-      widget.memory.incrementMembersCount();
+      await _userService.joinMemory(widget.crew);
+      widget.crew.incrementMembersCount();
     } catch (error) {
       _onError(error);
     } finally {
@@ -94,8 +94,8 @@ class OBJoinMemoryButtonState extends State<OBJoinMemoryButton> {
   void _leaveMemory() async {
     _setRequestInProgress(true);
     try {
-      await _userService.leaveMemory(widget.memory);
-      widget.memory.decrementMembersCount();
+      await _userService.leaveMemory(widget.crew);
+      widget.crew.decrementMembersCount();
     } catch (error) {
       _onError(error);
     } finally {

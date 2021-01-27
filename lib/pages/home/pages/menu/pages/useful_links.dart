@@ -55,7 +55,7 @@ class OBUsefulLinksPage extends StatelessWidget {
                   },
                 ),
                 ListTile(
-                  leading: const OBIcon(OBIcons.memoryModerators),
+                  leading: const OBIcon(OBIcons.crewModerators),
                   title: OBText(
                       _localizationService.drawer__useful_links_terms_of_use),
                   subtitle: OBSecondaryText(_localizationService

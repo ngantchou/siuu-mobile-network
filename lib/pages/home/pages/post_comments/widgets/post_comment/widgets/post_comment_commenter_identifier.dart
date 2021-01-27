@@ -88,7 +88,7 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
     if (postCommenter.hasProfileBadges()) badges.add(_buildProfileBadge());
 
     if (post.hasMemory()) {
-      Memory postMemory = post.memory;
+      Memory postMemory = post.crew;
 
       bool isMemoryAdministrator =
           postCommenter.isAdministratorOfMemory(postMemory);
@@ -115,7 +115,7 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
     return const Padding(
       padding: const EdgeInsets.symmetric(horizontal: 1),
       child: OBIcon(
-        OBIcons.memoryAdministrators,
+        OBIcons.crewAdministrators,
         size: OBIconSize.small,
         themeColor: OBIconThemeColor.primaryAccent,
       ),
@@ -126,7 +126,7 @@ class OBPostCommentCommenterIdentifier extends StatelessWidget {
     return const Padding(
         padding: const EdgeInsets.symmetric(horizontal: 1),
         child: OBIcon(
-          OBIcons.memoryModerators,
+          OBIcons.crewModerators,
           size: OBIconSize.small,
           themeColor: OBIconThemeColor.primaryAccent,
         ));

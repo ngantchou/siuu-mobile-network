@@ -101,49 +101,49 @@ class NavigationService {
   }
 
   Future navigateToMemory(
-      {@required Memory memory, @required BuildContext context}) async {
+      {@required Memory crew, @required BuildContext context}) async {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('memoryRoute'),
+          slidableKey: _getKeyRandomisedWithWord('crewRoute'),
           builder: (BuildContext context) {
             return OBMemoryPage(
-              memory,
+              crew,
             );
           }),
     );
   }
 
   Future navigateToMemoryStaffPage(
-      {@required BuildContext context, @required Memory memory}) {
+      {@required BuildContext context, @required Memory crew}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
           slidableKey: _getKeyRandomisedWithWord('MemoryStaffPageRoute'),
           builder: (BuildContext context) {
             return OBMemoryStaffPage(
-              memory: memory,
+              crew: crew,
             );
           }),
     );
   }
 
   Future navigateToMemoryRulesPage(
-      {@required BuildContext context, @required Memory memory}) {
+      {@required BuildContext context, @required Memory crew}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('memoryRulesPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('crewRulesPageRoute'),
           builder: (BuildContext context) {
             return OBMemoryRulesPage(
-              memory: memory,
+              crew: crew,
             );
           }),
     );
   }
 
   Future<bool> navigateToConfirmAddMemoryAdministrator(
-      {@required Memory memory,
+      {@required Memory crew,
       @required User user,
       @required BuildContext context}) async {
     return Navigator.push(
@@ -153,7 +153,7 @@ class NavigationService {
               _getKeyRandomisedWithWord('confirmAddMemoryAdministratorRoute'),
           builder: (BuildContext context) {
             return OBConfirmAddMemoryAdministrator(
-              memory: memory,
+              crew: crew,
               user: user,
             );
           }),
@@ -186,7 +186,7 @@ class NavigationService {
   }
 
   Future<bool> navigateToConfirmAddMemoryModerator(
-      {@required Memory memory,
+      {@required Memory crew,
       @required User user,
       @required BuildContext context}) async {
     return Navigator.push(
@@ -196,7 +196,7 @@ class NavigationService {
               _getKeyRandomisedWithWord('confirmAddMemoryModeratorPageRoute'),
           builder: (BuildContext context) {
             return OBConfirmAddMemoryModerator(
-              memory: memory,
+              crew: crew,
               user: user,
             );
           }),
@@ -204,7 +204,7 @@ class NavigationService {
   }
 
   Future<bool> navigateToConfirmBanMemoryUser(
-      {@required Memory memory,
+      {@required Memory crew,
       @required User user,
       @required BuildContext context}) async {
     return Navigator.push(
@@ -214,7 +214,7 @@ class NavigationService {
               _getKeyRandomisedWithWord('confirmBanMemoryUserPageRoute'),
           builder: (BuildContext context) {
             return OBConfirmBanMemoryUser(
-              memory: memory,
+              crew: crew,
               user: user,
             );
           }),
@@ -222,7 +222,7 @@ class NavigationService {
   }
 
   Future<void> navigateToManageMemory(
-      {@required Memory memory, @required BuildContext context}) {
+      {@required Memory crew, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
@@ -230,64 +230,63 @@ class NavigationService {
               _getKeyRandomisedWithWord('navigateToManageMemoryPageRoute'),
           builder: (BuildContext context) {
             return OBManageMemoryPage(
-              memory: memory,
+              crew: crew,
             );
           }),
     );
   }
 
   Future<void> navigateToLeaveMemory(
-      {@required Memory memory, @required BuildContext context}) {
+      {@required Memory crew, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
           slidableKey: _getKeyRandomisedWithWord('leaveMemoryPageRoute'),
           builder: (BuildContext context) {
             return OBLeaveMemoryPage(
-              memory: memory,
+              crew: crew,
             );
           }),
     );
   }
 
   Future<void> navigateToDeleteMemory(
-      {@required Memory memory, @required BuildContext context}) {
+      {@required Memory crew, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
           slidableKey: _getKeyRandomisedWithWord('deleteMemoryPageRoute'),
           builder: (BuildContext context) {
             return OBDeleteMemoryPage(
-              memory: memory,
+              crew: crew,
             );
           }),
     );
   }
 
   Future<void> navigateToMemoryAdministrators(
-      {@required Memory memory, @required BuildContext context}) {
+      {@required Memory crew, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey:
-              _getKeyRandomisedWithWord('memoryAdministratorsPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('crewAdministratorsPageRoute'),
           builder: (BuildContext context) {
             return OBMemoryAdministratorsPage(
-              memory: memory,
+              crew: crew,
             );
           }),
     );
   }
 
   Future<void> navigateToMemoryMembers(
-      {@required Memory memory, @required BuildContext context}) {
+      {@required Memory crew, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('memoryMembersPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('crewMembersPageRoute'),
           builder: (BuildContext context) {
             return OBMemoryMembersPage(
-              memory: memory,
+              crew: crew,
             );
           }),
     );
@@ -309,42 +308,42 @@ class NavigationService {
   }
 
   Future<void> navigateToMemoryModerators(
-      {@required Memory memory, @required BuildContext context}) {
+      {@required Memory crew, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('memoryModeratorsPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('crewModeratorsPageRoute'),
           builder: (BuildContext context) {
             return OBMemoryModeratorsPage(
-              memory: memory,
+              crew: crew,
             );
           }),
     );
   }
 
   Future<void> navigateToMemoryBannedUsers(
-      {@required Memory memory, @required BuildContext context}) {
+      {@required Memory crew, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('memoryBannedUsersPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('crewBannedUsersPageRoute'),
           builder: (BuildContext context) {
             return OBMemoryBannedUsersPage(
-              memory: memory,
+              crew: crew,
             );
           }),
     );
   }
 
   Future<void> navigateToMemoryClosedPosts(
-      {@required Memory memory, @required BuildContext context}) {
+      {@required Memory crew, @required BuildContext context}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('memoryClosedPostsPageRoute'),
+          slidableKey: _getKeyRandomisedWithWord('crewClosedPostsPageRoute'),
           builder: (BuildContext context) {
             return OBMemoryClosedPostsPage(
-              memory,
+              crew,
             );
           }),
     );
@@ -560,7 +559,7 @@ class NavigationService {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
-          slidableKey: _getKeyRandomisedWithWord('memoryGuidelinesPage'),
+          slidableKey: _getKeyRandomisedWithWord('crewGuidelinesPage'),
           builder: (BuildContext context) {
             return OBMemoryGuidelinesPage();
           }),
@@ -918,15 +917,15 @@ class NavigationService {
   }
 
   Future<void> navigateToMemoryModeratedObjects(
-      {@required BuildContext context, @required Memory memory}) async {
+      {@required BuildContext context, @required Memory crew}) async {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
           slidableKey:
-              _getKeyRandomisedWithWord('memoryModeratedObjectsPageRoute'),
+              _getKeyRandomisedWithWord('crewModeratedObjectsPageRoute'),
           builder: (BuildContext context) {
             return OBModeratedObjectsPage(
-              memory: memory,
+              crew: crew,
             );
           }),
     );
@@ -978,7 +977,7 @@ class NavigationService {
 
   Future<void> navigateToModeratedObjectMemoryReview(
       {@required BuildContext context,
-      @required Memory memory,
+      @required Memory crew,
       @required ModeratedObject moderatedObject}) async {
     return Navigator.push(
       context,
@@ -987,7 +986,7 @@ class NavigationService {
               _getKeyRandomisedWithWord('moderatedObjectMemoryReviewPageRoute'),
           builder: (BuildContext context) {
             return OBModeratedObjectMemoryReviewPage(
-              memory: memory,
+              crew: crew,
               moderatedObject: moderatedObject,
             );
           }),

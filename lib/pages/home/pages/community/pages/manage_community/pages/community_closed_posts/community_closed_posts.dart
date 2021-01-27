@@ -7,9 +7,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryClosedPostsPage extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryClosedPostsPage(this.memory);
+  OBMemoryClosedPostsPage(this.crew);
 
   @override
   Widget build(BuildContext context) {
@@ -17,8 +17,8 @@ class OBMemoryClosedPostsPage extends StatelessWidget {
       navigationBar: OBThemedNavigationBar(
         title: 'Closed posts',
       ),
-      child: OBPrimaryColorContainer(
-          child: OBMemoryClosedPosts(memory: this.memory)),
+      child:
+          OBPrimaryColorContainer(child: OBMemoryClosedPosts(crew: this.crew)),
     );
   }
 }

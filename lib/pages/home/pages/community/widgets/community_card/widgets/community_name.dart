@@ -3,26 +3,26 @@ import 'package:Siuu/widgets/theming/secondary_text.dart';
 import 'package:flutter/material.dart';
 
 class OBMemoryName extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  OBMemoryName(this.memory);
+  OBMemoryName(this.crew);
 
   @override
   Widget build(BuildContext context) {
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
-        var memory = snapshot.data;
-        String memoryName = memory?.name;
+        var crew = snapshot.data;
+        String crewName = crew?.name;
 
-        if (memoryName == null)
+        if (crewName == null)
           return const SizedBox(
             height: 10.0,
           );
 
         return OBSecondaryText(
-          'c/' + memoryName,
+          'c/' + crewName,
           style: TextStyle(fontWeight: FontWeight.bold, color: Colors.black45),
         );
       },

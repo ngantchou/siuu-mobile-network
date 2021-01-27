@@ -74,15 +74,13 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                   controller: _favoriteCommunitiesGroupController,
                   title: _localizationService.community__favorites_title,
                   groupName: _localizationService.community__favorite_memories,
-                  groupItemName:
-                      _localizationService.community__favorite_memory,
+                  groupItemName: _localizationService.community__favorite_crew,
                   maxGroupListPreviewItems: 5,
-                  memoryGroupListSearcher: _searchFavoriteCommunities,
-                  memorySearchResultListItemBuilder:
-                      _buildFavoriteMemoryListItem,
-                  memoryGroupListItemBuilder: _buildFavoriteMemoryListItem,
-                  memoryGroupListRefresher: _refreshFavoriteCommunities,
-                  memoryGroupListOnScrollLoader: _loadMoreFavoriteCommunities,
+                  crewGroupListSearcher: _searchFavoriteCommunities,
+                  crewSearchResultListItemBuilder: _buildFavoriteMemoryListItem,
+                  crewGroupListItemBuilder: _buildFavoriteMemoryListItem,
+                  crewGroupListRefresher: _refreshFavoriteCommunities,
+                  crewGroupListOnScrollLoader: _loadMoreFavoriteCommunities,
                 ),
                 OBMyCommunitiesGroup(
                     key: Key('AdministratedCommunitiesGroup'),
@@ -91,43 +89,41 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
                     groupName:
                         _localizationService.community__administrated_memories,
                     groupItemName:
-                        _localizationService.community__administrated_memory,
+                        _localizationService.community__administrated_crew,
                     maxGroupListPreviewItems: 5,
-                    memoryGroupListSearcher: _searchAdministratedCommunities,
-                    memorySearchResultListItemBuilder:
+                    crewGroupListSearcher: _searchAdministratedCommunities,
+                    crewSearchResultListItemBuilder:
                         _buildAdministratedMemoryListItem,
-                    memoryGroupListItemBuilder:
-                        _buildAdministratedMemoryListItem,
-                    memoryGroupListRefresher: _refreshAdministratedCommunities,
-                    memoryGroupListOnScrollLoader:
+                    crewGroupListItemBuilder: _buildAdministratedMemoryListItem,
+                    crewGroupListRefresher: _refreshAdministratedCommunities,
+                    crewGroupListOnScrollLoader:
                         _loadMoreAdministratedCommunities),
                 OBMyCommunitiesGroup(
                   key: Key('ModeratedCommunitiesGroup'),
                   controller: _moderatedCommunitiesGroupController,
                   title: _localizationService.community__moderated_title,
                   groupName: _localizationService.community__moderated_memories,
-                  groupItemName:
-                      _localizationService.community__moderated_memory,
+                  groupItemName: _localizationService.community__moderated_crew,
                   maxGroupListPreviewItems: 5,
-                  memoryGroupListSearcher: _searchModeratedCommunities,
-                  memorySearchResultListItemBuilder:
+                  crewGroupListSearcher: _searchModeratedCommunities,
+                  crewSearchResultListItemBuilder:
                       _buildModeratedMemoryListItem,
-                  memoryGroupListItemBuilder: _buildModeratedMemoryListItem,
-                  memoryGroupListRefresher: _refreshModeratedCommunities,
-                  memoryGroupListOnScrollLoader: _loadMoreModeratedCommunities,
+                  crewGroupListItemBuilder: _buildModeratedMemoryListItem,
+                  crewGroupListRefresher: _refreshModeratedCommunities,
+                  crewGroupListOnScrollLoader: _loadMoreModeratedCommunities,
                 ),
                 OBMyCommunitiesGroup(
                   key: Key('JoinedCommunitiesGroup'),
                   controller: _joinedCommunitiesGroupController,
                   title: _localizationService.community__joined_title,
                   groupName: _localizationService.community__joined_memories,
-                  groupItemName: _localizationService.community__joined_memory,
+                  groupItemName: _localizationService.community__joined_crew,
                   maxGroupListPreviewItems: 5,
-                  memoryGroupListSearcher: _searchJoinedCommunities,
-                  memorySearchResultListItemBuilder: _buildJoinedMemoryListItem,
-                  memoryGroupListItemBuilder: _buildJoinedMemoryListItem,
-                  memoryGroupListRefresher: _refreshJoinedCommunities,
-                  memoryGroupListOnScrollLoader: _loadMoreJoinedCommunities,
+                  crewGroupListSearcher: _searchJoinedCommunities,
+                  crewSearchResultListItemBuilder: _buildJoinedMemoryListItem,
+                  crewGroupListItemBuilder: _buildJoinedMemoryListItem,
+                  crewGroupListRefresher: _refreshJoinedCommunities,
+                  crewGroupListOnScrollLoader: _loadMoreJoinedCommunities,
                   noGroupItemsFallbackBuilder:
                       _buildNoJoinedCommunitiesFallback,
                 )
@@ -210,61 +206,60 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
     );
   }
 
-  Widget _buildJoinedMemoryListItem(BuildContext context, Memory memory) {
+  Widget _buildJoinedMemoryListItem(BuildContext context, Memory crew) {
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
         Memory latestMemory = snapshot.data;
 
         User loggedInUser = _userService.getLoggedInUser();
         return latestMemory.isMember(loggedInUser)
-            ? _buildMemoryListItem(memory)
+            ? _buildMemoryListItem(crew)
             : const SizedBox();
       },
     );
   }
 
-  Widget _buildModeratedMemoryListItem(BuildContext context, Memory memory) {
+  Widget _buildModeratedMemoryListItem(BuildContext context, Memory crew) {
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
         Memory latestMemory = snapshot.data;
 
         User loggedInUser = _userService.getLoggedInUser();
         return latestMemory.isModerator(loggedInUser)
-            ? _buildMemoryListItem(memory)
+            ? _buildMemoryListItem(crew)
             : const SizedBox();
       },
     );
   }
 
-  Widget _buildAdministratedMemoryListItem(
-      BuildContext context, Memory memory) {
+  Widget _buildAdministratedMemoryListItem(BuildContext context, Memory crew) {
     return StreamBuilder(
-      stream: memory.updateSubject,
-      initialData: memory,
+      stream: crew.updateSubject,
+      initialData: crew,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
         Memory latestMemory = snapshot.data;
 
         User loggedInUser = _userService.getLoggedInUser();
         return latestMemory.isAdministrator(loggedInUser)
-            ? _buildMemoryListItem(memory)
+            ? _buildMemoryListItem(crew)
             : const SizedBox();
       },
     );
   }
 
-  Widget _buildFavoriteMemoryListItem(BuildContext context, Memory memory) {
+  Widget _buildFavoriteMemoryListItem(BuildContext context, Memory crew) {
     return StreamBuilder(
-      initialData: memory,
-      stream: memory.updateSubject,
+      initialData: crew,
+      stream: crew.updateSubject,
       builder: (BuildContext context, AsyncSnapshot<Memory> snapshot) {
         Memory latestMemory = snapshot.data;
 
         return latestMemory.isFavorite
-            ? _buildMemoryListItem(memory)
+            ? _buildMemoryListItem(crew)
             : const SizedBox();
       },
     );
@@ -298,16 +293,16 @@ class OBMyCommunitiesState extends State<OBMyCommunities>
     return results.memories;
   }
 
-  Widget _buildMemoryListItem(Memory memory) {
+  Widget _buildMemoryListItem(Memory crew) {
     return OBMemoryTile(
-      memory,
+      crew,
       size: OBMemoryTileSize.small,
       onMemoryTilePressed: _onMemoryPressed,
     );
   }
 
-  void _onMemoryPressed(Memory memory) {
-    _navigationService.navigateToMemory(context: context, memory: memory);
+  void _onMemoryPressed(Memory crew) {
+    _navigationService.navigateToMemory(context: context, crew: crew);
   }
 
   Future<void> _refreshAllGroups() async {

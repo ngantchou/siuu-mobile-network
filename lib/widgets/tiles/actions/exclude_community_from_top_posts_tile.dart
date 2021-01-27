@@ -65,8 +65,8 @@ class OBExcludeMemoryFromTopPostsTileState
               ? OBIcons.undoExcludePostMemory
               : OBIcons.excludePostMemory),
           title: OBText(isExcluded
-              ? _localizationService.post__undo_exclude_post_memory
-              : _localizationService.post__exclude_post_memory),
+              ? _localizationService.post__undo_exclude_post_crew
+              : _localizationService.post__exclude_post_crew),
           onTap: isExcluded ? _undoExcludePostMemory : _excludePostMemory,
         );
       },
@@ -86,7 +86,7 @@ class OBExcludeMemoryFromTopPostsTileState
     _setRequestInProgress(true);
     try {
       _excludeMemoryOperation = CancelableOperation.fromFuture(
-          _userService.excludeMemoryFromTopPosts(widget.post.memory));
+          _userService.excludeMemoryFromTopPosts(widget.post.crew));
       String message = await _excludeMemoryOperation.value;
       if (widget.onExcludedPostMemory != null) widget.onExcludedPostMemory();
       widget.post.updateIsExcludedFromTopPosts(true);
@@ -104,7 +104,7 @@ class OBExcludeMemoryFromTopPostsTileState
     _setRequestInProgress(true);
     try {
       _undoExcludeMemoryOperation = CancelableOperation.fromFuture(
-          _userService.undoExcludeMemoryFromTopPosts(widget.post.memory));
+          _userService.undoExcludeMemoryFromTopPosts(widget.post.crew));
       await _undoExcludeMemoryOperation.value;
       if (widget.onUndoExcludedPostMemory != null)
         widget.onUndoExcludedPostMemory();

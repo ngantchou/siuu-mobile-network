@@ -15,9 +15,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class OBManageMemoryPage extends StatelessWidget {
-  final Memory memory;
+  final Memory crew;
 
-  const OBManageMemoryPage({@required this.memory});
+  const OBManageMemoryPage({@required this.crew});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class OBManageMemoryPage extends StatelessWidget {
 
     const TextStyle listItemSubtitleStyle = TextStyle(fontSize: 14);
 
-    if (loggedInUser.canChangeDetailsOfMemory(memory)) {
+    if (loggedInUser.canChangeDetailsOfMemory(crew)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.memories),
         title: OBText(
@@ -43,14 +43,14 @@ class OBManageMemoryPage extends StatelessWidget {
           style: listItemSubtitleStyle,
         ),
         onTap: () {
-          modalService.openEditMemory(context: context, memory: memory);
+          modalService.openEditMemory(context: context, crew: crew);
         },
       ));
     }
 
-    if (loggedInUser.canAddOrRemoveAdministratorsInMemory(memory)) {
+    if (loggedInUser.canAddOrRemoveAdministratorsInMemory(crew)) {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.memoryAdministrators),
+        leading: const OBIcon(OBIcons.crewAdministrators),
         title: OBText(
             _localizationService.trans('community__manage_admins_title')),
         subtitle: OBText(
@@ -59,14 +59,14 @@ class OBManageMemoryPage extends StatelessWidget {
         ),
         onTap: () {
           navigationService.navigateToMemoryAdministrators(
-              context: context, memory: memory);
+              context: context, crew: crew);
         },
       ));
     }
 
-    if (loggedInUser.canAddOrRemoveModeratorsInMemory(memory)) {
+    if (loggedInUser.canAddOrRemoveModeratorsInMemory(crew)) {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.memoryModerators),
+        leading: const OBIcon(OBIcons.crewModerators),
         title:
             OBText(_localizationService.trans('community__manage_mods_title')),
         subtitle: OBText(
@@ -75,14 +75,14 @@ class OBManageMemoryPage extends StatelessWidget {
         ),
         onTap: () {
           navigationService.navigateToMemoryModerators(
-              context: context, memory: memory);
+              context: context, crew: crew);
         },
       ));
     }
 
-    if (loggedInUser.canBanOrUnbanUsersInMemory(memory)) {
+    if (loggedInUser.canBanOrUnbanUsersInMemory(crew)) {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.memoryBannedUsers),
+        leading: const OBIcon(OBIcons.crewBannedUsers),
         title: OBText(
             _localizationService.trans('community__manage_banned_title')),
         subtitle: OBText(
@@ -91,14 +91,14 @@ class OBManageMemoryPage extends StatelessWidget {
         ),
         onTap: () {
           navigationService.navigateToMemoryBannedUsers(
-              context: context, memory: memory);
+              context: context, crew: crew);
         },
       ));
     }
 
-    if (loggedInUser.canBanOrUnbanUsersInMemory(memory)) {
+    if (loggedInUser.canBanOrUnbanUsersInMemory(crew)) {
       menuListTiles.add(ListTile(
-        leading: const OBIcon(OBIcons.memoryModerators),
+        leading: const OBIcon(OBIcons.crewModerators),
         title: OBText(
             _localizationService.trans('community__manage_mod_reports_title')),
         subtitle: OBText(
@@ -107,12 +107,12 @@ class OBManageMemoryPage extends StatelessWidget {
         ),
         onTap: () {
           navigationService.navigateToMemoryModeratedObjects(
-              context: context, memory: memory);
+              context: context, crew: crew);
         },
       ));
     }
 
-    if (loggedInUser.canCloseOrOpenPostsInMemory(memory)) {
+    if (loggedInUser.canCloseOrOpenPostsInMemory(crew)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.closePost),
         title: OBText(
@@ -123,13 +123,13 @@ class OBManageMemoryPage extends StatelessWidget {
         ),
         onTap: () {
           navigationService.navigateToMemoryClosedPosts(
-              context: context, memory: memory);
+              context: context, crew: crew);
         },
       ));
     }
 
     menuListTiles.add(OBNewPostNotificationsForMemoryTile(
-        memory: memory,
+        crew: crew,
         title: OBText(
           _localizationService.community__manage_enable_new_post_notifications,
           style: listItemSubtitleStyle,
@@ -140,7 +140,7 @@ class OBManageMemoryPage extends StatelessWidget {
         )));
 
     menuListTiles.add(ListTile(
-      leading: const OBIcon(OBIcons.memoryInvites),
+      leading: const OBIcon(OBIcons.crewInvites),
       title:
           OBText(_localizationService.trans('community__manage_invite_title')),
       subtitle: OBText(
@@ -148,12 +148,12 @@ class OBManageMemoryPage extends StatelessWidget {
         style: listItemSubtitleStyle,
       ),
       onTap: () {
-        modalService.openInviteToMemory(context: context, memory: memory);
+        modalService.openInviteToMemory(context: context, crew: crew);
       },
     ));
 
     menuListTiles.add(OBFavoriteMemoryTile(
-        memory: memory,
+        crew: crew,
         favoriteSubtitle: OBText(
           _localizationService.trans('community__manage_add_favourite'),
           style: listItemSubtitleStyle,
@@ -163,7 +163,7 @@ class OBManageMemoryPage extends StatelessWidget {
           style: listItemSubtitleStyle,
         )));
 
-    if (loggedInUser.isCreatorOfMemory(memory)) {
+    if (loggedInUser.isCreatorOfMemory(crew)) {
       menuListTiles.add(ListTile(
         leading: const OBIcon(OBIcons.deleteMemory),
         title: OBText(
@@ -174,7 +174,7 @@ class OBManageMemoryPage extends StatelessWidget {
         ),
         onTap: () {
           navigationService.navigateToDeleteMemory(
-              context: context, memory: memory);
+              context: context, crew: crew);
         },
       ));
     } else {
@@ -187,8 +187,7 @@ class OBManageMemoryPage extends StatelessWidget {
           style: listItemSubtitleStyle,
         ),
         onTap: () {
-          navigationService.navigateToLeaveMemory(
-              context: context, memory: memory);
+          navigationService.navigateToLeaveMemory(context: context, crew: crew);
         },
       ));
     }

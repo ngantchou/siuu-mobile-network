@@ -63,18 +63,18 @@ class OBTopPostsExcludedCommunitiesState
           listRefresher: _refreshExcludedCommunities,
           listOnScrollLoader: _loadMoreExcludedCommunities,
           listSearcher: _searchExcludedCommunities,
-          resourceSingularName: _localizationService.community__excluded_memory,
+          resourceSingularName: _localizationService.community__excluded_crew,
           resourcePluralName: _localizationService.community__excluded_memories,
         ),
       ),
     );
   }
 
-  Widget _buildExcludedMemoryListItem(BuildContext context, Memory memory) {
+  Widget _buildExcludedMemoryListItem(BuildContext context, Memory crew) {
     return Padding(
       padding: EdgeInsets.symmetric(vertical: 10.0),
       child: OBMemoryTile(
-        memory,
+        crew,
         size: OBMemoryTileSize.small,
         onMemoryTilePressed: _onExcludedMemoryListItemPressed,
         onMemoryTileDeleted: _onExcludedMemoryListItemDeleted,
@@ -82,8 +82,8 @@ class OBTopPostsExcludedCommunitiesState
     );
   }
 
-  void _onExcludedMemoryListItemPressed(Memory memory) {
-    _navigationService.navigateToMemory(memory: memory, context: context);
+  void _onExcludedMemoryListItemPressed(Memory crew) {
+    _navigationService.navigateToMemory(crew: crew, context: context);
   }
 
   void _onExcludedMemoryListItemDeleted(Memory excludedMemory) async {

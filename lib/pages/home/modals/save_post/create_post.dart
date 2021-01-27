@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:Siuu/models/community.dart';
 import 'package:Siuu/models/memory.dart';
-import 'package:Siuu/models/memory.dart';
 import 'package:Siuu/models/link_preview/link_preview.dart';
 import 'package:Siuu/models/post.dart';
 import 'package:Siuu/models/post_image.dart';
@@ -16,9 +15,6 @@ import 'package:Siuu/pages/home/modals/save_post/widgets/post_image_previewer.da
 import 'package:Siuu/pages/home/modals/save_post/widgets/post_video_previewer.dart';
 import 'package:Siuu/pages/home/modals/save_post/widgets/remaining_post_characters.dart';
 import 'package:Siuu/pages/home/pages/memories/TextMemory.dart';
-import 'package:Siuu/pages/home/pages/memories/VoiceMemory.dart';
-import 'package:Siuu/pages/home/pages/memories/categories.dart';
-import 'package:Siuu/pages/home/pages/memories/videoMemory.dart';
 import 'package:Siuu/provider.dart';
 import 'package:Siuu/services/draft.dart';
 import 'package:Siuu/services/httpie.dart';
@@ -164,7 +160,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     } else {
       _textController = DraftTextEditingController.post(
           text: widget.text,
-          memoryId: widget.memory != null ? widget.memory.id : null,
+          crewId: widget.memory != null ? widget.memory.id : null,
           draftService: _draftService);
       _postItemsWidgets = [
         OBCreatePostText(controller: _textController, focusNode: _focusNode)
@@ -329,15 +325,16 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
           isLoading: _isCreateCommunityPostInProgress);
     } else {
       if (isEnabled) {
-        nextButton = GestureDetector(
+        nextButton =
+            /*GestureDetector(
           onTap: _onWantsToGoNext,
           child: OBText(_localizationService.trans('post__create_next')),
-        );
-        OBButton(
-            type: OBButtonType.primary,
-            child: Text(_localizationService.trans('post__share')),
-            size: OBButtonSize.small,
-            onPressed: _onWantsToGoNext);
+        );*/
+            OBButton(
+                type: OBButtonType.success,
+                child: Text(_localizationService.trans('post__create_next')),
+                size: OBButtonSize.small,
+                onPressed: _onWantsToGoNext);
       } else {
         nextButton = Opacity(
           opacity: 0.5,
@@ -371,9 +368,12 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
       return;
     }
 
-    OBNewPostData createPostData = await _navigationService.navigateToSharePost(
-        context: context, createPostData: _makeNewPostData());
-
+    /*OBNewPostData createPostData = await _navigationService.navigateToSharePost(
+        context: context, createPostData: _makeNewPostData());*/
+    OBNewPostData createPostData =
+        await _navigationService.navigateToSharePostWithCircles(
+            context: context, createPostData: _makeNewPostData());
+    //if (createPostData != null) Navigator.pop(context, createPostData);
     if (createPostData != null) {
       // Remove modal
       if (this._postVideoFile != null)
@@ -762,7 +762,7 @@ class OBSavePostModalState extends OBContextualSearchBoxState<OBSavePostModal> {
     return OBNewPostData(
         text: _textController.text,
         media: media,
-        memory: widget.memory,
+        crew: widget.memory,
         textMeta: textMeta);
   }
 

@@ -15,24 +15,24 @@ import 'notification_tile_title.dart';
 
 class OBMemoryInviteNotificationTile extends StatelessWidget {
   final OBNotification notification;
-  final MemoryInviteNotification memoryInviteNotification;
+  final MemoryInviteNotification crewInviteNotification;
   final VoidCallback onPressed;
   static final double postImagePreviewSize = 40;
 
   const OBMemoryInviteNotificationTile(
       {Key key,
       @required this.notification,
-      @required this.memoryInviteNotification,
+      @required this.crewInviteNotification,
       this.onPressed})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    MemoryInvite memoryInvite = memoryInviteNotification.memoryInvite;
-    User inviteCreator = memoryInvite.creator;
-    Memory memory = memoryInvite.memory;
+    MemoryInvite crewInvite = crewInviteNotification.crewInvite;
+    User inviteCreator = crewInvite.creator;
+    Memory crew = crewInvite.crew;
 
-    String memoryName = memory.name;
+    String crewName = crew.name;
 
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     var utilsService = openbookProvider.utilsService;
@@ -50,11 +50,11 @@ class OBMemoryInviteNotificationTile extends StatelessWidget {
         OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
 
         openbookProvider.navigationService
-            .navigateToMemory(memory: memory, context: context);
+            .navigateToMemory(crew: crew, context: context);
       },
       leading: OBAvatar(
         onPressed: navigateToInviteCreatorProfile,
-        size: OBAvatarSize.medium,
+        size: OBAvatarSize.small,
         avatarUrl: inviteCreator.getProfileAvatar(),
       ),
       title: OBNotificationTileTitle(
@@ -62,11 +62,11 @@ class OBMemoryInviteNotificationTile extends StatelessWidget {
         onUsernamePressed: navigateToInviteCreatorProfile,
         text: TextSpan(
             text: _localizationService
-                .notifications__user_community_invite_tile(memoryName)),
+                .notifications__user_community_invite_tile(crewName)),
       ),
       trailing: OBMemoryAvatar(
-        memory: memory,
-        size: OBAvatarSize.medium,
+        crew: crew,
+        size: OBAvatarSize.small,
       ),
       subtitle: OBSecondaryText(
           utilsService.timeAgo(notification.created, _localizationService)),

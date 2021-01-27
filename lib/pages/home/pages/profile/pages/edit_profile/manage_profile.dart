@@ -44,7 +44,7 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
   NavigationService _navigationService;
   UserService _userService;
 
-  bool _memoryPostsVisible;
+  bool _crewPostsVisible;
   bool _isFirstBuild;
 
   @override
@@ -52,7 +52,7 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
     super.initState();
     _isFirstBuild = true;
 
-    _memoryPostsVisible = widget.user.getProfileMemoryPostsVisible();
+    _crewPostsVisible = widget.user.getProfileMemoryPostsVisible();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => _isFirstBuild = false);
   }
@@ -140,7 +140,7 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
 
   void _onMemoryPostsVisibleChanged(bool newValue) {
     setState(() {
-      _memoryPostsVisible = newValue;
+      _crewPostsVisible = newValue;
     });
   }
 
@@ -151,7 +151,7 @@ class OBManageProfilePageState extends State<OBManageProfilePage> {
   }
 
   Widget _buildExcludedCommunitiesTile() {
-    if (!_memoryPostsVisible) return const SizedBox();
+    if (!_crewPostsVisible) return const SizedBox();
 
     Widget tile = ListTile(
       leading: OBIcon(OBIcons.excludePostMemory),
