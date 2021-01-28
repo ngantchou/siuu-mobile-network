@@ -89,8 +89,7 @@ dependencies:
   animated_background: ^1.0.5
   google_maps_flutter: ^1.0.6
   permission_handler: ^5.0.1
-  flutter_sound: ^7.5.3+1
-  just_audio: ^0.5.4
+  flutter_sound: ^3.0.0
 
   flutter:
     sdk: flutter

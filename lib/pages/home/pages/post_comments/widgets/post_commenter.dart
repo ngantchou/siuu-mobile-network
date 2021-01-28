@@ -266,24 +266,49 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                     },
                     child: viewStickers
                         ? Icon(Icons.close)
-                        : SvgPicture.asset('assets/svg/emoji.svg')),
+                        : SvgPicture.asset(
+                            'assets/svg/emoji.svg',
+                            height: 50,
+                          )),
                 SizedBox(width: width * 0.024),
-                !isAudio
-                    ? InkWell(
-                        onTap: () {
-                          setState(() {
-                            isAudio = true;
-                          });
-                        },
-                        child: SvgPicture.asset('assets/svg/micIcon.svg'),
-                      )
-                    : PostCommentAudio(),
+                InkWell(
+                  onTap: () {
+                    setState(() {
+                      isAudio = true;
+                    });
+                    showModalBottomSheet<void>(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          height: 500,
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              PostCommentAudio(),
+                              ElevatedButton(
+                                child: const Text('Close BottomSheet'),
+                                onPressed: () => Navigator.pop(context),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                  child: SvgPicture.asset(
+                    'assets/svg/micIcon.svg',
+                    height: 50,
+                  ),
+                ),
                 SizedBox(width: width * 0.024),
                 InkWell(
                   onTap: () {
                     _submitForm();
                   },
-                  child: SvgPicture.asset('assets/svg/postIcon.svg'),
+                  child: SvgPicture.asset(
+                    'assets/svg/postIcon.svg',
+                    height: 50,
+                  ),
                 ),
               ],
             )
