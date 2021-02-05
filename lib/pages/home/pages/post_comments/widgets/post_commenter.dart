@@ -17,8 +17,9 @@ import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:Siuu/services/httpie.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
+import 'package:Siuu/services/bottom_sheet.dart';
 import 'post_comment/widgets/post_comment_audio.dart';
+import 'dart:io';
 
 class OBPostCommenter extends StatefulWidget {
   final Post post;
@@ -50,7 +51,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   bool viewStickers;
   int _charactersCount;
   bool _isMultiline;
-
+  BottomSheetService _bottomSheetService;
   UserService _userService;
   ToastService _toastService;
   ValidationService _validationService;
@@ -85,6 +86,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _toastService = provider.toastService;
       _validationService = provider.validationService;
       _localizationService = provider.localizationService;
+      _bottomSheetService = provider.bottomSheetService;
       widget.textController.addListener(_onPostCommentChanged);
       _needsBootstrap = false;
     }
@@ -167,6 +169,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
             child: keyboardVisible == 0
                 ? Column(
                     children: [
+                      isAudio ? PostCommentAudio() : SizedBox(),
                       buildContainer(width),
                       viewStickers
                           ? LottiePersonaStickers(width: width)
@@ -175,6 +178,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                   )
                 : Column(
                     children: [
+                      isAudio ? PostCommentAudio() : SizedBox(),
                       buildContainer(width),
                       viewStickers
                           ? LottiePersonaStickers(width: width)
@@ -268,37 +272,27 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                         ? Icon(Icons.close)
                         : SvgPicture.asset(
                             'assets/svg/emoji.svg',
-                            height: 50,
+                            height: 30,
                           )),
                 SizedBox(width: width * 0.024),
-                InkWell(
-                  onTap: () {
+                /*GestureDetector(
+                  onLongPressStart: (detail) {
                     setState(() {
                       isAudio = true;
                     });
-                    showModalBottomSheet<void>(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return Container(
-                          height: 500,
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              PostCommentAudio(),
-                              ElevatedButton(
-                                child: const Text('Close BottomSheet'),
-                                onPressed: () => Navigator.pop(context),
-                              )
-                            ],
-                          ),
-                        );
-                      },
-                    );
+                    _bottomSheetService.showReactToPostAudioComment(
+                        post: widget.post,
+                        postComment: widget.postComment,
+                        context: context);
                   },
-                  child: SvgPicture.asset(
-                    'assets/svg/micIcon.svg',
-                    height: 50,
-                  ),
+                  child: 
+                ),*/
+                PostCommentAudio(
+                  onRecorderSend: (audioPath) {
+                    print(audioPath);
+                    File f = new File(audioPath);
+                    _uploadPostMediaItem(f);
+                  },
                 ),
                 SizedBox(width: width * 0.024),
                 InkWell(
@@ -307,7 +301,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                   },
                   child: SvgPicture.asset(
                     'assets/svg/postIcon.svg',
-                    height: 50,
+                    height: 30,
                   ),
                 ),
               ],
@@ -511,6 +505,10 @@ class OBPostCommenterState extends State<OBPostCommenter> {
     setState(() {
       _formWasSubmitted = formWasSubmitted;
     });
+  }
+
+  Future _uploadPostMediaItem(File file) async {
+    await _userService.addMediaToPost(file: file, post: widget.post);
   }
 
   void _setCharactersCount(int charactersCount) {

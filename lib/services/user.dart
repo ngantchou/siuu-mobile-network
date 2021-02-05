@@ -620,7 +620,7 @@ class UserService {
       {@required File file, @required Post post}) async {
     HttpieStreamedResponse response =
         await _postsApiService.addMediaToPost(file: file, postUuid: post.uuid);
-
+    print(file.toString());
     _checkResponseIsOk(response);
   }
 

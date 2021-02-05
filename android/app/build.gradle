@@ -61,6 +61,7 @@ android {
         applicationId "social.siuu.app"
         minSdkVersion 21
         targetSdkVersion 29
+        multiDexEnabled true
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -91,6 +92,7 @@ flutter {
 
 dependencies {
     testImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:multidex:1.0.3'
     androidTestImplementation 'androidx.test:runner:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     implementation 'com.onesignal:OneSignal:[3.11.2, 3.99.99]'
