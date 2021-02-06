@@ -250,7 +250,8 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
           if (_timelinePageController.isFirstRoute()) {
             _timelinePageController.scrollToTop();
           } else {
-            _timelinePageController.popUntilFirstRoute();
+            //_timelinePageController.popUntilFirstRoute();
+            _timelinePageController.popToFirstRoute();
           }
         }
 

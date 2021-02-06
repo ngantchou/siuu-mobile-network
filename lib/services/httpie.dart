@@ -79,14 +79,9 @@ class HttpieService {
     Response response;
 
     try {
-      print(finalHeaders);
-      print(body);
-      print(encoding);
-      print(url);
       response = await client.post(url,
           headers: finalHeaders, body: body, encoding: encoding);
     } catch (error) {
-      print(error);
       _handleRequestError(error);
     }
 
@@ -633,7 +628,8 @@ class HttpieOverrides extends HttpOverrides {
   @override
   String findProxyFromEnvironment(Uri uri, Map<String, String> environment) {
     if (_proxy != null) return _proxy;
-    if (_previous != null) return _previous.findProxyFromEnvironment(uri, environment);
+    if (_previous != null)
+      return _previous.findProxyFromEnvironment(uri, environment);
     return super.findProxyFromEnvironment(uri, environment);
   }
 }

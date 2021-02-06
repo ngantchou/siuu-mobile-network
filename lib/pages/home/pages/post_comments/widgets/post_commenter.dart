@@ -18,7 +18,7 @@ import 'package:flutter/material.dart';
 import 'package:Siuu/services/httpie.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-import 'post_comment/widgets/post_comment_audio.dart';
+//import 'post_comment/widgets/post_comment_audio.dart';
 
 class OBPostCommenter extends StatefulWidget {
   final Post post;
@@ -268,7 +268,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                         ? Icon(Icons.close)
                         : SvgPicture.asset(
                             'assets/svg/emoji.svg',
-                            height: 50,
+                            height: 30,
                           )),
                 SizedBox(width: width * 0.024),
                 InkWell(
@@ -284,7 +284,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
-                              PostCommentAudio(),
+                              //PostCommentAudio(),
                               ElevatedButton(
                                 child: const Text('Close BottomSheet'),
                                 onPressed: () => Navigator.pop(context),
@@ -297,7 +297,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                   },
                   child: SvgPicture.asset(
                     'assets/svg/micIcon.svg',
-                    height: 50,
+                    height: 30,
                   ),
                 ),
                 SizedBox(width: width * 0.024),
@@ -307,7 +307,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
                   },
                   child: SvgPicture.asset(
                     'assets/svg/postIcon.svg',
-                    height: 50,
+                    height: 30,
                   ),
                 ),
               ],

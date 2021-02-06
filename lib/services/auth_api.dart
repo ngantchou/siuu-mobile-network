@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
+import 'package:http/http.dart' as http;
 
 class AuthApiService {
   HttpieService _httpService;
@@ -179,9 +180,10 @@ class AuthApiService {
 
   Future<void> createFirebaseUser(
       {String username, String siuuId, String phone, String siuuCoinId}) async {
-    CollectionReference users = FirebaseFirestore.instance.collection('users');
+    DocumentReference users =
+        FirebaseFirestore.instance.collection('users').doc(username);
     return users
-        .add({
+        .set({
           'username': username, // John Doe
           'siuu_id': siuuId, // Stokes and Sons
           'phone': phone,
@@ -191,8 +193,9 @@ class AuthApiService {
         .catchError((error) => print("Failed to add user: $error"));
   }
 
-  Future<HttpieResponse> createSiuuCoinUser() async {
-    return _httpService
+  Future<Response> createSiuuCoinUser() async {
+    var client = http.Client();
+    return client
         .get('http://161.35.161.138:5000/api/ether/mainnet/create_wallet');
   }
 

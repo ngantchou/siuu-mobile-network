@@ -217,7 +217,7 @@ class OBTimelinePageState extends State<OBTimelinePage>
                                         fit: BoxFit.contain,
                                         color: Colors.white),
                                   )),
-                              SizedBox(width: width * 0.024),
+                              SizedBox(width: width * 0.034),
                               InkWell(
                                 onTap: () {
                                   showMenu(
@@ -367,9 +367,10 @@ class OBTimelinePageState extends State<OBTimelinePage>
   void _onLoggedInUserChange(User newUser) async {
     if (newUser == null) return;
     List<Post> initialPosts = (await _userService.getStoredFirstPosts()).posts;
+    List<Post> timelinePosts = (await _userService.getTimelinePosts()).posts;
     setState(() {
       _loggedInUserBootstrapped = true;
-      _initialPosts = initialPosts;
+      _initialPosts = initialPosts == null ? timelinePosts : initialPosts;
       _loggedInUserChangeSubscription.cancel();
     });
   }

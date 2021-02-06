@@ -28,7 +28,7 @@ class _WalletState extends State<Wallet> with WidgetsBindingObserver {
   int minutesStr = 0;
   int secondsStr = 0;
   int totalSeconds = 0;
-  double bitcoin = 0.0;
+  double siuuCoin = 0.0;
   String publickey;
   UserService _userService;
   Stream<int> stopWatchStream() {
@@ -93,7 +93,7 @@ class _WalletState extends State<Wallet> with WidgetsBindingObserver {
       timerSubscription.pause();
       timerStream = null;
       setState(() {
-        bitcoin = totalSeconds * 0.000000000955555556;
+        siuuCoin = totalSeconds * 0.000000000955555556;
       });
     }
 
@@ -184,7 +184,7 @@ class _WalletState extends State<Wallet> with WidgetsBindingObserver {
                         children: [
                           FutureBuilder<DocumentSnapshot>(
                             future: users
-                                .doc(_userService.getLoggedInUser().uuid)
+                                .doc(_userService.getLoggedInUser().username)
                                 .get(),
                             builder: (BuildContext context,
                                 AsyncSnapshot<DocumentSnapshot> snapshot) {
@@ -197,15 +197,22 @@ class _WalletState extends State<Wallet> with WidgetsBindingObserver {
                                   snapshot.data.data() != null) {
                                 Map<String, dynamic> data =
                                     snapshot.data.data();
-                                publickey = data['public_key'];
-                                return Text("${data['public_key']}");
+                                publickey = data['siuu_coin_id'];
+                                String start = publickey.substring(0, 4);
+                                int index = publickey.length - 1;
+                                int before = publickey.length - 4;
+                                String end = publickey.substring(before, index);
+                                return Text("${start}...${end}",
+                                    style: TextStyle(color: Colors.white));
                               }
 
                               return Text("loading...");
                             },
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              _copyText(publickey);
+                            },
                             icon: Icon(Icons.content_copy,
                                 size: 30, color: Colors.white),
                           ),
@@ -215,7 +222,7 @@ class _WalletState extends State<Wallet> with WidgetsBindingObserver {
                         flex: 2,
                       ),
                       // buildText(fontSize: 30, text: '0.02439403'),
-                      FutureBuilder<String>(
+                      /*FutureBuilder<String>(
                         future: futureBalance,
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
@@ -227,7 +234,7 @@ class _WalletState extends State<Wallet> with WidgetsBindingObserver {
                           // By default, show a loading spinner.
                           return CircularProgressIndicator();
                         },
-                      ),
+                      ),*/
                       buildText(fontSize: 12, text: 'Total balance'),
                       Spacer(
                         flex: 2,
@@ -238,7 +245,7 @@ class _WalletState extends State<Wallet> with WidgetsBindingObserver {
                           Column(
                             children: [
                               buildText(fontSize: 21, text: '0'),
-                              buildText(fontSize: 14, text: 'Operations'),
+                              buildText(fontSize: 14, text: 'A venir'),
                             ],
                           ),
                           SizedBox(
@@ -246,8 +253,9 @@ class _WalletState extends State<Wallet> with WidgetsBindingObserver {
                           ),
                           Column(
                             children: [
-                              buildText(fontSize: 21, text: bitcoin.toString()),
-                              buildText(fontSize: 14, text: 'earning'),
+                              buildText(
+                                  fontSize: 21, text: siuuCoin.toString()),
+                              buildText(fontSize: 14, text: 'Disponible'),
                             ],
                           )
                         ],
@@ -283,8 +291,8 @@ class _WalletState extends State<Wallet> with WidgetsBindingObserver {
     );
   }
 
-  void _copyText() {
-    Clipboard.setData(ClipboardData(text: publickey));
+  void _copyText(String siuu_key) {
+    Clipboard.setData(ClipboardData(text: siuu_key));
     _toastService.toast(
         message: "Clée copié", context: context, type: ToastType.info);
   }

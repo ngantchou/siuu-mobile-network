@@ -11,6 +11,10 @@ class PoppablePageController {
     Navigator.of(_context).popUntil((Route<dynamic> r) => r.isFirst);
   }
 
+  void popToFirstRoute() {
+    Navigator.of(_context).popAndPushNamed('/');
+  }
+
   bool isFirstRoute() {
     Route currentRoute;
     /*  Navigator.popUntil(_context, (route) {

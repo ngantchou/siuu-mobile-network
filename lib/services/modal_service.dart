@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:Siuu/custom/InstantShareDialog.dart';
 import 'package:Siuu/models/circle.dart';
 import 'package:Siuu/models/community.dart';
 import 'package:Siuu/models/follows_list.dart';
@@ -83,6 +84,21 @@ class ModalService {
               );
             }));
 
+    return editedPost;
+  }
+
+  Future<Post> openSharePost(
+      {@required BuildContext context, @required Post post}) async {
+    Post editedPost = await Navigator.of(context, rootNavigator: true)
+        .push(CupertinoPageRoute<Post>(
+            fullscreenDialog: true,
+            builder: (BuildContext context) {
+              return Material(
+                child: SharePostModal(
+                  post: post,
+                ),
+              );
+            }));
     return editedPost;
   }
 

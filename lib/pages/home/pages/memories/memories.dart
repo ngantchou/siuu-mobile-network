@@ -81,35 +81,34 @@ class MemoriesState extends State<Memories> {
                                             .navigateToCreateStory(
                                                 context: context);
                                       },
-                                      child: userPic != null
-                                          ? Container(
-                                              width: width * 0.1482,
-                                              height: height * 0.0892,
-                                              decoration: BoxDecoration(
-                                                  shape: BoxShape.circle,
-                                                  // color: Colors.red,
-                                                  gradient: linearGradient
-                                                  // border: Border.all(color: Colors.red, width: 2),
-                                                  ),
-                                              child: Center(
-                                                child: Container(
-                                                  height: height * 0.053,
-                                                  width: width * 0.1085,
-                                                  decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    image: DecorationImage(
-                                                        image: NetworkImage(
-                                                            userPic)),
-                                                    border: Border.all(
-                                                        color: Colors.white,
-                                                        width: 2),
-                                                  ),
-                                                  child: Container(),
-                                                ),
-                                              ),
-                                            )
-                                          : Image.asset(
-                                              "assets/images/fallbacks/avatar-fallback.jpg"))),
+                                      child: Container(
+                                        width: width * 0.1482,
+                                        height: height * 0.0892,
+                                        decoration: BoxDecoration(
+                                            shape: BoxShape.circle,
+                                            // color: Colors.red,
+                                            gradient: linearGradient
+                                            // border: Border.all(color: Colors.red, width: 2),
+                                            ),
+                                        child: Center(
+                                          child: Container(
+                                            height: height * 0.053,
+                                            width: width * 0.1085,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              image: DecorationImage(
+                                                  image: userPic != null
+                                                      ? NetworkImage(userPic)
+                                                      : AssetImage(
+                                                          "assets/images/fallbacks/avatar-fallback.jpg")),
+                                              border: Border.all(
+                                                  color: Colors.white,
+                                                  width: 2),
+                                            ),
+                                            child: Container(),
+                                          ),
+                                        ),
+                                      ))),
                               Align(
                                   alignment: Alignment.bottomRight,
                                   child:
