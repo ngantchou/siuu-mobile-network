@@ -24,7 +24,7 @@ import 'package:Siuu/pages/home/bottom_sheets/post_actions.dart';
 import 'package:Siuu/pages/home/bottom_sheets/post_comment_more_actions.dart';
 import 'package:Siuu/pages/home/bottom_sheets/react_to_post.dart';
 import 'package:Siuu/pages/home/bottom_sheets/react_to_post_comment.dart';
-import 'package:Siuu/pages/home/bottom_sheets/react_to_post_audio.dart';
+//import 'package:Siuu/pages/home/bottom_sheets/react_to_post_audio.dart';
 import 'package:Siuu/pages/home/bottom_sheets/user_actions/user_actions.dart';
 import 'package:Siuu/pages/home/bottom_sheets/user_visibility_picker.dart';
 import 'package:Siuu/pages/home/bottom_sheets/video_picker.dart';
@@ -64,7 +64,7 @@ class BottomSheetService {
         });
   }
 
-  Future<PostCommentReaction> showReactToPostAudioComment(
+ /* Future<PostCommentReaction> showReactToPostAudioComment(
       {@required PostComment postComment,
       @required Post post,
       @required BuildContext context}) async {
@@ -76,7 +76,7 @@ class BottomSheetService {
                 postComment: postComment, post: post),
           );
         });
-  }
+  }*/
 
   void showConnectionsCirclesPicker(
       {@required BuildContext context,
