@@ -90,6 +90,7 @@ dependencies:
   google_maps_flutter: ^1.0.6
   permission_handler: ^5.0.1
   flutter_sound: ^3.0.0
+  story_view: ^0.12.8
 
   flutter:
     sdk: flutter
