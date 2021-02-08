@@ -12,7 +12,10 @@ class PoppablePageController {
   }
 
   void popToFirstRoute() {
-    Navigator.of(_context).popAndPushNamed('/');
+    Navigator.popUntil(
+      _context,
+      ModalRoute.withName('/'),
+    );
   }
 
   bool isFirstRoute() {

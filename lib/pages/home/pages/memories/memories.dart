@@ -7,6 +7,8 @@ import 'package:Siuu/services/user.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+import '../storyView.dart';
+
 class Memories extends StatefulWidget {
   String avatar;
   Memories(this.avatar);
@@ -126,6 +128,16 @@ class MemoriesState extends State<Memories> {
                     onTap: () {
                       setState(() {});
                       _navigationService.navigateToViewStory(context: context);
+                    },
+                    child: buildStatusColumn(
+                        gradient: linearGradient,
+                        imagePath: 'assets/images/icon.png',
+                        name: 'grandpa'),
+                  ),
+                  InkWell(
+                    onTap: () {
+                      setState(() {});
+                      _navigationService.navigateToStory(context: context);
                     },
                     child: buildStatusColumn(
                         gradient: linearGradient,
