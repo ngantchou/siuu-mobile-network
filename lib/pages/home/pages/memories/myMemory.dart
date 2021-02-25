@@ -1,5 +1,7 @@
+import 'package:Siuu/pages/home/pages/storyView.dart';
 import 'package:Siuu/pages/home/widgets/lottieStickers.dart';
 import 'package:Siuu/res/colors.dart';
+import 'package:Siuu/story/story_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:flutter_xlider/flutter_xlider.dart';
@@ -18,7 +20,7 @@ class _MyMemoryState extends State<MyMemory> {
 
   bool expandViews;
   bool crewLongPress;
-
+  final StoryController controller = StoryController();
   bool isFollowed;
 
   @override
@@ -53,10 +55,7 @@ class _MyMemoryState extends State<MyMemory> {
                       crewLongPress = false;
                     });
                   },
-                  child: Image.asset(
-                    'assets/images/bgImage.png',
-                    fit: BoxFit.cover,
-                  ),
+                  child: MoreStories(),
                 ),
               ),
               Padding(
@@ -64,7 +63,7 @@ class _MyMemoryState extends State<MyMemory> {
                 child: Column(
                   children: [
                     SizedBox(height: height * 0.029),
-                    FlutterSlider(
+                    /*  FlutterSlider(
                       disabled: true,
                       handler: FlutterSliderHandler(
                         child: Container(),
@@ -76,7 +75,7 @@ class _MyMemoryState extends State<MyMemory> {
                       handlerWidth: 0,
                       max: 100,
                       min: 0,
-                    ),
+                    ),*/
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -115,7 +114,7 @@ class _MyMemoryState extends State<MyMemory> {
                       bottom: 0,
                       child: Container(
                         color: Colors.transparent,
-                        height: height * 0.658,
+                        height: height * 0.258,
                         width: width,
                         child: SingleChildScrollView(
                           child: Padding(

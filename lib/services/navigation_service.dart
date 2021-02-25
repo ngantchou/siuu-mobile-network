@@ -76,6 +76,7 @@ import 'package:Siuu/pages/home/pages/post_comments/post_comments_page_controlle
 import 'package:Siuu/pages/home/pages/profile/profile.dart';
 import 'package:Siuu/pages/home/pages/report_object/pages/confirm_report_object.dart';
 import 'package:Siuu/pages/home/pages/report_object/report_object.dart';
+import 'package:Siuu/pages/home/pages/storyView.dart';
 import 'package:Siuu/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Siuu/widgets/new_post_data_uploader.dart';
 import 'package:Siuu/widgets/routes/slide_right_route.dart';
@@ -773,7 +774,16 @@ class NavigationService {
           }),
     );
   }
-
+  Future<void> navigateToStory({@required BuildContext context}) {
+    return Navigator.push(
+      context,
+      OBSlideRightRoute<dynamic>(
+          slidableKey: _getKeyRandomisedWithWord('storyPageRoute'),
+          builder: (BuildContext context) {
+            return StoryViewWidget();
+          }),
+    );
+  }
   Future<void> navigateToPostCommentReactions(
       {@required PostComment postComment,
       @required Post post,

@@ -108,7 +108,7 @@ class OBSuggestedCommunitiesState extends State<OBSuggestedCommunities>
     _setRequestInProgress(true);
     try {
       CommunitiesList suggestedCommunitiesList =
-          await _userService.getSuggestedCommunities();
+          await _userService.getTrendingCommunities();
       _setSuggestedCommunities(suggestedCommunitiesList.memories);
       if (widget.onNoSuggestions != null &&
           suggestedCommunitiesList.memories.isEmpty) widget.onNoSuggestions();

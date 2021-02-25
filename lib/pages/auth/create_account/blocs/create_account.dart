@@ -21,6 +21,7 @@ class CreateAccountBloc {
   final _nameSubject = BehaviorSubject<String>();
   final _emailSubject = BehaviorSubject<String>();
   final _passwordSubject = BehaviorSubject<String>();
+  final _tokenSubject = BehaviorSubject<String>();
   final _avatarSubject = BehaviorSubject<File>();
   final _usernameSubject = BehaviorSubject<String>();
   final _phoneSubject = BehaviorSubject<String>();
@@ -49,6 +50,7 @@ class CreateAccountBloc {
   CreateAccountBloc() {
     _isOfLegalAgeSubject.stream.listen(_onLegalAgeConfirmationChange);
     _nameSubject.stream.listen(_onNameChange);
+    _tokenSubject.stream.listen(_onTokenChange);
     _emailSubject.stream.listen(_onEmailChange);
     _passwordSubject.listen(_onPasswordChange);
     _avatarSubject.listen(_onAvatarChange);
@@ -60,6 +62,7 @@ class CreateAccountBloc {
   void dispose() {
     _isOfLegalAgeSubject.close();
     _nameSubject.close();
+    _tokenSubject.close();
     _emailSubject.close();
     _passwordSubject.close();
     _avatarSubject.close();
@@ -123,6 +126,11 @@ class CreateAccountBloc {
   void _onNameChange(String name) {
     if (name == null) return;
     userRegistrationData.name = name;
+  }
+
+  void _onTokenChange(String token) {
+    if (token == null) return;
+    userRegistrationData.token = token;
   }
 
   void _clearName() {
@@ -261,13 +269,13 @@ class CreateAccountBloc {
   }
 
   void setToken(String token) async {
-    registrationTokenSubject.add(token);
+    _tokenSubject.add(token);
   }
 
-  void _onTokenChange(String token) {
+  /*void _onTokenChange(String token) {
     if (token == null) return;
     userRegistrationData.token = token;
-  }
+  }*/
 
   void _clearToken() {
     userRegistrationData.token = null;
@@ -299,14 +307,14 @@ class CreateAccountBloc {
 
   //Password Reset Token ends
 
-  Future<bool> createAccount() async {
+  Future<bool> createAccount(String token) async {
     _clearCreateAccount();
 
     _createAccountInProgressSubject.add(true);
 
     var accountWasCreated = false;
 
-    print(userRegistrationData);
+    print(token);
 
     try {
       HttpieStreamedResponse response = await _authApiService.createUser(
@@ -314,7 +322,7 @@ class CreateAccountBloc {
           isOfLegalAge: true,
           name: userRegistrationData.name,
           username: userRegistrationData.username,
-          token: userRegistrationData.token,
+          token: token,
           password: userRegistrationData.password,
           areGuidelinesAccepted: true,
           phone: userRegistrationData.phone,
@@ -326,14 +334,15 @@ class CreateAccountBloc {
           jsonDecode(await response.readAsString());
       setUsername(responseData['username']);
       _userService.loginWithAuthToken(responseData['token']);
-      HttpieResponse siuuCoin = await _authApiService.createSiuuCoinUser();
+      Response siuuCoin = await _authApiService.createSiuuCoinUser();
       var userData = json.decode(siuuCoin.body);
+      // var jsonResponse = convert.jsonDecode(response.body);
       print(userData);
       _authApiService.createFirebaseUser(
           phone: userRegistrationData.phone,
           username: responseData['username'],
-          siuuId: responseData['id'],
-          siuuCoinId: "null");
+          siuuId: responseData['username'],
+          siuuCoinId: userData['public']);
     } catch (error) {
       if (error is HttpieConnectionRefusedError) {
         _onCreateAccountValidationError(error.toHumanReadableMessage());

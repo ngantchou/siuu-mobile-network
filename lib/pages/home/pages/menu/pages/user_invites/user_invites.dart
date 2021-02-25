@@ -176,7 +176,7 @@ class OBUserInvitesPageState extends State<OBUserInvitesPage> {
         : _localizationService.user__invites_none_left;
 
     String assetImage = hasInvites
-        ? 'assets/images/stickers/perplexed-owl.png'
+        ? 'assets/images/404.PNG'
         : 'assets/images/stickers/owl-instructor.png';
 
     Function _onPressed = hasInvites ? _onWantsToCreateInvite : _refreshInvites;

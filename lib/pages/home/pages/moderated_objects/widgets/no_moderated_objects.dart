@@ -14,7 +14,7 @@ class OBNoModeratedObjects extends StatelessWidget {
       onPressed: onWantsToRefreshModeratedObjects,
       buttonText: 'Refresh',
       buttonIcon: OBIcons.refresh,
-      assetImage: 'assets/images/stickers/perplexed-owl.png',
+      assetImage: 'assets/images/404.PNG',
     );
   }
 }
