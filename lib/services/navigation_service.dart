@@ -77,10 +77,13 @@ import 'package:Siuu/pages/home/pages/profile/profile.dart';
 import 'package:Siuu/pages/home/pages/report_object/pages/confirm_report_object.dart';
 import 'package:Siuu/pages/home/pages/report_object/report_object.dart';
 import 'package:Siuu/pages/home/pages/storyView.dart';
+import 'package:Siuu/story/camera_screen/camera_screen.dart';
+import 'package:Siuu/story/utilities/constants.dart';
 import 'package:Siuu/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Siuu/widgets/new_post_data_uploader.dart';
 import 'package:Siuu/widgets/routes/slide_right_route.dart';
 import 'package:Siuu/widgets/theming/primary_color_container.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -753,13 +756,17 @@ class NavigationService {
     );
   }
 
-  Future<void> navigateToCreateStory({@required BuildContext context}) {
+  Future<void> navigateToCreateStory(
+      {@required BuildContext context,
+      List<CameraDescription> cameras,
+      Function backToHomeScreen,
+      CameraConsumer cameraConsumer}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
           slidableKey: _getKeyRandomisedWithWord('storyCreatePageRoute'),
           builder: (BuildContext context) {
-            return Categories();
+            return CameraScreen(cameras, backToHomeScreen, cameraConsumer);
           }),
     );
   }
@@ -774,6 +781,7 @@ class NavigationService {
           }),
     );
   }
+
   Future<void> navigateToStory({@required BuildContext context}) {
     return Navigator.push(
       context,
@@ -784,6 +792,7 @@ class NavigationService {
           }),
     );
   }
+
   Future<void> navigateToPostCommentReactions(
       {@required PostComment postComment,
       @required Post post,

@@ -17,6 +17,8 @@ import 'package:Siuu/services/navigation_service.dart';
 import 'package:Siuu/services/theme.dart';
 import 'package:Siuu/services/theme_value_parser.dart';
 import 'package:Siuu/services/user.dart';
+import 'package:Siuu/story/utilities/constants.dart';
+import 'package:Siuu/story/utilities/show_error_dialog.dart';
 import 'package:Siuu/widgets/badges/badge.dart';
 import 'package:Siuu/widgets/buttons/button.dart';
 import 'package:Siuu/widgets/buttons/floating_action_button.dart';
@@ -26,6 +28,7 @@ import 'package:Siuu/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Siuu/widgets/page_scaffold.dart';
 import 'package:Siuu/widgets/new_post_data_uploader.dart';
 import 'package:Siuu/widgets/posts_stream/posts_stream.dart';
+import 'package:camera/camera.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -70,10 +73,13 @@ class OBTimelinePageState extends State<OBTimelinePage>
   double _hideFloatingButtonTolerance = 10;
   AnimationController _hideFloatingButtonAnimation;
   double _previousScrollPixels;
+  List<CameraDescription> _cameras;
+  CameraConsumer _cameraConsumer = CameraConsumer.post;
 
   @override
   void initState() {
     super.initState();
+    _getCameras();
     _timelinePostsStreamController = OBPostsStreamController();
     _timelinePostsStreamScrollController = ScrollController();
     _searchPageController = OBMainSearchPageController();
@@ -109,6 +115,15 @@ class OBTimelinePageState extends State<OBTimelinePage>
 
       _previousScrollPixels = newScrollPixelPosition;
     });
+  }
+
+  Future<Null> _getCameras() async {
+    try {
+      _cameras = await availableCameras();
+    } on CameraException catch (_) {
+      ShowErrorDialog.showAlertDialog(
+          errorMessage: 'Cant get cameras!', context: context);
+    }
   }
 
   @override
