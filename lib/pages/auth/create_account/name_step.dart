@@ -30,7 +30,8 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
   ToastService _toastService;
   UserInvitesApiService userInvitesApiService;
   UserService _userService;
-
+  bool mustRequestCreateAccount;
+  LocalizationService localizationService;
   bool _emailCheckInProgress;
   bool _emailTaken;
   bool _usernameCheckInProgress;
@@ -49,6 +50,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
   void initState() {
     _usernameCheckInProgress = false;
     passwordIsVisible = false;
+    mustRequestCreateAccount = true;
     _emailCheckInProgress = false;
     super.initState();
   }
@@ -61,6 +63,7 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
     _validationService = openbookProvider.validationService;
     _toastService = openbookProvider.toastService;
     _userService = openbookProvider.userService;
+    localizationService = openbookProvider.localizationService;
 
     final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
@@ -198,19 +201,41 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
     await _checkUsernameAvailable(_usernameController.text.trim(), context);
 
     bool isNameValid = _validateForm();
-    if (isNameValid) {
-      UserInvite createdUserInvite = await _userService.createUserInvite(
-          nickname: _usernameController.text.trim());
+    UserInvite createdUserInvite = await _userService.createUserInvite(
+        nickname: _usernameController.text.trim());
+    print(createdUserInvite.token);
+    if (isNameValid && createdUserInvite.token != null) {
       setState(() {
         _createAccountBloc.setName(_nameController.text);
         _createAccountBloc.setPassword(_passwordController.text);
         _createAccountBloc.setUsername(_usernameController.text.trim());
         _createAccountBloc.setEmail(_emailController.text.trim());
         _createAccountBloc.setToken(createdUserInvite.token);
+        _createAccountBloc.setLegalAgeConfirmation(true);
+        if (mustRequestCreateAccount) {
+          _requestCreateAccount(createdUserInvite.token);
+        }
+
+        //Navigator.pushNamed(context, '/auth/submit_step');
         //Navigator.pushNamed(context, '/auth/legal_step');
-        Navigator.pushNamed(context, '/auth/accept_step');
+        //Navigator.pushNamed(context, '/auth/accept_step');
       });
+      //print(_createAccountBloc.toString());
     }
+  }
+
+  void _requestCreateAccount(String token) async {
+    showLoaderDialog(context);
+    bool createdAccount = await _createAccountBloc.createAccount(token);
+    print(createdAccount);
+    if (createdAccount) {
+      _createAccountBloc.clearAll();
+      Navigator.pushNamed(context, '/auth/suggested_memories');
+      //Navigator.pushNamed(context, '/auth/done_step');
+    } else {
+      Navigator.pop(context);
+    }
+    mustRequestCreateAccount = false;
   }
 
   Future<bool> _checkEmailAvailable(String email, BuildContext context) async {
@@ -271,6 +296,107 @@ class OBAuthNameStepPageState extends State<OBAuthNameStepPage> {
       onPressed: () {
         Navigator.pop(context);
       },
+    );
+  }
+
+  showLoaderDialog(BuildContext context) {
+    AlertDialog alert = AlertDialog(
+      content: new Container(
+          height: 200, margin: EdgeInsets.only(left: 7), child: _buildStatus()),
+    );
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  Widget _buildStatus() {
+    return StreamBuilder(
+      stream: _createAccountBloc.createAccountErrorFeedback,
+      initialData: null,
+      builder: (context, snapshot) {
+        var createAccountErrorFeedback = snapshot.data;
+
+        if (createAccountErrorFeedback != null) {
+          return _buildStatusError(context, createAccountErrorFeedback);
+        }
+
+        return _buildStatusLoading(context);
+      },
+    );
+  }
+
+  Widget _buildStatusError(BuildContext context, String errorFeedback) {
+    var errorTitle =
+        localizationService.trans('auth__create_acc__submit_error_title');
+
+    var errorDescription = errorFeedback;
+
+    return Column(
+      children: <Widget>[
+        Text(
+          '😥‍',
+          style: TextStyle(fontSize: 45.0, color: Colors.white),
+        ),
+        const SizedBox(
+          height: 20.0,
+        ),
+        Text(errorTitle,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              //color: Colors.white
+            )),
+        const SizedBox(
+          height: 20.0,
+        ),
+        Text(errorDescription,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18.0,
+              //color: Colors.white
+            ))
+      ],
+    );
+  }
+
+  Widget _buildStatusLoading(BuildContext context) {
+    var loadingTitle =
+        localizationService.trans('auth__create_acc__submit_loading_title');
+
+    var loadingDescription =
+        localizationService.trans('auth__create_acc__submit_loading_desc');
+
+    return Column(
+      children: <Widget>[
+        Text(
+          '🥚‍',
+          style: TextStyle(fontSize: 45.0, color: Colors.white),
+        ),
+        const SizedBox(
+          height: 20.0,
+        ),
+        Text(loadingTitle,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24.0,
+              fontWeight: FontWeight.bold,
+              //color: Colors.white
+            )),
+        const SizedBox(
+          height: 20.0,
+        ),
+        Text(loadingDescription,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 18.0,
+              //color: Colors.white
+            ))
+      ],
     );
   }
 

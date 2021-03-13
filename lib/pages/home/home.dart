@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:Siuu/pages/home/pages/Messages/Message.dart';
 import 'package:Siuu/pages/home/pages/place/place.dart';
+import 'package:Siuu/pages/message/chat_page.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:Siuu/models/push_notification.dart';
 import 'package:Siuu/pages/home/lib/poppable_page_controller.dart';
@@ -143,7 +144,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
     if (currentBackPressTime == null ||
         now.difference(currentBackPressTime) > Duration(seconds: 2)) {
       currentBackPressTime = now;
-      AlertDialog(
+      /*AlertDialog(
         actions: [
           FlatButton(
               onPressed: () {
@@ -157,7 +158,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
               child: Text('Yes'))
         ],
         content: Text("will you want to quit Siuu ?"),
-      );
+      );*/
     }
     return confirm;
   }
@@ -171,7 +172,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         );
         break;
       case OBHomePageTabs.search:
-        page = MessagePage(
+        page = ChatPage(
             //controller: _searchPageController,
             );
         break;
@@ -250,7 +251,9 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
           if (_timelinePageController.isFirstRoute()) {
             _timelinePageController.scrollToTop();
           } else {
-            _timelinePageController.popUntilFirstRoute();
+            //_timelinePageController.popUntilFirstRoute();
+            //_timelinePageController.canPop();
+            Navigator.of(context).pop();
           }
         }
 

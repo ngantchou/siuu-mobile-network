@@ -12,7 +12,6 @@ import 'package:Siuu/widgets/alerts/alert.dart';
 import 'package:Siuu/widgets/avatars/logged_in_user_avatar.dart';
 import 'package:Siuu/widgets/avatars/avatar.dart';
 import 'package:Siuu/widgets/buttons/button.dart';
-import 'package:Siuu/widgets/fields/text_form_field.dart';
 import 'package:async/async.dart';
 import 'package:flutter/material.dart';
 import 'package:Siuu/services/httpie.dart';
@@ -91,7 +90,6 @@ class OBPostCommenterState extends State<OBPostCommenter> {
       _needsBootstrap = false;
     }
     final keyboardVisible = MediaQuery.of(context).viewInsets.bottom;
-    final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     List<Widget> commentItems = [];
     commentItems.addAll([
@@ -192,7 +190,7 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   }
 
   Container buildContainer(double width) {
-    FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
+//    FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
     return Container(
       width: width,
       decoration: BoxDecoration(
@@ -318,12 +316,12 @@ class OBPostCommenterState extends State<OBPostCommenter> {
   }
 
   Widget _buildTextFormField(int maxLines, TextStyle style) {
-    EdgeInsetsGeometry inputContentPadding =
-        EdgeInsets.symmetric(vertical: 8.0, horizontal: 10);
+    /*  EdgeInsetsGeometry inputContentPadding =
+        EdgeInsets.symmetric(vertical: 8.0, horizontal: 10);*/
 
     bool autofocus = widget.autofocus;
     FocusNode focusNode = widget.commentTextFieldFocusNode ?? null;
-    final double height = MediaQuery.of(context).size.height;
+    //  final double height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
 
     return Container(

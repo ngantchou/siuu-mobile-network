@@ -23,9 +23,10 @@ class OBPostsStreamDrHoo extends StatelessWidget {
   Widget build(BuildContext context) {
     String drHooTitle;
     String drHooSubtitle;
-    String drHooImage = 'assets/images/404.png';
+    String drHooImage = 'assets/images/404.PNG';
     bool hasRefreshButton = false;
-
+    final double height = MediaQuery.of(context).size.height;
+    final double width = MediaQuery.of(context).size.width;
     OpenbookProviderState openbookProvider = OpenbookProvider.of(context);
     LocalizationService localizationService =
         openbookProvider.localizationService;
@@ -41,7 +42,7 @@ class OBPostsStreamDrHoo extends StatelessWidget {
         drHooSubtitle = localizationService.posts_stream__empty_drhoo_subtitle;
         break;
       case OBPostsStreamStatus.loadingMoreFailed:
-        drHooImage = 'assets/images/404.png';
+        drHooImage = 'assets/images/404.PNG';
         drHooTitle =
             localizationService.post__timeline_posts_failed_drhoo_title;
         drHooSubtitle =
@@ -49,7 +50,7 @@ class OBPostsStreamDrHoo extends StatelessWidget {
         hasRefreshButton = true;
         break;
       case OBPostsStreamStatus.empty:
-        drHooImage = 'assets/images/404.png';
+        drHooImage = 'assets/images/404.PNG';
         drHooTitle = localizationService.posts_stream__empty_drhoo_title;
         drHooSubtitle = localizationService.posts_stream__empty_drhoo_subtitle;
         hasRefreshButton = true;
@@ -65,19 +66,18 @@ class OBPostsStreamDrHoo extends StatelessWidget {
     List<Widget> drHooColumnItems = [
       Image.asset(
         drHooImage,
-        height: 100,
       ),
       const SizedBox(
         height: 20.0,
       ),
-      OBText(
+      /*OBText(
         drHooTitle,
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 18.0,
         ),
         textAlign: TextAlign.center,
-      ),
+      ),*/
       const SizedBox(
         height: 10.0,
       ),
@@ -95,10 +95,10 @@ class OBPostsStreamDrHoo extends StatelessWidget {
         OBButton(
           icon: const OBIcon(
             OBIcons.refresh,
-            size: OBIconSize.small,
+            size: OBIconSize.large,
           ),
           type: OBButtonType.highlight,
-          child: OBText(localizationService.post__timeline_posts_refresh_posts),
+          child: Container(),
           onPressed: streamRefresher,
           isLoading: streamStatus == OBPostsStreamStatus.refreshing,
         )

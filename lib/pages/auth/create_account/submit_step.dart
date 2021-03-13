@@ -191,10 +191,11 @@ class OBAuthSubmitPageState extends State<OBAuthSubmitPage> {
   }
 
   void _requestCreateAccount() async {
-    bool createdAccount = await createAccountBloc.createAccount();
+    bool createdAccount = await createAccountBloc.createAccount("sd");
     if (createdAccount) {
       createAccountBloc.clearAll();
-      Navigator.pushNamed(context, '/auth/done_step');
+
+      //Navigator.pushNamed(context, '/auth/done_step');
     }
     mustRequestCreateAccount = false;
   }
