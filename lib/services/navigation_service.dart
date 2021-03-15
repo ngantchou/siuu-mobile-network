@@ -78,6 +78,8 @@ import 'package:Siuu/pages/home/pages/report_object/pages/confirm_report_object.
 import 'package:Siuu/pages/home/pages/report_object/report_object.dart';
 import 'package:Siuu/pages/home/pages/storyView.dart';
 import 'package:Siuu/story/camera_screen/camera_screen.dart';
+import 'package:Siuu/story/stories_screen/stories_screen.dart';
+import 'package:Siuu/story/story_model.dart';
 import 'package:Siuu/story/utilities/constants.dart';
 import 'package:Siuu/widgets/nav_bars/themed_nav_bar.dart';
 import 'package:Siuu/widgets/new_post_data_uploader.dart';
@@ -782,13 +784,13 @@ class NavigationService {
     );
   }
 
-  Future<void> navigateToStory({@required BuildContext context}) {
+  Future<void> navigateToStory({@required BuildContext context,List<Story> stories,User user}) {
     return Navigator.push(
       context,
       OBSlideRightRoute<dynamic>(
           slidableKey: _getKeyRandomisedWithWord('storyPageRoute'),
           builder: (BuildContext context) {
-            return StoryViewWidget();
+            return StoryScreen(seenStories: 1,stories: stories,user: user,);
           }),
     );
   }

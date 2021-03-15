@@ -159,7 +159,7 @@ class _StoryScreenState extends State<StoryScreen>
                         horizontal: 1.5, vertical: 10.0),
                     child: StoryInfo(
                       onSwipeUp: () => _onSwipeUp(),
-                      height: size.height - 100,
+                      height: size.height - 10,
                       user: widget.user,
                       story: widget.stories[_currentIndex],
                     ),

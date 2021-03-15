@@ -36,6 +36,6 @@ enum SearchFrom {
 }
 
 enum CameraConsumer {
-  post,
-  story,
+  Video,
+  Photo,
 }

@@ -74,7 +74,7 @@ class OBTimelinePageState extends State<OBTimelinePage>
   AnimationController _hideFloatingButtonAnimation;
   double _previousScrollPixels;
   List<CameraDescription> _cameras;
-  CameraConsumer _cameraConsumer = CameraConsumer.post;
+  CameraConsumer _cameraConsumer = CameraConsumer.Photo;
 
   @override
   void initState() {
@@ -284,7 +284,7 @@ class OBTimelinePageState extends State<OBTimelinePage>
                 ],
               ),
             ),
-            Memories(_userService.getLoggedInUser()?.profile?.avatar),
+            Memories(_userService.getLoggedInUser()?.profile?.avatar,_cameras,_cameraConsumer),
             Container(
               height: height / 1.5,
               child: _loggedInUserBootstrapped

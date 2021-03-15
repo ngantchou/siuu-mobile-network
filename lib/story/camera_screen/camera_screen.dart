@@ -3,6 +3,7 @@ import 'package:Siuu/story/stories_screen/widgets/circular_icon_button.dart';
 import 'package:Siuu/story/utilities/constants.dart';
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
@@ -26,7 +27,17 @@ class _CameraScreenState extends State<CameraScreen> {
   bool _toggleCamera = false;
   CameraController controller;
   final _picker = ImagePicker();
-  CameraConsumer _cameraConsumer = CameraConsumer.post;
+  CameraConsumer _cameraConsumer = CameraConsumer.Photo;
+
+  TextStyle _textStyle = TextStyle(fontSize: 11);
+  int _pageSelectedIndex=1;
+  String path;
+  File filePath;
+
+  int intervalTime = 10; // 30 seconds
+
+  DateTime dateTimeStart;
+  Duration totalVideoDuration = Duration(seconds: 0);
 
   @override
   void initState() {
@@ -35,7 +46,7 @@ class _CameraScreenState extends State<CameraScreen> {
     } catch (e) {
       print(e.toString());
     }
-    if (widget.cameraConsumer != CameraConsumer.post) {
+    if (widget.cameraConsumer != CameraConsumer.Photo) {
       changeConsumer(widget.cameraConsumer);
     }
     super.initState();
@@ -72,14 +83,8 @@ class _CameraScreenState extends State<CameraScreen> {
     return Scaffold(
       body: Stack(
         children: <Widget>[
-          Center(
-            child: Transform.scale(
-              scale: controller.value.aspectRatio / deviceRatio,
-              child: new AspectRatio(
-                aspectRatio: controller.value.aspectRatio,
-                child: new CameraPreview(controller),
-              ),
-            ),
+          Container(
+            child: new CameraPreview(controller),
           ),
           Align(
             alignment: Alignment.topRight,
@@ -101,7 +106,7 @@ class _CameraScreenState extends State<CameraScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                Row(
+                /*Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     RaisedButton(
@@ -109,18 +114,18 @@ class _CameraScreenState extends State<CameraScreen> {
                           borderRadius: BorderRadius.only(
                               bottomLeft: Radius.circular(15),
                               topLeft: Radius.circular(15))),
-                      onPressed: () => changeConsumer(CameraConsumer.post),
-                      color: _cameraConsumer == CameraConsumer.post
+                      onPressed: () => changeConsumer(CameraConsumer.Photo),
+                      color: _cameraConsumer == CameraConsumer.Photo
                           ? Colors.white.withOpacity(0.85)
                           : Colors.black38,
                       child: Text(
-                        'Post',
+                        'Photo',
                         style: TextStyle(
                           fontSize: 18,
-                          color: _cameraConsumer == CameraConsumer.post
+                          color: _cameraConsumer == CameraConsumer.Photo
                               ? Colors.black
                               : Colors.white,
-                          fontWeight: _cameraConsumer == CameraConsumer.post
+                          fontWeight: _cameraConsumer == CameraConsumer.Photo
                               ? FontWeight.bold
                               : FontWeight.normal,
                         ),
@@ -131,25 +136,25 @@ class _CameraScreenState extends State<CameraScreen> {
                           borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(15),
                               topRight: Radius.circular(15))),
-                      onPressed: () => changeConsumer(CameraConsumer.story),
-                      color: _cameraConsumer == CameraConsumer.story
+                      onPressed: () => changeConsumer(CameraConsumer.Video),
+                      color: _cameraConsumer == CameraConsumer.Video
                           ? Colors.white.withOpacity(0.85)
                           : Colors.black38,
                       child: Text(
-                        'Story',
+                        'Video',
                         style: TextStyle(
                           fontSize: 18,
-                          color: _cameraConsumer == CameraConsumer.story
+                          color: _cameraConsumer == CameraConsumer.Video
                               ? Colors.black
                               : Colors.white,
-                          fontWeight: _cameraConsumer == CameraConsumer.story
+                          fontWeight: _cameraConsumer == CameraConsumer.Video
                               ? FontWeight.bold
                               : FontWeight.normal,
                         ),
                       ),
                     ),
                   ],
-                ),
+                ),*/
                 SizedBox(
                   height: 10,
                 ),
@@ -168,14 +173,17 @@ class _CameraScreenState extends State<CameraScreen> {
                             borderRadius:
                                 BorderRadius.all(Radius.circular(50.0)),
                             onTap: () {
+                              if(_cameraConsumer == CameraConsumer.Video){
+                                _startVideoRecording();
+                              }else{
                               _captureImage();
+                              }
                             },
                             child: Container(
                               padding: EdgeInsets.all(4.0),
-                              child: Image.asset(
-                                'assets/images/shutter.png',
-                                width: 72.0,
-                                height: 72.0,
+                              child: SvgPicture.asset(
+                                'assets/svg/storyCamera.svg',
+                                height: 57,
                               ),
                             ),
                           ),
@@ -197,17 +205,15 @@ class _CameraScreenState extends State<CameraScreen> {
                               } else {
                                 onCameraSelected(widget.cameras[0]);
                                 setState(() {
-                                  _toggleCamera = false;
+                                  _toggleCamera = true;
                                 });
                               }
                             },
                             child: Container(
                               padding: EdgeInsets.all(4.0),
-                              child: Image.asset(
-                                'assets/images/switch_camera.png',
-                                color: Colors.grey[200],
-                                width: 42.0,
-                                height: 42.0,
+                              child: SvgPicture.asset(
+                                'assets/svg/Camera2.svg',
+                                height: 40,
                               ),
                             ),
                           ),
@@ -223,11 +229,9 @@ class _CameraScreenState extends State<CameraScreen> {
                             onTap: getGalleryImage,
                             child: Container(
                               padding: EdgeInsets.all(4.0),
-                              child: Image.asset(
-                                'assets/images/gallery_button.png',
-                                color: Colors.grey[200],
-                                width: 42.0,
-                                height: 42.0,
+                              child: SvgPicture.asset(
+                                'assets/svg/Camera.svg',
+                                height: 42,
                               ),
                             ),
                           ),
@@ -239,7 +243,256 @@ class _CameraScreenState extends State<CameraScreen> {
               ],
             ),
           ),
+          _topRowWidget(),
+          _rightColumnWidgets(),
+
         ],
+      ),
+    );
+  }
+  Future<String> _startVideoRecording() async {
+
+    if (!controller.value.isInitialized) {
+
+      return null;
+
+    }
+
+    // Do nothing if a recording is on progress
+
+    if (controller.value.isRecordingVideo) {
+
+      return null;
+
+    }
+    //get storage path
+
+    final Directory appDirectory = await getApplicationDocumentsDirectory();
+
+    final String videoDirectory = '${appDirectory.path}/Videos';
+
+    await Directory(videoDirectory).create(recursive: true);
+
+    final String currentTime = DateTime.now().millisecondsSinceEpoch.toString();
+
+    final String filePath = '$videoDirectory/${currentTime}.mp4';
+
+
+
+    try {
+
+      await controller.startVideoRecording(filePath);
+
+      //videoPath = filePath;
+
+    } on CameraException catch (e) {
+
+      print(e);
+
+      return null;
+
+    }
+
+
+    //gives you path of where the video was stored
+    return filePath;
+
+  }
+  Widget _topRowWidget() {
+    return Positioned(
+      top: 30,
+      left: 10,
+      right: 20,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            InkWell(
+                onTap: () {
+                  Navigator.pop(context);
+                },
+                child: Icon(Icons.close)),
+            Container(
+              child: Row(
+                children: <Widget>[
+                  Icon(Icons.music_note),
+                  Text("Sounds"),
+                ],
+              ),
+            ),
+            Column(
+              children: <Widget>[
+                Icon(Icons.flip),
+                Text(
+                  "flip",
+                  style: _textStyle,
+                )
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _rightColumnWidgets() {
+    return Positioned(
+      right: 20,
+      top: 80,
+      child: Column(
+        children: <Widget>[
+          Container(
+            child: Column(
+              children: <Widget>[
+                Icon(Icons.shutter_speed),
+                Text(
+                  "Speed",
+                  style: _textStyle,
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Container(
+            child: Column(
+              children: <Widget>[
+                Icon(Icons.filter_tilt_shift),
+                Text(
+                  "filters",
+                  style: _textStyle,
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Container(
+            child: Column(
+              children: <Widget>[
+                Icon(Icons.color_lens),
+                Text(
+                  "beautify",
+                  style: _textStyle,
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Container(
+            child: Column(
+              children: <Widget>[
+                Icon(Icons.av_timer),
+                Text(
+                  "Timer",
+                  style: _textStyle,
+                )
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 15,
+          ),
+          Container(
+            child: Column(
+              children: <Widget>[
+                Icon(Icons.flash_off),
+                Text(
+                  "Flash",
+                  style: _textStyle,
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _bottomRowWidget() {
+    return Positioned(
+      bottom: 60,
+      left: 10,
+      right: 10,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        Colors.purple.withOpacity(.4),
+                        Colors.blue.withOpacity(.4)
+                      ]),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Image.asset("assets/effects.png"),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    "Effects",
+                    style: _textStyle,
+                  )
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.all(10),
+              height: 80,
+              width: 80,
+              decoration: BoxDecoration(
+                color: Colors.red.withOpacity(.4),
+                borderRadius: BorderRadius.all(Radius.circular(50)),
+              ),
+              child: Container(
+                height: 60,
+                width: 60,
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.all(Radius.circular(50)),
+                  border: Border.all(color: Colors.black, width: 1.5),
+                ),
+              ),
+            ),
+            Container(
+              child: Column(
+                children: <Widget>[
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 2, vertical: 2),
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: Colors.white, width: 2),
+                      borderRadius: BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Image.asset("assets/gallery.png"),
+                  ),
+                  SizedBox(
+                    height: 4,
+                  ),
+                  Text(
+                    "Upload",
+                    style: _textStyle,
+                  )
+                ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -300,7 +553,13 @@ class _CameraScreenState extends State<CameraScreen> {
   }
 
   void setCameraResult() async {
-    if (_cameraConsumer == CameraConsumer.post) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => CreateStoryScreen(File(imagePath)),
+      ),
+    );
+    /*if (_cameraConsumer == CameraConsumer.Photo) {
       File croppedImage = await _cropImage(File(imagePath));
       if (croppedImage == null) {
         return;
@@ -323,7 +582,7 @@ class _CameraScreenState extends State<CameraScreen> {
           builder: (_) => CreateStoryScreen(File(imagePath)),
         ),
       );
-    }
+    }*/
   }
 
   Future<String> takePicture() async {

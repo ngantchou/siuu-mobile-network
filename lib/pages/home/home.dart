@@ -217,7 +217,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
               color: color,
             ),
           ),
-          title != null
+         /* title != null
               ? FittedBox(
                   child: Text(
                     title,
@@ -229,7 +229,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
                     ),
                   ),
                 )
-              : Container(),
+              :*/ Container(),
         ],
       ),
     );
@@ -333,7 +333,14 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
-          icon: Align(
+            icon: buildBottomNavigationBarItem(
+                iconPath: "assets/svg/lightningIcon.svg", index: 1, title: 'Message'),
+            activeIcon: buildBottomNavigationBarItem(
+                color: Color(pinkColor),
+                iconPath: "assets/svg/lightningIcon.svg",
+                index: 1,
+                title: 'Message'),
+          /*Align(
             alignment: Alignment.bottomCenter,
             child: Stack(
               children: [
@@ -343,7 +350,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
                     child: Padding(
                       padding: const EdgeInsets.only(bottom: 15),
                       child: Container(
-                        height: height * 0.152,
+                       // height: height * 0.152,
                         width: width * 0.170,
                         decoration: BoxDecoration(
                             gradient: linearGradient, shape: BoxShape.circle),
@@ -366,9 +373,9 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
                   alignment: Alignment.bottomCenter,
                   child: Container(
                     child: Padding(
-                      padding: const EdgeInsets.only(bottom: 15),
+                      padding: const EdgeInsets.only(bottom: 1),
                       child: Container(
-                        height: height * 0.102,
+                       // height: height * 0.102,
                         width: width * 0.170,
                         decoration: BoxDecoration(
                             gradient: linearGradient, shape: BoxShape.circle),
@@ -382,7 +389,7 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
                 ),
               ],
             ),
-          ),
+          ),*/
         ),
         BottomNavigationBarItem(
           title: const SizedBox(),
@@ -492,6 +499,8 @@ class OBHomePageState extends State<OBHomePage> with WidgetsBindingObserver {
       currentTabController.pop();
       // Stop default
 
+      //willQuitApp();
+    }else{
       willQuitApp();
     }
 

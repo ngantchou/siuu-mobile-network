@@ -26,7 +26,7 @@ class _ReactionPostContainerState extends State<ReactinPostContainer> {
   CancelableOperation _clearPostReactionOperation;
   bool _clearPostReactionInProgress;
   LocalizationService _localizationService;
-  String expression = "";
+  Widget expression ;
   UserService _userService;
   ToastService _toastService;
   NavigationService _navigationService;
@@ -72,43 +72,43 @@ class _ReactionPostContainerState extends State<ReactinPostContainer> {
             id: 1,
             previewIcon: buildpreview('like'),
             icon: buildIcon('like'),
-            title: 'like',
+            title: Text('like'),
           ),
           Reaction(
             id: 2,
             previewIcon: buildpreview('dislike'),
             icon: buildIcon('dislike'),
-            title: 'dislike',
+            title: Text('dislike'),
           ),
           Reaction(
             id: 3,
             previewIcon: buildpreview('heartReact'),
             icon: buildIcon('heartReact'),
-            title: 'heartReact',
+            title: Text('heartReact'),
           ),
           Reaction(
             id: 4,
             previewIcon: buildpreview('brokenHeart'),
             icon: buildIcon('brokenHeart'),
-            title: 'brokenHeart',
+            title: Text('brokenHeart'),
           ),
           Reaction(
             id: 5,
             previewIcon: buildpreview('haha'),
             icon: buildIcon('haha'),
-            title: 'haha',
+            title: Text('haha'),
           ),
           Reaction(
             id: 6,
             previewIcon: buildpreview('shock'),
             icon: buildIcon('shock'),
-            title: 'shock',
+            title: Text('shock'),
           ),
           Reaction(
             id: 7,
             previewIcon: buildpreview('smirk'),
             icon: buildIcon('smirk'),
-            title: 'smirk',
+            title: Text('smirk'),
           ),
         ],
         initialReaction: Reaction(

@@ -1,12 +1,13 @@
 import 'dart:io';
 import 'package:Siuu/story/utilities/constants.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 
 class StroageService {
-  static Future<String> uploadUserProfileImage(
+/*  static Future<String> uploadUserProfileImage(
       String url, File imageFile) async {
     String photoId = Uuid().v4();
 
@@ -16,13 +17,13 @@ class StroageService {
       photoId = exp.firstMatch(url)[1];
     }
     File image = await compressImage(photoId, imageFile);
-    firebase_storage.UploadTask uploadTask = storageRef
+    StorageUploadTask uploadTask = storageRef
         .child('images/users/userProfile_$photoId.jpg')
         .putFile(image);
-    firebase_storage.TaskSnapshot storageSnap = uploadTask.snapshot;
+    StorageUploadTask storageSnap = uploadTask.snapshot;
     String downloadUrl = await storageSnap.ref.getDownloadURL();
     return downloadUrl;
-  }
+  }*/
 
   static Future<File> compressImage(String photoId, File image) async {
     final tempDir = await getTemporaryDirectory();
@@ -37,11 +38,17 @@ class StroageService {
 
   static Future<String> _uploadImage(
       String path, String imageId, File image) async {
-    firebase_storage.UploadTask uploadTask =
-        storageRef.child(path).putFile(image);
-    firebase_storage.TaskSnapshot storageSnap = uploadTask.snapshot;
-    String downloadUrl = await storageSnap.ref.getDownloadURL();
-    return downloadUrl;
+    StorageReference storageReference = FirebaseStorage.instance
+        .ref()
+        .child(path);
+    StorageUploadTask uploadTask = storageReference.putFile(image);
+    await uploadTask.onComplete;
+    print('File Uploaded');
+    String returnURL;
+    await storageReference.getDownloadURL().then((fileURL) {
+      returnURL =  fileURL;
+    });
+    return returnURL;
   }
 
   static Future<String> uploadMessageImage(File imageFile) async {

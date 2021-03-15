@@ -449,6 +449,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
   }
 
   void _createStory(String currentUserId) async {
+    print('start creating...');
     if (!_isLoading && widget.imageFile != null) {
       setState(() => _isLoading = true);
       File imageFile =
@@ -459,6 +460,7 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
         return;
       }
       String imageUrl = await StroageService.uploadStoryImage(imageFile);
+      print("story url : $imageUrl");
       final DateTime dateNow = DateTime.now();
       final Timestamp timeStart = Timestamp.fromDate(dateNow);
       final Timestamp timeEnd = Timestamp.fromDate(DateTime(
@@ -487,7 +489,8 @@ class _CreateStoryScreenState extends State<CreateStoryScreen> {
       await StoriesService.createStory(story);
       setState(() => _isLoading == false);
 
-      // CustomNavigation.navigateToHomeScreen(context, currentUserId);
+      // ignore: unnecessary_statements
+      Navigator.of(context).pop;
     }
   }
 
